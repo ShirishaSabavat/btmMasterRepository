@@ -45,7 +45,7 @@ const Schedule = () => {
             <Col sm="12" md="6">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Schedule</CardTitle>
+                        <CardTitle>Edit Schedule</CardTitle>
                     </CardHeader>
                     <hr className="m-0" />
                     <CardBody>
@@ -200,7 +200,7 @@ const Schedule = () => {
                                         </Col>
                                     </Row>
                                     <div className="float-right mt-1">
-                                        <Button color="primary" type="submit">Save</Button>
+                                        <Button color="primary" type="submit">Update</Button>
                                     </div>
                                 </Form>
                             )

@@ -3,11 +3,11 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import { Country, State, City }  from 'country-state-city'
-import {Home, Book, Phone, MapPin, User, Key, } from "react-feather"
+import {Home, Book, Phone, MapPin, User, Key, Mail } from "react-feather"
 
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 
-const GeneralSettings = () => {
+const OrganizationSettings = () => {
     
   const allCountries = Country.getAllCountries().map(values => { return {label : values.name, value : values.isoCode } })
 
@@ -42,10 +42,12 @@ const GeneralSettings = () => {
     const initialValues = {
         orgName:"",
         regNo:"",
-        country:"",
+        country:"IN",
         state:"",
         city:"",
         pincode:"",
+        email:"",
+        webaddress:"",
         phNo:"",
         personName:"",
         address:"",
@@ -67,6 +69,8 @@ const GeneralSettings = () => {
         state:  Yup.string().required("Required"),
         city:  Yup.string().required("Required"),
         pincode: Yup.number().positive().integer().required("Required"),
+        email:Yup.string().email().required("Required"),
+        webaddress:Yup.string().required("Required"),
         phNo: Yup.number().positive().integer().required("Required"),
         personName:Yup.string().required("Required"),
         address:Yup.string().required("Required"),
@@ -90,7 +94,7 @@ const GeneralSettings = () => {
         <Col>
             <Card>
                 <CardHeader>
-                    <CardTitle>General Settings</CardTitle>
+                    <CardTitle>Organization Settings</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
@@ -112,7 +116,7 @@ const GeneralSettings = () => {
                                                     type="text"
                                                     name="orgName"
                                                     id="orgName"
-                                                    placeholder="School Name ..."
+                                                    placeholder="Organization Name ..."
                                                     {...formik.getFieldProps("orgName")}
                                                     invalid={!!(formik.touched.orgName && formik.errors.orgName)}
                                                     >
@@ -138,7 +142,6 @@ const GeneralSettings = () => {
                                                     type="number"
                                                     name="regNo"
                                                     id="regNo"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("regNo")}
                                                     invalid={!!(formik.touched.regNo && formik.errors.regNo)}
                                                     >
@@ -211,7 +214,6 @@ const GeneralSettings = () => {
                                                     type="number"
                                                     name="pincode"
                                                     id="pincode"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("pincode")}
                                                     invalid={!!(formik.touched.pincode && formik.errors.pincode)}
                                                     >
@@ -226,25 +228,24 @@ const GeneralSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="phNo">Phone No</Label>
+                                                <Label for="email">Mail Id</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.phNo && formik.errors.phNo) ? "border border-danger" : null}>
-                                                        <Phone size={15} />
+                                                    <InputGroupText className={ !!(formik.touched.email && formik.errors.email) ? "border border-danger" : null}>
+                                                        <Mail size={15} />
                                                     </InputGroupText>
                                                     </InputGroupAddon>
                                                     <Input
-                                                    type="number"
-                                                    name="phNo"
-                                                    id="phNo"
-                                                    placeholder="School Name ..."
-                                                    {...formik.getFieldProps("phNo")}
-                                                    invalid={!!(formik.touched.phNo && formik.errors.phNo)}
+                                                    type="email"
+                                                    name="email"
+                                                    id="email"
+                                                    {...formik.getFieldProps("email")}
+                                                    invalid={!!(formik.touched.email && formik.errors.email)}
                                                     >
                                                     </Input>
                                                 </InputGroup>
                                                 <ErrorMessage
-                                                    name="phNo"
+                                                    name="email"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
@@ -252,25 +253,24 @@ const GeneralSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="personName">Person Name</Label>
+                                                <Label for="webaddress">Web Address</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.personName && formik.errors.personName) ? "border border-danger" : null}>
-                                                        <User size={15} />
+                                                    <InputGroupText className={ !!(formik.touched.webaddress && formik.errors.webaddress) ? "border border-danger" : null}>
+                                                        <MapPin size={15} />
                                                     </InputGroupText>
                                                     </InputGroupAddon>
                                                     <Input
-                                                    type="text"
-                                                    name="personName"
-                                                    id="personName"
-                                                    placeholder="School Name ..."
-                                                    {...formik.getFieldProps("personName")}
-                                                    invalid={!!(formik.touched.personName && formik.errors.personName)}
+                                                    type="number"
+                                                    name="webaddress"
+                                                    id="webaddress"
+                                                    {...formik.getFieldProps("webaddress")}
+                                                    invalid={!!(formik.touched.webaddress && formik.errors.webaddress)}
                                                     >
                                                     </Input>
                                                 </InputGroup>
                                                 <ErrorMessage
-                                                    name="personName"
+                                                    name="webaddress"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
@@ -296,7 +296,60 @@ const GeneralSettings = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Row className="mb-1">
+                                    <hr />
+                                    <h3>Contact Details</h3>
+                                    <hr />
+                                    <Row>
+                                        <Col sm="12" md="3">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="phNo">Phone No</Label>
+                                                <InputGroup>
+                                                    <InputGroupAddon addonType='prepend'>
+                                                    <InputGroupText className={ !!(formik.touched.phNo && formik.errors.phNo) ? "border border-danger" : null}>
+                                                        <Phone size={15} />
+                                                    </InputGroupText>
+                                                    </InputGroupAddon>
+                                                    <Input
+                                                    type="number"
+                                                    name="phNo"
+                                                    id="phNo"
+                                                    {...formik.getFieldProps("phNo")}
+                                                    invalid={!!(formik.touched.phNo && formik.errors.phNo)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="phNo"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="3">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="personName">Person Name</Label>
+                                                <InputGroup>
+                                                    <InputGroupAddon addonType='prepend'>
+                                                    <InputGroupText className={ !!(formik.touched.personName && formik.errors.personName) ? "border border-danger" : null}>
+                                                        <User size={15} />
+                                                    </InputGroupText>
+                                                    </InputGroupAddon>
+                                                    <Input
+                                                    type="text"
+                                                    name="personName"
+                                                    id="personName"
+                                                    {...formik.getFieldProps("personName")}
+                                                    invalid={!!(formik.touched.personName && formik.errors.personName)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="personName"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="username">User Name</Label>
@@ -310,7 +363,6 @@ const GeneralSettings = () => {
                                                     type="text"
                                                     name="username"
                                                     id="username"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("username")}
                                                     invalid={!!(formik.touched.username && formik.errors.username)}
                                                     >
@@ -336,7 +388,6 @@ const GeneralSettings = () => {
                                                     type="password"
                                                     name="password"
                                                     id="password"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("password")}
                                                     invalid={!!(formik.touched.password && formik.errors.password)}
                                                     >
@@ -349,6 +400,11 @@ const GeneralSettings = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
+                                    </Row>
+                                    <hr />
+                                    <h3>Organization Details</h3>
+                                    <hr />
+                                    <Row className="mb-1">
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="panNo">Pan No</Label>
@@ -357,7 +413,6 @@ const GeneralSettings = () => {
                                                     type="number"
                                                     name="panNo"
                                                     id="panNo"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("panNo")}
                                                     invalid={!!(formik.touched.panNo && formik.errors.panNo)}
                                                     />
@@ -377,7 +432,6 @@ const GeneralSettings = () => {
                                                     type="number"
                                                     name="gstNo"
                                                     id="gstNo"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("gstNo")}
                                                     invalid={!!(formik.touched.gstNo && formik.errors.gstNo)}
                                                     >
@@ -385,50 +439,6 @@ const GeneralSettings = () => {
                                                 </InputGroup>
                                                 <ErrorMessage
                                                     name="gstNo"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-                                    <Row className="mb-1">
-                                        <Col sm="12" md="3">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label for="cinNo">CIN No</Label>
-                                                <InputGroup>
-                                                    <Input
-                                                    type="number"
-                                                    name="cinNo"
-                                                    id="cinNo"
-                                                    placeholder="School Name ..."
-                                                    {...formik.getFieldProps("cinNo")}
-                                                    invalid={!!(formik.touched.cinNo && formik.errors.cinNo)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="cinNo"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col sm="12" md="3">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label for="pfNo">PF No</Label>
-                                                <InputGroup>
-                                                    <Input
-                                                    type="number"
-                                                    name="pfNo"
-                                                    id="pfNo"
-                                                    placeholder="School Name ..."
-                                                    {...formik.getFieldProps("pfNo")}
-                                                    invalid={!!(formik.touched.pfNo && formik.errors.pfNo)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="pfNo"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
@@ -442,7 +452,6 @@ const GeneralSettings = () => {
                                                     type="number"
                                                     name="prdNo"
                                                     id="prdNo"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("prdNo")}
                                                     invalid={!!(formik.touched.prdNo && formik.errors.prdNo)}
                                                     >
@@ -463,7 +472,6 @@ const GeneralSettings = () => {
                                                     type="number"
                                                     name="esiNo"
                                                     id="esiNo"
-                                                    placeholder="School Name ..."
                                                     {...formik.getFieldProps("esiNo")}
                                                     invalid={!!(formik.touched.esiNo && formik.errors.esiNo)}
                                                     >
@@ -478,6 +486,46 @@ const GeneralSettings = () => {
                                         </Col>
                                     </Row>
                                     <Row className="mb-1">
+                                        <Col sm="12" md="3">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="cinNo">CIN No</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="number"
+                                                    name="cinNo"
+                                                    id="cinNo"
+                                                    {...formik.getFieldProps("cinNo")}
+                                                    invalid={!!(formik.touched.cinNo && formik.errors.cinNo)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="cinNo"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="3">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="pfNo">PF No</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="number"
+                                                    name="pfNo"
+                                                    id="pfNo"
+                                                    {...formik.getFieldProps("pfNo")}
+                                                    invalid={!!(formik.touched.pfNo && formik.errors.pfNo)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="pfNo"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
                                         <Col sm="12" md="4">
                                             <FormGroup>
                                                 <Label for="logo">Logo</Label>
@@ -507,4 +555,4 @@ const GeneralSettings = () => {
     </Row>
 }
 
-export default GeneralSettings
+export default OrganizationSettings
