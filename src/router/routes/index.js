@@ -1,34 +1,19 @@
-import { lazy } from 'react'
+import HomeRoute from './HomeRoute'
+import SettingsRoute from './SettingsRoute'
+import CourseRoutes from "./CourseRoutes"
 
 // ** Document title
-const TemplateTitle = '%s - Vuexy React Admin Template'
+const TemplateTitle = '%s - ATS School Management'
 
 // ** Default Route
-const DefaultRoute = '/home'
+const DefaultRoute = '/login'
 
 // ** Merge Routes
 const Routes = [
-  {
-    path: '/home',
-    component: lazy(() => import('../../views/Home'))
-  },
-  {
-    path: '/second-page',
-    component: lazy(() => import('../../views/SecondPage'))
-  },
-  {
-    path: '/login',
-    component: lazy(() => import('../../views/Login')),
-    layout: 'BlankLayout',
-    meta: {
-      authRoute: true
-    }
-  },
-  {
-    path: '/error',
-    component: lazy(() => import('../../views/Error')),
-    layout: 'BlankLayout'
-  }
-]
+    ...HomeRoute,
+    ...SettingsRoute,
+    ...CourseRoutes
+    ]
 
 export { DefaultRoute, TemplateTitle, Routes }
+
