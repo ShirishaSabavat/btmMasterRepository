@@ -1,17 +1,29 @@
-import { Mail, Home, Settings, ChevronRight, Video } from 'react-feather'
+import { Mail, Home, Settings, ChevronRight, Video, Sliders, Youtube } from 'react-feather'
 
 const Navigation = [
   {
     id: 'home',
-    title: 'Home',
+    title: 'Dashboard',
     icon: <Home size={20} />,
-    navLink: '/home'
+    navLink: '/dashboard'
   },
   {
-    id: 'secondPage',
-    title: 'Second Page',
-    icon: <Mail size={20} />,
-    navLink: '/second-page'
+    id: 'courses',
+    title: 'Courses',
+    icon: <Video size={20} />,
+    navLink: '/courses'
+  },
+  {
+    id: 'videos',
+    title: 'Videos',
+    icon: <Youtube size={20} />,
+    navLink: '/videos'
+  },
+  {
+    id: 'cms',
+    title: 'CMS',
+    icon: <Sliders size={20} />,
+    navLink: '/cms'
   },
   {
     id: "settings",
@@ -20,47 +32,23 @@ const Navigation = [
     icon: <Settings size={20} />,
     children: [
       {
-        id: "general_settings",
-        title: "General Settings",
+        id: "organization",
+        title: "Organization",
         type: "item",
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
         navLink: "/general-settings"
-      }
-    ]
-  },
-  {
-    id: "courses",
-    title: "Courses",
-    type: "collapse",
-    icon: <Video size={20} />,
-    children: [
-      {
-        id: "add_course",
-        title: "Add Course",
-        type: "item",
-        icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
-        navLink: "/add-course"
       },
       {
-        id: "schedule",
-        title: "Schedule",
+        id: "faculty",
+        title: "Faculty",
         type: "item",
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
-        navLink: "/schedule"
-      },
-      {
-        id: "courses",
-        title: "Courses",
-        type: "item",
-        icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
-        navLink: "/courses"
+        navLink: "/faculty-settings"
       }
     ]
-  },
+  }
 ]
 
 export default  Navigation

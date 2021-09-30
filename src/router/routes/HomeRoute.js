@@ -3,12 +3,8 @@ import { lazy } from 'react'
 // ** Merge Routes
 const HomeRoute = [
   {
-    path: '/home',
+    path: '/dashboard',
     component: lazy(() => import('../../views/Home'))
-  },
-  {
-    path: '/second-page',
-    component: lazy(() => import('../../views/SecondPage'))
   },
   {
     path: '/login',

@@ -4,7 +4,11 @@ import { lazy } from 'react'
 const SettingsRoute = [
   {
     path: '/general-settings',
-    component: lazy(() => import('../../views/Settings/GeneralSettings'))
+    component: lazy(() => import('../../views/Settings/OrganizationSettings'))
+  },
+  {
+    path: '/faculty-settings',
+    component: lazy(() => import('../../views/Settings/FacultySettings'))
   }
 ]
 

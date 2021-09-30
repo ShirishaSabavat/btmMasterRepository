@@ -1,8 +1,8 @@
 import React, {useState} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
-import {Calendar, Edit, Trash, Eye} from "react-feather"
+import {Edit, Trash} from "react-feather"
 import DeleteModal from "./Modals/DeleteModal"
 
 const CourseTable = () => {
@@ -26,45 +26,63 @@ const CourseTable = () => {
 
     const tableColumns = [
         {
-          name: "Course Name",
-          selector: "courseName",
+          name: "Batch No",
+          selector: "batchNo",
           sortable: true,
           minWidth: "200px",
           cell: (row) => (
             <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
               <div className="user-info text-truncate ml-xl-50 ml-0">
                 <span
-                  title={row.courseName}
+                  title={row.batchNo}
                   className="d-block text-bold-500 text-truncate mb-0"
                 >
-                  {row.courseName}
+                  {row.batchNo}
                 </span>
               </div>
             </div>
           )
         },
         {
-          name: "Code",
-          selector: "code",
+          name: "Start Date",
+          selector: "startDate",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.startDate}</p>
           )
         },
         {
-          name: "Type",
-          selector: "type",
+          name: "End Date",
+          selector: "endDate",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.type}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.endDate}</p>
           )
         },
         {
-          name: "Price",
-          selector: "price",
+          name: "Allowed Seats",
+          selector: "allowedSeats",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.price}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.allowedSeats}</p>
+          )
+        },
+        {
+          name: "Filing Seats",
+          selector: "fillingSeats",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 text-truncate mb-0">{row.fillingSeats}</p>
+          )
+        },
+        {
+          name: "Status",
+          selector: "status",
+          sortable: true,
+          cell: (row) => (
+            <Badge color={row.status === "completed" ? "success" : "danger"} pill>
+                <span>{row.status.toUpperCase()}</span>
+            </Badge>
           )
         },
         {
@@ -74,33 +92,13 @@ const CourseTable = () => {
           cell: (row) => {
             return (
               <div className="d-flex flex-column align-items-center">
-                <ul className="list-inline mb-0">
-                    <li className="list-inline-item">
-                        <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-info"
-                        >
-                          <Link to="/schedule-table">
-                            <Eye size={15} />
-                          </Link>
-                        </Button>
-                    </li>      
-                    <li className="list-inline-item">
-                        <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-info"
-                        >
-                          <Link to="/schedule">
-                            <Calendar size={15} />
-                          </Link>
-                        </Button>
-                    </li>      
+                <ul className="list-inline mb-0">     
                     <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/edit-course"}}>
+                        <Link to={{pathname: "/edit-schedule"}}>
                             <Edit size={15} />
                         </Link>
                         </Button>
@@ -121,7 +119,7 @@ const CourseTable = () => {
         }
       ]
 
-    const schoolData = [{courseName: "course1", code: "123", type: "BCA", price: 1000 }]
+    const schoolData = [{batchNo: "123", startDate: "2-2-2021", endDate: "2-3-2021", allowedSeats: 10, fillingSeats: 5, status: "completed" }]
 
     const customStyles = {
         headCells: {
@@ -144,8 +142,8 @@ const CourseTable = () => {
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
-                    <CardTitle>Courses</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-course" className="text-white">Add Course</Link></Button>
+                    <CardTitle>Schedule</CardTitle>
+                    <Button color="primary" type="button"><Link to="/schedule" className="text-white">Add Schedule</Link></Button>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable
