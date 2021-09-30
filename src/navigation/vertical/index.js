@@ -3,15 +3,9 @@ import { Mail, Home, Settings, ChevronRight, Video, Sliders, Youtube } from 'rea
 const Navigation = [
   {
     id: 'home',
-    title: 'Home',
+    title: 'Dashboard',
     icon: <Home size={20} />,
-    navLink: '/home'
-  },
-  {
-    id: 'secondPage',
-    title: 'Second Page',
-    icon: <Mail size={20} />,
-    navLink: '/second-page'
+    navLink: '/dashboard'
   },
   {
     id: 'courses',

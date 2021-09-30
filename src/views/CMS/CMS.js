@@ -2,8 +2,12 @@ import {Card, CardHeader, CardBody, CardTitle} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 
 import { Editor } from 'react-draft-wysiwyg'
+import { useState } from "react"
 
-const CMS = () => {
+const CMS = (props) => {
+
+    const [value, setValue] = useState()
+
     return <Card>
         <CardHeader>
             <CardTitle>CMS Settings</CardTitle>
