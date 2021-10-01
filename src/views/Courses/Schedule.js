@@ -8,7 +8,7 @@ import Flatpickr from "react-flatpickr"
 
 
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css"
 
 const Schedule = () => {
 
@@ -38,7 +38,7 @@ const Schedule = () => {
         console.log("values", values)
     }
 
-    const facultyNameOptions =[{label: "Lecture 1", value: "Ram"}]
+    const facultyNameOptions = [{label: "Lecture 1", value: "Ram"}]
 
     return (<>
         <Row >

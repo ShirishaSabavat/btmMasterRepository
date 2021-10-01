@@ -119,7 +119,7 @@ const CourseTable = () => {
         }
       ]
 
-    const schoolData = [{batchNo: "123",startDate: "2-2-2021" , endDate: "2-3-2021" , allowedSeats: 10 , fillingSeats: 5, status: "completed" }]
+    const schoolData = [{batchNo: "123", startDate: "2-2-2021", endDate: "2-3-2021", allowedSeats: 10, fillingSeats: 5, status: "completed" }]
 
     const customStyles = {
         headCells: {
