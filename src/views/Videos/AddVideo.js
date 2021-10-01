@@ -31,14 +31,16 @@ const AddVideo = () => {
         title:"",
         image:"",
         videoLink:"",
-        duration:""
+        duration:"",
+        description:""
     }
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
         image: Yup.string().required("Required"),
         videoLink: Yup.string().required("Required"),
-        duration: Yup.number().positive().integer().required("Required")
+        duration: Yup.number().positive().integer().required("Required"),
+        description: Yup.string().required("required")
     })
 
     const submitForm = (values) => {
@@ -131,6 +133,28 @@ const AddVideo = () => {
                                                 </InputGroup>
                                                 <ErrorMessage
                                                     name="duration"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row className="mb-1">
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="description">Description</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="textarea"
+                                                    name="description"
+                                                    id="description"
+                                                    {...formik.getFieldProps("description")}
+                                                    invalid={!!(formik.touched.description && formik.errors.description)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="description"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />

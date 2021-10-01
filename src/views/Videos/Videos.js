@@ -1,12 +1,18 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import {Edit, Trash} from "react-feather"
+import {useDispatch, useSelector} from "react-redux"
+
 import ScheduleModal from "./Modals/Modal"
 import DeleteModal from "./Modals/DeleteModal"
+import {fetchAllVideos, deleteVideoById} from "../../redux/actions/videos/index"
 
 const Videos = () => {
+
+  const dispatch = useDispatch()
+  const videosData = useSelector(state => state.videos.videos)
 
   const [setAddFormUpdate] = useState(false)
 
@@ -47,25 +53,25 @@ const Videos = () => {
     const tableColumns = [
         {
             name: "Video Id",
-            selector: "id",
+            selector: "_id",
             sortable: true,
             cell: (row) => (
-              <p className="text-bold-500 text-truncate mb-0">{row.id}</p>
+              <p className="text-bold-500 text-truncate mb-0">{row._id}</p>
             )
         },
         {
           name: "Video Name",
-          selector: "videoName",
+          selector: "title",
           sortable: true,
           minWidth: "200px",
           cell: (row) => (
             <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
               <div className="user-info text-truncate ml-xl-50 ml-0">
                 <span
-                  title={row.videoName}
+                  title={row.title}
                   className="d-block text-bold-500 text-truncate mb-0"
                 >
-                  {row.videoName}
+                  {row.title}
                 </span>
               </div>
             </div>
@@ -81,11 +87,11 @@ const Videos = () => {
         },
         {
           name: "Video Link",
-          selector: "videoLink",
+          selector: "link",
           sortable: true,
           cell: (row) => (
             <Badge color='primary'>
-              <Link className="text-white" to={`${row.videoLink}`}>Click Here</Link>
+              <Link className="text-white" to={`${row.link}`}>Click Here</Link>
             </Badge>
           )
         },
@@ -102,6 +108,7 @@ const Videos = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
+            const id = row._id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">
@@ -110,7 +117,7 @@ const Videos = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/edit-video"}}>
+                        <Link to={{pathname: "/edit-video", params:{id}}}>
                             <Edit size={15} />
                         </Link>
                         </Button>
@@ -119,7 +126,7 @@ const Videos = () => {
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true })}
+                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
                         >
                             <Trash size={15} />
                         </Button>
@@ -131,7 +138,20 @@ const Videos = () => {
         }
       ]
 
-    const videosData = [{id: "123", videoName: "spritual 1", image: "BCA", videoLink: "htpps://", duration: "1hr" }]
+  // Fetching Data 
+  useEffect(() => {
+    dispatch(fetchAllVideos())
+  }, [confirmAlert, dispatch])
+
+  //Deleting Data
+  const deleteid = defaultAlert.did
+  useEffect(() => {
+    if (confirmAlert) {
+      dispatch(deleteVideoById(deleteid))
+    }
+  }, [confirmAlert, deleteid, dispatch])
+
+    // const videosData = [{id: "123", videoName: "spritual 1", image: "BCA", videoLink: "htpps://", duration: "1hr" }]
 
     const customStyles = {
         headCells: {
