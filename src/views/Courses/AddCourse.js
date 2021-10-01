@@ -1,13 +1,23 @@
-import React from "react"
+import React, {useState} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup } from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import Select from "react-select"
+import TagsInput from 'react-tagsinput'
 import { selectThemeColors } from '@utils'
 
+import 'react-tagsinput/react-tagsinput.css' 
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 
 const AddCourse = () => {
+    
+    const [state, setState] = useState({
+        tags: []
+    })
+
+    const handleChange = (tags) => {
+        setState({tags})
+    }
 
     const initialValues = {
         courseName:"",
@@ -17,7 +27,8 @@ const AddCourse = () => {
         courseValidity:"",
         price:"",
         videoLink:[],
-        facultyName:""
+        facultyName:"",
+        tags: state.tags
     }
 
     const validationSchema = Yup.object().shape({
@@ -29,10 +40,11 @@ const AddCourse = () => {
         price: Yup.number().positive().integer().required("Required"),
         videoLink: Yup.string().required("Required"),
         facultyName: Yup.string().required("Required")
+        // tags: Yup.string().required("Required")
     })
 
     const submitForm = (values) => {
-        console.log("values", values)
+        console.log("course values", values)
     }
 
     const courseOptions = [{label:"BAC", value:"bac"}, {label: "Regular", value: "regular"}]
@@ -45,6 +57,12 @@ const AddCourse = () => {
         { value: 'yellow', label: 'Yellow', color: '#FFC400', isFixed: false }
       ]
 
+      const onKeyDown = (keyEvent) => {
+        if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+          keyEvent.preventDefault()
+        }
+      }
+
     return <Row>
         <Col sm="12" md="6">
             <Card >
@@ -53,11 +71,11 @@ const AddCourse = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             console.log("ff", formik.values)
                             return (
-                                <Form>
+                                <Form onKeyDown={onKeyDown}>
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
@@ -200,6 +218,14 @@ const AddCourse = () => {
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col sm="12">
+                                            <FormGroup>
+                                                <Label for="tag">Tags</Label>
+                                                <TagsInput value={state.tags} onChange={handleChange} addOnBlur className="react-tagsinput rounded"  />
                                             </FormGroup>
                                         </Col>
                                     </Row>

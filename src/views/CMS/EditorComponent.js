@@ -18,29 +18,29 @@ const EditorComponent = ({submitForm}) => {
         editorValue: Yup.string().required("Required")
     })
 
-    return  
-        
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
-        {(formik) => {
-            return (
-                <Form>
-                    <FormGroup>
-                        <Editor editorState={formik.values.editorValue} onEditorStateChange={data => setValue(data)} />
-                        <ErrorMessage
-                            name="editorValue"
-                            component="div"
-                            className="field-error text-danger"
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <div className="float-right">
-                            <Button type="submit" color="success">Save</Button>
-                        </div>
-                    </FormGroup>
-                </Form>
-            )
-        }}
-    </Formik>
+    return  <div>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
+            {(formik) => {
+                return (
+                    <Form>
+                        <FormGroup>
+                            <Editor editorState={formik.values.editorValue} onEditorStateChange={data => setValue(data)} />
+                            <ErrorMessage
+                                name="editorValue"
+                                component="div"
+                                className="field-error text-danger"
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <div className="float-right">
+                                <Button type="submit" color="success">Save</Button>
+                            </div>
+                        </FormGroup>
+                    </Form>
+                )
+            }}
+        </Formik>
+    </div>
 }
 
 export default EditorComponent

@@ -1,4 +1,4 @@
-import { Mail, Home, Settings, ChevronRight, Video, Sliders, Youtube } from 'react-feather'
+import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube } from 'react-feather'
 
 const Navigation = [
   {
@@ -20,10 +20,74 @@ const Navigation = [
     navLink: '/videos'
   },
   {
-    id: 'cms',
-    title: 'CMS',
+    id: 'gallery',
+    title: 'Gallery',
+    icon: <Image size={20} />,
+    navLink: '/admin/gallery'
+  },
+  {
+    id: "cms",
+    title: "CMS",
+    type: "collapse",
     icon: <Sliders size={20} />,
-    navLink: '/cms'
+    children: [
+      {
+        id: "about",
+        title: "About",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/about-settings"
+      },
+      {
+        id: "mission",
+        title: "Mission",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/mission-settings"
+      },
+      {
+        id: "vission",
+        title: "Vission",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/vision-settings"
+      },
+      {
+        id: "contact",
+        title: "Contact",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/contact-settings"
+      },
+      {
+        id: "gallery",
+        title: "Gallery",
+        type: "collapse",
+        icon: <Sliders size={20} />,
+        children: [
+          {
+            id: "imagespage",
+            title: "Gallery Images Settings",
+            type: "item",
+            icon: <ChevronRight size={15} />,
+            permissions: ["admin", "editor"],
+            navLink: "/gallery-page-images-settings"
+          },
+          {
+            id: "videospage",
+            title: "Gallery Videos Settings",
+            type: "item",
+            icon: <ChevronRight size={15} />,
+            permissions: ["admin", "editor"],
+            navLink: "/gallery-videos-page-settings"
+          }
+        ]
+      }
+    ]
   },
   {
     id: "settings",

@@ -1,11 +1,30 @@
 import React, {useState} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
-import {Calendar, Edit, Trash, Eye} from "react-feather"
+import {Edit, Trash} from "react-feather"
+import ScheduleModal from "./Modals/Modal"
 import DeleteModal from "./Modals/DeleteModal"
 
-const CourseTable = () => {
+const Gallery = () => {
+
+  const [setAddFormUpdate] = useState(false)
+
+  const [editModal, setModal] = useState({
+    modal: false,
+    modalData: {
+      id:"",
+      title:"",
+      image:""
+    }
+  })
+
+  
+  const toggleModel = (modalData) => {
+    setModal((prevState) => {
+      return { modal: !prevState.modal, modalData }
+    })
+  }
 
   const [defaultAlert, setDefaultAlert] = useState({
     alert: false,
@@ -26,45 +45,29 @@ const CourseTable = () => {
 
     const tableColumns = [
         {
-          name: "Course Name",
-          selector: "courseName",
+          name: "Image Title",
+          selector: "title",
           sortable: true,
           minWidth: "200px",
           cell: (row) => (
             <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
               <div className="user-info text-truncate ml-xl-50 ml-0">
                 <span
-                  title={row.courseName}
+                  title={row.title}
                   className="d-block text-bold-500 text-truncate mb-0"
                 >
-                  {row.courseName}
+                  {row.title}
                 </span>
               </div>
             </div>
           )
         },
         {
-          name: "Code",
-          selector: "code",
+          name: "Image",
+          selector: "image",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.code}</p>
-          )
-        },
-        {
-          name: "Type",
-          selector: "type",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.type}</p>
-          )
-        },
-        {
-          name: "Price",
-          selector: "price",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.price}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.image}</p>
           )
         },
         {
@@ -78,29 +81,9 @@ const CourseTable = () => {
                     <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
-                        color="flat-info"
-                        >
-                          <Link to="/schedule-table">
-                            <Eye size={15} />
-                          </Link>
-                        </Button>
-                    </li>      
-                    <li className="list-inline-item">
-                        <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-info"
-                        >
-                          <Link to="/schedule">
-                            <Calendar size={15} />
-                          </Link>
-                        </Button>
-                    </li>      
-                    <li className="list-inline-item">
-                        <Button
-                        className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/edit-course"}}>
+                        <Link to={{pathname: "/edit-gallery"}}>
                             <Edit size={15} />
                         </Link>
                         </Button>
@@ -121,7 +104,7 @@ const CourseTable = () => {
         }
       ]
 
-    const schoolData = [{courseName: "course1", code: "123", type: "BCA", price: 1000 }]
+    const videosData = [{ title: "sample1", image: "" }]
 
     const customStyles = {
         headCells: {
@@ -144,18 +127,27 @@ const CourseTable = () => {
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
-                    <CardTitle>Courses</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-course" className="text-white">Add</Link></Button>
+                    <CardTitle>Gallery</CardTitle>
+                    <Button color="primary" type="button"><Link to="/add-gallery" className="text-white">Add</Link></Button>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable
                     className="dataTable-custom"
-                    data={schoolData}
+                    data={videosData}
                     columns={tableColumns}
                     noHeader
                     pagination
                     customStyles={customStyles}
                 />
+                 {editModal.modal ? (
+                    <ScheduleModal
+                      modalState={editModal.modal}
+                      modalData={editModal.modalData}
+                      onClose={toggleModel}
+                      formTitle="Videos"
+                      setAddFormUpdate={setAddFormUpdate}
+                    />
+                  ) : null}
                  {defaultAlert.alert ? (
                   <DeleteModal
                     defaultAlertHandler={defaultAlertHandler}
@@ -171,4 +163,4 @@ const CourseTable = () => {
     </Row>
 }
 
-export default CourseTable
+export default Gallery

@@ -4,6 +4,7 @@ import CourseRoutes from "./CourseRoutes"
 import CMSRoutes from './CMSRoutes'
 import Videos from "./Videos"
 import LandingRoute from './LandingRoutes'
+import GalleryRoute from './GalleryRoute'
 
 // ** Document title
 const TemplateTitle = '%s - ATS School Management'
@@ -18,7 +19,8 @@ const Routes = [
     ...CourseRoutes,
     ...CMSRoutes,
     ...Videos,
-    ...LandingRoute
+    ...LandingRoute,
+    ...GalleryRoute
     ]
 
 export { DefaultRoute, TemplateTitle, Routes }

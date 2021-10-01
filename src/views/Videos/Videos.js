@@ -155,7 +155,7 @@ const Videos = () => {
             <Card >
                 <CardHeader>
                     <CardTitle>Course Videos</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-video" className="text-white">Add Videos</Link></Button>
+                    <Button color="primary" type="button"><Link to="/add-video" className="text-white">Add</Link></Button>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable
