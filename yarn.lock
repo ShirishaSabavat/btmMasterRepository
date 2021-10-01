@@ -4331,7 +4331,7 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
-clsx@^1.1.1:
+clsx@^1.1.0, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
@@ -5974,7 +5974,7 @@ eslint-webpack-plugin@^2.1.0:
     normalize-path "^3.0.0"
     schema-utils "^3.0.0"
 
-eslint@^7.11.0, eslint@^7.8.0:
+eslint@^7.11.0, eslint@^7.32.0:
   version "7.32.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.32.0.tgz#c6d328a14be3fb08c8d1d21e12c02fdb7a2a812d"
   integrity sha512-VHZ8gX+EDfz+97jGcgyGCyRia/dPOd6Xh9yPv8Bl1+SoaIwD+a/vlrOmGRUyOYu7MwUhc7CxqeaDZU13S4+EpA==
@@ -9564,6 +9564,14 @@ normalize-url@^3.0.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
+
+notistack@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/notistack/-/notistack-2.0.2.tgz#18361a0ce39d2c2d8c3ef58ae43cf4b30d78b800"
+  integrity sha512-Z2kD6QK9n/9V9zXQfN3ZgH22TefBWE3OZ/q74gMVslGPA9j9WGjoi+YxsgkTAOY8NqTYdUe8aijd2kXsGNYp6g==
+  dependencies:
+    clsx "^1.1.0"
+    hoist-non-react-statics "^3.3.0"
 
 nouislider-react@3.3.8:
   version "3.3.8"

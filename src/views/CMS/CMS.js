@@ -1,15 +1,12 @@
 import React from "react"
 import {Card, CardHeader, CardBody, CardTitle} from "reactstrap"
-
 import EditorComponent from "./EditorComponent"
 
-
-const CMS = () => {
-
+const CMS = (props) => {
     const submitForm = (values) => {
         console.log("values", values)
     }
-   
+
     return <Card>
         <CardHeader>
             <CardTitle>CMS Settings</CardTitle>

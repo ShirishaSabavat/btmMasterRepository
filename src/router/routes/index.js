@@ -1,22 +1,24 @@
-import HomeRoute from './HomeRoute'
+import AuthRoute from './AuthRoute'
 import SettingsRoute from './SettingsRoute'
 import CourseRoutes from "./CourseRoutes"
 import CMSRoutes from './CMSRoutes'
 import Videos from "./Videos"
+import LandingRoute from './LandingRoutes'
 
 // ** Document title
 const TemplateTitle = '%s - ATS School Management'
 
 // ** Default Route
-const DefaultRoute = '/login'
+const DefaultRoute = '/home'
 
 // ** Merge Routes
 const Routes = [
-    ...HomeRoute,
+    ...AuthRoute,
     ...SettingsRoute,
     ...CourseRoutes,
     ...CMSRoutes,
-    ...Videos
+    ...Videos,
+    ...LandingRoute
     ]
 
 export { DefaultRoute, TemplateTitle, Routes }

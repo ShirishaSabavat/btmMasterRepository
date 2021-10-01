@@ -1,21 +1,18 @@
-// **  Initial State
+import { DO_LOGIN, LOGOUT } from '../../types/auth'
+
 const initialState = {
+  token: '',
   userData: {}
 }
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        userData: action.data,
-        [action.config.storageTokenKeyName]: action[action.config.storageTokenKeyName],
-        [action.config.storageRefreshTokenKeyName]: action[action.config.storageRefreshTokenKeyName]
-      }
-    case 'LOGOUT':
-      const obj = { ...action }
-      delete obj.type
-      return { ...state, userData: {}, ...obj }
+    case DO_LOGIN:
+      return {...state, userData: action.payload}
+    
+    case LOGOUT:
+      return {...state, userData: {}}
+
     default:
       return state
   }
