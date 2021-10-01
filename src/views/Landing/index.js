@@ -5,9 +5,12 @@ import InputPasswordToggle from '@components/input-password-toggle'
 import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
 import {Grid, Stack, Button, Card, CardActions, CardContent, CardMedia, Typography} from '@mui/material'
+import { useSelector } from 'react-redux'
 
 const Landing = () => {
   const [skin, setSkin] = useSkin()
+
+  const userData = useSelector(state => state.auth.userData)
 
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
@@ -23,7 +26,12 @@ const Landing = () => {
                         <Button variant="text"><Link to="/about-us">About Us</Link></Button>
                         <Button variant="text"><Link to="/gallery">Gallery</Link></Button>
                         <Button variant="text"><Link to="/contact-us">Contact Us</Link></Button>
-                        <Button  variant="text"><Link to="/login">Login</Link></Button>
+                        {!localStorage.getItem('userData') && (
+                            <Button variant="text"><Link to="/login">Login</Link></Button>
+                        )}
+                        {localStorage.getItem('userData') && (
+                            <Button variant="text"><Link to="/dashboard">Dashboard</Link></Button>
+                        )}
                     </Stack>
                 </Col>
             </Row>
@@ -45,7 +53,7 @@ View more- Explore Online Courses and Certifications</p>
         </Grid>
 
         <Grid item xs={12}>
-            <h2 className="text-center mt-4">Cources</h2>
+            <h2 className="text-center mt-4 mb-2">Cources</h2>
         </Grid>
 
         <Grid item container spacing={2}>

@@ -1,4 +1,4 @@
-import HomeRoute from './HomeRoute'
+import AuthRoute from './AuthRoute'
 import SettingsRoute from './SettingsRoute'
 import CourseRoutes from "./CourseRoutes"
 import CMSRoutes from './CMSRoutes'
@@ -13,7 +13,7 @@ const DefaultRoute = '/home'
 
 // ** Merge Routes
 const Routes = [
-    ...HomeRoute,
+    ...AuthRoute,
     ...SettingsRoute,
     ...CourseRoutes,
     ...CMSRoutes,

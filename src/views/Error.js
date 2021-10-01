@@ -17,7 +17,7 @@ const Error = () => {
           <Button.Ripple tag={Link} to='/' color='primary' className='btn-sm-block mb-2'>
             Back to home
           </Button.Ripple>
-          <img className='img-fluid' src={errorImg} alt='Not authorized page' />
+          {/* <img className='img-fluid' src={errorImg} alt='Not authorized page' /> */}
         </div>
       </div>
     </div>

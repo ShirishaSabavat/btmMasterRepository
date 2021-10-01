@@ -7,7 +7,7 @@ const LandingRoute = [
         component: lazy(() => import('../../views/Landing')),
         layout: 'BlankLayout',
         meta: {
-          authRoute: true
+          publicRoute: true
         }
     }
 ]
