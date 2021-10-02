@@ -165,7 +165,7 @@ const CourseTable = () => {
             <Card >
                 <CardHeader>
                     <CardTitle>Courses</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-course" className="text-white">Add</Link></Button>
+                    <Link to="/add-course" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable

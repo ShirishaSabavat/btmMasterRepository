@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { handleLogout } from '@store/actions/auth'
 
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
-import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircle, Power } from 'react-feather'
+import { User, Power } from 'react-feather'
 
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
 
@@ -36,7 +36,7 @@ const UserDropdown = () => {
       <DropdownMenu right>
         <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
           <User size={14} className='mr-75' />
-          <span className='align-middle'>Account</span>
+          <span className='align-middle'>Profile</span>
         </DropdownItem>
         <DropdownItem onClick={() => { dispatch(handleLogout()); history.push('/login') }}>
           <Power size={14} className='mr-75' />

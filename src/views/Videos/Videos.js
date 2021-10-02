@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import ScheduleModal from "./Modals/Modal"
 import DeleteModal from "./Modals/DeleteModal"
 import {fetchAllVideos, deleteVideoById} from "../../redux/actions/videos/index"
+import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 
 const Videos = () => {
 
@@ -52,11 +53,11 @@ const Videos = () => {
 
     const tableColumns = [
         {
-            name: "Video Id",
+            name: "S.No",
             selector: "_id",
             sortable: true,
             cell: (row) => (
-              <p className="text-bold-500 text-truncate mb-0">{row._id}</p>
+              <p className="text-bold-500 text-truncate mb-0">{row.sno}</p>
             )
         },
         {
@@ -68,10 +69,10 @@ const Videos = () => {
             <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
               <div className="user-info text-truncate ml-xl-50 ml-0">
                 <span
-                  title={row.title}
+                  title={row.values.title}
                   className="d-block text-bold-500 text-truncate mb-0"
                 >
-                  {row.title}
+                  {row.values.title}
                 </span>
               </div>
             </div>
@@ -82,7 +83,7 @@ const Videos = () => {
           selector: "image",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.image}</p>
+            <img className="img-thumbnail" style={{marginTop: "5px", marginBottom: "5px"}} src={sampleImg} width="58px" height="58px" alt="image" />
           )
         },
         {
@@ -91,7 +92,7 @@ const Videos = () => {
           sortable: true,
           cell: (row) => (
             <Badge color='primary'>
-              <Link className="text-white" to={`${row.link}`}>Click Here</Link>
+              <a className="text-white" target="_blank" href={`/${row.values.link}`}>Click Here</a>
             </Badge>
           )
         },
@@ -100,7 +101,7 @@ const Videos = () => {
           selector: "duration",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.duration}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.values.duration}</p>
           )
         },
         {
@@ -108,7 +109,7 @@ const Videos = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
-            const id = row._id
+            const id = row.values._id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">
@@ -174,8 +175,8 @@ const Videos = () => {
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
-                    <CardTitle>Course Videos</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-video" className="text-white">Add</Link></Button>
+                    <CardTitle>Videos</CardTitle>
+                    <Link to="/add-video" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable

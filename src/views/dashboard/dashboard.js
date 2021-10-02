@@ -1,18 +1,14 @@
-import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink, Row, Col, Media } from 'reactstrap'
+import { Card, CardBody, CardText, Row, Col } from 'reactstrap'
 import Avatar from '@components/avatar'
-// import { TrendingUp, User, Box, DollarSign } from 'react-feather'
+
+// import decorationLeft from '@src/assets/images/elements/decore-left.png'
+// import decorationRight from '@src/assets/images/elements/decore-right.png'
 import {
-    Eye,
-    MessageSquare,
     ShoppingBag,
-    Heart,
     Award,
-    Truck,
-    Cpu,
-    Server,
     Activity,
     Users,
-    AlertOctagon
+    Star
   } from 'react-feather'
 
 const statsData = [
@@ -23,7 +19,7 @@ const statsData = [
         icon: <ShoppingBag size={24} />
     },
     {
-        title: 'Cources',
+        title: 'Courses',
         count: '0',
         color: 'bg-light-success',
         icon: <Award size={24} />
@@ -38,14 +34,36 @@ const statsData = [
         title: 'Schedules',
         count: '0',
         icon: <Activity size={24} />
+    },
+    {
+        title: 'Rank',
+        count: '10',
+        icon: <Star size={24} />
     }
 ]
 
 const Dashboard = () => {
   return (
+      <>
     <Row>
       {<StatsCard data={statsData} />}
     </Row>
+    <Row>
+        <Card className='card-congratulations'>
+            <CardBody className='text-center'>
+                {/* <img className='congratulations-img-left' src={decorationLeft} alt='decor-left' /> */}
+                {/* <img className='congratulations-img-right' src={decorationRight} alt='decor-right' /> */}
+                <Avatar icon={<Star size={28} />} className='shadow' color='primary' size='xl' />
+                <div className='text-center'>
+                <h1 className='mb-1 text-white'>Rank</h1>
+                <CardText className='m-auto w-75'>
+                    You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
+                </CardText>
+                </div>
+            </CardBody>
+        </Card>
+    </Row>
+</>
   )
 }
 

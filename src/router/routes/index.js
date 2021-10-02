@@ -5,6 +5,11 @@ import CMSRoutes from './CMSRoutes'
 import Videos from "./Videos"
 import LandingRoute from './LandingRoutes'
 import GalleryRoute from './GalleryRoute'
+import MyCustomerRoute from "./MyCustomerRoute"
+import MyCommissionRoute from "./MyCommissionRoute"
+import MyMessagesRoute from "./MyMessagesRoute"
+import MyPayoutsRoute from "./MyPayoutsRoute"
+import MyReportsRoute from "./MyReportsRoute"
 
 // ** Document title
 const TemplateTitle = '%s - ATS School Management'
@@ -20,7 +25,12 @@ const Routes = [
     ...CMSRoutes,
     ...Videos,
     ...LandingRoute,
-    ...GalleryRoute
+    ...GalleryRoute,
+    ...MyCustomerRoute,
+    ...MyCommissionRoute,
+    ...MyMessagesRoute,
+    ...MyPayoutsRoute,
+    ...MyReportsRoute
     ]
 
 export { DefaultRoute, TemplateTitle, Routes }

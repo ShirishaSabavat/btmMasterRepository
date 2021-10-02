@@ -1,14 +1,27 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText, CustomInput} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {Link} from "react-feather"
-import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
-import FileUploadModal from "../UtilityComponents/FileUploadModal"
+import {useDispatch, useSelector} from "react-redux"
+import {useHistory} from "react-router-dom"
 
+import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
+import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 
 const AddVideo = () => {
+
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const oldData = useSelector(state => state.videos.video)
+    const imagesData = useSelector(state => state.media.medias)
+
+    const id = history.location?.params?.id
+
+    useEffect(() => {
+        dispatch(fetchVideoById(id))
+    }, [id])
 
     const [fileModalState, setFileModalState] = useState(false)
 
@@ -26,13 +39,16 @@ const AddVideo = () => {
         setFileModalState((prevState) => !prevState)
     }
 
+    const [selectedImg, setSelectedImg] = useState(oldData?.image)
+
     const initialValues = {
-        title:"",
-        image:"",
-        videoLink:"",
-        duration:"",
-        description:""
+        title: oldData?.title || "",
+        image:  selectedImg || "",
+        videoLink: oldData?.link || "",
+        duration: oldData.duration || "",
+        description: oldData.description || ""
     }
+
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
@@ -44,32 +60,45 @@ const AddVideo = () => {
 
     const submitForm = (values) => {
         console.log("values", values)
+
+        const rawData = {
+            duration: values.duration,
+            description: values.description,
+            link: values.videoLink,
+            image: values.image,
+            title: values.title
+        }
+
+        dispatch(EditVideoAPI(id, rawData))
     }
 
 
     return <Row>
-        <Col sm="12" md="4">
+        <Col sm="12" md="5">
             <Card >
                 <CardHeader>
                     <CardTitle>Edit Video</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
+                            console.log("new", formik.values)
                             return (
                                 <Form>
-                                    <Row className="mb-1">
+                                    <Row className="d-flex justify-content-center">
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={sampleImg} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
                                                 </Col>
                                             </Row>
                                         </Col>
+                                    </Row>
+                                    <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="title">Video Title</Label>
@@ -91,7 +120,7 @@ const AddVideo = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Row className="mb-1">
+                                    <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="videoLink">Video Link</Label>
@@ -138,7 +167,7 @@ const AddVideo = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Row className="mb-1">
+                                    <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="description">Description</Label>
@@ -173,12 +202,9 @@ const AddVideo = () => {
                     modalState={editModal.modal}
                     onClose={toggleModel}
                     toggleFileModal={toggleFileModal}
-                />
-                ) : null}
-                {fileModalState ? (
-                <FileUploadModal
-                    modalState={fileModalState}
-                    onClose={toggleFileModal}
+                    imagesData={imagesData}
+                    selectedImg={selectedImg}
+                    setSelectedImg={setSelectedImg}
                 />
                 ) : null}
             </Card>
