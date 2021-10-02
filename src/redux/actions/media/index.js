@@ -5,9 +5,10 @@ import { toast } from 'react-toastify'
 export const fetchAllMedia = () => dispatch => {
   ServerApi().get('/media')
   .then(res => {
+    const data = res.data.map(values => values) 
     dispatch({
       type: GET_ALL_MEDIA,
-      payload: res
+      payload: data
     })
   })
   .catch(e => {

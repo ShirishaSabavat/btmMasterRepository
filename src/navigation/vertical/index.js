@@ -1,4 +1,4 @@
-import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube } from 'react-feather'
+import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase } from 'react-feather'
 
 const Navigation = [
   {
@@ -6,6 +6,36 @@ const Navigation = [
     title: 'Dashboard',
     icon: <Home size={20} />,
     navLink: '/dashboard'
+  },
+  {
+    id: 'mycustomers',
+    title: 'My Customers',
+    icon: <Users size={20} />,
+    navLink: '/admin/my-customers'
+  },
+  {
+    id: 'mycommission',
+    title: 'My Commission',
+    icon: <Briefcase size={20} />,
+    navLink: '/admin/my-commission'
+  },
+  {
+    id: 'mypayouts',
+    title: 'My Payouts',
+    icon: <CreditCard size={20} />,
+    navLink: '/admin/my-payouts'
+  },
+  {
+    id: 'myreports',
+    title: 'My Reports',
+    icon: <FileText size={20} />,
+    navLink: '/admin/my-reports'
+  },
+  {
+    id: 'mymessages',
+    title: 'My Messages',
+    icon: <MessageSquare size={20} />,
+    navLink: '/admin/my-messages'
   },
   {
     id: 'courses',

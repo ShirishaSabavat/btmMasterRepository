@@ -2,7 +2,6 @@ import React from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
-import Select from "react-select"
 import { selectThemeColors } from '@utils'
 
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
@@ -16,8 +15,7 @@ const EditCourse = () => {
         courseDetails:"",
         courseValidity:"",
         price:"",
-        videoLink:"",
-        facultyName:""
+        videoLink:[]
     }
 
     const validationSchema = Yup.object().shape({
@@ -26,13 +24,28 @@ const EditCourse = () => {
         courseCode: Yup.string().required("Required"),
         courseDetails: Yup.string().required("Required"),
         courseValidity: Yup.number().positive().integer().required("Required"),
-        price: Yup.number().positive().integer().required("Required"),
-        videoLink: Yup.string().required("Required"),
-        facultyName: Yup.string().required("Required")
+        price: Yup.number().positive().integer().required("Required")
+        // videoLink: Yup.string().required("Required")
     })
 
     const submitForm = (values) => {
         console.log("values", values)
+
+        // const rawData = {
+        //     "gst": 18,
+        //     "tags": "",
+        //     "categories": "C",
+        //     "schedule": "hh",
+        //     "shortDescription": "ok",
+        //     "validity": "1212",
+        //     "videos": "koo",
+        //     "price": 12,
+        //     "details": "hjgjhgg",
+        //     "code": "12",
+        //     "type": "bac",
+        //     "name": "Course 2"
+        // }
+
     }
 
     const courseOptions = [{label:"BAC", value:"bac"}, {label: "Regular", value: "regular"}]
@@ -86,8 +99,8 @@ const EditCourse = () => {
                                                 <CustomSelectField
                                                 value={formik.values.courseType}
                                                 options={courseOptions}
-                                                {...formik.getFieldProps("courseType")}
-                                                />
+                                                onChange={(value) => formik.setFieldValue("courseType", value.value)
+                                                } />
                                                 <ErrorMessage
                                                 name="courseType"
                                                 component="div"
@@ -159,18 +172,15 @@ const EditCourse = () => {
                                         </Col>
                                     </Row>
                                     <Row className="mb-1">
-                                        <Col sm="12" md="6">
+                                        <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="videoLink">Video Link</Label>
-                                                <Select
-                                                isClearable={true}
-                                                theme={selectThemeColors}
-                                                isMulti
-                                                name='videoLink'
-                                                id="videoLink"
+                                                <CustomSelectField
+                                                // value={formik.values.videoLink}
                                                 options={videoOptions}
-                                                className='react-select'
-                                                classNamePrefix='select'
+                                                onChange={(value) => formik.setFieldValue("videoLink", [...formik.values.videoLink, value.value])
+                                                } 
+                                                isMulti={true}
                                                 />
                                                 <ErrorMessage
                                                     name="videoLink"

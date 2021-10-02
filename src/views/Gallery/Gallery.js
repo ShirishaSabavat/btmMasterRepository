@@ -6,6 +6,7 @@ import {Edit, Trash} from "react-feather"
 import ScheduleModal from "./Modals/Modal"
 import DeleteModal from "./Modals/DeleteModal"
 
+
 const Gallery = () => {
 
   const [setAddFormUpdate] = useState(false)
@@ -128,7 +129,7 @@ const Gallery = () => {
             <Card >
                 <CardHeader>
                     <CardTitle>Gallery</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-gallery" className="text-white">Add</Link></Button>
+                   <Link to="/add-gallery" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable

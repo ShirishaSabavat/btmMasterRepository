@@ -1,58 +1,34 @@
 import React from "react"
-import { FormGroup, Label, Row, Col, CustomInput } from "reactstrap"
-import {Formik, Form, ErrorMessage} from "formik"
-import * as Yup from "yup"
-import SweetAlert from "react-bootstrap-sweetalert"
-import Button from "reactstrap/lib/Button"
+import {Card} from "reactstrap"
+import { PlusCircle } from "react-feather"
 
-const FileUploadModal = (props) => {
+const FileUploadModal = () => {
 
-    const initialValues = {
-        image:""
-    }
+    const handleImageUpload = (e) => {
 
-    const validationSchema = Yup.object().shape({
-        image: Yup.string().required("Required")
-    })
+        const imageData = e.currentTarget.files[0]
 
-    const submitForm = (values) => {
-        console.log("submited File", values)
+        const formdata = new FormData()
+        formdata.append("type", "FILE")
+        formdata.append("file", imageData)
+
+        console.log("imageData", imageData)
+
     }
 
   return (
-    <SweetAlert
-        showConfirm={false}
-        showTitle={false}
-        show={props.modalState}
-    >
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
-            {(formik) => {
-                return (
-                    <Form>
-                        <FormGroup className="d-flex flex-column align-items-start">
-                            <Label for="image">Video Thumbnail Image</Label>
-                            <CustomInput type='file' 
-                                name="image"
-                                id="image"
-                                {...formik.getFieldProps("image")}
-                            />
-                            <ErrorMessage
-                                name="image"
-                                component="div"
-                                className="field-error text-danger"
-                            />
-                        </FormGroup>
-                        <hr />
-                        <div className="d-flex justify-content-around">
-                            <Button type="button" color="danger" onClick={props.onClose}>Close</Button>
-                            <Button type="submit" color="success" onClick={props.onClose}>Upload</Button>
-                        </div>
-                    </Form>
-                )
-            }}
-        </Formik>
-    </SweetAlert>
-  )
+        <form>
+            <Card className="d-flex justify-content-center align-items-center m-0" style={{minWidth: "200px", minHeight: "200px", maxHeigth: "250px", maxWidth: "250px"}}>
+                <div  role="button">
+                    <label for="image" role="button" className="d-flex flex-column justify-content-center align-items-center"> 
+                        <PlusCircle size={50} />
+                        <h3>Upload</h3>
+                    </label>
+                    <input type="file" name="image" id="image" className="d-none" onChange={(e) => handleImageUpload(e)} />
+                </div>
+            </Card>
+        </form>
+    )
 }
 
 export default FileUploadModal
