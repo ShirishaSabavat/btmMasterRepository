@@ -29,3 +29,4 @@ yarn-error.log*
 /react-shell-scripts
 
 yarn.lock
+package-lock.json

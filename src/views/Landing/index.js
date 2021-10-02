@@ -6,14 +6,110 @@ import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInp
 import '@styles/base/pages/page-auth.scss'
 import {Grid, Stack, Button, Card, CardActions, CardContent, CardMedia, Typography} from '@mui/material'
 import { useSelector } from 'react-redux'
+import ServerApi from '../../utility/ServerApi'
 
 const Landing = () => {
-  const [skin, setSkin] = useSkin()
+    // const dispatch = useDispatch()
+    const [skin, setSkin] = useSkin()
 
-  const userData = useSelector(state => state.auth.userData)
+    const userData = useSelector(state => state.auth.userData)
 
-  const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
-    source = require(`@src/assets/images/pages/${illustration}`).default
+    function loadScript(src) {
+        return new Promise((resolve) => {
+            const script = document.createElement("script")
+            script.src = src
+            script.onload = () => {
+                resolve(true)
+            }
+            script.onerror = () => {
+                resolve(false)
+            }
+            document.body.appendChild(script)
+        })
+      }
+
+    async function displayRazorpay(price) {
+        // setLoading(true)
+
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+        )
+
+        if (!res) {
+            alert("Razorpay SDK failed to load. Are you online?")
+            return
+        }
+
+        const result = await ServerApi().post("/payments/orders", {amount: price * 100, currency: "INR"})
+
+        if (!result) {
+            alert("Server error. Are you online?")
+            return
+        }
+
+        const { amount, id, currency } = result.data.data
+
+        // console.log('amount')
+        // console.log(amount)
+
+        //rzp_live_yQridN4TIi2mEm
+        //CxNzVTZRYv72mLsoof5eYiCg
+        //
+        //rzp_test_tZ8WCE2tCPXW63
+        //5xnKX6BvwxiFGxNThYO7djZv
+
+        const options = {
+            key: "rzp_test_tZ8WCE2tCPXW63", 
+            amount: amount.toString(),
+            currency,
+            name: "Business Acharaya Consultancy",
+            description: `Purchase Course.`,
+            image: '/asstes/images/demo1.jpg',
+            order_id: id,
+            async handler (response) {
+                const data = {
+                    orderCreationId: id,
+                    razorpayPaymentId: response.razorpay_payment_id,
+                    razorpayOrderId: response.razorpay_order_id,
+                    razorpaySignature: response.razorpay_signature,
+                    amount,
+                    credits: amount,
+                    currency: "INR"
+                }
+
+                const result = await ServerApi().post(`/payments/${response.razorpay_payment_id}/capture`, data)
+
+                // updateUser()
+                // setLoading(false)
+                // setPaymentDone(true)
+                
+                // setTimeout(() => {
+                //     setRechargeModal(false)
+                //     setPaymentDone(false)
+                //     history.push('/transactions')
+                // }, 3000)
+
+                // enqueueSnackbar('Payment Done!', {variant: 'success'})
+                // dispatch({ type: "UPDATE_BALANCE", payload: getUser().wallet.balance })
+
+                console.log(result.data)
+            },
+            prefill: {
+                name: 'test',
+                email: 'test',
+                contact: 'test'
+            },
+            notes: {
+                address: getUser().address.address
+            },
+            theme: {
+                color: "#7367f0"
+            }
+        }
+
+        const paymentObject = new window.Razorpay(options)
+        paymentObject.open()
+    }
 
   return (
     <Grid container spacing={2}>
@@ -74,7 +170,7 @@ View more- Explore Online Courses and Certifications</p>
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Buy</Button>
+                        <Button onClick={() => displayRazorpay()} size="small">Buy</Button>
                         {/* <Button size="small">Learn More</Button> */}
                     </CardActions>
                 </Card>
