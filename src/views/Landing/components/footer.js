@@ -36,7 +36,7 @@ const Footer = () => {
         </Grid>
         <Grid item xs={12} md={4}>
             <div className="p-4">
-                <h3 style={{fontWeight: 'bold'}} className="text-white mb-2">Explore BAC</h3>
+                <h3 style={{fontWeight: 'bold'}} className="text-white mb-2">Explore Business Aacharya</h3>
                 <Grid style={{backgroundColor: '#161616'}} container>
                     <Grid item xs={6} md={6}>
                         <ul className="p-0 mb-2" style={{listStyleType: 'none'}}>
@@ -98,7 +98,7 @@ const Footer = () => {
     </Grid>
 
     <Grid style={{backgroundColor: '#252525'}} className="p-2" item xs={12} md={12}>
-        <h6 className="text-center m-0" style={{ color: '#a5a5a5', fontSize: 11}}> Copyright - 2020 - <a href="https://amoghnya.com" target="_blank">Amoghnya</a> - All rights reserved.</h6>
+        <h6 className="text-center m-0" style={{ color: '#a5a5a5', fontSize: 11}}> Developed by <a href="https://amoghnya.com" target="_blank">amoghnya techsolutions pvt.ltd </a> 🤝 <a href="https://www.mindsoftitsolution.com/" target="_blank">mindsoft it solutions</a></h6>
     </Grid>
     </>
   )
