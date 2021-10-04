@@ -1,4 +1,4 @@
-import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase } from 'react-feather'
+import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle } from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 let Navigation = [
@@ -8,6 +8,13 @@ let Navigation = [
     icon: <Home size={20} />,
     navLink: '/dashboard',
     permissions: ["ADMIN", "USER"]
+  },
+  {
+    id: 'mycustomers',
+    title: 'My Courses',
+    icon: <Briefcase size={20} />,
+    navLink: '/my-courses',
+    permissions: ["USER"]
   },
   {
     id: 'mycustomers',
@@ -63,6 +70,13 @@ let Navigation = [
     title: 'Gallery',
     icon: <Image size={20} />,
     navLink: '/admin/gallery',
+    permissions: ["ADMIN"]
+  },
+  {
+    id: 'kyc',
+    title: 'KYC',
+    icon: <CheckCircle size={20} />,
+    navLink: '/admin/kyc',
     permissions: ["ADMIN"]
   },
   {
@@ -161,7 +175,7 @@ let Navigation = [
 // let newNavigation = [...Navigation]
 const user = getUserData()
 if (user !== null) {
-  Navigation = Navigation.filter(i => i.permissions.includes(user.user.role))
+  Navigation = Navigation.filter(i => i.permissions.includes(user?.user?.role))
 }
 
 export default  Navigation

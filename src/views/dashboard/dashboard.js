@@ -9,7 +9,8 @@ import {
     Award,
     Activity,
     Users,
-    Star
+    Star,
+    Video
   } from 'react-feather'
 
 const statsData = [
@@ -17,35 +18,46 @@ const statsData = [
         title: 'Videos',
         count: '0',
         color: 'bg-light-info',
-        icon: <ShoppingBag size={24} />
+        role: ['ADMIN', 'USER', 'BAC_USER'],
+        icon: <Video size={24} />
     },
     {
         title: 'Courses',
         count: '0',
         color: 'bg-light-success',
+        role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Award size={24} />
     },
     {
-        title: 'Users',
+        title: 'MyClients',
         count: '0',
+        role: ['BAC_USER'],
         color: 'bg-light-danger',
         icon: <Users size={24} />
     },
     {
         title: 'Schedules',
         count: '0',
+        role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Activity size={24} />
     },
     {
-        title: 'Rank',
-        count: '10',
-        icon: <Star size={24} />
+        title: 'Total Sales',
+        count: '0',
+        role: ['BAC_USER'],
+        icon: <ShoppingBag size={24} />
+    },
+    {
+        title: 'Total Earningss',
+        count: '0',
+        role: ['BAC_USER'],
+        icon: <Activity size={24} />
     }
 ]
 
 const Dashboard = () => {
   return (
-      <>
+    <>
     <Row>
       {<StatsCard data={statsData} />}
     </Row>
@@ -67,13 +79,16 @@ const Dashboard = () => {
         </Card>
     </Row>
     )}
-</>
+    </>
   )
 }
 
 const StatsCard = (props) => {
-    const newData = getUserData().role !== 'BAC_USER' ? props.data.filter(i => i.title !== 'Rank') : props.data
-    return newData.map(val => {
+    // const userRole = getUserData().user.role
+    // const newData = props.data.filter(i => i.role.includes(getUserData().user.role))
+    // console.log({newData})
+    // console.log(props.data.filter(i => i.role.includes('USER')))
+    return props.data.map(val => {
         return (
             <Col md="3" sm="12">
                 <Card>

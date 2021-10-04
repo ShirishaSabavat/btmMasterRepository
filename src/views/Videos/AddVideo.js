@@ -1,23 +1,20 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText, CustomInput} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import {Link} from "react-feather"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 
 import {AddVideoAPI} from "../../redux/actions/videos/index"
-import {fetchAllMedia} from "../../redux/actions/media/index"
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
-import {BASE_URL} from '../../utility/serverSettings'
+
 
 const AddVideo = () => {
 
     const dispatch = useDispatch()
 
-    const imagesData = useSelector(state => state.media.medias)
-
-    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image')
+    const [selectedImg, setSelectedImg] = useState(sampleImg)
     const [editModal, setModal] = useState({
         modal: false
       })
@@ -62,10 +59,6 @@ const AddVideo = () => {
         dispatch(AddVideoAPI(rawData, resetForm))
     }
 
-    useEffect(() => {
-        dispatch(fetchAllMedia())
-    }, [])
-
     return <Row>
         <Col sm="12" md="5">
             <Card >
@@ -82,7 +75,7 @@ const AddVideo = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={`${BASE_URL}uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
@@ -194,7 +187,6 @@ const AddVideo = () => {
                     modalState={editModal.modal}
                     onClose={toggleModel}
                     toggleFileModal={toggleModel}
-                    imagesData={imagesData}
                     selectedImg={selectedImg}
                     setSelectedImg={setSelectedImg}
                 />

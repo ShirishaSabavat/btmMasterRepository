@@ -8,7 +8,7 @@ import {useHistory} from "react-router-dom"
 
 import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
-import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
+import { BASE_URL } from '../../utility/serverSettings'
 
 const AddVideo = () => {
 
@@ -39,7 +39,7 @@ const AddVideo = () => {
         setFileModalState((prevState) => !prevState)
     }
 
-    const [selectedImg, setSelectedImg] = useState(oldData?.image)
+    const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${oldData?.image}`)
 
     const initialValues = {
         title: oldData?.title || "",
