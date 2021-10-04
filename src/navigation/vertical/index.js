@@ -159,7 +159,7 @@ let Navigation = [
         type: "item",
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
-        navLink: "/faculty-settings"
+        navLink: "/faculty"
       }
     ]
   }

@@ -8,6 +8,8 @@ import layout from './layout'
 import videos from "./videos"
 import media from "./media"
 import courses from "./courses"
+import cms from "./cms"
+import faculty from "./faculty"
 
 const rootReducer = combineReducers({
   auth,
@@ -15,7 +17,9 @@ const rootReducer = combineReducers({
   layout,
   videos,
   media,
-  courses
+  courses,
+  cms,
+  faculty
 })
 
 export default rootReducer

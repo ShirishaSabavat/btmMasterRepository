@@ -5,7 +5,7 @@ const initialState = {
   course: {}
 }
 
-const courseReducer = (state = initialState, action) => {
+const course = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_COURSES:
       return {...state, courses: action.payload}
@@ -18,4 +18,4 @@ const courseReducer = (state = initialState, action) => {
   }
 }
 
-export default courseReducer
+export default course

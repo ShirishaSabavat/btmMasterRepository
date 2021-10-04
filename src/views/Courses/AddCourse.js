@@ -3,7 +3,6 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
-import {BASE_URL} from '../../utility/serverSettings'
 
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
@@ -11,6 +10,7 @@ import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import { fetchAllMedia } from "../../redux/actions/media"
 import { fetchAllVideos } from "../../redux/actions/videos"
 import { AddCourseAPI } from "../../redux/actions/courses"
+import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 
 
 // import TagsInput from 'react-tagsinput'
@@ -25,11 +25,23 @@ const AddCourse = () => {
     const coursesData = useSelector(state => state.courses.courses)
     const imagesData = useSelector(state => state.media.medias)
     const allVideos = useSelector(state => state.videos.videos)
+    const faculty = useSelector(state => state.faculty.facultyOptions)
 
+    const [facultyOptions, setFacultyOptions] = useState({})
     const [selectedImg, setSelectedImg] = useState(sampleImg)
     const [editModal, setModal] = useState({
         modal: false
       })
+
+      useEffect(() => {
+        faculty.map(values => {
+            setFacultyOptions({label: values.name, value: values._id})
+        })
+      }, [faculty])
+
+      useEffect(() => {
+        dispatch(fetchAllFacultyOptions())
+      }, [])
 
     const toggleModel = () => {
     setModal((prevState) => {
@@ -50,7 +62,7 @@ const AddCourse = () => {
     // }
 
     const initialValues = {
-        image:"",
+        image: selectedImg,
         courseName:"",
         courseType:"",
         courseCode:"",
@@ -59,7 +71,8 @@ const AddCourse = () => {
         price:"",
         videoLink:[],
         // tags: state.tags
-        tags:""
+        tags:"",
+        faculty:""
     }
 
     const validationSchema = Yup.object().shape({
@@ -70,7 +83,8 @@ const AddCourse = () => {
         courseValidity: Yup.number().positive().integer().required("Required"),
         price: Yup.number().positive().integer().required("Required"),
         videoLink: Yup.array().required("Required"),
-        tags: Yup.string().required("Required")
+        tags: Yup.string().required("Required"),
+        faculty: Yup.string().required("Required")
     })
 
     const submitForm = (values) => {
@@ -89,7 +103,8 @@ const AddCourse = () => {
             details: values.courseDetails,
             code: values.courseCode,
             type: values.courseType,
-            name: values.courseName
+            name: values.courseName,
+            faculty: values.faculty
         }
 
         dispatch(AddCourseAPI(rawData))
@@ -120,7 +135,7 @@ const AddCourse = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={`${BASE_URL}uploads/${selectedImg}`} alt="choosen image" className="p-1 img-fluid" />
+                                                    <img src={formik.values.image} alt="choosen image" className="p-1 img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
@@ -229,6 +244,23 @@ const AddCourse = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
+                                    {/* <Row className="mb-1">
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="faculty">Faculty</Label>
+                                                <CustomSelectField
+                                                    value={formik.values.faculty}
+                                                    options={facultyOptions}
+                                                    onChange={(value) => formik.setFieldValue("faculty", value.value)
+                                                } />
+                                                <ErrorMessage
+                                                    name="faculty"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row> */}
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">

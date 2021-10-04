@@ -1,24 +1,61 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
-import { selectThemeColors } from '@utils'
+import {useDispatch, useSelector} from "react-redux"
+import {useHistory} from "react-router-dom"
 
+import {EditCourseAPI, fetchCourseById} from "../../redux/actions/courses/index"
+import { fetchVideoById } from "../../redux/actions/videos"
+import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
+import { BASE_URL } from '../../utility/serverSettings'
 
 const EditCourse = () => {
 
+    
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const CourseData = useSelector(state => state.courses.course)
+    const allVideos = useSelector(state => state.videos.video)
+
+    const id = history.location?.params?.id
+
+    useEffect(() => {
+        dispatch(fetchCourseById(id))
+    }, [id])
+    
+    useEffect(() => {
+        // CourseData?.videos?.map(value => {
+        //     dispatch(fetchVideoById(value))
+        // })
+    }, [CourseData])
+
+    const [editModal, setModal] = useState({
+        modal: false
+      })
+
+    const toggleModel = () => {
+    setModal((prevState) => {
+        return { modal: !prevState.modal }
+    })
+    }
+
+    const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${CourseData?.image}`)
+
     const initialValues = {
-        courseName:"",
-        courseType:"",
-        courseCode:"",
-        courseDetails:"",
-        courseValidity:"",
-        price:"",
-        videoLink:[]
+        image: selectedImg,
+        courseName: CourseData?.name || "",
+        courseType: CourseData?.type || "",
+        courseCode: CourseData?.code || "",
+        courseDetails: CourseData?.details || "",
+        courseValidity: CourseData?.validity || "",
+        price: CourseData?.price || "",
+        videoLink: allVideos || ""
     }
 
     const validationSchema = Yup.object().shape({
+        image: Yup.string().required("Required"),
         courseName: Yup.string().required("Required"),
         courseType: Yup.string().required("Required"),
         courseCode: Yup.string().required("Required"),
@@ -31,24 +68,27 @@ const EditCourse = () => {
     const submitForm = (values) => {
         console.log("values", values)
 
-        // const rawData = {
-        //     "gst": 18,
-        //     "tags": "",
-        //     "categories": "C",
-        //     "schedule": "hh",
-        //     "shortDescription": "ok",
-        //     "validity": "1212",
-        //     "videos": "koo",
-        //     "price": 12,
-        //     "details": "hjgjhgg",
-        //     "code": "12",
-        //     "type": "bac",
-        //     "name": "Course 2"
-        // }
+        const rawData = {
+            gst: 18,
+            tags: values.tags,
+            categories: "C",
+            schedule: "hh",
+            shortDescription: "ok",
+            validity: values.courseValidity,
+            videos: values.videoLink,
+            price: values.price,
+            details: values.courseDetails,
+            code: values.courseCode,
+            type: values.courseType,
+            name: values.courseName,
+            image: values.image
+        }
+
+        dispactch(EditCourseAPI(rawData))
 
     }
 
-    const courseOptions = [{label:"BAC", value:"bac"}, {label: "Regular", value: "regular"}]
+    const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
     const videoOptions = [
         { value: 'ocean', label: 'WATCH LATER AD TO QUEUE React JS - React Tutorial for Beginners', color: '#00B8D9', isFixed: true },
         { value: 'blue', label: 'NOW PLAYING WATCH LATER ADD TO QUEUE Learn React JS with Project in 2 Hours | React Tutorial for Beginners | React Project Crash Course', color: '#0052CC', isFixed: true },
@@ -70,6 +110,19 @@ const EditCourse = () => {
                         {(formik) => {
                             return (
                                 <Form>
+                                     <Label for="courseName">Preview Image</Label>
+                                      <Row className="d-flex justify-content-center">
+                                        <Col sm="12" md="8" className="mb-1">
+                                            <Row className="d-flex justify-content-around align-items-center">
+                                                <Col sm="12" md="8">
+                                                    <img src={formik.values.image} alt="choosen image" className="p-1 img-fluid" />
+                                                </Col>
+                                                <Col sm="12" md="4">
+                                                    <Button color="primary" type="button" >Choose Image</Button>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
@@ -219,6 +272,16 @@ const EditCourse = () => {
                             )
                         }}
                     </Formik>
+                    {editModal.modal ? (
+                    <ImagePickerComponent
+                        modalState={editModal.modal}
+                        onClose={toggleModel}
+                        toggleFileModal={toggleFileModal}
+                        imagesData={imagesData}
+                        selectedImg={selectedImg}
+                        setSelectedImg={setSelectedImg}
+                    />
+                    ) : null}
                 </CardBody>
             </Card>
         </Col>

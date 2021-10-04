@@ -1,36 +1,75 @@
-import React from "react"
+import React, {useState} from "react"
 import {Card, CardHeader, CardBody, CardTitle, Button, Row, Col, FormGroup, Label, InputGroup, Input, CustomInput} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
+import {useDispatch} from "react-redux"
 
-const FacultySettings = () => {
+import sampleImg from "../../../assets/images/portrait/small/avatar-s-1.jpg"
+import {AddFaculty} from "../../../redux/actions/faculty/index"
+import ImagePickerComponent from "../../UtilityComponents/ImagePickerComponent"
+
+const AddFacultyComponent = () => {
+
+    const dispatch = useDispatch()
+    const [selectedImg, setSelectedImg] = useState(sampleImg)
+    const [editModal, setModal] = useState({
+        modal: false
+      })
+
+    const toggleModel = () => {
+    setModal((prevState) => {
+        return { modal: !prevState.modal }
+    })
+    }
+
+    const toggleFileModal = () => {
+        setFileModalState((prevState) => !prevState)
+    }
+
     const initialValues = {
         facultyName:"",
         facultyDetails:"",
-        facultyPhoto:""
+        image: selectedImg
     }
     const validationSchema = Yup.object().shape({
         facultyName: Yup.string().required("Required"),
         facultyDetails: Yup.string().required("Required"),
-        facultyPhoto: Yup.string().required("required")
+        image: Yup.string().required("required")
     })
-    const submitForm = (values) => {
-        console.log("values", values)
+    const submitForm = (values, resetForm) => {
+        const rawData = {
+            name: values.facultyName,
+            details: values.facultyDetails,
+            image: values.image
+        }
+        dispatch(AddFaculty(rawData, resetForm))
     }
     return <Row>
-        <Col sm="12" md="6">
+        <Col sm="12" md="5">
             <Card>
                 <CardHeader>
                     <CardTitle>Faculty Settings</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form>
-                                    <Row>
-                                        <Col sm="12" md="6">
+                                    <Row className="d-flex justify-content-center">
+                                        <Col sm="12" md="8" className="mb-1">
+                                            <Row className="d-flex justify-content-around align-items-center">
+                                                <Col sm="12" md="8">
+                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                </Col>
+                                                <Col sm="12" md="4">
+                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                    <Row className="pl-1 pr-1">
+                                        <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="facultyName">Faculty Name</Label>
                                                 <InputGroup>
@@ -50,23 +89,8 @@ const FacultySettings = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col sm="12" md="6">
-                                            <FormGroup>
-                                                <Label for="facultyPhoto">Faculty Photo</Label>
-                                                <CustomInput type='file' 
-                                                    name="facultyPhoto"
-                                                    id="facultyPhoto"
-                                                    {...formik.getFieldProps("facultyPhoto")}
-                                                />
-                                                <ErrorMessage
-                                                    name="facultyPhoto"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
                                     </Row>
-                                    <Row>
+                                    <Row className="pl-1 pr-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="facultyDetails">Faculty Details</Label>
@@ -100,9 +124,18 @@ const FacultySettings = () => {
                         }}
                     </Formik>
                 </CardBody>
+                {editModal.modal ? (
+                <ImagePickerComponent
+                    modalState={editModal.modal}
+                    onClose={toggleModel}
+                    toggleFileModal={toggleModel}
+                    selectedImg={selectedImg}
+                    setSelectedImg={setSelectedImg}
+                />
+                ) : null}
             </Card>
         </Col>
     </Row>
 }
 
-export default FacultySettings
+export default AddFacultyComponent
