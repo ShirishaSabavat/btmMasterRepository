@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from './serverSettings'
 
 const getLoggedInUser = () => {
     const user = localStorage.getItem('userData')
@@ -15,10 +16,8 @@ function ServerApi(props) {
     token = ''
   }
 
-  const baseURL = 'https://bac-api.amoghnya.com/'
-
   return (axios.create({
-    baseURL,
+    baseURL: BASE_URL,
     headers: {
       Authorization: `Bearer ${token}`, 
       "Content-Type": "application/json"

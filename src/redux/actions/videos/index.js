@@ -48,7 +48,8 @@ export const EditVideoAPI = (id, rawData) => dispatch => {
 export const fetchAllVideos = () => dispatch => {
   ServerApi().get('/videos')
   .then(res => {
-    const data = res.data.map((values, index) => { return {values, sno: index + 1 } })
+    // const data = res.data.map((values, index) => { return {values, sno: index + 1 } })
+    const data = res.data.map((values, index) => ({...values, sno: index + 1}))
     dispatch({
       type: GET_ALL_VIDEOS,
       payload: data

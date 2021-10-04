@@ -3,12 +3,14 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
+import {BASE_URL} from '../../utility/serverSettings'
 
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
-import {fetchAllMedia} from "../../redux/actions/media/index"
-import { AddCourseAPI } from "../../redux/actions/courses/index"
+import { fetchAllMedia } from "../../redux/actions/media"
+import { fetchAllVideos } from "../../redux/actions/videos"
+import { AddCourseAPI } from "../../redux/actions/courses"
 
 
 // import TagsInput from 'react-tagsinput'
@@ -22,6 +24,7 @@ const AddCourse = () => {
     const dispatch = useDispatch()
     const coursesData = useSelector(state => state.courses.courses)
     const imagesData = useSelector(state => state.media.medias)
+    const allVideos = useSelector(state => state.videos.videos)
 
     const [selectedImg, setSelectedImg] = useState(sampleImg)
     const [editModal, setModal] = useState({
@@ -66,7 +69,7 @@ const AddCourse = () => {
         courseDetails: Yup.string().required("Required"),
         courseValidity: Yup.number().positive().integer().required("Required"),
         price: Yup.number().positive().integer().required("Required"),
-        // videoLink: Yup.string().required("Required")
+        videoLink: Yup.array().required("Required"),
         tags: Yup.string().required("Required")
     })
 
@@ -74,13 +77,14 @@ const AddCourse = () => {
         console.log("course values", values)
 
         const rawData =  {
+            image: selectedImg,
             gst: 18,
             tags: values.tags,
             categories: "C",
             schedule: "hh",
             shortDescription: "ok",
             validity: values.courseValidity,
-            videos: values.videoLink.toString(),
+            videos: JSON.stringify(values.videoLink.map(i => i.value)),
             price: values.price,
             details: values.courseDetails,
             code: values.courseCode,
@@ -93,17 +97,10 @@ const AddCourse = () => {
     
     useEffect(() => {
         dispatch(fetchAllMedia())
+        dispatch(fetchAllVideos())
     }, [])
 
     const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
-    const videoOptions = [
-        { value: 'ocean', label: 'WATCH LATER AD TO QUEUE React JS - React Tutorial for Beginners', color: '#00B8D9', isFixed: true },
-        { value: 'blue', label: 'NOW PLAYING WATCH LATER ADD TO QUEUE Learn React JS with Project in 2 Hours | React Tutorial for Beginners | React Project Crash Course', color: '#0052CC', isFixed: true },
-        { value: 'purple', label: 'Purple', color: '#5243AA', isFixed: true },
-        { value: 'red', label: 'Red', color: '#FF5630', isFixed: false },
-        { value: 'orange', label: 'Orange', color: '#FF8B00', isFixed: false },
-        { value: 'yellow', label: 'Yellow', color: '#FFC400', isFixed: false }
-      ]
 
     return <Row>
         <Col sm="12" md="6">
@@ -118,11 +115,12 @@ const AddCourse = () => {
                             console.log("ff", formik.values)
                             return (
                                 <Form >
+                                    <Label for="courseName">Preview Image</Label>
                                       <Row className="d-flex justify-content-center">
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={`${BASE_URL}uploads/${selectedImg}`} alt="choosen image" className="p-1 img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
@@ -157,9 +155,9 @@ const AddCourse = () => {
                                             <FormGroup>
                                                 <Label for="courseType">Course Type</Label>
                                                 <CustomSelectField
-                                                value={formik.values.courseType}
-                                                options={courseOptions}
-                                                onChange={(value) => formik.setFieldValue("courseType", value.value)
+                                                    value={formik.values.courseType}
+                                                    options={courseOptions}
+                                                    onChange={(value) => formik.setFieldValue("courseType", value.value)
                                                 } />
                                                 <ErrorMessage
                                                 name="courseType"
@@ -236,12 +234,11 @@ const AddCourse = () => {
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="videoLink">Video Link</Label>
                                                 <CustomSelectField
-                                                value={formik.values.videoLink}
-                                                options={videoOptions}
-                                                name="videoLink"
-                                                onChange={(value) => formik.setFieldValue("videoLink", [...formik.values.videoLink, value.value])
-                                                } 
-                                                isMulti={true}
+                                                    value={formik.values.videoLink}
+                                                    options={allVideos.map((i) => ({label: i.title, value: i._id}))}
+                                                    name="videoLink"
+                                                    onChange={(value) => formik.setFieldValue("videoLink", value)} 
+                                                    isMulti={true}
                                                 />
                                                 <ErrorMessage
                                                     name="videoLink"
@@ -330,7 +327,7 @@ const AddCourse = () => {
                     <ImagePickerComponent
                         modalState={editModal.modal}
                         onClose={toggleModel}
-                        toggleFileModal={toggleFileModal}
+                        toggleFileModal={toggleModel}
                         imagesData={imagesData}
                         selectedImg={selectedImg}
                         setSelectedImg={setSelectedImg}

@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {AddVideoAPI} from "../../redux/actions/videos/index"
 import {fetchAllMedia} from "../../redux/actions/media/index"
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
+import {BASE_URL} from '../../utility/serverSettings'
 
 const AddVideo = () => {
 
@@ -16,7 +17,7 @@ const AddVideo = () => {
 
     const imagesData = useSelector(state => state.media.medias)
 
-    const [selectedImg, setSelectedImg] = useState(sampleImg)
+    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image')
     const [editModal, setModal] = useState({
         modal: false
       })
@@ -81,7 +82,7 @@ const AddVideo = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={`${BASE_URL}uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
@@ -192,7 +193,7 @@ const AddVideo = () => {
                 <ImagePickerComponent
                     modalState={editModal.modal}
                     onClose={toggleModel}
-                    toggleFileModal={toggleFileModal}
+                    toggleFileModal={toggleModel}
                     imagesData={imagesData}
                     selectedImg={selectedImg}
                     setSelectedImg={setSelectedImg}

@@ -68,7 +68,7 @@ export const fetchCourseById = (id) => dispatch => {
   .then(res => {
     dispatch({
       type: GET_COURSE_BY_ID,
-      payload: res
+      payload: res.data
     })
   })
   .catch(e => {

@@ -1,5 +1,6 @@
 import { Card, CardBody, CardText, Row, Col } from 'reactstrap'
 import Avatar from '@components/avatar'
+import {getUserData} from '../../utility/Utils'
 
 // import decorationLeft from '@src/assets/images/elements/decore-left.png'
 // import decorationRight from '@src/assets/images/elements/decore-right.png'
@@ -48,6 +49,8 @@ const Dashboard = () => {
     <Row>
       {<StatsCard data={statsData} />}
     </Row>
+
+    {getUserData().role === 'BAC_USER' && (
     <Row>
         <Card className='card-congratulations'>
             <CardBody className='text-center'>
@@ -63,12 +66,14 @@ const Dashboard = () => {
             </CardBody>
         </Card>
     </Row>
+    )}
 </>
   )
 }
 
 const StatsCard = (props) => {
-    return props.data.map(val => {
+    const newData = getUserData().role !== 'BAC_USER' ? props.data.filter(i => i.title !== 'Rank') : props.data
+    return newData.map(val => {
         return (
             <Col md="3" sm="12">
                 <Card>
