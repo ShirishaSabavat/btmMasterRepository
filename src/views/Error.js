@@ -8,7 +8,7 @@ const Error = () => {
   return (
     <div className='misc-wrapper'>
       <a className='brand-logo' href='/'>
-        <h2 className='brand-text text-primary ml-1'>BAC</h2>
+        <h2 className='brand-text text-primary ml-1'>Business Aacharya</h2>
       </a>
       <div className='misc-inner p-2 p-sm-3'>
         <div className='w-100 text-center'>

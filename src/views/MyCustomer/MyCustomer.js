@@ -12,7 +12,7 @@ const MyCustomer = () => {
 
     const dispatch = useDispatch()
     // const customerData = useSelector(state => state.videos.videos)
-    const customerData = [{name: "sample", email: "sample@gmail.com", phno: 9999999999, custType: "BAC", kycstatus: "DONE", accStatus: "Active"}]
+    const customerData = [{name: "sample", email: "sample@gmail.com", phno: 9999999999, custType: "Business Aacharya", kycstatus: "DONE", accStatus: "Active"}]
 
   const [editModal, setModal] = useState(false)
 

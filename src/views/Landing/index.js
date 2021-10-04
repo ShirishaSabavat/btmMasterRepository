@@ -138,7 +138,7 @@ const Landing = () => {
             <Row className=''>
                 <Col className='d-lg-flex align-items-center' lg='8' sm='12'>
                 <div className='w-100 px-5 mt-4'>
-                    <h2 style={{color: 'black'}}>Welcome to BAC</h2>
+                    <h2 style={{color: 'black'}}>Welcome to Business Aacharya</h2>
                     <p>Br Shafi Shaik Shafiulla is Popularly Known as  Brother Shafi  is Founder President of Mission Nenu Saitham Samajam Kosam. Br Shafi  has done Masters Degree from Osmania University in MSW Medical and Psychiatric Social Work.   He Awarded Gold Medal for His best services in  social work from Roda MISTRY college of social work, Osmania University. by Deputy CM and Educational Minister of Telangana State Sri Kadiyam Srihari Garu. Br Shafi is Master Motivator, life skills trainer and international orator. He has given many motivational training programs and Personality Development work shops in many schools, colleges, corporate companies and Police officials.</p>
                 </div>
                 </Col>

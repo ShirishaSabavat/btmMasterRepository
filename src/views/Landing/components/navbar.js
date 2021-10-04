@@ -62,7 +62,7 @@ const NavBar = () => {
                     component="div"
                     sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
                 >
-                    Business Acharaya Consultancy
+                    Business Acharaya
                 </Typography>
                 {/* <SearchIcon /> */}
                 <Button onClick={() => history.push('/home')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Home</Button>

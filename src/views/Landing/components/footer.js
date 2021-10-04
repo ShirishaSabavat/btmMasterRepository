@@ -36,7 +36,7 @@ const Footer = () => {
         </Grid>
         <Grid item xs={12} md={4}>
             <div className="p-4">
-                <h3 style={{fontWeight: 'bold'}} className="text-white mb-2">Explore BAC</h3>
+                <h3 style={{fontWeight: 'bold'}} className="text-white mb-2">Explore Business Aacharya</h3>
                 <Grid style={{backgroundColor: '#161616'}} container>
                     <Grid item xs={6} md={6}>
                         <ul className="p-0 mb-2" style={{listStyleType: 'none'}}>
