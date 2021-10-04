@@ -84,11 +84,11 @@ const Dashboard = () => {
 }
 
 const StatsCard = (props) => {
-    // const userRole = getUserData().user.role
-    // const newData = props.data.filter(i => i.role.includes(getUserData().user.role))
+    const userRole = getUserData().user.role
+    const newData = props.data.filter(i => i.role.includes(getUserData().user.role))
     // console.log({newData})
     // console.log(props.data.filter(i => i.role.includes('USER')))
-    return props.data.map(val => {
+    return newData.map(val => {
         return (
             <Col md="3" sm="12">
                 <Card>
