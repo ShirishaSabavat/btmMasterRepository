@@ -10,11 +10,8 @@ import MyCommissionRoute from "./MyCommissionRoute"
 import MyMessagesRoute from "./MyMessagesRoute"
 import MyPayoutsRoute from "./MyPayoutsRoute"
 import MyReportsRoute from "./MyReportsRoute"
-<<<<<<< HEAD
 import MyCourcesRoutes from './MyCourcesRoutes'
-=======
 import KYCRoute from "./KYCRoute"
->>>>>>> 292ebde9fd0c21ba9c36b5a2ce35076cb2b7dc99
 
 // ** Document title
 const TemplateTitle = '%s - ATS School Management'
