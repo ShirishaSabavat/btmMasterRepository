@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import { fetchCourseById } from '../../redux/actions/courses'
 import { DO_LOGIN } from '../../redux/types/auth'
 import Footer from './components/footer'
+import { BASE_URL } from '../../utility/serverSettings'
 
 const Landing = (route) => {
     const history = useHistory()
@@ -159,13 +160,13 @@ const Landing = (route) => {
     <Grid container spacing={2}>
         <NavBar />
 
-        <Grid className="bg-white" item xs={12}>
+        <Grid className="bg-white py-5" item xs={12}>
             <Row className=''>
                 <Col className='d-lg-flex align-items-center' lg='8' sm='12'>
                 <div className='w-100 px-5'>
-                    <img style={{height: 154}} className='img-fluid' src="/assets/images/demo1.jpg" alt='Login V2' />
-                    <h2>{course.name}</h2>
-                    <p>{course.shortDescription}</p>
+                    <img className='img-fluid' src={`${BASE_URL}uploads/${course.image}`} alt='Login V2' />
+                    <h2 style={{fontSize: 42, fontWeight: 'bold'}} className="mt-2">{course.name}</h2>
+                    <p className="mt-1">{course.details}</p>
                 </div>
                 </Col>
                 <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>

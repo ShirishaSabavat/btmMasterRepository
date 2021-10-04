@@ -98,7 +98,7 @@ const Footer = () => {
     </Grid>
 
     <Grid style={{backgroundColor: '#252525'}} className="p-2" item xs={12} md={12}>
-        <h6 className="text-center m-0" style={{ color: '#a5a5a5', fontSize: 11}}> Copyright - 2020 - <a href="https://amoghnya.com" target="_blank">Amoghnya</a> - All rights reserved.</h6>
+        <h6 className="text-center m-0" style={{ color: '#a5a5a5', fontSize: 11}}> Developed by <a href="https://amoghnya.com" target="_blank">amoghnya techsolutions pvt.ltd </a> 🤝 <a href="https://www.mindsoftitsolution.com/" target="_blank">mindsoft it solutions</a></h6>
     </Grid>
     </>
   )

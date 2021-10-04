@@ -18,33 +18,39 @@ const statsData = [
         title: 'Videos',
         count: '0',
         color: 'bg-light-info',
+        role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Video size={24} />
     },
     {
         title: 'Courses',
         count: '0',
         color: 'bg-light-success',
+        role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Award size={24} />
     },
     {
         title: 'MyClients',
         count: '0',
+        role: ['BAC_USER'],
         color: 'bg-light-danger',
         icon: <Users size={24} />
     },
     {
         title: 'Schedules',
         count: '0',
+        role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Activity size={24} />
     },
     {
         title: 'Total Sales',
         count: '0',
+        role: ['BAC_USER'],
         icon: <ShoppingBag size={24} />
     },
     {
         title: 'Total Earningss',
         count: '0',
+        role: ['BAC_USER'],
         icon: <Activity size={24} />
     }
 ]
@@ -78,8 +84,11 @@ const Dashboard = () => {
 }
 
 const StatsCard = (props) => {
-    const newData = getUserData().role !== 'BAC_USER' ? props.data.filter(i => i.title !== 'Rank') : props.data
-    return newData.map(val => {
+    // const userRole = getUserData().user.role
+    // const newData = props.data.filter(i => i.role.includes(getUserData().user.role))
+    // console.log({newData})
+    // console.log(props.data.filter(i => i.role.includes('USER')))
+    return props.data.map(val => {
         return (
             <Col md="3" sm="12">
                 <Card>
