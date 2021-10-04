@@ -15,9 +15,7 @@ const AddVideo = () => {
 
     const dispatch = useDispatch()
 
-    const imagesData = useSelector(state => state.media.medias)
-
-    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image')
+    const [selectedImg, setSelectedImg] = useState(sampleImg)
     const [editModal, setModal] = useState({
         modal: false
       })
@@ -61,10 +59,6 @@ const AddVideo = () => {
 
         dispatch(AddVideoAPI(rawData, resetForm))
     }
-
-    useEffect(() => {
-        dispatch(fetchAllMedia())
-    }, [])
 
     return <Row>
         <Col sm="12" md="5">
@@ -194,7 +188,6 @@ const AddVideo = () => {
                     modalState={editModal.modal}
                     onClose={toggleModel}
                     toggleFileModal={toggleModel}
-                    imagesData={imagesData}
                     selectedImg={selectedImg}
                     setSelectedImg={setSelectedImg}
                 />

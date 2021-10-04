@@ -161,7 +161,7 @@ let Navigation = [
 // let newNavigation = [...Navigation]
 const user = getUserData()
 if (user !== null) {
-  Navigation = Navigation.filter(i => i.permissions.includes(user.user.role))
+  Navigation = Navigation.filter(i => i.permissions.includes(user?.user?.role))
 }
 
 export default  Navigation

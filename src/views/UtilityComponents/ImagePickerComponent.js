@@ -1,14 +1,25 @@
 import React, {useState} from "react"
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap"
+import {useDispatch, useSelector} from "react-redux"
+
 import FileUploadModal from "./FileUploadModal"
 import { BASE_URL } from '../../utility/serverSettings'
+import {fetchAllMedia} from "../../redux/actions/media/index"
 
 const ImagePickerComponent = (props) => {
     const {imagesData, selectedImg} = props
 
+    const dispatch = useDispatch()
+    const img = useSelector(state => state.medias.medias)
+
+    const [reFetch, setReFetch] = useState(false)
     const [images, setImages] = useState(imagesData || "")
 
     console.log("datta", imagesData)
+
+    useEffect(() => {
+        dispatch(fetchAllMedia())
+    }, [reFetch])
 
     return (
     <Modal scrollable isOpen={props.modalState} toggle={props.onClose} className="modal-lg">

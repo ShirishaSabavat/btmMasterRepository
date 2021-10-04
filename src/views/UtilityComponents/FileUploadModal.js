@@ -1,18 +1,25 @@
 import React from "react"
 import {Card} from "reactstrap"
 import { PlusCircle } from "react-feather"
+import {useDispatch} from "react-redux"
+
+import {postMedia} from "../../redux/actions/media/index"
 
 const FileUploadModal = () => {
+
+    const dispatch = useDispatch()
 
     const handleImageUpload = (e) => {
 
         const imageData = e.currentTarget.files[0]
 
         const formdata = new FormData()
-        formdata.append("type", "FILE")
         formdata.append("file", imageData)
 
         console.log("imageData", imageData)
+        console.log("formData", formdata)
+
+        dispatch(postMedia(formdata))
 
     }
 

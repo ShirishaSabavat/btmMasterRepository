@@ -19,6 +19,7 @@ export const fetchAllMedia = () => dispatch => {
   })
 }
 
+
 // export const fetchMediaById = (id) => dispatch => {
 //   ServerApi().get(`/media/${id}`)
 //   .then(res => {
@@ -34,4 +35,19 @@ export const fetchAllMedia = () => dispatch => {
 //     console.log(e)
 //   })
 // }
+
+
+export const postMedia = (formdata) => (dispatch) => {
+  ServerApi().post("/media", formdata).then(res => {
+    toast.success("Successfully Uploaded Image", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  }).catch(e => {
+    toast.error("Error in Uploading Image", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
 
