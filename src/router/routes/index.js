@@ -10,6 +10,7 @@ import MyCommissionRoute from "./MyCommissionRoute"
 import MyMessagesRoute from "./MyMessagesRoute"
 import MyPayoutsRoute from "./MyPayoutsRoute"
 import MyReportsRoute from "./MyReportsRoute"
+import KYCRoute from "./KYCRoute"
 
 // ** Document title
 const TemplateTitle = '%s - ATS School Management'
@@ -30,7 +31,8 @@ const Routes = [
     ...MyCommissionRoute,
     ...MyMessagesRoute,
     ...MyPayoutsRoute,
-    ...MyReportsRoute
+    ...MyReportsRoute,
+    ...KYCRoute
     ]
 
 export { DefaultRoute, TemplateTitle, Routes }
