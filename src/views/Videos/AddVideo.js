@@ -8,7 +8,7 @@ import {useDispatch} from "react-redux"
 
 import {AddVideoAPI} from "../../redux/actions/videos/index"
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
-import {BASE_URL} from '../../utility/serverSettings'
+
 
 const AddVideo = () => {
 
@@ -75,7 +75,7 @@ const AddVideo = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={`${BASE_URL}uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>

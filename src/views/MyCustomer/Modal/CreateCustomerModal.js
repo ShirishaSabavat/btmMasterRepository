@@ -21,7 +21,7 @@ const CreateCustomerModal = ({modalState, onClose}) => {
         onClose()
     }
 
-    return  <Modal isOpen={modalState} toggle={onClose} >
+    return  <Modal isOpen={modalState} toggle={onClose} className="modal-dialog-centered " >
             <ModalHeader>Create Customer</ModalHeader>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                 {(formik) => {

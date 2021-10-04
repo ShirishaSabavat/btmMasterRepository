@@ -1,14 +1,18 @@
 import React, {useState} from "react"
-import {Card, CardHeader, CardTitle, Button, Row, Col} from "reactstrap"
+import {Card, CardHeader, CardTitle, Button, Row, Col, Badge} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {useDispatch, useSelector} from "react-redux"
+import {Link} from "react-router-dom"
+import {Edit, Trash} from "react-feather"
+
 import CreateCustomerModal from "./Modal/CreateCustomerModal"
+import DeleteModal from "./Modal/DeleteModal"
 
 const MyCustomer = () => {
 
     const dispatch = useDispatch()
     // const customerData = useSelector(state => state.videos.videos)
-    const customerData = [{}]
+    const customerData = [{name: "sample", email: "sample@gmail.com", phno: 9999999999, custType: "BAC", kycstatus: "DONE", accStatus: "Active"}]
 
   const [editModal, setModal] = useState(false)
 
@@ -112,7 +116,7 @@ const MyCustomer = () => {
                     className="btn-icon rounded-circle"
                     color="flat-warning"
                     >
-                    <Link to={{pathname: "/edit-video", params:{id}}}>
+                    <Link to={{pathname: "/admin/edit-customer", params:{id}}}>
                         <Edit size={15} />
                     </Link>
                     </Button>
@@ -165,7 +169,7 @@ const MyCustomer = () => {
 
 
     return <Row>
-        <Col sm="12" md="4">
+        <Col sm="12" md="12">
             <Card>
                 <CardHeader className="d-flex justify-content-between">
                     <CardTitle>My Customer</CardTitle>
