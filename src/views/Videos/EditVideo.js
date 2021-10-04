@@ -8,7 +8,7 @@ import {useHistory} from "react-router-dom"
 
 import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
-import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
+import { BASE_URL } from '../../utility/serverSettings'
 
 const AddVideo = () => {
 
@@ -39,7 +39,7 @@ const AddVideo = () => {
         setFileModalState((prevState) => !prevState)
     }
 
-    const [selectedImg, setSelectedImg] = useState(oldData?.image)
+    const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${oldData?.image}`)
 
     const initialValues = {
         title: oldData?.title || "",
@@ -90,7 +90,7 @@ const AddVideo = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={`https://bac-api.amoghnya.com/uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
