@@ -27,7 +27,8 @@ export const AddVideoAPI = (rawData, resetForm) => dispatch => {
 export const EditVideoAPI = (id, rawData) => dispatch => {
   ServerApi().patch(`/videos/${id}`, rawData)
   .then(res => {
-    if (res.statusText === "Ok") {
+    console.log(res)
+    if (res.status === 200) {
       toast.success("Data Updated!", {
         position: toast.POSITION.BOTTOM_CENTER
       })

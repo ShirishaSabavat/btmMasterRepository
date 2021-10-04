@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText, CustomInput} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import {Link} from "react-feather"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 
 import {AddVideoAPI} from "../../redux/actions/videos/index"
-import {fetchAllMedia} from "../../redux/actions/media/index"
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 import {BASE_URL} from '../../utility/serverSettings'
 

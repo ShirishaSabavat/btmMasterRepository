@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux"
 
 import {postMedia} from "../../redux/actions/media/index"
 
-const FileUploadModal = () => {
+const FileUploadModal = ({setReFetch}) => {
 
     const dispatch = useDispatch()
 
@@ -16,10 +16,7 @@ const FileUploadModal = () => {
         const formdata = new FormData()
         formdata.append("file", imageData)
 
-        console.log("imageData", imageData)
-        console.log("formData", formdata)
-
-        dispatch(postMedia(formdata))
+        dispatch(postMedia(formdata, setReFetch))
 
     }
 

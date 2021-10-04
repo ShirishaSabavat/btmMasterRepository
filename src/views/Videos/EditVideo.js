@@ -90,7 +90,7 @@ const AddVideo = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={`https://bac-api.amoghnya.com/uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>

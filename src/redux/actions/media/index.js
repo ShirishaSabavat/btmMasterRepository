@@ -37,11 +37,12 @@ export const fetchAllMedia = () => dispatch => {
 // }
 
 
-export const postMedia = (formdata) => (dispatch) => {
+export const postMedia = (formdata, setReFetch) => (dispatch) => {
   ServerApi().post("/media", formdata).then(res => {
     toast.success("Successfully Uploaded Image", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    setReFetch(prevState => !prevState)
     console.log(e)
   }).catch(e => {
     toast.error("Error in Uploading Image", {

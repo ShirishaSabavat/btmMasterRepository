@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap"
 import {useDispatch, useSelector} from "react-redux"
 
@@ -7,15 +7,12 @@ import { BASE_URL } from '../../utility/serverSettings'
 import {fetchAllMedia} from "../../redux/actions/media/index"
 
 const ImagePickerComponent = (props) => {
-    const {imagesData, selectedImg} = props
+    const {selectedImg} = props
 
     const dispatch = useDispatch()
-    const img = useSelector(state => state.medias.medias)
 
     const [reFetch, setReFetch] = useState(false)
-    const [images, setImages] = useState(imagesData || "")
-
-    console.log("datta", imagesData)
+    const [images] = useState(useSelector(state => state.media.medias))
 
     useEffect(() => {
         dispatch(fetchAllMedia())
@@ -26,10 +23,10 @@ const ImagePickerComponent = (props) => {
         <ModalBody className="p-3 justify-content-around align-items-center">
             <div className="row col-12">
                 <h3 className="mb-3 w-100 text-center">Media Picker</h3>
+                <hr />
             </div>
-
             <div className="row">
-            <FileUploadModal />
+            <FileUploadModal setReFetch={setReFetch} />
                 {images?.map(values => <div className="col"><img 
                         src={`${BASE_URL}uploads/${values.file}`} 
                         alt="image" 

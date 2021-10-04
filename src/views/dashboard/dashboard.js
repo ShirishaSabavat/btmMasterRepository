@@ -9,7 +9,8 @@ import {
     Award,
     Activity,
     Users,
-    Star
+    Star,
+    Video
   } from 'react-feather'
 
 const statsData = [
@@ -17,7 +18,7 @@ const statsData = [
         title: 'Videos',
         count: '0',
         color: 'bg-light-info',
-        icon: <ShoppingBag size={24} />
+        icon: <Video size={24} />
     },
     {
         title: 'Courses',
@@ -26,7 +27,7 @@ const statsData = [
         icon: <Award size={24} />
     },
     {
-        title: 'Users',
+        title: 'MyClients',
         count: '0',
         color: 'bg-light-danger',
         icon: <Users size={24} />
@@ -37,15 +38,20 @@ const statsData = [
         icon: <Activity size={24} />
     },
     {
-        title: 'Rank',
-        count: '10',
-        icon: <Star size={24} />
+        title: 'Total Sales',
+        count: '0',
+        icon: <ShoppingBag size={24} />
+    },
+    {
+        title: 'Total Earningss',
+        count: '0',
+        icon: <Activity size={24} />
     }
 ]
 
 const Dashboard = () => {
   return (
-      <>
+    <>
     <Row>
       {<StatsCard data={statsData} />}
     </Row>
@@ -67,7 +73,7 @@ const Dashboard = () => {
         </Card>
     </Row>
     )}
-</>
+    </>
   )
 }
 
