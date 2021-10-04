@@ -75,6 +75,12 @@ const Router = () => {
       resource = route.meta.resource ? route.meta.resource : null
     }
 
+    // console.log('isUserLoggedIn()---')
+    // console.log(isUserLoggedIn())
+
+    // console.log(route.meta)
+    // console.log(route.meta)
+
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
       (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
@@ -90,9 +96,9 @@ const Router = () => {
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
-    } else if (isUserLoggedIn() && !ability.can(action || 'read', resource)) {
+    // } else if (isUserLoggedIn() && !ability.can(action || 'read', resource)) {
       // ** If user is Logged in and doesn't have ability to visit the page redirect the user to Not Authorized
-      return <Redirect to='/misc/not-authorized' />
+      // return <Redirect to='/misc/not-authorized' />
     } else {
       // ** If none of the above render component
       return <route.component {...props} />
@@ -168,8 +174,8 @@ const Router = () => {
                               : {})}
                             /*eslint-enable */
                           >
-                            <route.component {...props} />
-                            {/* <FinalRoute route={route} {...props} /> */}
+                            {/* <route.component {...props} /> */}
+                            <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
                         </Suspense>
                       )

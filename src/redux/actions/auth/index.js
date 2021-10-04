@@ -1,34 +1,26 @@
-// ** UseJWT import to get config
-import useJwt from '@src/auth/jwt/useJwt'
+import { DO_LOGIN, LOGOUT } from '../../types/auth'
+import ServerApi from '../../../utility/ServerApi'
+import { toast } from 'react-toastify'
 
-const config = useJwt.jwtConfig
-
-// ** Handle User Login
-export const handleLogin = data => {
-  return dispatch => {
+export const handleLogin = payload => dispatch => {
+  ServerApi().post('auth/login', payload)
+  .then(res => {
     dispatch({
-      type: 'LOGIN',
-      data,
-      config,
-      [config.storageTokenKeyName]: data[config.storageTokenKeyName],
-      [config.storageRefreshTokenKeyName]: data[config.storageRefreshTokenKeyName]
+      type: DO_LOGIN,
+      payload: res.data
     })
 
-    // ** Add to user, accessToken & refreshToken to localStorage
-    localStorage.setItem('userData', JSON.stringify(data))
-    localStorage.setItem(config.storageTokenKeyName, JSON.stringify(data.accessToken))
-    localStorage.setItem(config.storageRefreshTokenKeyName, JSON.stringify(data.refreshToken))
-  }
+    localStorage.setItem('userData', JSON.stringify(res.data))
+  })
+  .catch(e => {
+    toast.error("Invalid Email/Password", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
 }
 
-// ** Handle User Logout
-export const handleLogout = () => {
-  return dispatch => {
-    dispatch({ type: 'LOGOUT', [config.storageTokenKeyName]: null, [config.storageRefreshTokenKeyName]: null })
-
-    // ** Remove user, accessToken & refreshToken from localStorage
-    localStorage.removeItem('userData')
-    localStorage.removeItem(config.storageTokenKeyName)
-    localStorage.removeItem(config.storageRefreshTokenKeyName)
-  }
+export const handleLogout = () => dispatch => {
+  dispatch({ type: LOGOUT })
+  localStorage.removeItem('userData')
 }

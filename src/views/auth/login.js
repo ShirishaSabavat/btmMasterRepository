@@ -1,25 +1,51 @@
 import { useSkin } from '@hooks/useSkin'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import { Facebook, Twitter, Mail, GitHub } from 'react-feather'
 import InputPasswordToggle from '@components/input-password-toggle'
 import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { handleLogin } from '../../redux/actions/auth'
 
 const Login = () => {
-  const [skin, setSkin] = useSkin()
+    const dispatch = useDispatch()
+    const history = useHistory()
 
-  const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
-    source = require(`@src/assets/images/pages/${illustration}`).default
+    const userData = useSelector(state => state.auth.userData)
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const doLogin = () => {
+
+    if (email === '' || password === '') {
+      toast.error("Invalid Email/Password", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      return
+    }
+
+    dispatch(handleLogin({email, password}))
+  }
+
+  //go to dashboard on successful login
+  useEffect(() => {
+      if (userData.access_token) {
+          history.push('/dashboard')
+      }
+  }, [userData])
 
   return (
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/'>
-          <h2 className='brand-text text-primary ml-1'>Business Acharaya Consultancy</h2>
+          {/* <h2 className='brand-text text-primary ml-1'>Business Acharaya Consultancy</h2> */}
         </Link>
-        <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
+        <Col style={{backgroundColor: '#161749'}} className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
           <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
-            <img className='img-fluid' src={source} alt='Login V2' />
+            <img className='img-fluid' src='/assets/images/demo5.jpg' alt='Login V2' />
           </div>
         </Col>
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
@@ -27,13 +53,13 @@ const Login = () => {
             <CardTitle tag='h2' className='font-weight-bold mb-1'>
               Welcome to BAC
             </CardTitle>
-            <CardText className='mb-2'>Please sign-in to your account</CardText>
+            <CardText className='mb-2'></CardText>
             <Form className='auth-login-form mt-2' onSubmit={e => e.preventDefault()}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>
                   Email
                 </Label>
-                <Input type='email' id='login-email' placeholder='john@example.com' autoFocus />
+                <Input onChange={(e) => setEmail(e.target.value)} type='email' id='login-email' placeholder='' autoFocus />
               </FormGroup>
               <FormGroup>
                 <div className='d-flex justify-content-between'>
@@ -44,13 +70,13 @@ const Login = () => {
                     <small>Forgot Password?</small>
                   </Link> */}
                 </div>
-                <InputPasswordToggle className='input-group-merge' id='login-password' />
+                <InputPasswordToggle onChange={(e) => setPassword(e.target.value)} className='input-group-merge' id='login-password' />
               </FormGroup>
               <FormGroup>
                 <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
               </FormGroup>
-              <Button.Ripple tag={Link} to='/dashboard' color='primary' block>
-                Sign in
+              <Button.Ripple onClick={() => doLogin()} color='primary' block>
+                Log in
               </Button.Ripple>
             </Form>
             {/* <p className='text-center mt-2'>

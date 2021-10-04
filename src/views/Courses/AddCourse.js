@@ -1,15 +1,56 @@
-import React from "react"
-import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
+import React, {useState, useEffect} from "react"
+import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup } from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
-import Select from "react-select"
-import { selectThemeColors } from '@utils'
+import {useDispatch, useSelector} from "react-redux"
+import {BASE_URL} from '../../utility/serverSettings'
 
+import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
+import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
+import { fetchAllMedia } from "../../redux/actions/media"
+import { fetchAllVideos } from "../../redux/actions/videos"
+import { AddCourseAPI } from "../../redux/actions/courses"
+
+
+// import TagsInput from 'react-tagsinput'
+// import 'react-tagsinput/react-tagsinput.css' 
+
+// import "@pathofdev/react-tag-input/build/index.css"
+// import ReactTagInput from "@pathofdev/react-tag-input"
 
 const AddCourse = () => {
 
+    const dispatch = useDispatch()
+    const coursesData = useSelector(state => state.courses.courses)
+    const imagesData = useSelector(state => state.media.medias)
+    const allVideos = useSelector(state => state.videos.videos)
+
+    const [selectedImg, setSelectedImg] = useState(sampleImg)
+    const [editModal, setModal] = useState({
+        modal: false
+      })
+
+    const toggleModel = () => {
+    setModal((prevState) => {
+        return { modal: !prevState.modal }
+    })
+    }
+
+    const toggleFileModal = () => {
+        setFileModalState((prevState) => !prevState)
+    }
+    
+    // const [state, setState] = useState({
+    //     tags: []
+    // })
+
+    // const handleChange = (tags) => {
+    //     setState({tags})
+    // }
+
     const initialValues = {
+        image:"",
         courseName:"",
         courseType:"",
         courseCode:"",
@@ -17,7 +58,8 @@ const AddCourse = () => {
         courseValidity:"",
         price:"",
         videoLink:[],
-        facultyName:""
+        // tags: state.tags
+        tags:""
     }
 
     const validationSchema = Yup.object().shape({
@@ -27,23 +69,38 @@ const AddCourse = () => {
         courseDetails: Yup.string().required("Required"),
         courseValidity: Yup.number().positive().integer().required("Required"),
         price: Yup.number().positive().integer().required("Required"),
-        videoLink: Yup.string().required("Required"),
-        facultyName: Yup.string().required("Required")
+        videoLink: Yup.array().required("Required"),
+        tags: Yup.string().required("Required")
     })
 
     const submitForm = (values) => {
-        console.log("values", values)
-    }
+        console.log("course values", values)
 
-    const courseOptions = [{label:"BAC", value:"bac"}, {label: "Regular", value: "regular"}]
-    const videoOptions = [
-        { value: 'ocean', label: 'WATCH LATER AD TO QUEUE React JS - React Tutorial for Beginners', color: '#00B8D9', isFixed: true },
-        { value: 'blue', label: 'NOW PLAYING WATCH LATER ADD TO QUEUE Learn React JS with Project in 2 Hours | React Tutorial for Beginners | React Project Crash Course', color: '#0052CC', isFixed: true },
-        { value: 'purple', label: 'Purple', color: '#5243AA', isFixed: true },
-        { value: 'red', label: 'Red', color: '#FF5630', isFixed: false },
-        { value: 'orange', label: 'Orange', color: '#FF8B00', isFixed: false },
-        { value: 'yellow', label: 'Yellow', color: '#FFC400', isFixed: false }
-      ]
+        const rawData =  {
+            image: selectedImg,
+            gst: 18,
+            tags: values.tags,
+            categories: "C",
+            schedule: "hh",
+            shortDescription: "ok",
+            validity: values.courseValidity,
+            videos: JSON.stringify(values.videoLink.map(i => i.value)),
+            price: values.price,
+            details: values.courseDetails,
+            code: values.courseCode,
+            type: values.courseType,
+            name: values.courseName
+        }
+
+        dispatch(AddCourseAPI(rawData))
+    }
+    
+    useEffect(() => {
+        dispatch(fetchAllMedia())
+        dispatch(fetchAllVideos())
+    }, [])
+
+    const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
 
     return <Row>
         <Col sm="12" md="6">
@@ -53,11 +110,24 @@ const AddCourse = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             console.log("ff", formik.values)
                             return (
-                                <Form>
+                                <Form >
+                                    <Label for="courseName">Preview Image</Label>
+                                      <Row className="d-flex justify-content-center">
+                                        <Col sm="12" md="8" className="mb-1">
+                                            <Row className="d-flex justify-content-around align-items-center">
+                                                <Col sm="12" md="8">
+                                                    <img src={`${BASE_URL}uploads/${selectedImg}`} alt="choosen image" className="p-1 img-fluid" />
+                                                </Col>
+                                                <Col sm="12" md="4">
+                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
@@ -85,10 +155,10 @@ const AddCourse = () => {
                                             <FormGroup>
                                                 <Label for="courseType">Course Type</Label>
                                                 <CustomSelectField
-                                                value={formik.values.courseType}
-                                                options={courseOptions}
-                                                {...formik.getFieldProps("courseType")}
-                                                />
+                                                    value={formik.values.courseType}
+                                                    options={courseOptions}
+                                                    onChange={(value) => formik.setFieldValue("courseType", value.value)
+                                                } />
                                                 <ErrorMessage
                                                 name="courseType"
                                                 component="div"
@@ -163,15 +233,12 @@ const AddCourse = () => {
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="videoLink">Video Link</Label>
-                                                <Select
-                                                isClearable={true}
-                                                theme={selectThemeColors}
-                                                isMulti
-                                                name='videoLink'
-                                                id="videoLink"
-                                                options={videoOptions}
-                                                className='react-select'
-                                                classNamePrefix='select'
+                                                <CustomSelectField
+                                                    value={formik.values.videoLink}
+                                                    options={allVideos.map((i) => ({label: i.title, value: i._id}))}
+                                                    name="videoLink"
+                                                    onChange={(value) => formik.setFieldValue("videoLink", value)} 
+                                                    isMulti={true}
                                                 />
                                                 <ErrorMessage
                                                     name="videoLink"
@@ -203,6 +270,52 @@ const AddCourse = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
+                                    {/* <Row>
+                                        <Col sm="12">
+                                            <FormGroup>
+                                                <Label for="tag">Tags</Label>
+                                                <TagsInput value={state.tags} onChange={handleChange} addOnBlur className="react-tagsinput rounded"  />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row> */}
+                                    {/* <Row>
+                                        <Col sm="12">
+                                            <FormGroup>
+                                                <Label for="tag">Tags</Label>
+                                                <ReactTagInput 
+                                                    tags={state.tags} 
+                                                    placeholder="Type and press enter"
+                                                    maxTags={10}
+                                                    editable={true}
+                                                    readOnly={false}
+                                                    removeOnBackspace={true}
+                                                    onChange={handleChange}
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row> */}
+                                    <Row>
+                                        <Col sm="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="tags">Tags</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="text"
+                                                    name="tags"
+                                                    id="tags"
+                                                    {...formik.getFieldProps("tags")}
+                                                    invalid={!!(formik.touched.tags && formik.errors.tags)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="tags"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
                                     <div className="float-right mt-1">
                                         <Button color="primary" type="submit">Save</Button>
                                     </div>
@@ -210,6 +323,16 @@ const AddCourse = () => {
                             )
                         }}
                     </Formik>
+                    {editModal.modal ? (
+                    <ImagePickerComponent
+                        modalState={editModal.modal}
+                        onClose={toggleModel}
+                        toggleFileModal={toggleModel}
+                        imagesData={imagesData}
+                        selectedImg={selectedImg}
+                        setSelectedImg={setSelectedImg}
+                    />
+                    ) : null}
                 </CardBody>
             </Card>
         </Col>

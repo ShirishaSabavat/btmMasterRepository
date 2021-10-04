@@ -1,11 +1,17 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import {Calendar, Edit, Trash, Eye} from "react-feather"
+import { useDispatch, useSelector } from "react-redux"
+
 import DeleteModal from "./Modals/DeleteModal"
+import {fetchAllCourses, deleteCourseById} from "../../redux/actions/courses/index"
 
 const CourseTable = () => {
+
+  const dispatch = useDispatch()
+  const courseData = useSelector(state => state.courses.courses)
 
   const [defaultAlert, setDefaultAlert] = useState({
     alert: false,
@@ -27,17 +33,17 @@ const CourseTable = () => {
     const tableColumns = [
         {
           name: "Course Name",
-          selector: "courseName",
+          selector: "name",
           sortable: true,
           minWidth: "200px",
           cell: (row) => (
             <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
               <div className="user-info text-truncate ml-xl-50 ml-0">
                 <span
-                  title={row.courseName}
+                  title={row.name}
                   className="d-block text-bold-500 text-truncate mb-0"
                 >
-                  {row.courseName}
+                  {row.name}
                 </span>
               </div>
             </div>
@@ -64,7 +70,7 @@ const CourseTable = () => {
           selector: "price",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.price}</p>
+            <p className="text-bold-500 text-truncate mb-0">₹ {row.price}</p>
           )
         },
         {
@@ -72,6 +78,7 @@ const CourseTable = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
+            const id = row._id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">
@@ -100,7 +107,7 @@ const CourseTable = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/edit-course"}}>
+                        <Link to={{pathname: "/edit-course", params:{id}}}>
                             <Edit size={15} />
                         </Link>
                         </Button>
@@ -109,7 +116,7 @@ const CourseTable = () => {
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true })}
+                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
                         >
                             <Trash size={15} />
                         </Button>
@@ -121,7 +128,20 @@ const CourseTable = () => {
         }
       ]
 
-    const schoolData = [{courseName: "course1", code: "123", type: "BCA", price: 1000 }]
+  // Fetching Data 
+  useEffect(() => {
+    dispatch(fetchAllCourses())
+  }, [confirmAlert, dispatch])
+
+  //Deleting Data
+  const deleteid = defaultAlert.did
+  useEffect(() => {
+    if (confirmAlert) {
+      dispatch(deleteCourseById(deleteid))
+    }
+  }, [confirmAlert, deleteid, dispatch])
+
+    // const courseData = [{courseName: "course1", code: "123", type: "BCA", price: 1000 }]
 
     const customStyles = {
         headCells: {
@@ -145,12 +165,12 @@ const CourseTable = () => {
             <Card >
                 <CardHeader>
                     <CardTitle>Courses</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-course" className="text-white">Add Course</Link></Button>
+                    <Link to="/add-course" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable
                     className="dataTable-custom"
-                    data={schoolData}
+                    data={courseData}
                     columns={tableColumns}
                     noHeader
                     pagination
