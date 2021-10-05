@@ -1,16 +1,20 @@
 import React, {useState} from "react"
 import {FormGroup, Button} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
-import { EditorState } from 'draft-js'
+import { EditorState, convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import '@styles/react/libs/editor/editor.scss'
-
+import draftToHtml from 'draftjs-to-html'
+import htmlToDraft from 'html-to-draftjs'
 
 const EditorComponent = ({data, submitForm}) => {
 
-    console.log("icd", data[0]?.content)
+    console.log({data})
 
-    const [value, setValue] = useState(data ? data[0]?.content : EditorState.createEmpty())
+    const [value, setValue] = useState(data ? data : EditorState.createEmpty())
+
+    // console.log('convertToRaw(editorState.getCurrentContent(value))')
+    // console.log(draftToHtml(convertToRaw(value.getCurrentContent())))
 
     const initialValues = {
         editorValue: value
@@ -22,7 +26,11 @@ const EditorComponent = ({data, submitForm}) => {
                 return (
                     <Form>
                         <FormGroup>
-                            <Editor editorState={formik.values.editorValue} onEditorStateChange={data => setValue(data) } />
+                            <Editor 
+                                editorState={formik.values.editorValue} 
+                                onEditorStateChange={val => setValue(val.getCurrentContent()) } 
+                            />
+                            
                             <ErrorMessage
                                 name="editorValue"
                                 component="div"

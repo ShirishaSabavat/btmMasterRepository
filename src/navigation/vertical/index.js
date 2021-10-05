@@ -21,34 +21,41 @@ let Navigation = [
     title: 'My Customers',
     icon: <Users size={20} />,
     navLink: '/admin/my-customers',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'mycommission',
     title: 'My Commission',
     icon: <Briefcase size={20} />,
     navLink: '/admin/my-commission',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'mypayouts',
     title: 'My Payouts',
     icon: <CreditCard size={20} />,
     navLink: '/admin/my-payouts',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'myreports',
     title: 'My Reports',
     icon: <FileText size={20} />,
     navLink: '/admin/my-reports',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'mymessages',
     title: 'My Messages',
     icon: <MessageSquare size={20} />,
     navLink: '/admin/my-messages',
+    permissions: ["BAC_USER"]
+  },
+  {
+    id: 'videos',
+    title: 'Videos',
+    icon: <Youtube size={20} />,
+    navLink: '/videos',
     permissions: ["ADMIN"]
   },
   {
@@ -63,13 +70,6 @@ let Navigation = [
     title: 'Course Schedule',
     icon: <Briefcase size={20} />,
     navLink: '/course-schedule',
-    permissions: ["ADMIN"]
-  },
-  {
-    id: 'videos',
-    title: 'Videos',
-    icon: <Youtube size={20} />,
-    navLink: '/videos',
     permissions: ["ADMIN"]
   },
   {

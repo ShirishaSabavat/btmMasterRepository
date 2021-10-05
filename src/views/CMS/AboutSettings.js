@@ -1,11 +1,9 @@
 import React, {useEffect} from "react"
 import {Card, CardHeader, CardBody, CardTitle} from "reactstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { convertToRaw } from 'draft-js'
 
 import { fetchCMS, AddCMS } from "../../redux/actions/cms"
 import EditorComponent from "./EditorComponent"
-
 
 const AboutSettings = () => {
 
@@ -19,7 +17,7 @@ const AboutSettings = () => {
     const submitForm = (values) => {
         const rawData = {
             type: "about",
-            content: convertToRaw(values.editorValue?.getCurrentContent()).blocks
+            content: JSON.stringify(values.editorValue)
         }
         dispatch(AddCMS('ABOUT', rawData))
     }
@@ -30,7 +28,7 @@ const AboutSettings = () => {
         </CardHeader>
         <hr className="m-0" />
         <CardBody>
-            <EditorComponent submitForm={submitForm} data={data} />
+            <EditorComponent submitForm={submitForm} data={data[0] ? JSON.parse(data[0].content) : undefined} />
         </CardBody>
     </Card>
     </>
