@@ -44,7 +44,7 @@ export const fetchAllFaculty = () => dispatch => {
 export const fetchAllFacultyOptions = () => dispatch => {
   ServerApi().get(`/faculty`)
   .then(res => {
-    const data = res.data.map(values => { return {label: values.name, value: values._id} })
+    const data = res.data.map(values => ({label: values.name, value: values._id}))
     dispatch({
       type: GET_ALL_FACULTY_OPTIONS,
       payload: data

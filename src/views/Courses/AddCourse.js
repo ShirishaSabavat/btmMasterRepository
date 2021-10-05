@@ -12,32 +12,18 @@ import { fetchAllVideos } from "../../redux/actions/videos"
 import { AddCourseAPI } from "../../redux/actions/courses"
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 
-
-// import TagsInput from 'react-tagsinput'
-// import 'react-tagsinput/react-tagsinput.css' 
-
-// import "@pathofdev/react-tag-input/build/index.css"
-// import ReactTagInput from "@pathofdev/react-tag-input"
-
 const AddCourse = () => {
 
     const dispatch = useDispatch()
     const coursesData = useSelector(state => state.courses.courses)
     const imagesData = useSelector(state => state.media.medias)
     const allVideos = useSelector(state => state.videos.videos)
-    const faculty = useSelector(state => state.faculty.facultyOptions)
+    const facultyOptions = useSelector(state => state.faculty.facultyOptions)    
 
-    const [facultyOptions, setFacultyOptions] = useState({})
     const [selectedImg, setSelectedImg] = useState(sampleImg)
     const [editModal, setModal] = useState({
         modal: false
       })
-
-      useEffect(() => {
-        faculty.map(values => {
-            setFacultyOptions({label: values.name, value: values._id})
-        })
-      }, [faculty])
 
       useEffect(() => {
         dispatch(fetchAllFacultyOptions())
@@ -52,14 +38,6 @@ const AddCourse = () => {
     const toggleFileModal = () => {
         setFileModalState((prevState) => !prevState)
     }
-    
-    // const [state, setState] = useState({
-    //     tags: []
-    // })
-
-    // const handleChange = (tags) => {
-    //     setState({tags})
-    // }
 
     const initialValues = {
         image: selectedImg,
@@ -70,7 +48,6 @@ const AddCourse = () => {
         courseValidity:"",
         price:"",
         videoLink:[],
-        // tags: state.tags
         tags:"",
         faculty:""
     }
@@ -127,7 +104,6 @@ const AddCourse = () => {
                 <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
-                            console.log("ff", formik.values)
                             return (
                                 <Form >
                                     <Label for="courseName">Preview Image</Label>
@@ -244,13 +220,13 @@ const AddCourse = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    {/* <Row className="mb-1">
+                                    <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="faculty">Faculty</Label>
                                                 <CustomSelectField
                                                     value={formik.values.faculty}
-                                                    options={facultyOptions}
+                                                    options={facultyOptions.map(values => values)}
                                                     onChange={(value) => formik.setFieldValue("faculty", value.value)
                                                 } />
                                                 <ErrorMessage
@@ -260,7 +236,7 @@ const AddCourse = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                    </Row> */}
+                                    </Row>
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">

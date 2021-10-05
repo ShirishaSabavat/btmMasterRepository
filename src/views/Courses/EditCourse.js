@@ -6,10 +6,10 @@ import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from "react-router-dom"
 
 import {EditCourseAPI, fetchCourseById} from "../../redux/actions/courses/index"
-import { fetchVideoById } from "../../redux/actions/videos"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 import { BASE_URL } from '../../utility/serverSettings'
+import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 
 const EditCourse = () => {
 
@@ -18,12 +18,17 @@ const EditCourse = () => {
     const history = useHistory()
     const CourseData = useSelector(state => state.courses.course)
     const allVideos = useSelector(state => state.videos.video)
+    const facultyOptions = useSelector(state => state.faculty.facultyOptions)  
 
     const id = history.location?.params?.id
 
     useEffect(() => {
         dispatch(fetchCourseById(id))
     }, [id])
+
+    useEffect(() => {
+        dispatch(fetchAllFacultyOptions())
+      }, [])
     
     useEffect(() => {
         // CourseData?.videos?.map(value => {
@@ -51,7 +56,8 @@ const EditCourse = () => {
         courseDetails: CourseData?.details || "",
         courseValidity: CourseData?.validity || "",
         price: CourseData?.price || "",
-        videoLink: allVideos || ""
+        videoLink: allVideos || "",
+        faculty: CourseData?.faculty || ""
     }
 
     const validationSchema = Yup.object().shape({
@@ -61,7 +67,8 @@ const EditCourse = () => {
         courseCode: Yup.string().required("Required"),
         courseDetails: Yup.string().required("Required"),
         courseValidity: Yup.number().positive().integer().required("Required"),
-        price: Yup.number().positive().integer().required("Required")
+        price: Yup.number().positive().integer().required("Required"),
+        faculty: Yup.string().required("Required")
         // videoLink: Yup.string().required("Required")
     })
 
@@ -81,10 +88,11 @@ const EditCourse = () => {
             code: values.courseCode,
             type: values.courseType,
             name: values.courseName,
-            image: values.image
+            image: values.image,
+            faculty: values.faculty
         }
 
-        dispactch(EditCourseAPI(rawData))
+        dispatch(EditCourseAPI(rawData))
 
     }
 
@@ -218,6 +226,23 @@ const EditCourse = () => {
                                                 </InputGroup>
                                                 <ErrorMessage
                                                     name="price"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row className="mb-1">
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="faculty">Faculty</Label>
+                                                <CustomSelectField
+                                                    value={formik.values.faculty}
+                                                    options={facultyOptions.map(values => values)}
+                                                    onChange={(value) => formik.setFieldValue("faculty", value.value)
+                                                } />
+                                                <ErrorMessage
+                                                    name="faculty"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
