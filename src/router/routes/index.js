@@ -10,6 +10,7 @@ import MyCommissionRoute from "./MyCommissionRoute"
 import MyMessagesRoute from "./MyMessagesRoute"
 import MyPayoutsRoute from "./MyPayoutsRoute"
 import MyReportsRoute from "./MyReportsRoute"
+import MyCourcesRoutes from './MyCourcesRoutes'
 import KYCRoute from "./KYCRoute"
 
 // ** Document title
@@ -32,6 +33,7 @@ const Routes = [
     ...MyMessagesRoute,
     ...MyPayoutsRoute,
     ...MyReportsRoute,
+    ...MyCourcesRoutes,
     ...KYCRoute
     ]
 
