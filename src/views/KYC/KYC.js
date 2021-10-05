@@ -22,7 +22,7 @@ const KYC = () => {
     <Card>
       <CardHeader><CardTitle>KYC Settings</CardTitle></CardHeader>
       <hr className="m-0" />
-        <Nav tabs>
+        <Nav tabs className='p-1'>
           <NavItem>
             <NavLink
               active={active === '1'}
@@ -90,7 +90,7 @@ const KYC = () => {
             </NavLink>
           </NavItem>
         </Nav>
-        <hr />
+        <hr className="m-0" />
         <TabContent className='py-50' activeTab={active}>
           <TabPane tabId='1'>
               <PersonalInfoComponent />
