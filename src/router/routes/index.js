@@ -12,6 +12,7 @@ import MyPayoutsRoute from "./MyPayoutsRoute"
 import MyReportsRoute from "./MyReportsRoute"
 import MyCourcesRoutes from './MyCourcesRoutes'
 import KYCRoute from "./KYCRoute"
+import CourseScheduleRoute from "./CourseScheduleRoute"
 
 // ** Document title
 const TemplateTitle = '%s - ATS School Management'
@@ -34,7 +35,8 @@ const Routes = [
     ...MyPayoutsRoute,
     ...MyReportsRoute,
     ...MyCourcesRoutes,
-    ...KYCRoute
+    ...KYCRoute,
+    ...CourseScheduleRoute
     ]
 
 export { DefaultRoute, TemplateTitle, Routes }

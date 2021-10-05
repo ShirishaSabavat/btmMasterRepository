@@ -59,6 +59,13 @@ let Navigation = [
     permissions: ["ADMIN"]
   },
   {
+    id: 'courseSchedule',
+    title: 'Course Schedule',
+    icon: <Briefcase size={20} />,
+    navLink: '/course-schedule',
+    permissions: ["ADMIN"]
+  },
+  {
     id: 'videos',
     title: 'Videos',
     icon: <Youtube size={20} />,
