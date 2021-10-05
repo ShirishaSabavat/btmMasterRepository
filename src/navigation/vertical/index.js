@@ -1,4 +1,4 @@
-import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle } from 'react-feather'
+import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2 } from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 let Navigation = [
@@ -84,6 +84,13 @@ let Navigation = [
     title: 'KYC',
     icon: <CheckCircle size={20} />,
     navLink: '/admin/kyc',
+    permissions: ["ADMIN"]
+  },
+  {
+    id: 'socialMedia',
+    title: 'Social Media',
+    icon: <Share2 size={20} />,
+    navLink: '/admin/social-media',
     permissions: ["ADMIN"]
   },
   {

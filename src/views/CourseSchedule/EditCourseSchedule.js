@@ -47,8 +47,8 @@ const EditCourseSchedule = () => {
 
     const validationSchema = Yup.object().shape({
         courseId: Yup.string().required("Required"),
-        startdate: Yup.string().required("Required"),
-        enddate: Yup.string().required("Required"),
+        startdate: Yup.date().required("Required"),
+        enddate: Yup.date().required("Required"),
         starttime: Yup.string().required("Required"),
         endtime: Yup.string().required("Required"),
         location: Yup.string().required("Required"),
@@ -112,8 +112,6 @@ const EditCourseSchedule = () => {
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
-                                                data-enable-time
-                                                enable-time
                                                 name="startdate"
                                                 value={formik.values.startdate}
                                                 onChange={(date) => {
@@ -128,7 +126,6 @@ const EditCourseSchedule = () => {
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
-                                                data-enable-time
                                                 name="enddate"
                                                 value={formik.values.enddate}
                                                 onChange={(date) => {
