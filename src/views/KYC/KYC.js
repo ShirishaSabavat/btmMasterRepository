@@ -87,7 +87,7 @@ const KYC = () => {
             >
               <Home size={14} />
               <span className='align-middle'>Bussiness Address</span>
-            </NavLink>
+            </NavLink> 
           </NavItem>
         </Nav>
         <hr className="m-0" />
