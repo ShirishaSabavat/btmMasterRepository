@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
 import DataTable from "react-data-table-component"
+import {Trash, Eye} from "react-feather"
 import {Link} from "react-router-dom"
-import {Edit, Trash, Eye} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 
 import DeleteModal from "./Modals/DeleteModal"
-import {fetchAllCourseSchedules, deleteCourseSchedule} from "../../redux/actions/courseSchedule/index"
+import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
 
-const CourseSchedule = () => {
+const UserTable = () => {
 
   const dispatch = useDispatch()
-  const workshopData = useSelector(state => state.courseSchedule.courseSchedules) 
 
   const [defaultAlert, setDefaultAlert] = useState({
     alert: false,
@@ -32,29 +31,45 @@ const CourseSchedule = () => {
 
     const tableColumns = [
         {
-          name: "Batch No",
-          selector: "batchNo",
+          name: "SNo",
+          selector: "sno",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.batchNo}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.sno}</p>
           )
         },
         {
-          name: "Course Name",
-          selector: "courseName",
+          name: "Name",
+          selector: "name",
           sortable: true,
           cell: (row) => (
             <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
               <div className="user-info text-truncate ml-xl-50 ml-0">
                 <p
-                  title={row.courseId}
+                  title={row.name}
                   className="d-block text-bold-500 text-truncate mb-0"
                 >
-                  {row.courseId}
+                  {row.name}
                 </p>
               </div>
             </div>
           )
+        },
+        {
+        name: "Phone No",
+        selector: "phno",
+        sortable: true,
+        cell: (row) => (
+            <p className="text-bold-500 text-truncate mb-0">{row.phno}</p>
+        )
+        },
+        {
+        name: "Email",
+        selector: "email",
+        sortable: true,
+        cell: (row) => (
+            <p className="text-bold-500 text-truncate mb-0">{row.email}</p>
+        )
         },
         {
           name: "Date",
@@ -63,25 +78,8 @@ const CourseSchedule = () => {
           height:"200px",
           cell: (row) => (
             <div className="d-flex flex-wrap">
-              <p className="text-bold-500 text-wrap mb-0">From: {row.startDate}</p>
-              <p className="text-bold-500 mb-0">To: {row.endDate}</p>
+              <p className="text-bold-500 text-wrap mb-0">{row.date}</p>
             </div>
-          )
-        },
-        {
-          name: "Location",
-          selector: "location",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.location}</p>
-          )
-        },
-        {
-          name: "Faculty",
-          selector: "faculty",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.faculty}</p>
           )
         },
         {
@@ -108,18 +106,8 @@ const CourseSchedule = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/view-course-schedule", params: {id}}}>
+                        <Link to={{pathname: "/view-user-data", params: {id}}}>
                             <Eye size={15} />
-                        </Link>
-                        </Button>
-                    </li>
-                    <li className="list-inline-item">
-                        <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-warning"
-                        >
-                        <Link to={{pathname: "/edit-course-schedule", params: {id}}}>
-                            <Edit size={15} />
                         </Link>
                         </Button>
                     </li>
@@ -142,18 +130,18 @@ const CourseSchedule = () => {
       
   // Fetching Data 
   useEffect(() => {
-    dispatch(fetchAllCourseSchedules())
+    dispatch(fetchAllUsersData())
   }, [confirmAlert])
 
    //Deleting Data
    const deleteid = defaultAlert.did
    useEffect(() => {
      if (confirmAlert) {
-       dispatch(deleteCourseSchedule(deleteid))
+       dispatch(deleteUser(deleteid))
      }
    }, [confirmAlert, deleteid, dispatch])
 
-    // const workshopData = [{_id: "123", batchNo: 1, courseName: "sample1", startdate: "2-2-2021", enddate:"4-4-2021", location: "HYD", faculty: "sir 1", status: "ACTIVE" }]
+    const usersData = [{sno: 1, name: "sample1", phno: "0099009900", email:"sample@sample.com", date: "2-2-2021", status: "ACTIVE" }]
 
     const customStyles = {
         headCells: {
@@ -176,13 +164,12 @@ const CourseSchedule = () => {
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
-                    <CardTitle>Course Schedule</CardTitle>
-                    <Button color="primary" type="button"><Link to="/add-course-schedule" className="text-white">Add</Link></Button>
+                    <CardTitle>Users Data</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable
                     className="dataTable-custom"
-                    data={workshopData}
+                    data={usersData}
                     columns={tableColumns}
                     noHeader
                     pagination
@@ -203,4 +190,4 @@ const CourseSchedule = () => {
     </Row>
 }
 
-export default CourseSchedule
+export default UserTable

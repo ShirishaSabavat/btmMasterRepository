@@ -11,6 +11,8 @@ import courses from "./courses"
 import cms from "./cms"
 import faculty from "./faculty"
 import organization from "./settings/organization"
+import courseSchedule from "./courseSchedule"
+import user from "./user"
 
 const rootReducer = combineReducers({
   auth,
@@ -21,7 +23,9 @@ const rootReducer = combineReducers({
   courses,
   cms,
   faculty,
-  organization
+  organization,
+  courseSchedule,
+  ...user
 })
 
 export default rootReducer
