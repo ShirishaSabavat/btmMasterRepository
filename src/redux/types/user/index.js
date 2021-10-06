@@ -1,0 +1,2 @@
+export const FETCH_ALL_USER_DATA = "FETCH_ALL_USER_DATA"
+export const FETCH_USER_BY_ID = "FETCH_USER_BY_ID"

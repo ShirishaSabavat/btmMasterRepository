@@ -2,7 +2,7 @@ import React from "react"
 import {Card, CardHeader, CardBody, CardTitle, CardImg, CustomInput, FormGroup, Button} from "reactstrap"
 import {Formik, Form} from "formik"
 
-import ImgSam from "../../../assets/images/portrait/small/avatar-s-1.jpg"
+const ImgSam = "/assets/images/default-image.jpg"
 
 const Images = () => {
     const submitForm = (values) => {

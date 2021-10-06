@@ -1,11 +1,13 @@
-import { GET_ALL_COURSES, GET_COURSE_BY_ID } from '../../types/courses'
+import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS, FETCH_WORKSHOP } from '../../types/courses'
 
 const initialState = {
   courses: [],
-  course: {}
+  course: {},
+  courseOptions: [],
+  workshops: []
 }
 
-const courseReducer = (state = initialState, action) => {
+const course = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_COURSES:
       return {...state, courses: action.payload}
@@ -13,9 +15,14 @@ const courseReducer = (state = initialState, action) => {
     case GET_COURSE_BY_ID:
       return {...state, course: action.payload}
 
+    case GET_ALL_COURSES_OPTIONS:
+      return {...state, courseOptions: action.payload}
+    case FETCH_WORKSHOP:
+      return {...state, workshops: action.payload}
+
     default:
       return state
   }
 }
 
-export default courseReducer
+export default course

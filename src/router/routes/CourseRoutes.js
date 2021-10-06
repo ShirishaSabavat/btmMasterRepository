@@ -11,10 +11,6 @@ const CourseRoutes = [
     component: lazy(() => import('../../views/Courses/CoursesTable'))
   },
   {
-    path: '/schedule',
-    component: lazy(() => import('../../views/Courses/Schedule'))
-  },
-  {
     path: '/schedule-table',
     component: lazy(() => import('../../views/Courses/ScheduleTable'))
   },

@@ -4,27 +4,30 @@ import {useDispatch, useSelector} from "react-redux"
 
 import FileUploadModal from "./FileUploadModal"
 import { BASE_URL } from '../../utility/serverSettings'
-import {fetchAllMedia} from "../../redux/actions/media/index"
+import { fetchAllMedia } from "../../redux/actions/media/index"
 
 const ImagePickerComponent = (props) => {
     const {selectedImg} = props
 
     const dispatch = useDispatch()
 
-    const [reFetch, setReFetch] = useState(false)
-    const [images] = useState(useSelector(state => state.media.medias))
+    const images = useSelector(state => state.media.medias)
 
     useEffect(() => {
         dispatch(fetchAllMedia())
-    }, [reFetch])
+    }, [])
 
     return (
     <Modal scrollable isOpen={props.modalState} toggle={props.onClose} className="modal-lg">
         <ModalHeader>Media Picker</ModalHeader>
-        <ModalBody className="p-3 justify-content-around align-items-center">
+        <ModalBody className="p-1 justify-content-around align-items-center">
             <div className="row">
-            <FileUploadModal setReFetch={setReFetch} />
-                {images?.map(values => <div className="col"><img 
+            
+            <FileUploadModal />
+
+                {console.log({images})}
+
+                {images.reverse().map(values => <div className="col-auto"><img 
                         src={`${BASE_URL}uploads/${values.file}`} 
                         alt="image" 
                         name="imgName1" 
@@ -34,10 +37,10 @@ const ImagePickerComponent = (props) => {
                         onClick={() => { props.setSelectedImg(`${BASE_URL}uploads/${values.file}`); props.toggleFileModal() }} /></div>)}
             </div>
         </ModalBody>
-        <ModalFooter>
+        {/* <ModalFooter>
             <Button type="button" color="danger" onClick={props.onClose}>Close</Button>
             <Button type="button" color="success" onClick={props.onClose}>Done</Button>
-        </ModalFooter>
+        </ModalFooter> */}
     </Modal>
   )
 }

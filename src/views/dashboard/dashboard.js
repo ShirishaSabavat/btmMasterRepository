@@ -15,6 +15,13 @@ import {
 
 const statsData = [
     {
+        title: 'Users',
+        count: '0',
+        role: ['ADMIN'],
+        color: 'bg-light-danger',
+        icon: <Users size={24} />
+    },
+    {
         title: 'Videos',
         count: '0',
         color: 'bg-light-info',

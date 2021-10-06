@@ -5,10 +5,10 @@ import { toast } from 'react-toastify'
 export const fetchAllMedia = () => dispatch => {
   ServerApi().get('/media')
   .then(res => {
-    const data = res.data.map(values => values) 
+    // const data = res.data.map(values => values) 
     dispatch({
       type: GET_ALL_MEDIA,
-      payload: data
+      payload: res.data
     })
   })
   .catch(e => {
@@ -37,13 +37,12 @@ export const fetchAllMedia = () => dispatch => {
 // }
 
 
-export const postMedia = (formdata, setReFetch) => (dispatch) => {
+export const postMedia = (formdata) => (dispatch) => {
   ServerApi().post("/media", formdata).then(res => {
     toast.success("Successfully Uploaded Image", {
       position: toast.POSITION.BOTTOM_CENTER
     })
-    setReFetch(prevState => !prevState)
-    console.log(e)
+    dispatch(fetchAllMedia())
   }).catch(e => {
     toast.error("Error in Uploading Image", {
       position: toast.POSITION.BOTTOM_CENTER

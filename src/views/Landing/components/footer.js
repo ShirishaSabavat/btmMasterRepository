@@ -21,13 +21,13 @@ const Footer = () => {
                 <h5 className="mb-2" style={{fontSize: 16, fontWeight: 300, color: '#a5a5a5'}}>Mr. Br SHAFI (MSW)  Shaikh Shafiullah is popularly knows as brother Shafi. He is founder president of mission Nenu Saitham Samajam kosam. Br Shafi has done Masters Degree from Osmaniya university in MSW, master in social work with medical and psychiatric social work specialization.</h5>  
 
                 <ButtonGroup >
-                    <IconButton color="info" component="span">
+                    <IconButton onClick={() => window.open("https://www.facebook.com/BRSHAFI/", "_blank")} color="info" component="span">
                         <Facebook />
                     </IconButton>
-                    <IconButton color="warning" component="span">
+                    <IconButton onClick={() => window.open("https://www.instagram.com/brshafi/", "_blank")} color="warning" component="span">
                         <Instagram />
                     </IconButton>
-                    <IconButton color="error" component="span">
+                    <IconButton onClick={() => window.open("https://www.youtube.com/c/BRSHAFI", "_blank")} color="error" component="span">
                         <Youtube />
                     </IconButton>
 

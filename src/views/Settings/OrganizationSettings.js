@@ -4,10 +4,28 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import { Country, State, City }  from 'country-state-city'
 import {Home, Book, Phone, MapPin, User, Key, Mail } from "react-feather"
+import {useDispatch, useSelector} from "react-redux"
 
+import {fetchAllOrganizationSettings, postOrganizationSettings} from "../../redux/actions/settings/organization"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
+import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
+import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 
 const OrganizationSettings = () => {
+
+    const dispatch = useDispatch()
+    const organizationData = useSelector(state => state.organization.organization)
+
+    const [selectedImg, setSelectedImg] = useState(sampleImg)
+    const [editModal, setModal] = useState({
+        modal: false
+      })
+
+    const toggleModel = () => {
+    setModal((prevState) => {
+        return { modal: !prevState.modal }
+    })
+    }
     
   const allCountries = Country.getAllCountries().map(values => { return {label : values.name, value : values.isoCode } })
 
@@ -28,43 +46,47 @@ const OrganizationSettings = () => {
     setCityOptions(City.getCitiesOfState(CountryCode, StateCode).map(values => { return {label : values.name, value: values.stateCode } }))
   }, [selectedState])
 
+  useEffect(() => {
+      dispatch(fetchAllOrganizationSettings())
+  }, [])
+
   const countryChangeHadler = (value, formik) => {
-    formik.setFieldValue("country", value.label)
+    formik.setFieldValue("country", value.value)
     setSelectedCountry(value.value)
   }
 
   const StateChangeHadler = (value, formik) => {
     console.log("val", value)
-    formik.setFieldValue("state", value.label)
+    formik.setFieldValue("state", value.value)
     setSelectedState(value)
   }
 
     const initialValues = {
-        orgName:"",
-        regNo:"",
-        country:"IN",
-        state:"",
-        city:"",
-        pincode:"",
-        email:"",
-        webaddress:"",
-        phNo:"",
-        personName:"",
-        address:"",
-        username:"",
-        password:"",
-        panNo:"",
-        gstNo:"",
-        cinNo:"",
-        pfNo:"",
-        prdNo:"",
-        esiNo:"",
-        logo:""
+        orgName: organizationData[0]?.name || "",
+        regNo: organizationData[0]?.regNo || "",
+        country: organizationData[0]?.country || "IN",
+        state: organizationData[0]?.state || "",
+        city: organizationData[0]?.city || "",
+        pincode: organizationData[0]?.pinCode || "",
+        email: organizationData[0]?.email || "",
+        webaddress: organizationData[0]?.webaddress || "",
+        phNo: organizationData[0]?.phoneNo || "",
+        personName: organizationData[0]?.contactPerson || "",
+        address:organizationData[0]?.address || "",
+        username: organizationData[0]?.username || "",
+        password: organizationData[0]?.password || "",
+        panNo: organizationData[0]?.pAN || "",
+        gstNo: organizationData[0]?.gST || "",
+        cinNo: organizationData[0]?.cIN || "",
+        pfNo: organizationData[0]?.pF || "",
+        prdNo: organizationData[0]?.prdNo || "",
+        esiNo: organizationData[0]?.eSI || "",
+        logo: organizationData[0]?.logo || selectedImg
     }
 
     const validationSchema = Yup.object().shape({
         orgName: Yup.string().required("Required"),
-        regNo: Yup.number().positive().integer().required("Required"),
+        regNo: Yup.string().required("Required"),
         country: Yup.string().required("Required"),
         state:  Yup.string().required("Required"),
         city:  Yup.string().required("Required"),
@@ -76,17 +98,39 @@ const OrganizationSettings = () => {
         address:Yup.string().required("Required"),
         username:Yup.string().required("Required"),
         password:Yup.string().required("Required"),
-        panNo: Yup.number().positive().integer().required("Required"),
-        gstNo: Yup.number().positive().integer().required("Required"),
-        cinNo: Yup.number().positive().integer().required("Required"),
-        pfNo: Yup.number().positive().integer().required("Required"),
-        prdNo: Yup.number().positive().integer().required("Required"),
-        esiNo: Yup.number().positive().integer().required("Required"),
+        panNo: Yup.string().required("Required"),
+        gstNo: Yup.string().required("Required"),
+        cinNo: Yup.string().required("Required"),
+        pfNo: Yup.string().required("Required"),
+        prdNo: Yup.string().required("Required"),
+        esiNo: Yup.string().required("Required"),
         logo:Yup.string().required("Required")
     })
 
     const submitForm = (values) => {
         console.log("values", values)
+
+        const id = organizationData[0]?._id
+
+        const rawData =  {
+            logo: values.logo,
+            eSI: values.esiNo,
+            pF: values.pfNo,
+            cIN: values.cinNo,
+            gST: values.gstNo,
+            pAN: values.panNo,
+            phoneNo: values.phNo,
+            contactPerson: values.personName,
+            address: values.address,
+            pinCode: values.pincode,
+            city: values.city,
+            state: values.state,
+            country: values.country,
+            regNo: values.regNo,
+            name: values.orgName
+        }
+
+        dispatch(postOrganizationSettings(id, rawData))
     }
 
 
@@ -98,7 +142,7 @@ const OrganizationSettings = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form>
@@ -261,7 +305,7 @@ const OrganizationSettings = () => {
                                                     </InputGroupText>
                                                     </InputGroupAddon>
                                                     <Input
-                                                    type="number"
+                                                    type="text"
                                                     name="webaddress"
                                                     id="webaddress"
                                                     {...formik.getFieldProps("webaddress")}
@@ -410,7 +454,7 @@ const OrganizationSettings = () => {
                                                 <Label for="panNo">Pan No</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="string"
                                                     name="panNo"
                                                     id="panNo"
                                                     {...formik.getFieldProps("panNo")}
@@ -429,7 +473,7 @@ const OrganizationSettings = () => {
                                                 <Label for="gstNo">GST No</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="string"
                                                     name="gstNo"
                                                     id="gstNo"
                                                     {...formik.getFieldProps("gstNo")}
@@ -449,7 +493,7 @@ const OrganizationSettings = () => {
                                                 <Label for="prdNo">Provident Fund No</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="string"
                                                     name="prdNo"
                                                     id="prdNo"
                                                     {...formik.getFieldProps("prdNo")}
@@ -469,7 +513,7 @@ const OrganizationSettings = () => {
                                                 <Label for="esiNo">ESI No</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="string"
                                                     name="esiNo"
                                                     id="esiNo"
                                                     {...formik.getFieldProps("esiNo")}
@@ -491,7 +535,7 @@ const OrganizationSettings = () => {
                                                 <Label for="cinNo">CIN No</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="string"
                                                     name="cinNo"
                                                     id="cinNo"
                                                     {...formik.getFieldProps("cinNo")}
@@ -511,7 +555,7 @@ const OrganizationSettings = () => {
                                                 <Label for="pfNo">PF No</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="string"
                                                     name="pfNo"
                                                     id="pfNo"
                                                     {...formik.getFieldProps("pfNo")}
@@ -526,22 +570,28 @@ const OrganizationSettings = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col sm="12" md="4">
-                                            <FormGroup>
-                                                <Label for="logo">Logo</Label>
-                                                <CustomInput type='file' 
-                                                    name="logo"
-                                                    id="logo"
-                                                    {...formik.getFieldProps("logo")}
-                                                />
-                                                <ErrorMessage
-                                                    name="logo"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
+                                    </Row>
+                                    <Row className="d-flex">
+                                        <Col sm="12" md="5" className="mb-1">
+                                            <Row className="d-flex justify-content-around align-items-center">
+                                                <Col sm="12" md="8">
+                                                    <img src={formik.values.logo} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                </Col>
+                                                <Col sm="12" md="4">
+                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                                </Col>
+                                            </Row>
                                         </Col>
                                     </Row>
+                                    {editModal.modal ? (
+                                    <ImagePickerComponent
+                                        modalState={editModal.modal}
+                                        onClose={toggleModel}
+                                        toggleFileModal={toggleModel}
+                                        selectedImg={selectedImg}
+                                        setSelectedImg={setSelectedImg}
+                                    />
+                                    ) : null}
                                     <FormGroup className="d-flex justify-content-end">
                                         <Button color="primary" type="submit" >Save</Button>
                                     </FormGroup>

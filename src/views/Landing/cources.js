@@ -34,7 +34,7 @@ const Landing = () => {
         </Grid>
 
         <Grid className="bg-white" item container spacing={2}>
-            {courses.map((item) => (
+            {courses.filter((i) => i.type === 'Regular').map((item) => (
                 <CourseCard key={item._id} data={item} />
             ))}
         </Grid>
