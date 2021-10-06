@@ -26,10 +26,6 @@ const AddVideo = () => {
     })
     }
 
-    const toggleFileModal = () => {
-        setFileModalState((prevState) => !prevState)
-    }
-
     const initialValues = {
         title:"",
         image:selectedImg,

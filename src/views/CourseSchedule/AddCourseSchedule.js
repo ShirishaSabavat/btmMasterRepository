@@ -9,8 +9,8 @@ import {useDispatch, useSelector} from "react-redux"
 
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 import {fetchAllCoursesOptions, fetchCourseById} from "../../redux/actions/courses/index"
+import {AddCourseScheduleAPI} from "../../redux/actions/courseSchedule/index"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
-import "react-datepicker/dist/react-datepicker.css"
 
 const AddCourseSchedule = () => {
 
@@ -49,8 +49,8 @@ const AddCourseSchedule = () => {
         courseId: Yup.string().required("Required"),
         startdate: Yup.date().required("Required"),
         enddate: Yup.date().required("Required"),
-        starttime: Yup.string().required("Required"),
-        endtime: Yup.string().required("Required"),
+        starttime: Yup.date().required("Required"),
+        endtime: Yup.date().required("Required"),
         location: Yup.string().required("Required"),
         faculty: Yup.string().required("Required"),
         address: Yup.string().required("Required")
@@ -58,6 +58,19 @@ const AddCourseSchedule = () => {
 
     const submitForm = (values) => {
         console.log("values", values)
+
+        const rawData = {
+            courseId: values.courseId,
+            startDate: values.startdate,
+            endDate: values.enddate,
+            startTime: values.starttime,
+            endTime: values.endtime,
+            faculty: values.faculty,
+            address: values.address,
+            location: values.location
+        }
+
+        dispatch(AddCourseScheduleAPI(rawData))
     }
 
     return (<>
@@ -113,9 +126,13 @@ const AddCourseSchedule = () => {
                                                 <Flatpickr
                                                 className="form-control"
                                                 name="startdate"
+                                                id="startdate"
                                                 value={formik.values.startdate}
+                                                options={{
+                                                    dateFormat: "Y-m-d"
+                                                  }}
                                                 onChange={(date) => {
-                                                    formik.values.startdate = date
+                                                    formik.setFieldValue("startdate", date[0])
                                                 }} />
                                                 <ErrorMessage name="startdate" component="div" className="field-error text-danger" />
                                             </FormGroup>
@@ -127,9 +144,13 @@ const AddCourseSchedule = () => {
                                                 <Flatpickr
                                                 className="form-control"
                                                 name="enddate"
+                                                id="enddate"
                                                 value={formik.values.enddate}
+                                                options={{
+                                                    dateFormat: "Y-m-d"
+                                                  }}
                                                 onChange={(date) => {
-                                                    formik.values.enddate = date
+                                                    formik.setFieldValue("enddate", date[0])
                                                 }} />
                                                 <ErrorMessage name="enddate" component="div" className="field-error text-danger" />
                                             </FormGroup>
@@ -152,7 +173,7 @@ const AddCourseSchedule = () => {
                                                   time_24hr: false
                                                 }}
                                                 onChange={(date) => {
-                                                    formik.values.starttime = date
+                                                    formik.values.starttime = date[0]
                                                 }} />
                                                 <ErrorMessage name="starttime" component="div" className="field-error text-danger" />
                                             </FormGroup>
@@ -174,7 +195,7 @@ const AddCourseSchedule = () => {
                                                 }}
                                                 value={formik.values.endtime}
                                                 onChange={(date) => {
-                                                    formik.values.endtime = date
+                                                    formik.values.endtime = date[0]
                                                 }} />
                                                 <ErrorMessage name="endtime" component="div" className="field-error text-danger" />
                                             </FormGroup>
