@@ -10,6 +10,7 @@ import media from "./media"
 import courses from "./courses"
 import cms from "./cms"
 import faculty from "./faculty"
+import organization from "./settings/organization"
 
 const rootReducer = combineReducers({
   auth,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   media,
   courses,
   cms,
-  faculty
+  faculty,
+  organization
 })
 
 export default rootReducer

@@ -11,7 +11,7 @@ const ImagePickerComponent = (props) => {
 
     const dispatch = useDispatch()
 
-    const [reFetch, setReFetch] = useState(false)
+    const [reFetch, setReFetch] = useState("")
     const [images] = useState(useSelector(state => state.media.medias))
 
     useEffect(() => {
