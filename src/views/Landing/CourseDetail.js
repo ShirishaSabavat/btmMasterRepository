@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useSkin } from '@hooks/useSkin'
 import { Link, useParams, useHistory } from 'react-router-dom'
-import { Facebook, Twitter, Mail, GitHub, Send } from 'react-feather'
+import { Calendar, MapPin, Send } from 'react-feather'
 import InputPasswordToggle from '@components/input-password-toggle'
-import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap'
+import { Media, Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import {Grid, Stack, Button, Card, CardActions, FormControl, CardContent, CardMedia, Typography, Chip, TextField} from '@mui/material'
+import Avatar from '@components/avatar'
+import {Grid, Radio, Divider, Button, Card, Dialog, DialogTitle, FormControl, CardContent, DialogContent, Typography, Chip, TextField} from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import ServerApi from '../../utility/ServerApi'
 import NavBar from './components/navbar'
 import { toast } from 'react-toastify'
-import { fetchCourseById } from '../../redux/actions/courses'
+import { fetchCourseById, fetchAllCourses } from '../../redux/actions/courses'
 import { DO_LOGIN } from '../../redux/types/auth'
 import Footer from './components/footer'
 import { BASE_URL } from '../../utility/serverSettings'
+// import CourseCard from './components/courseCard'
 
 const Landing = (route) => {
     const history = useHistory()
@@ -21,14 +23,26 @@ const Landing = (route) => {
     const [skin, setSkin] = useSkin()
 
     const [loading, setLoading] = useState(false)
+    const [registerModal, setRegisterModal] = useState(false)
+    const [loginModal, setLoginModal] = useState(false)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    const [otp, setOtp] = useState('')
+    const [chooseWorkshop, setChooseWorkshop] = useState('')
+    
 
     const { id } = useParams()
  
     const userData = useSelector(state => state.auth.userData)
     const course = useSelector(state => state.courses.course)
+    const workshops = useSelector(state => state.courses.workshops)
+    const courses = useSelector(state => state.courses.courses)
+
+
+    useEffect(() => {
+        dispatch(fetchAllCourses())
+    }, [])
 
     useEffect(() => {
         dispatch(fetchCourseById(id))
@@ -160,72 +174,218 @@ const Landing = (route) => {
     <Grid container spacing={2}>
         <NavBar />
 
-        <Grid className="bg-white py-5" item xs={12}>
-            <Row className=''>
-                <Col className='d-lg-flex align-items-center' lg='8' sm='12'>
-                <div className='w-100 px-5'>
-                    <img className='img-fluid' src={`${BASE_URL}uploads/${course.image}`} alt='Login V2' />
-                    <h2 style={{fontSize: 42, fontWeight: 'bold'}} className="mt-2">{course.name}</h2>
-                    <p className="mt-1">{course.details}</p>
-                </div>
-                </Col>
-                <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
-                    <div className="p-2">
-                        <Card >
-                            <Typography mx={3} className="text-center mt-3" variant="h5" component="div">
-                            {!userData.access_token ? 'Get started today' : 'Purchase This Course'}
-                            </Typography>
-                            <CardContent>
-                                {!userData.access_token && (
-                                <>
-                                <FormControl fullWidth sx={{ p: 1 }}>
-                                    <TextField
-                                        id="name"
-                                        label="Name"
-                                        defaultValue=""
-                                        variant="standard"
-                                        // error={name === ''}
-                                        // helperText="Name is required"
-                                        onChange={e => setName(e.target.value)}
-                                    />
-                                </FormControl>
-                                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
-                                    <TextField
-                                        id="email"
-                                        label="Email"
-                                        defaultValue=""
-                                        variant="standard"
-                                        onChange={e => setEmail(e.target.value)}
-                                    />
-                                    </FormControl>
-                                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
-                                    <TextField
-                                        id="phone"
-                                        label="Phone No."
-                                        defaultValue=""
-                                        variant="standard"
-                                        onChange={e => setPhone(e.target.value)}
-                                    />
-                                </FormControl>
-                                </>
-                                )}
-
-                                <div className="text-center mt-2">
-                                    <Button 
-                                        loading={loading}
-                                        loadingPosition="start"
-                                        variant="contained" 
-                                        style={{borderRadius: 2}}
-                                        onClick={() => displayRazorpay(100)}
-                                        endIcon={<Send />}
-                                    >{!userData.access_token ? "Join Now" : "Buy Now" }</Button>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-                </Col>
-            </Row>
+        <Grid className="bg-white py-5" item xs={12} md={9}>
+            <div className='w-100 px-5'>
+                <img className='img-fluid' src={`${BASE_URL}uploads/${course.image}`} alt='image' style={{maxHeight: 340}} />
+                
+                <h2 style={{fontSize: 42, fontWeight: 'bold'}} className="mt-2">{course.name}</h2>
+                <Chip color="primary" size="small" label="BAC Cource" onClick={() => null} />
+                
+                <h2 style={{fontSize: 32, fontWeight: 'bold'}} className="mt-2">₹ {course.price} /-</h2>
+                
+                <p className="mt-1">{course.details}</p>
+            </div>
+        
         </Grid>
+        <Grid className="bg-white py-5" item xs={12} md={3}>
+
+            <div className="p-2">
+                <Card >
+                    <Typography mx={2} className="text-center mt-2" variant="h5" component="div">
+                        {!userData.access_token ? 'Join Online Course' : 'Purchase This Course'}
+                    </Typography>
+                    <CardContent>
+
+                        <div className="text-center mt-2">
+                            <Button 
+                                loading={loading}
+                                loadingPosition="start"
+                                variant="contained" 
+                                style={{borderRadius: 2}}
+                                onClick={() => setRegisterModal(true)}
+                                endIcon={<Send />}
+                            >{!userData.access_token ? "Join Now" : "Buy Now" }</Button>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {workshops.length > 0 && (
+                <div className="p-2">
+                    <Card className="card-developer-meetup" >
+                        <Typography mx={2} mb={2} className="text-center mt-2" variant="h5" component="div">
+                            Workshops
+                        </Typography>
+                        <CardContent>
+
+                            {workshops.map((work) => (
+                                <Media>
+                                    <Avatar color='light-primary' className='rounded mr-1' icon={<Calendar size={18} />} />
+                                    <Media body>
+                                        <h6 className='mb-0'>{work.startDate}</h6>
+                                        <small>{work.startTime} to {work.endTime}</small>
+                                    </Media>
+                                    <Radio
+                                        checked={chooseWorkshop === work._id}
+                                        onChange={() => setChooseWorkshop(work._id)}
+                                        value="a"
+                                        name="radio-buttons"
+                                        inputProps={{ 'aria-label': work.startDate }}
+                                    />
+                                </Media>
+                            ))}
+
+                            <div className="text-center mt-2">
+                                <Button 
+                                    loading={loading}
+                                    loadingPosition="start"
+                                    variant="contained" 
+                                    style={{borderRadius: 2}}
+                                    onClick={() => setRegisterModal(true)}
+                                    endIcon={<Send />}
+                                >{!userData.access_token ? "Join Now" : "Buy Now" }</Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            )}
+        </Grid>
+
+        <Grid item md={12} xs={12}>
+        </Grid>
+
+        {course.type !== 'Bac' && (
+            <Grid className="bg-white pb-5" item xs={12}>
+                <Row className=''>
+                    <Col className='' lg='4' xs='12'>
+                        <img className='img-fluid' src="/assets/images/c2.jpg" alt='Login V2' />
+                    </Col>
+                    <Col className='' lg='8' xs='12'>
+                    <div className='w-100 px-4 mt-4'>
+                        <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
+                        <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                        <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
+                    </div>
+                    </Col>
+                </Row>
+            </Grid>
+        )}
+
+        {/* <Grid className="bg-white" pt={5} item container spacing={2}>
+            <Grid item md={12} xs={12}>
+                <Divider />
+            </Grid>
+
+            <Grid item md={12} xs={12}>
+                <h2 style={{paddingLeft: 38, fontSize: 24, fontWeight: 'bold'}} className="mt-2">You may also like</h2>
+            </Grid>
+
+            {courses.map((item) => (
+                <CourseCard goTo={(ln) => history.push(`/course/${ln}`)} key={item._id} data={item} />
+            ))}
+        </Grid> */}
+
+        <Dialog onClose={() => setRegisterModal(false)} open={registerModal}>
+            <DialogTitle className="text-center">Register & Join</DialogTitle>
+
+            <DialogContent style={{maxWidth: 370}}>
+            {!userData.access_token && (
+                <>
+                <FormControl fullWidth sx={{ p: 1 }}>
+                    <TextField
+                        id="name"
+                        label="Name"
+                        defaultValue=""
+                        variant="standard"
+                        // error={name === ''}
+                        // helperText="Name is required"
+                        onChange={e => setName(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                    <TextField
+                        id="email"
+                        label="Email"
+                        defaultValue=""
+                        variant="standard"
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                    </FormControl>
+                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                    <TextField
+                        id="phone"
+                        label="Phone No."
+                        defaultValue=""
+                        variant="standard"
+                        onChange={e => setPhone(e.target.value)}
+                    />
+                </FormControl>
+                </>
+            )}
+
+            <div className="text-center mt-2">
+                <Button 
+                    loading={loading}
+                    loadingPosition="start"
+                    variant="contained" 
+                    style={{borderRadius: 2}}
+                    onClick={() => displayRazorpay(course.price)}
+                    endIcon={<Send />}
+                >{!userData.access_token ? "Register & Join" : "Buy Now" }</Button>
+            </div>
+
+            <div className="text-center" style={{marginTop: 12}}>
+                <p style={{fontSize: 11, cursor: 'pointer'}} onClick={() => { setRegisterModal(false); setLoginModal(true) }}>Aready have an account ?</p>
+            </div>
+        
+            </DialogContent>
+        </Dialog>
+
+        <Dialog onClose={() => setLoginModal(false)} open={loginModal}>
+            <DialogTitle className="text-center">Login</DialogTitle>
+
+            <DialogContent style={{maxWidth: 370}}>
+            {!userData.access_token && (
+                <>
+                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                    <TextField
+                        id="phone"
+                        label="Phone No."
+                        defaultValue=""
+                        variant="standard"
+                        onChange={e => setPhone(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                    <TextField
+                        id="otp"
+                        label="OTP"
+                        defaultValue=""
+                        variant="standard"
+                        helperText={"please enter phone no. otp will be sent automatically."}
+                        onChange={e => setOtp(e.target.value)}
+                    />
+                </FormControl>
+                </>
+            )}
+
+            <div className="text-center mt-2">
+                <Button 
+                    loading={loading}
+                    loadingPosition="start"
+                    variant="contained" 
+                    style={{borderRadius: 2}}
+                    onClick={() => doLogin()}
+                    endIcon={<Send />}
+                >{"Login"}</Button>
+            </div>
+
+            <div className="text-center" style={{marginTop: 12}}>
+                <p style={{fontSize: 11, cursor: 'pointer'}} onClick={() => { setLoginModal(false); setRegisterModal(true) }}>Don't have an account ?</p>
+            </div>
+        
+            </DialogContent>
+        </Dialog>
 
         <Footer />
 

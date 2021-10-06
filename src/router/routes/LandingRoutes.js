@@ -27,6 +27,14 @@ const LandingRoute = [
     }
   },
   {
+    path: '/bac-courses',
+    component: lazy(() => import('../../views/Landing/bacCources')),
+    layout: 'BlankLayout',
+    meta: {
+      publicRoute: true
+    }
+  },
+  {
     path: '/about-us',
     component: lazy(() => import('../../views/Landing/aboutUs')),
     layout: 'BlankLayout',

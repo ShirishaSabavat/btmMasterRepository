@@ -7,8 +7,12 @@ const SettingsRoute = [
     component: lazy(() => import('../../views/Settings/OrganizationSettings'))
   },
   {
-    path: '/faculty-settings',
-    component: lazy(() => import('../../views/Settings/FacultySettings'))
+    path: '/faculty',
+    component: lazy(() => import('../../views/Settings/faculty/Faculty'))
+  },
+  {
+    path: '/add-faculty',
+    component: lazy(() => import('../../views/Settings/faculty/AddFaculty'))
   }
 ]
 

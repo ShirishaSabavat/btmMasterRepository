@@ -8,6 +8,10 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleLogin } from '../../redux/actions/auth'
+import NavBar from '../Landing/components/navbar'
+import Footer from '../Landing/components/footer'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -38,6 +42,8 @@ const Login = () => {
   }, [userData])
 
   return (
+    <>
+    <NavBar />
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/'>
@@ -48,10 +54,12 @@ const Login = () => {
             <img className='img-fluid' src='/assets/images/demo5.jpg' alt='Login V2' />
           </div>
         </Col>
-        <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+        <Col style={{backgroundColor: '#161749'}} className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
-            <CardTitle tag='h2' className='font-weight-bold mb-1'>
-              Welcome to Business Acharaya
+            <Card className="p-2">
+            <CardContent>
+            <CardTitle tag='h2' className='font-weight-bold'>
+              Welcome to Business Aachrya
             </CardTitle>
             <CardText className='mb-2'></CardText>
             <Form className='auth-login-form mt-2' onSubmit={e => e.preventDefault()}>
@@ -79,6 +87,8 @@ const Login = () => {
                 Log in
               </Button.Ripple>
             </Form>
+            </CardContent>
+            </Card>
             {/* <p className='text-center mt-2'>
               <span className='mr-25'>New on our platform?</span>
               <Link to='/'>
@@ -106,6 +116,9 @@ const Login = () => {
         </Col>
       </Row>
     </div>
+
+    <Footer />
+    </>
   )
 }
 

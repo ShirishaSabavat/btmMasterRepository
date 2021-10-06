@@ -1,30 +1,36 @@
 import React, {useState} from "react"
 import {FormGroup, Button} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
-import * as Yup from "yup"
-import { EditorState } from 'draft-js'
+import { EditorState, convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import '@styles/react/libs/editor/editor.scss'
+import draftToHtml from 'draftjs-to-html'
+import htmlToDraft from 'html-to-draftjs'
 
+const EditorComponent = ({data, submitForm}) => {
 
-const EditorComponent = ({submitForm}) => {
-    const [value, setValue] = useState(EditorState.createEmpty())
+    console.log({data})
+
+    const [value, setValue] = useState(data ? data : EditorState.createEmpty())
+
+    // console.log('convertToRaw(editorState.getCurrentContent(value))')
+    // console.log(draftToHtml(convertToRaw(value.getCurrentContent())))
 
     const initialValues = {
         editorValue: value
     }
 
-    const validationSchema = Yup.object().shape({
-        editorValue: Yup.string().required("Required")
-    })
-
     return  <div>
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
+        <Formik initialValues={initialValues} onSubmit={submitForm} enableReinitialize>
             {(formik) => {
                 return (
                     <Form>
                         <FormGroup>
-                            <Editor editorState={formik.values.editorValue} onEditorStateChange={data => setValue(data)} />
+                            <Editor 
+                                editorState={formik.values.editorValue} 
+                                onEditorStateChange={val => setValue(val.getCurrentContent()) } 
+                            />
+                            
                             <ErrorMessage
                                 name="editorValue"
                                 component="div"

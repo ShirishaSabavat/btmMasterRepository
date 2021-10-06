@@ -1,4 +1,4 @@
-import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle } from 'react-feather'
+import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User } from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 let Navigation = [
@@ -7,6 +7,13 @@ let Navigation = [
     title: 'Dashboard',
     icon: <Home size={20} />,
     navLink: '/dashboard',
+    permissions: ["ADMIN", "USER"]
+  },
+  {
+    id: 'user',
+    title: 'User',
+    icon: <User size={20} />,
+    navLink: '/users',
     permissions: ["ADMIN", "USER"]
   },
   {
@@ -21,34 +28,41 @@ let Navigation = [
     title: 'My Customers',
     icon: <Users size={20} />,
     navLink: '/admin/my-customers',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'mycommission',
     title: 'My Commission',
     icon: <Briefcase size={20} />,
     navLink: '/admin/my-commission',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'mypayouts',
     title: 'My Payouts',
     icon: <CreditCard size={20} />,
     navLink: '/admin/my-payouts',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'myreports',
     title: 'My Reports',
     icon: <FileText size={20} />,
     navLink: '/admin/my-reports',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'mymessages',
     title: 'My Messages',
     icon: <MessageSquare size={20} />,
     navLink: '/admin/my-messages',
+    permissions: ["BAC_USER"]
+  },
+  {
+    id: 'videos',
+    title: 'Videos',
+    icon: <Youtube size={20} />,
+    navLink: '/videos',
     permissions: ["ADMIN"]
   },
   {
@@ -59,10 +73,10 @@ let Navigation = [
     permissions: ["ADMIN"]
   },
   {
-    id: 'videos',
-    title: 'Videos',
-    icon: <Youtube size={20} />,
-    navLink: '/videos',
+    id: 'courseSchedule',
+    title: 'Course Schedule',
+    icon: <Briefcase size={20} />,
+    navLink: '/course-schedule',
     permissions: ["ADMIN"]
   },
   {
@@ -77,6 +91,13 @@ let Navigation = [
     title: 'KYC',
     icon: <CheckCircle size={20} />,
     navLink: '/admin/kyc',
+    permissions: ["BAC_USER"]
+  },
+  {
+    id: 'socialMedia',
+    title: 'Social Media',
+    icon: <Share2 size={20} />,
+    navLink: '/admin/social-media',
     permissions: ["ADMIN"]
   },
   {
@@ -166,7 +187,7 @@ let Navigation = [
         type: "item",
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
-        navLink: "/faculty-settings"
+        navLink: "/faculty"
       }
     ]
   }
