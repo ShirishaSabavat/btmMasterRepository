@@ -13,7 +13,7 @@ import {fetchAllCourses} from '../../redux/actions/courses'
 import { useEffect } from 'react'
 import Footer from './components/footer'
 
-const Landing = () => {
+const BacCources = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const [skin, setSkin] = useSkin()
@@ -30,11 +30,11 @@ const Landing = () => {
         <NavBar />
 
         <Grid item xs={12}>
-            <h2 className="text-center mb-2">Cources</h2>
+            <h2 className="text-center mb-2">BAC Cources</h2>
         </Grid>
 
         <Grid className="bg-white" item container spacing={2}>
-            {courses.filter((i) => i.type === 'Regular').map((item) => (
+            {courses.filter((i) => i.type === 'Bac').map((item) => (
                 <CourseCard key={item._id} data={item} />
             ))}
         </Grid>
@@ -45,4 +45,4 @@ const Landing = () => {
   )
 }
 
-export default Landing
+export default BacCources

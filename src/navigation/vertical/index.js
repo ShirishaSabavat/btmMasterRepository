@@ -84,7 +84,7 @@ let Navigation = [
     title: 'KYC',
     icon: <CheckCircle size={20} />,
     navLink: '/admin/kyc',
-    permissions: ["ADMIN"]
+    permissions: ["BAC_USER"]
   },
   {
     id: 'socialMedia',

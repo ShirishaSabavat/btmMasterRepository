@@ -1,4 +1,4 @@
-import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS } from '../../types/courses'
+import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS, FETCH_WORKSHOP } from '../../types/courses'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 
@@ -85,6 +85,20 @@ export const fetchCourseById = (id) => dispatch => {
   .then(res => {
     dispatch({
       type: GET_COURSE_BY_ID,
+      payload: res.data
+    })
+  })
+  .catch(e => {
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+
+  ServerApi().get(`/workshops/courceWorkshops/${id}`)
+  .then(res => {
+    dispatch({
+      type: FETCH_WORKSHOP,
       payload: res.data
     })
   })

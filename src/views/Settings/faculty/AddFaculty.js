@@ -4,14 +4,14 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch} from "react-redux"
 
-import sampleImg from "../../../assets/images/portrait/small/avatar-s-1.jpg"
+// import sampleImg from "/assets/images/default-image.jpg"
 import {AddFaculty} from "../../../redux/actions/faculty/index"
 import ImagePickerComponent from "../../UtilityComponents/ImagePickerComponent"
 
 const AddFacultyComponent = () => {
 
     const dispatch = useDispatch()
-    const [selectedImg, setSelectedImg] = useState(sampleImg)
+    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image.jpg')
     const [editModal, setModal] = useState({
         modal: false
       })

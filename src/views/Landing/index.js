@@ -158,7 +158,7 @@ const Landing = () => {
                     <div className='w-100 px-5 mt-4'>
                         <h2 style={{fontWeight: 'bold', fontSize: 48}}>We Organize  <br /> Effective Learning</h2>
                         <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
-                        <Button size="large" className="mt-2" variant="contained">About Us</Button>
+                        <Button onClick={() => history.push('about-us')} size="large" className="mt-2" variant="contained">About Us</Button>
                     </div>
                 </Col>
                 
@@ -187,7 +187,7 @@ const Landing = () => {
                         <h2 className="text-white" style={{fontWeight: 'bold', fontSize: 48}}>Our Trainings Workshops</h2>
                         <p className="text-white mt-3">Sharpen your skills. Be the best you can be</p>
                         <p className="text-white">Br Shafi Shaik Shafiulla is Popularly Known as  Brother Shafi  is Founder President of Mission Nenu Saitham Samajam Kosam. Br Shafi  has done Masters Degree from Osmania University in MSW Medical and Psychiatric Social Work.   He Awarded Gold Medal for His best services in  social work from Roda MISTRY college of social work, Osmania University. by Deputy CM and Educational Minister of Telangana State Sri Kadiyam Srihari Garu. Br Shafi is Master Motivator, life skills trainer and international orator. He has given many motivational training programs and Personality Development work shops in many schools, colleges, corporate companies and Police officials.</p>
-                        <Button className="mt-2" size="large" variant="contained">View Workshops</Button>
+                        <Button onClick={() => history.push('/all-courses')} className="mt-2" size="large" variant="contained">View Workshops</Button>
                     </div>
                 </Col>
                 
@@ -212,11 +212,27 @@ const Landing = () => {
             </Row>
         </Grid>
 
+        <Grid className="bg-white pb-5" item xs={12}>
+            <Row className=''>
+                <Col className='' lg='4' xs='12'>
+                    <img className='img-fluid' src="/assets/images/c2.jpg" alt='Login V2' />
+                </Col>
+                
+                <Col className='' lg='8' xs='12'>
+                <div className='w-100 px-4 mt-4'>
+                    <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
+                    <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                    <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
+                </div>
+                </Col>
+            </Row>
+        </Grid>
+
         <Grid className="pt-4" style={{background: 'floralwhite'}} item xs={12}>
             <div className='w-100 px-5 text-center'>
                 <h1 style={{fontSize: 45, marginBottom: 10, fontFamily: 'cursive', fontWeight: 'bold'}}>ACCOMPLISH MORE <br /> IN 2021</h1>
                 <p className="mb-2">MASTER YOUR TIME TO GET MORE DONE <br /> AND ACHIEVE MORE MEANINGFUL RESULTS</p>
-                <Button size="large" variant="contained">Cources</Button>
+                <Button onClick={() => history.push('/all-courses')} size="large" variant="contained">Cources</Button>
             </div>
 
             <img src="/assets/images/demo6.png" /> 

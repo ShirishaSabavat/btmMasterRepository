@@ -88,7 +88,7 @@ const EditCourse = () => {
             code: values.courseCode,
             type: values.courseType,
             name: values.courseName,
-            image: values.image,
+            image: values.image.replace(`${BASE_URL}uploads/`, ''),
             faculty: values.faculty
         }
 

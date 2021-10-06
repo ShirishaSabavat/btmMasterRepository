@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import ScheduleModal from "./Modals/Modal"
 import DeleteModal from "./Modals/DeleteModal"
 import {fetchAllVideos, deleteVideoById} from "../../redux/actions/videos/index"
-import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
+// import sampleImg from "/assets/images/default-image.jpg"
 import {BASE_URL} from '../../utility/serverSettings'
 
 const Videos = () => {

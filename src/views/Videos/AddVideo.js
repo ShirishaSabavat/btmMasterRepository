@@ -5,16 +5,17 @@ import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import {Link} from "react-feather"
 import {useDispatch} from "react-redux"
+import {BASE_URL} from '../../utility/serverSettings'
 
 import {AddVideoAPI} from "../../redux/actions/videos/index"
-import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
+// import sampleImg from "/assets/images/default-image.jpg"
 
 
 const AddVideo = () => {
 
     const dispatch = useDispatch()
 
-    const [selectedImg, setSelectedImg] = useState(sampleImg)
+    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image.jpg')
     const [editModal, setModal] = useState({
         modal: false
       })
@@ -52,7 +53,7 @@ const AddVideo = () => {
             duration: values.duration,
             description: values.description,
             link: values.videoLink,
-            image: selectedImg,
+            image: selectedImg.replace(`${BASE_URL}uploads/`, ''),
             title: values.title
         }
 

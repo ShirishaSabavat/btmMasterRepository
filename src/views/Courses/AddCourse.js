@@ -4,13 +4,14 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
 
-import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
+// import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import { fetchAllMedia } from "../../redux/actions/media"
 import { fetchAllVideos } from "../../redux/actions/videos"
 import { AddCourseAPI } from "../../redux/actions/courses"
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
+import { BASE_URL } from "../../utility/serverSettings"
 
 const AddCourse = () => {
 
@@ -20,7 +21,7 @@ const AddCourse = () => {
     const allVideos = useSelector(state => state.videos.videos)
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)    
 
-    const [selectedImg, setSelectedImg] = useState(sampleImg)
+    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image.jpg')
     const [editModal, setModal] = useState({
         modal: false
       })
@@ -68,7 +69,7 @@ const AddCourse = () => {
         console.log("course values", values)
 
         const rawData =  {
-            image: selectedImg,
+            image: selectedImg.replace(`${BASE_URL}uploads/`, ''),
             gst: 18,
             tags: values.tags,
             categories: "C",

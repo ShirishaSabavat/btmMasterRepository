@@ -1,9 +1,10 @@
-import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS } from '../../types/courses'
+import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS, FETCH_WORKSHOP } from '../../types/courses'
 
 const initialState = {
   courses: [],
   course: {},
-  courseOptions: []
+  courseOptions: [],
+  workshops: []
 }
 
 const course = (state = initialState, action) => {
@@ -16,6 +17,8 @@ const course = (state = initialState, action) => {
 
     case GET_ALL_COURSES_OPTIONS:
       return {...state, courseOptions: action.payload}
+    case FETCH_WORKSHOP:
+      return {...state, workshops: action.payload}
 
     default:
       return state
