@@ -51,16 +51,15 @@ const OrganizationSettings = () => {
   }, [])
 
   const countryChangeHadler = (value, formik) => {
-    formik.setFieldValue("country", value.label)
+    formik.setFieldValue("country", value.value)
     setSelectedCountry(value.value)
   }
 
   const StateChangeHadler = (value, formik) => {
     console.log("val", value)
-    formik.setFieldValue("state", value.label)
+    formik.setFieldValue("state", value.value)
     setSelectedState(value)
   }
-
 
     const initialValues = {
         orgName: organizationData[0]?.name || "",

@@ -21,11 +21,12 @@ export const fetchAllOrganizationSettings = () => dispatch => {
 
 export const postOrganizationSettings = (id, formdata) => (dispatch) => {
   ServerApi().patch(`/settings/${id}`, formdata).then(res => {
-    toast.success("Successfully Updated Data", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-    setReFetch(prevState => !prevState)
-    console.log(e)
+    if (res.status === "200") {
+      toast.success("Successfully Updated Data", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      setReFetch(prevState => !prevState)
+    }
   }).catch(e => {
     toast.error("Error in Updating Data", {
       position: toast.POSITION.BOTTOM_CENTER
