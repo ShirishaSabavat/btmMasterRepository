@@ -43,7 +43,7 @@ const AddVideo = () => {
 
     const initialValues = {
         title: oldData?.title || "",
-        image:  selectedImg || "",
+        image:  selectedImg.replace(`${BASE_URL}uploads/`, '') || "",
         videoLink: oldData?.link || "",
         duration: oldData.duration || "",
         description: oldData.description || ""
@@ -54,8 +54,8 @@ const AddVideo = () => {
         title: Yup.string().required("Required"),
         image: Yup.string().required("Required"),
         videoLink: Yup.string().required("Required"),
-        duration: Yup.number().positive().integer().required("Required"),
-        description: Yup.string().required("required")
+        duration: Yup.string(),
+        description: Yup.string()
     })
 
     const submitForm = (values) => {
@@ -90,7 +90,7 @@ const AddVideo = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={`${BASE_URL}uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
@@ -148,10 +148,9 @@ const AddVideo = () => {
                                         </Col>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="duration">Duration</Label>
+                                                <Label for="duration">Duration (Hours)</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
                                                     name="duration"
                                                     id="duration"
                                                     {...formik.getFieldProps("duration")}

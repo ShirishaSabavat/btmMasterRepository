@@ -1,0 +1,1 @@
+export const FETCH_ALL_STAFF = "FETCH_ALL_STAFF"

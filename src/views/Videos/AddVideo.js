@@ -38,8 +38,8 @@ const AddVideo = () => {
         title: Yup.string().required("Required"),
         image: Yup.string().required("Required"),
         videoLink: Yup.string().required("Required"),
-        duration: Yup.number().positive().integer().required("Required"),
-        description: Yup.string().required("required")
+        duration: Yup.string(),
+        description: Yup.string()
     })
 
     const submitForm = (values, {resetForm}) => {
@@ -130,10 +130,9 @@ const AddVideo = () => {
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="duration">Duration</Label>
+                                                <Label for="duration">Duration (Hours)</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
                                                     name="duration"
                                                     id="duration"
                                                     {...formik.getFieldProps("duration")}

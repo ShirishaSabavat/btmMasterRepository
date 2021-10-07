@@ -1,24 +1,38 @@
-import React, {useEffect} from "react"
-import {Card, CardHeader, CardBody, CardTitle} from "reactstrap"
+import React, {useState, useEffect, useRef} from "react"
+import {Card, CardHeader, CardTitle, CardBody, Button} from "reactstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { convertToRaw } from 'draft-js'
+import JoditEditor from "jodit-react"
 
-import EditorComponent from "./EditorComponent"
-import { fetchCMS, AddCMS } from "../../redux/actions/cms"
+import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 
 const VisionSettings = () => {
 
     const dispatch = useDispatch()
-    const data = useSelector(state => state.cms.vission)
+    const data = useSelector(state => state.cms.vission[0]?.content)
+
+    const editor = useRef(null)
+    const [content, setContent] = useState()
+    const config = {
+        readonly: false
+    }
 
     useEffect(() => {
         dispatch(fetchCMS("vission"))
     }, [])
 
-    const submitForm = (values) => {
+    useEffect(() => {
+        setContent(data)
+    }, [data])
+
+
+    const submitForm = () => {
         const rawData = {
             type: "vission",
-            content: convertToRaw(values.editorValue?.getCurrentContent()).blocks
+            content
+        }
+        if (content !== "") {
+            dispatch(EditCMS('VISSION', rawData))
+            return
         }
         dispatch(AddCMS('VISSION', rawData))
     }
@@ -29,7 +43,16 @@ const VisionSettings = () => {
         </CardHeader>
         <hr className="m-0" />
         <CardBody>
-            <EditorComponent submitForm={submitForm} data={data} />
+            <JoditEditor
+                ref={editor}
+                value={content}
+                config={config}
+                tabIndex={1} 
+                onBlur={newContent => setContent(newContent)} 
+            />
+            <div className="d-flex justify-content-end m-1">
+                <Button type="button" color="success" onClick={submitForm}>Save</Button>
+            </div>
         </CardBody>
     </Card>
     </>

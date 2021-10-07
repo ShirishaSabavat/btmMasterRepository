@@ -2,6 +2,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap'
 import { User, Lock, Video, Briefcase } from 'react-feather'
 
 const Tabs = ({ activeTab, toggleTab }) => {
+
   return (
     <Nav className='nav-left' pills vertical>
       <NavItem>
