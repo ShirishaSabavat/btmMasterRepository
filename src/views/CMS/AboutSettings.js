@@ -8,8 +8,10 @@ import JoditEditor from "jodit-react"
 const AboutSettings = () => {
 
     const dispatch = useDispatch()
+    const data = useSelector(state => state.cms.about[0]?.content)
+
     const editor = useRef(null)
-    const [content, setContent] = useState(useSelector(state => state.cms.about[0]?.content) || "")
+    const [content, setContent] = useState()
     const config = {
         readonly: false
     }
@@ -17,6 +19,10 @@ const AboutSettings = () => {
     useEffect(() => {
         dispatch(fetchCMS("about"))
     }, [])
+
+    useEffect(() => {
+        setContent(data)
+    }, [data])
 
     const submitForm = (values) => {
         const rawData = {
