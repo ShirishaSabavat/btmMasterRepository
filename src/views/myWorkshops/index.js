@@ -4,32 +4,32 @@ import { Calendar, MapPin } from 'react-feather'
 import AvatarGroup from '@components/avatar-group'
 import { Card, CardTitle, CardBody, CardText, Media } from 'reactstrap'
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Chip, List, ListItem, IconButton, ListItemAvatar, Avatar, ListItemText } from '@mui/material'
-import { fetchMyCourses } from '../../redux/actions/courses'
+import { fetchMyWorkshops } from '../../redux/actions/courses'
 import { useDispatch, useSelector } from "react-redux"
 import { BASE_URL } from "../../utility/serverSettings"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { PlayCircleFilled as PlayCircleFilledIcon, Folder as FolderIcon} from '@mui/icons-material'
 
  
-const MyCources = () => {
+const MyWorkshops = () => {
 
     const dispatch = useDispatch()
 
-    const myCourses = useSelector(state => state.courses.myCourses)
+    const myWorkshops = useSelector(state => state.courses.myWorkshops)
 
     useEffect(() => {
-        dispatch(fetchMyCourses())
+        dispatch(fetchMyWorkshops())
     }, [])
 
     return (
         <div className="row">
-            {myCourses && (
+            {myWorkshops && (
                 <>
-                    {myCourses.map(item => (
+                    {myWorkshops.map(item => (
                     <div className="col-md-4 col-sm-12">
                         <Card className='card-developer-meetup'>
                             <div className='meetup-img-wrapper rounded-top text-center'>
-                                <img src={`${BASE_URL}uploads/${item.courseId.image}`} className="img-fluid" />
+                                <img src={`${BASE_URL}uploads/${item.worksopId.image}`} height='170' />
                             </div>
                             <div className="row">
                                 <div className="col-6 text-center">
@@ -51,10 +51,10 @@ const MyCources = () => {
                                 </div> */}
                                 <div className='my-auto'>
                                     <CardTitle tag='h4' className='mb-25'>
-                                        {item.courseId.name}
+                                        {item.worksopId.name}
                                     </CardTitle>
-                                    <CardText className='mb-0'>{item.courseId.shortDescription}</CardText>
-                                    {/* <CardText className='mb-0'>{new Date(item.purchaseDate).toLocaleTimeString()}</CardText> */}
+                                    <CardText className='mb-0'>{item.worksopId.shortDescription}</CardText>
+                                    <CardText className='mb-0'>{new Date(item.purchaseDate).toLocaleTimeString()}</CardText>
                                 </div>
                                 </div>
                                 {/* <Media>
@@ -81,7 +81,7 @@ const MyCources = () => {
                                 >
                                 <Typography>Videos</Typography>
                                 </AccordionSummary>
-                                <AccordionDetails className="p-0">
+                                <AccordionDetails>
                                     <List dense={true}>
                                         <ListItem
                                             secondaryAction={
@@ -112,4 +112,4 @@ const MyCources = () => {
     )
 }
 
-export default MyCources
+export default MyWorkshops

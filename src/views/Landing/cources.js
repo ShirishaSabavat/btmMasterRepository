@@ -39,6 +39,21 @@ const Landing = () => {
             ))}
         </Grid>
 
+        <Grid className="bg-white pb-5" item xs={12}>
+            <Row className=''>
+                <Col className='' lg='4' xs='12'>
+                    <img className='img-fluid' src="/assets/images/c2.jpg" alt='Login V2' />
+                </Col>
+                <Col className='' lg='8' xs='12'>
+                <div className='w-100 px-4 mt-4'>
+                    <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
+                    <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                    <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
+                </div>
+                </Col>
+            </Row>
+        </Grid>
+
         <Footer />
 
     </Grid>

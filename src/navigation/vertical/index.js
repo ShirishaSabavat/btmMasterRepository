@@ -1,4 +1,4 @@
-import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User } from 'react-feather'
+import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User, Calendar } from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 let Navigation = [
@@ -14,13 +14,20 @@ let Navigation = [
     title: 'User',
     icon: <User size={20} />,
     navLink: '/users',
-    permissions: ["ADMIN", "USER"]
+    permissions: ["ADMIN"]
   },
   {
-    id: 'mycustomers',
+    id: 'mycourses',
     title: 'My Courses',
-    icon: <Briefcase size={20} />,
+    icon: <Video size={20} />,
     navLink: '/my-courses',
+    permissions: ["USER"]
+  },
+  {
+    id: 'myworkshops',
+    title: 'My Workshops',
+    icon: <Calendar size={20} />,
+    navLink: '/my-workshops',
     permissions: ["USER"]
   },
   {
