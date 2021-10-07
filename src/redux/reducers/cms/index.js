@@ -1,4 +1,4 @@
-import { GET_ABOUT, GET_MISSION, GET_VISION } from '../../types/cms'
+import { GET_ABOUT, GET_MISSION, GET_VISSION } from '../../types/cms'
 
 const initialState = {
   about: "",
@@ -14,8 +14,8 @@ const cmsReducer = (state = initialState, action) => {
     case GET_MISSION:
       return {...state, mission: action.payload}
 
-    case GET_VISION:
-      return {...state, vision: action.payload}
+    case GET_VISSION:
+      return {...state, vission: action.payload}
 
     default:
       return state
