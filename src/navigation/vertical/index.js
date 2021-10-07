@@ -17,6 +17,13 @@ let Navigation = [
     permissions: ["ADMIN", "USER"]
   },
   {
+    id: 'sales',
+    title: 'Sales',
+    icon: <User size={20} />,
+    navLink: '/sales',
+    permissions: ["ADMIN", "USER"]
+  },
+  {
     id: 'mycustomers',
     title: 'My Courses',
     icon: <Briefcase size={20} />,

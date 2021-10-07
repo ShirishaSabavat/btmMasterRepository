@@ -2,12 +2,12 @@ import { Button, Label, Row, Col, Input, FormGroup } from 'reactstrap'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 
-const UserDetails = () => {
+const UserDetails = ({userData}) => {
 
   const initialValues = {
-    name:"",
-    email:"",
-    phNo:""
+    name: userData?.name || "",
+    email: userData?.email || "",
+    phNo: userData?.phone || ""
   }
 
   const validationSchema = Yup.object().shape({
@@ -23,7 +23,7 @@ const UserDetails = () => {
 
   return (
     <>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
         {(formik) => {
           return (
             <Form>

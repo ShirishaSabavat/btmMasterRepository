@@ -11,6 +11,7 @@ import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
 const UserTable = () => {
 
   const dispatch = useDispatch()
+  const usersData = useSelector(state => state.user.users)
 
   const [defaultAlert, setDefaultAlert] = useState({
     alert: false,
@@ -43,24 +44,31 @@ const UserTable = () => {
           selector: "name",
           sortable: true,
           cell: (row) => (
-            <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-              <div className="user-info text-truncate ml-xl-50 ml-0">
                 <p
-                  title={row.name}
                   className="d-block text-bold-500 text-truncate mb-0"
                 >
                   {row.name}
                 </p>
-              </div>
-            </div>
+          )
+        },
+        {
+          name: "Role",
+          selector: "role",
+          sortable: true,
+          cell: (row) => (
+                <p
+                  className="text-bold-500 text-truncate mb-0"
+                >
+                  {row.role}
+                </p>
           )
         },
         {
         name: "Phone No",
-        selector: "phno",
+        selector: "phone",
         sortable: true,
         cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.phno}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
         )
         },
         {
@@ -140,8 +148,6 @@ const UserTable = () => {
        dispatch(deleteUser(deleteid))
      }
    }, [confirmAlert, deleteid, dispatch])
-
-    const usersData = [{sno: 1, name: "sample1", phno: "0099009900", email:"sample@sample.com", date: "2-2-2021", status: "ACTIVE" }]
 
     const customStyles = {
         headCells: {

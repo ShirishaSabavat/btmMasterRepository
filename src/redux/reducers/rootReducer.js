@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   faculty,
   organization,
   courseSchedule,
-  ...user
+  user
 })
 
 export default rootReducer
