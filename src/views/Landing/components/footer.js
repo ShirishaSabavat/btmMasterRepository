@@ -47,6 +47,9 @@ const Footer = () => {
                                 <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/all-courses"> Cources </Link>
                             </li>
                             <li style={{marginBottom: 5}}>
+                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/bac-courses"> BAC Cources </Link>
+                            </li>
+                            <li style={{marginBottom: 5}}>
                                 <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/gallery"> Gallery </Link>
                             </li>
                             <li style={{marginBottom: 5}}>

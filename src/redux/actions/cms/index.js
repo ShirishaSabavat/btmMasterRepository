@@ -1,5 +1,6 @@
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { GET_MISSION, GET_ABOUT, GET_VISSION } from "../../types/cms/index"
 
 export const AddCMS = (type, rawData) => dispatch => {
   ServerApi().post(`/cms`, rawData)
@@ -24,10 +25,10 @@ export const AddCMS = (type, rawData) => dispatch => {
 }
 
 export const EditCMS = (type, content) => dispatch => {
-  ServerApi().patch(`/cms/${type}`, content)
+  ServerApi().patch(`/cms/${type.toLowerCase()}`, content)
   .then(res => {
-    console.log("ress", res)
-    if (res.statusText === "Ok") {
+    console.log("ress", res, content)
+    if (res.status === 200) {
       toast.success("Updated Content", {
         position: toast.POSITION.BOTTOM_CENTER
       })
@@ -48,20 +49,19 @@ export const EditCMS = (type, content) => dispatch => {
 export const fetchCMS = (type) => dispatch => {
   ServerApi().get(`/cms/${type}`)
   .then(res => {
-
     if (type === "about") {
       dispatch({
-        type: `GET_ABOUT`,
+        type: GET_ABOUT,
         payload: res.data
       })
     } else if (type === "mission") {
       dispatch({
-        type: `GET_MISSION`,
+        type: GET_MISSION,
         payload: res.data
       })
     } else if (type === "vission") {
       dispatch({
-        type: `GET_VISSION`,
+        type: GET_VISSION,
         payload: res.data
       })
     }

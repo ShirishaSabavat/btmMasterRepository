@@ -27,8 +27,8 @@ const courseCard = (props) => {
 
                 <Stack direction="row" spacing={2}>
                     <Avatar style={{width: 24, height: 24}} alt="" src="/assets/images/deafault-user.jpg" />
-                    <Typography variant="body2" color="text.secondary">
-                        Author Name
+                    <Typography style={{paddingTop: 3}} variant="body2" color="text.secondary">
+                        {props.data.faculty}
                     </Typography>
                     <Typography style={{marginLeft: 'auto', marginRight: 12}} variant="h5" color="text.primary">
                         ₹ {props.data.price}

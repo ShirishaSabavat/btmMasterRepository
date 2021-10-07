@@ -1,8 +1,10 @@
 import { DO_LOGIN, LOGOUT } from '../../types/auth'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const handleLogin = payload => dispatch => {
+  dispatch(toggleNetworkLoading())
   ServerApi().post('auth/login', payload)
   .then(res => {
     dispatch({
@@ -11,11 +13,13 @@ export const handleLogin = payload => dispatch => {
     })
 
     localStorage.setItem('userData', JSON.stringify(res.data))
+    dispatch(toggleNetworkLoading())
   })
   .catch(e => {
     toast.error("Invalid Email/Password", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    dispatch(toggleNetworkLoading())
     console.log(e)
   })
 }

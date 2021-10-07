@@ -3,6 +3,7 @@ import { useSkin } from '@hooks/useSkin'
 import { Link, useParams, useHistory } from 'react-router-dom'
 import { Calendar, MapPin, Send } from 'react-feather'
 import InputPasswordToggle from '@components/input-password-toggle'
+import LoadingButton from '@mui/lab/LoadingButton'
 import { Media, Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
 import Avatar from '@components/avatar'
@@ -12,9 +13,12 @@ import ServerApi from '../../utility/ServerApi'
 import NavBar from './components/navbar'
 import { toast } from 'react-toastify'
 import { fetchCourseById, fetchAllCourses } from '../../redux/actions/courses'
+import { toggleNetworkLoading } from '../../redux/actions/common'
 import { DO_LOGIN } from '../../redux/types/auth'
 import Footer from './components/footer'
 import { BASE_URL } from '../../utility/serverSettings'
+import { handleLogin } from '../../redux/actions/auth'
+// import { getUserData } from '../../utility/Utils'
 // import CourseCard from './components/courseCard'
 
 const Landing = (route) => {
@@ -22,15 +26,18 @@ const Landing = (route) => {
     const dispatch = useDispatch()
     const [skin, setSkin] = useSkin()
 
-    const [loading, setLoading] = useState(false)
+    const networkLoading = useSelector(state => state.common.loading)
+
+    // const [loading, setLoading] = useState(false)
     const [registerModal, setRegisterModal] = useState(false)
     const [loginModal, setLoginModal] = useState(false)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
     const [otp, setOtp] = useState('')
     const [chooseWorkshop, setChooseWorkshop] = useState('')
-    
+    const [purchaseType, setPurchaseType] = useState('')
 
     const { id } = useParams()
  
@@ -48,6 +55,12 @@ const Landing = (route) => {
         dispatch(fetchCourseById(id))
     }, [])
 
+    useEffect(() => {
+        if (userData.user && loginModal) {
+            setLoginModal(false)
+        }
+    }, [userData])
+
     function loadScript(src) {
         return new Promise((resolve) => {
             const script = document.createElement("script")
@@ -62,8 +75,9 @@ const Landing = (route) => {
         })
       }
 
-    async function displayRazorpay(price) {
+    async function displayRazorpay(price, type) {
         if (!userData.access_token) {
+
             if (name === '' || email === '' || phone === '') {
                 toast.error("Please enter all fields.", {
                     position: toast.POSITION.BOTTOM_CENTER
@@ -81,20 +95,26 @@ const Landing = (route) => {
             return
         }
 
-        setLoading(true)
+        dispatch(toggleNetworkLoading())
             
         ServerApi().post("purchases/createOrder", {
-            userName: name,
-            userEmail: email,
-            userPhone: phone,
-            courseId: course._id
+            userName: userData.access_token ? userData.user.name : name,
+            userEmail: userData.access_token ? userData.user.email : email,
+            userPhone: userData.access_token ? userData.user.phone : phone,
+            userPassword: password,
+            courseId: course._id,
+            purchaseType: type || purchaseType,
+            workshopId: chooseWorkshop
         })
         .then(result => {
-            console.log({ result })
+            if (result.data.success === false) {
+                toast.error(result.data.message || "Unable to register.", {
+                    position: toast.POSITION.BOTTOM_CENTER
+                })
+                return
+            }
 
-            
             const { orderId } = result.data
-
             // console.log('amount')
             // console.log(amount)
 
@@ -161,13 +181,44 @@ const Landing = (route) => {
             const paymentObject = new window.Razorpay(options)
             paymentObject.open()
 
-            setLoading(false)
+            dispatch(toggleNetworkLoading())
         })
         .catch(e => {
             console.log(e)
-            setLoading(false)
+            dispatch(toggleNetworkLoading())
             alert("Unable to make payment!")
         })
+    }
+
+    const doLogin = () => {
+        if (email === '' || password === '') {
+            toast.error("Please enter valid email & password", {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
+            return
+        }
+
+        dispatch(handleLogin({email, password}))
+
+    }
+
+    const initPurchase = (type) => {
+        if (type === 'WORKSHOP') {
+            if (chooseWorkshop === '') {
+                toast.error("Please choose a workshop first", {
+                    position: toast.POSITION.BOTTOM_CENTER
+                })
+                return
+            }
+        }
+        setPurchaseType(type)
+
+        if (userData.access_token) {
+            displayRazorpay(course.price, type)
+            return
+        }
+
+        setRegisterModal(true)
     }
 
   return (
@@ -190,21 +241,21 @@ const Landing = (route) => {
         <Grid className="bg-white py-5" item xs={12} md={3}>
 
             <div className="p-2">
-                <Card >
+                <Card style={{borderRadius: 12}} elevation={6} >
                     <Typography mx={2} className="text-center mt-2" variant="h5" component="div">
                         {!userData.access_token ? 'Join Online Course' : 'Purchase This Course'}
                     </Typography>
                     <CardContent>
 
                         <div className="text-center mt-2">
-                            <Button 
-                                loading={loading}
+                            <LoadingButton 
+                                loading={networkLoading}
                                 loadingPosition="start"
                                 variant="contained" 
                                 style={{borderRadius: 2}}
-                                onClick={() => setRegisterModal(true)}
+                                onClick={() => initPurchase('ONLINE')}
                                 endIcon={<Send />}
-                            >{!userData.access_token ? "Join Now" : "Buy Now" }</Button>
+                            >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                         </div>
                     </CardContent>
                 </Card>
@@ -212,7 +263,7 @@ const Landing = (route) => {
 
             {workshops.length > 0 && (
                 <div className="p-2">
-                    <Card className="card-developer-meetup" >
+                    <Card style={{borderRadius: 12}} elevation={6} className="card-developer-meetup" >
                         <Typography mx={2} mb={2} className="text-center mt-2" variant="h5" component="div">
                             Workshops
                         </Typography>
@@ -222,8 +273,8 @@ const Landing = (route) => {
                                 <Media>
                                     <Avatar color='light-primary' className='rounded mr-1' icon={<Calendar size={18} />} />
                                     <Media body>
-                                        <h6 className='mb-0'>{work.startDate}</h6>
-                                        <small>{work.startTime} to {work.endTime}</small>
+                                        <h6 className='mb-0'>{new Date(work.startDate).toDateString()}</h6>
+                                        <small>{new Date(work.startTime).toLocaleTimeString().replace(':00', '')} to {new Date(work.endTime).toLocaleTimeString().replace(':00', '')}</small>
                                     </Media>
                                     <Radio
                                         checked={chooseWorkshop === work._id}
@@ -236,14 +287,14 @@ const Landing = (route) => {
                             ))}
 
                             <div className="text-center mt-2">
-                                <Button 
-                                    loading={loading}
+                                <LoadingButton 
+                                    loading={networkLoading}
                                     loadingPosition="start"
                                     variant="contained" 
                                     style={{borderRadius: 2}}
-                                    onClick={() => setRegisterModal(true)}
+                                    onClick={() => initPurchase('WORKSHOP')}
                                     endIcon={<Send />}
-                                >{!userData.access_token ? "Join Now" : "Buy Now" }</Button>
+                                >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                             </div>
                         </CardContent>
                     </Card>
@@ -320,12 +371,22 @@ const Landing = (route) => {
                         onChange={e => setPhone(e.target.value)}
                     />
                 </FormControl>
+                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                    <TextField
+                        id="password"
+                        label="Password"
+                        defaultValue=""
+                        variant="standard"
+                        type="password"
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                </FormControl>
                 </>
             )}
 
             <div className="text-center mt-2">
                 <Button 
-                    loading={loading}
+                    loading={networkLoading}
                     loadingPosition="start"
                     variant="contained" 
                     style={{borderRadius: 2}}
@@ -350,34 +411,33 @@ const Landing = (route) => {
                 <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
                     <TextField
                         id="phone"
-                        label="Phone No."
+                        label="Email"
                         defaultValue=""
                         variant="standard"
-                        onChange={e => setPhone(e.target.value)}
+                        onChange={e => setEmail(e.target.value)}
                     />
                 </FormControl>
                 <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
                     <TextField
                         id="otp"
-                        label="OTP"
+                        label="Password"
                         defaultValue=""
                         variant="standard"
-                        helperText={"please enter phone no. otp will be sent automatically."}
-                        onChange={e => setOtp(e.target.value)}
+                        onChange={e => setPassword(e.target.value)}
                     />
                 </FormControl>
                 </>
             )}
 
             <div className="text-center mt-2">
-                <Button 
-                    loading={loading}
+                <LoadingButton 
+                    loading={networkLoading}
                     loadingPosition="start"
                     variant="contained" 
                     style={{borderRadius: 2}}
                     onClick={() => doLogin()}
                     endIcon={<Send />}
-                >{"Login"}</Button>
+                >{"Login"}</LoadingButton>
             </div>
 
             <div className="text-center" style={{marginTop: 12}}>

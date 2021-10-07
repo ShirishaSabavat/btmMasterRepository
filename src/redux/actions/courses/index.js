@@ -1,4 +1,4 @@
-import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS, FETCH_WORKSHOP } from '../../types/courses'
+import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS, FETCH_WORKSHOP, FETCH_MY_COURSES, FETCH_MY_WORKSHOPS } from '../../types/courses'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 
@@ -124,3 +124,36 @@ export const deleteCourseById = (id) => dispatch => {
     console.log(e)
   })
 }
+
+export const fetchMyCourses = () => dispatch => {
+  ServerApi().get(`purchases?purchaseType=cources`)
+  .then(res => {
+    dispatch({
+      type: FETCH_MY_COURSES,
+      payload: res.data
+    })
+  })
+  .catch(e => {
+    toast.error("unable to fetch purchased courses.", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
+export const fetchMyWorkshops = () => dispatch => {
+  ServerApi().get(`purchases?purchaseType=workshops`)
+  .then(res => {
+    dispatch({
+      type: FETCH_MY_WORKSHOPS,
+      payload: res.data
+    })
+  })
+  .catch(e => {
+    toast.error("unable to fetch purchased courses.", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
