@@ -2,62 +2,67 @@ import React, {useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
-import {Eye} from "react-feather"
+import { Edit } from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 
-import { fetchAllSales } from "../../redux/actions/sales/index"
+import { fetchAllStaff } from "../../redux/actions/staff/index"
 
-const Sales = () => {
+const Staff = () => {
 
   const dispatch = useDispatch()
-  const salesData = useSelector(state => state.sales.sales)
+//   const staffData = useSelector(state => state.staff.staff)
 
   useEffect(() => {
-    dispatch(fetchAllSales())
+    dispatch(fetchAllStaff())
   }, [])
 
     const tableColumns = [
         {
-            name: "S.No",
-            selector: "sno",
+            name: "Full Name",
+            selector: "fullName",
             sortable: true,
             cell: (row) => (
-              <p className="text-bold-500 text-truncate mb-0">{row.sno}</p>
+              <p className="text-bold-500 text-truncate mb-0">{row.fullName}</p>
             )
         },
         {
-          name: "Purchase Type",
-          selector: "purchaseType",
+            name: "Email",
+            selector: "email",
+            sortable: true,
+            cell: (row) => (
+              <p className="text-bold-500 text-truncate mb-0">{row.email}</p>
+            )
+        },
+        {
+          name: "Phone",
+          selector: "phone",
           sortable: true,
-          minWidth: "200px",
           cell: (row) => (
-            <Badge color={row.status === "WORKSHOP" ? "danger" : "success"} pill>
-            <span>{row.purchaseType}</span>
-          </Badge>
+            <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
           )
         },
         {
-          name: "Name",
-          selector: "name",
+          name: "DOB",
+          selector: "dob",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.name}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.dob}</p>
           )
         },
         {
-          name: "Date",
-          selector: "purchaseDate",
+          name: "Gender",
+          selector: "gender",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{new Date(row.purchaseDate).toDateString()}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.gender}</p>
           )
         },
         {
-          name: "Paid Amount",
-          selector: "paidAmount",
+          name: "Role",
+          selector: "role",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.paidAmount}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.role}</p>
           )
         },
         {
@@ -79,16 +84,16 @@ const Sales = () => {
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">
-                    <li className="list-inline-item">
+                <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/view-sales", params:{id}}}>
-                            <Eye size={15} />
+                        <Link to={{pathname: "/edit-staff", params:{id}}}>
+                            <Edit size={15} />
                         </Link>
                         </Button>
-                    </li>         
+                    </li>        
                 </ul>
               </div>
             )
@@ -113,18 +118,19 @@ const Sales = () => {
         }
       }
 
-    // const salesData = [{sno: "1", _id:"124", purchaseType: "WORKSHOP", name: "Sample 1", date: "2-2-2021", paidAmount: "100", status: "ACTIVE" }]
+    const staffData = [{fullName: "sample1", email:"124@123.com", phone: "9999999999", dob: "2-2-21", gender: "Male", role: "ADMIN", status: "ACTIVE" }]
 
     return <Row>
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
-                    <CardTitle>Sales</CardTitle>
+                    <CardTitle>Staff</CardTitle>
+                    <Link to="/add-staff" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
                 <DataTable
                     className="dataTable-custom"
-                    data={salesData}
+                    data={staffData}
                     columns={tableColumns}
                     noHeader
                     pagination
@@ -135,4 +141,4 @@ const Sales = () => {
     </Row>
 }
 
-export default Sales
+export default Staff

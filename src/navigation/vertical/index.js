@@ -24,6 +24,13 @@ let Navigation = [
     permissions: ["ADMIN", "USER"]
   },
   {
+    id: 'staff',
+    title: 'Staff',
+    icon: <Users size={20} />,
+    navLink: '/staff',
+    permissions: ["ADMIN", "USER"]
+  },
+  {
     id: 'mycustomers',
     title: 'My Courses',
     icon: <Briefcase size={20} />,
@@ -195,6 +202,14 @@ let Navigation = [
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
         navLink: "/faculty"
+      },
+      {
+        id: "role",
+        title: "Role",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/role"
       }
     ]
   }
