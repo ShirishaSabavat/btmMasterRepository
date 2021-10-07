@@ -1,11 +1,14 @@
-import {useState } from 'react'
+import {useState, useEffect } from 'react'
+import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
+import { useHistory } from 'react-router-dom'
+import {useDispatch, useSelector} from "react-redux"
+
+import { fetchUserById } from "../../redux/actions/user/index"
 import Tabs from './Tabs'
 import UserDetails from './components/UserDetails'
 import ChangePassword from './components/ChangePassword'
 import Courses from "./components/Courses"
 import Workshop from "./components/Workshop"
-import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
-
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 
@@ -15,6 +18,16 @@ const UserData = () => {
   const toggleTab = tab => {
     setActiveTab(tab)
   }
+
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const userData = useSelector(state => state.user.user)
+
+  const uid = history.location?.params?.id
+
+  useEffect(() => {
+    dispatch(fetchUserById(uid))
+  }, [uid])
 
   return (
     <Row>
@@ -26,7 +39,7 @@ const UserData = () => {
             <CardBody>
             <TabContent activeTab={activeTab}>
                 <TabPane tabId='1'>
-                <UserDetails />
+                <UserDetails userData={userData} />
                 </TabPane>
                 <TabPane tabId='2'>
                 <ChangePassword />

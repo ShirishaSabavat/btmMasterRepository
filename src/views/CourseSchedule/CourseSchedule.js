@@ -44,16 +44,9 @@ const CourseSchedule = () => {
           selector: "courseName",
           sortable: true,
           cell: (row) => (
-            <div className="d-flex flex-xl-row flex-column align-items-xl-center align-items-start py-xl-0 py-1">
-              <div className="user-info text-truncate ml-xl-50 ml-0">
-                <p
-                  title={row.courseId}
-                  className="d-block text-bold-500 text-truncate mb-0"
-                >
-                  {row.courseId}
+                <p>
+                  {row.courseId.name}
                 </p>
-              </div>
-            </div>
           )
         },
         {
@@ -63,8 +56,8 @@ const CourseSchedule = () => {
           height:"200px",
           cell: (row) => (
             <div className="d-flex flex-wrap">
-              <p className="text-bold-500 text-wrap mb-0">From: {row.startDate}</p>
-              <p className="text-bold-500 mb-0">To: {row.endDate}</p>
+              <p className="text-bold-500 text-wrap mb-0">From: {new Date(row.startDate).toDateString()}</p>
+              <p className="text-bold-500 mb-0">To: {new Date(row.endDate).toDateString()}</p>
             </div>
           )
         },

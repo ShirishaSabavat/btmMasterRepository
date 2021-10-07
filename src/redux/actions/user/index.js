@@ -5,7 +5,8 @@ import { toast } from 'react-toastify'
 export const fetchAllUsersData = () => dispatch => {
   ServerApi().get('/users')
   .then(res => {
-    const data = res.data.map(values => values) 
+    console.log("res", res)
+    const data = res.data.map((values, index) => ({...values, sno: index + 1}))
     dispatch({
       type: FETCH_ALL_USER_DATA,
       payload: data
@@ -24,7 +25,7 @@ export const fetchUserById = (id) => dispatch => {
   .then(res => {
     dispatch({
       type: FETCH_USER_BY_ID,
-      payload: res
+      payload: res.data
     })
   })
   .catch(e => {

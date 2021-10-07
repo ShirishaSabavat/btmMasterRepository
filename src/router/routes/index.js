@@ -16,6 +16,9 @@ import CourseScheduleRoute from "./CourseScheduleRoute"
 import SocialMedia from "./SocialMedia"
 import UserRoute from "./UserRoute"
 import MyWorkshopsRoutes from './MyWorkshops'
+import SalesRoute from "./SalesRoute"
+import StaffRoute from "./StaffRoute"
+import RoleRoute from "./RoleRoute"
 
 // ** Document title
 const TemplateTitle = '%s - ATS School Management'
@@ -42,7 +45,10 @@ const Routes = [
     ...CourseScheduleRoute,
     ...SocialMedia,
     ...UserRoute,
-    ...MyWorkshopsRoutes
+    ...MyWorkshopsRoutes,
+    ...SalesRoute,
+    ...StaffRoute,
+    ...RoleRoute
     ]
 
 export { DefaultRoute, TemplateTitle, Routes }

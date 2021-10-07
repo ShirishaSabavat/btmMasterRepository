@@ -1,4 +1,3 @@
-
 import { GET_ALL_MEDIA, GET_MEDIA_BY_ID } from '../../types/media'
 
 const initialState = {
