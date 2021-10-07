@@ -3,14 +3,14 @@ import {Card, CardHeader, CardBody, CardTitle, Button} from "reactstrap"
 import { useDispatch, useSelector } from "react-redux"
 import JoditEditor from "jodit-react"
 
-import { fetchCMS, AddCMS } from "../../redux/actions/cms"
+import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 
 const MissionSettings = () => {
 
     const dispatch = useDispatch()
 
     const editor = useRef(null)
-    const [content, setContent] = useState(useSelector(state => state.cms.mission[0]?.content) || "")
+    const [content, setContent] = useState(useSelector(state => state.cms.mission[0])?.content || "")
     const config = {
         readonly: false
     }
@@ -19,10 +19,15 @@ const MissionSettings = () => {
         dispatch(fetchCMS("mission"))
     }, [])
 
-    const submitForm = (values) => {
+    const submitForm = () => {
         const rawData = {
             type: "mission",
             content
+        }
+        
+        if (content !== "") {
+            dispatch(EditCMS('MISSION', rawData))
+            return
         }
         dispatch(AddCMS('MISSION', rawData))
     }

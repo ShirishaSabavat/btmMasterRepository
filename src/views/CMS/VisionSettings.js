@@ -3,7 +3,7 @@ import {Card, CardHeader, CardTitle, CardBody, Button} from "reactstrap"
 import { useDispatch, useSelector } from "react-redux"
 import JoditEditor from "jodit-react"
 
-import { fetchCMS, AddCMS } from "../../redux/actions/cms"
+import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 
 const VisionSettings = () => {
 
@@ -23,6 +23,10 @@ const VisionSettings = () => {
         const rawData = {
             type: "vission",
             content
+        }
+        if (content !== "") {
+            dispatch(EditCMS('VISSION', rawData))
+            return
         }
         dispatch(AddCMS('VISSION', rawData))
     }

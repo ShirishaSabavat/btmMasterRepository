@@ -25,11 +25,10 @@ export const AddCMS = (type, rawData) => dispatch => {
 }
 
 export const EditCMS = (type, content) => dispatch => {
-  console.log("object", `/cms/${type}`)
-  ServerApi().patch(`/cms/${type}`, content)
+  ServerApi().patch(`/cms/${type.toLowerCase()}`, content)
   .then(res => {
-    console.log("ress", res)
-    if (res.statusText === "200") {
+    console.log("ress", res, content)
+    if (res.status === 200) {
       toast.success("Updated Content", {
         position: toast.POSITION.BOTTOM_CENTER
       })

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from "react"
 import {Card, CardHeader, CardBody, CardTitle, Button} from "reactstrap"
 import { useDispatch, useSelector } from "react-redux"
 
-import { fetchCMS, AddCMS } from "../../redux/actions/cms"
+import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 import JoditEditor from "jodit-react"
 
 const AboutSettings = () => {
@@ -22,6 +22,10 @@ const AboutSettings = () => {
         const rawData = {
             type: "about",
             content
+        }
+        if (content !== "") {
+            dispatch(EditCMS('ABOUT', rawData))
+            return
         }
         dispatch(AddCMS('ABOUT', rawData))
     }
