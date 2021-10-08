@@ -18,6 +18,8 @@
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.49",
     "@mui/material": "^5.0.1",
+    "@mui/styles": "^5.0.1",
+    "@mui/x-data-grid": "^5.0.0-beta.3",
     "@pathofdev/react-tag-input": "^1.0.7",
     "@uppy/react": "1.10.8",
     "animate.css": "4.1.1",
