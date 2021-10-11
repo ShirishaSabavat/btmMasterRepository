@@ -12,6 +12,7 @@ import CourseCard from './components/courseCard'
 import {fetchAllCourses} from '../../redux/actions/courses'
 import { useEffect } from 'react'
 import Footer from './components/footer'
+import Empty from '../../components/loading/Empty'
 
 const BacCources = () => {
     const history = useHistory()
@@ -32,6 +33,12 @@ const BacCources = () => {
         <Grid item xs={12}>
             <h2 className="text-center mb-2">BAC Cources</h2>
         </Grid>
+
+        {courses.length === 0 && (
+            <Grid className="bg-white" item container spacing={2}>
+                <Empty title="No courses are available !" />
+            </Grid>
+        )}
 
         <Grid className="bg-white" item container spacing={2}>
             {courses.filter((i) => i.type === 'Bac').map((item) => (

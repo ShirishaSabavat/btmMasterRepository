@@ -12,6 +12,7 @@ import CourseCard from './components/courseCard'
 import {fetchAllCourses} from '../../redux/actions/courses'
 import { useEffect } from 'react'
 import Footer from './components/footer'
+import Empty from '../../components/loading/Empty'
 
 const Landing = () => {
     const history = useHistory()
@@ -38,6 +39,10 @@ const Landing = () => {
                 <CourseCard key={item._id} data={item} />
             ))}
         </Grid>
+
+        {courses.length === 0 && (
+            <Empty title="No courses are available !" />
+        )}
 
         <Grid className="bg-white pb-5" item xs={12}>
             <Row className=''>

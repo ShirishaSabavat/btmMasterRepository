@@ -225,20 +225,22 @@ const Landing = (route) => {
     <Grid container spacing={2}>
         <NavBar />
 
-        <Grid className="bg-white py-5" item xs={12} md={9}>
+        <Grid className="bg-white py-5" item xs={12} md={8}>
             <div className='w-100 px-5'>
                 <img className='img-fluid' src={`${BASE_URL}uploads/${course.image}`} alt='image' style={{maxHeight: 340}} />
                 
                 <h2 style={{fontSize: 42, fontWeight: 'bold'}} className="mt-2">{course.name}</h2>
-                <Chip color="primary" size="small" label="BAC Cource" onClick={() => null} />
+                {course.type === 'Bac' && (
+                    <Chip color="primary" size="small" label="BAC Cource" onClick={() => null} />
+                )}
                 
                 <h2 style={{fontSize: 32, fontWeight: 'bold'}} className="mt-2">₹ {course.price} /-</h2>
                 
-                <p className="mt-1">{course.details}</p>
+                <p className="mt-1 text-justify">{course.details}</p>
             </div>
         
         </Grid>
-        <Grid className="bg-white py-5" item xs={12} md={3}>
+        <Grid className="bg-white py-5" item xs={12} md={4}>
 
             <div className="p-2">
                 <Card style={{borderRadius: 12}} elevation={6} >
@@ -254,7 +256,6 @@ const Landing = (route) => {
                                 variant="contained" 
                                 style={{borderRadius: 2}}
                                 onClick={() => initPurchase('ONLINE')}
-                                endIcon={<Send />}
                             >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                         </div>
                     </CardContent>
@@ -270,11 +271,13 @@ const Landing = (route) => {
                         <CardContent>
 
                             {workshops.map((work) => (
+                                <>
                                 <Media>
-                                    <Avatar color='light-primary' className='rounded mr-1' icon={<Calendar size={18} />} />
+                                    <Avatar color='light-primary' className='rounded mr-1' icon={<Chip color="primary" size="small" label={work.batchNo} onClick={() => null} />} />
                                     <Media body>
-                                        <h6 className='mb-0'>{new Date(work.startDate).toDateString()}</h6>
-                                        <small>{new Date(work.startTime).toLocaleTimeString().replace(':00', '')} to {new Date(work.endTime).toLocaleTimeString().replace(':00', '')}</small>
+                                        <h4 style={{fontWeight: 'bold'}} className='mb-0'> {new Date(work.startDate).toDateString()}</h4>
+                                        <p className="mb-0"><small>{new Date(work.startTime).toLocaleTimeString().replace(':00', '')} to {new Date(work.endTime).toLocaleTimeString().replace(':00', '')}</small></p>
+                                        <p> <MapPin size={16} className="mr-1" /><a href={work.location} target="_blank" rel="noopener">{work.address}</a></p>
                                     </Media>
                                     <Radio
                                         checked={chooseWorkshop === work._id}
@@ -284,6 +287,8 @@ const Landing = (route) => {
                                         inputProps={{ 'aria-label': work.startDate }}
                                     />
                                 </Media>
+                                <Divider />
+                                </>
                             ))}
 
                             <div className="text-center mt-2">
@@ -293,7 +298,6 @@ const Landing = (route) => {
                                     variant="contained" 
                                     style={{borderRadius: 2}}
                                     onClick={() => initPurchase('WORKSHOP')}
-                                    endIcon={<Send />}
                                 >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                             </div>
                         </CardContent>
@@ -314,7 +318,7 @@ const Landing = (route) => {
                     <Col className='' lg='8' xs='12'>
                     <div className='w-100 px-4 mt-4'>
                         <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
-                        <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                        <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
                         <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
                     </div>
                     </Col>
@@ -391,7 +395,6 @@ const Landing = (route) => {
                     variant="contained" 
                     style={{borderRadius: 2}}
                     onClick={() => displayRazorpay(course.price)}
-                    endIcon={<Send />}
                 >{!userData.access_token ? "Register & Join" : "Buy Now" }</Button>
             </div>
 
@@ -436,7 +439,6 @@ const Landing = (route) => {
                     variant="contained" 
                     style={{borderRadius: 2}}
                     onClick={() => doLogin()}
-                    endIcon={<Send />}
                 >{"Login"}</LoadingButton>
             </div>
 

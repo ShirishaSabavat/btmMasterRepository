@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { BASE_URL } from "../../utility/serverSettings"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { PlayCircleFilled as PlayCircleFilledIcon, Folder as FolderIcon} from '@mui/icons-material'
+import Empty from '../../components/loading/Empty'
 
- 
 const MyCources = () => {
 
     const dispatch = useDispatch()
@@ -23,6 +23,17 @@ const MyCources = () => {
 
     return (
         <div className="row">
+            {myCourses.length === 0 && (
+                <div className="col-md-12 col-sm-12 text-center">
+                    <Empty 
+                        title="Looks like you haven't purchased any courses yet." 
+                        button={true}
+                        buttonLink={'/all-courses'}
+                        buttonText={'Explore'}
+                    />
+                </div>
+            )}
+
             {myCourses && (
                 <>
                     {myCourses.map(item => (

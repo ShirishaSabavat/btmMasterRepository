@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react'
 import { useSkin } from '@hooks/useSkin'
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import { Row, Col} from 'reactstrap'
@@ -8,49 +9,56 @@ import NavBar from './components/navbar'
 import Footer from './components/footer'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
+import Gallery from 'react-photo-gallery'
+import Carousel, { Modal, ModalGateway } from "react-images"
 
-const itemData = [
+const photos = [
     {
-      img: '/assets/images/br3.jpg',
-      title: 'Breakfast',
-      rows: 2,
-      cols: 2
+      src: '/assets/images/br3.jpg',
+      width: 4,
+      height: 4
     },
     {
-      img: '/assets/images/br5.jpg',
-      title: 'Burger'
+      src: '/assets/images/br5.jpg',
+      width: 4,
+      height: 4
     },
     {
-      img: '/assets/images/br4.jpg',
-      title: 'Camera'
+      src: '/assets/images/br4.jpg',
+      width: 4,
+      height: 4
     },
     {
-      img: '/assets/images/w1.jpg',
-      title: 'Coffee',
-      cols: 2
+      src: '/assets/images/w1.jpg',
+      width: 4,
+      height: 4
     },
     {
-      img: '/assets/images/w2.jpg',
-      title: 'Coffee',
-      rows: 2,
-      cols: 2
+      src: '/assets/images/w2.jpg',
+      width: 4,
+      height: 4
     }
   ]
 
-const Gallery = () => {
+
+const GalleryPage = () => {
     const history = useHistory()
     const [skin, setSkin] = useSkin()
 
     const userData = useSelector(state => state.auth.userData)
 
-    function srcset(image, size, rows = 1, cols = 1) {
-        return {
-          src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-          srcSet: `${image}?w=${size * cols}&h=${
-            size * rows
-          }&fit=crop&auto=format&dpr=2 2x`
-        }
-      }
+    const [currentImage, setCurrentImage] = useState(0)
+    const [viewerIsOpen, setViewerIsOpen] = useState(false)
+
+    const openLightbox = useCallback((event, { photo, index }) => {
+      setCurrentImage(index)
+      setViewerIsOpen(true)
+    }, [])
+
+    const closeLightbox = () => {
+      setCurrentImage(0)
+      setViewerIsOpen(false)
+    }
 
   return (
     <Grid container spacing={2}>
@@ -60,28 +68,25 @@ const Gallery = () => {
             <h2 className="text-center">Gallery</h2>
         </Grid>
 
-        <Grid className="bg-white" item xs={12}>
-            <Row className=''>
-                <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='12' xs='12'>
-                    <ImageList
-                        sx={{ margin: 'auto' }}
-                        variant="quilted"
-                        cols={4}
-                        rowHeight={121}
-                        >
-                        {itemData.map((item) => (
-                            <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
-                            <img
-                                {...srcset(item.img, 121, item.rows, item.cols)}
-                                alt={item.title}
-                                loading="lazy"
-                            />
-                            </ImageListItem>
-                        ))}
-                    </ImageList>
-                </Col>
-            </Row>
+
+        <Grid className="bg-white p-4" item xs={12}>
+            <Gallery onClick={openLightbox} columns={3} photos={photos} />
         </Grid>
+
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel
+                currentIndex={currentImage}
+                views={photos.map(x => ({
+                  ...x,
+                  srcset: x.srcSet,
+                  caption: x.title
+                }))}
+              />
+            </Modal>
+          ) : null}
+        </ModalGateway>
 
         <Footer />
 
@@ -89,4 +94,4 @@ const Gallery = () => {
   )
 }
 
-export default Gallery
+export default GalleryPage

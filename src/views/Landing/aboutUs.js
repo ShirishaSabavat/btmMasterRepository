@@ -25,18 +25,35 @@ const Landing = () => {
             <h2 className="text-center">About Us</h2>
         </Grid> */}
 
-        <Grid className="bg-white pb-5" item xs={12}>
-            <Row className=''>
-                <Col className='' lg='8' xs='12'>
-                <div className='w-100 px-4 mt-4'>
-                    <h2 style={{fontWeight: 'bold', fontSize: 48}}>About Us <br /> </h2>
-                    <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
-                </div>
-                </Col>
-                <Col className='' lg='4' xs='12'>
-                    <img className='img-fluid' src="/assets/images/br2.webp" alt='Login V2' />
-                </Col>
-            </Row>
+        <Grid className="bg-white pb-5" item xs={12} md={8}>
+            <div className='w-100 px-4 mt-4'>
+                <h2 style={{fontWeight: 'bold', fontSize: 48}}>About Us <br /> </h2>
+                <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+            </div>
+        </Grid>
+        <Grid className="bg-white pb-5" item xs={12} md={4}>
+            <img className='img-fluid' src="/assets/images/br2.webp" alt='Login V2' />
+        </Grid>
+
+        <Grid style={{backgroundColor: '#f1f1f3'}} className="pb-5" item xs={12} md={4}>
+            <img className='img-fluid' src="/assets/images/mission.png" alt='Login V2' />
+        </Grid>
+
+        <Grid style={{backgroundColor: '#f1f1f3'}} className="pb-5" item xs={12} md={8}>
+            <div className='w-100 px-4 mt-4'>
+                <h2 style={{fontWeight: 'bold', fontSize: 48}}>Mission <br /> </h2>
+                <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+            </div>
+        </Grid>
+
+        <Grid style={{backgroundColor: '#00a6c0'}} className="pb-5" item xs={12} md={8}>
+            <div className='w-100 px-4 mt-4'>
+                <h2 className="text-white" style={{fontWeight: 'bold', fontSize: 48}}>Vision <br /> </h2>
+                <p className="text-white text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+            </div>
+        </Grid>
+        <Grid style={{backgroundColor: '#00a6c0'}} className="pb-5" item xs={12} md={4}>
+            <img className='img-fluid' src="/assets/images/vision2.jpg" alt='Login V2' />
         </Grid>
 
         <Footer />
