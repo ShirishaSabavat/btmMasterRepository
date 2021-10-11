@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component"
 import {Trash, Eye} from "react-feather"
 import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
+import { DataGrid } from '@mui/x-data-grid'
 
 import DeleteModal from "./Modals/DeleteModal"
 import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
@@ -19,6 +20,7 @@ const UserTable = () => {
   })
   const [confirmAlert, setConfirmAlert] = useState(false)
   const [cancelAlert, setCancelAlert] = useState(false)
+  const [rows, setRows] = useState([])
 
   const defaultAlertHandler = (value) => {
     setDefaultAlert({ alert: value.alert, did: value.did })
@@ -29,6 +31,23 @@ const UserTable = () => {
   const cancelAlertHandler = (value) => {
     setCancelAlert(value)
   }
+
+  useEffect(() => {
+    setRows(usersData.map((values) => { return {id: values.sno, col1: values.sno, col2: values.name, col3: values.role, col4: values.phone, col5: values.email, col6: values.date, col7: values.status } }))
+  }, [usersData])
+
+
+  const columns = [
+    { field: 'col1', headerName: 'SNo', width: 150 },
+    { field: 'col2', headerName: 'Name', width: 150 },
+    { field: 'col3', headerName: 'Role', width: 150 },
+    { field: 'col4', headerName: 'Phone', width: 150 },
+    { field: 'col5', headerName: 'Email', width: 150 },
+    { field: 'col6', headerName: 'Date', width: 150 },
+    { field: 'col7', headerName: 'Status', width: 150},
+    { field: 'col8', headerName: 'Mode', width: 100 }
+  ]
+  
 
     const tableColumns = [
         {
@@ -149,6 +168,8 @@ const UserTable = () => {
      }
    }, [confirmAlert, deleteid, dispatch])
 
+  console.log("rows", rows)
+
     const customStyles = {
         headCells: {
           style: {
@@ -181,6 +202,18 @@ const UserTable = () => {
                     pagination
                     customStyles={customStyles}
                 />
+                <hr />
+                <div style={{ height: 300, width: '99%', margin: "auto" }}>
+
+                <DataGrid
+                  rows={rows} 
+                  columns={columns}
+                  filterModel={{
+                    items: [{ columnField: 'Name', operatorValue: 'contains', value: 'rice' }]
+                  }}
+                
+                />
+                </div>
                  {defaultAlert.alert ? (
                   <DeleteModal
                     defaultAlertHandler={defaultAlertHandler}

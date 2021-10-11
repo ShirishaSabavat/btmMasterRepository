@@ -10,6 +10,10 @@
     "@mui/icons-material": "^5.0.1",
     "@mui/lab": "^5.0.0-alpha.49",
     "@mui/material": "^5.0.1",
+<<<<<<< HEAD
+=======
+    "@mui/styles": "^5.0.1",
+>>>>>>> 8fb42c0dff30bb43d0bc9289032079e4e4615dbd
     "@mui/x-data-grid": "^5.0.0-beta.3",
     "@pathofdev/react-tag-input": "^1.0.7",
     "animate.css": "4.1.1",
