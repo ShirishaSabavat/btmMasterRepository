@@ -1,10 +1,11 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch} from "react-redux"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
+import { Country, State, City }  from 'country-state-city'
 
 import {AddStaffAPI} from "../../redux/actions/staff/index"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
@@ -12,6 +13,25 @@ import CustomSelectField from "../UtilityComponents/CustomSelectField"
 const AddStaff = () => {
 
     const dispatch = useDispatch()
+
+    const allCountries = Country.getAllCountries().map(values => { return {label : values.name, value : values.isoCode } })
+
+    const [countryOptions] = useState(allCountries)
+    const [stateOptions, setStates] = useState([])
+    const [cityOptions, setCityOptions] = useState()
+  
+    const [selectedCountry, setSelectedCountry] = useState("")
+    const [selectedState, setSelectedState] = useState("")
+  
+    useEffect(() => {
+      setStates(State.getStatesOfCountry(selectedCountry).map(values => { return {label : values.name, value : values.isoCode, countryCode: values.countryCode } }))
+    }, [selectedCountry])
+  
+    useEffect(() => {
+      const CountryCode = selectedState?.countryCode 
+      const StateCode = selectedState?.value
+      setCityOptions(City.getCitiesOfState(CountryCode, StateCode).map(values => { return {label : values.name, value: values.stateCode } }))
+    }, [selectedState])
 
 
     const initialValues = {
@@ -23,7 +43,19 @@ const AddStaff = () => {
         role:"",
         password:"",
         dateOfJoining:"",
-        salary:""
+        salary:"",
+        epf:"",
+        panNo:"",
+        aadhar:"",
+        maritialStatus:"",
+        country:"",
+        state:"",
+        city:"",
+        address:"",
+        bankName:"",
+        branch:"",
+        acc:"",
+        ifsc:""
     }
 
     const validationSchema = Yup.object().shape({
@@ -56,11 +88,24 @@ const AddStaff = () => {
         dispatch(AddStaffAPI(rawData, resetForm))
     }
 
+    const countryChangeHadler = (value, formik) => {
+        formik.setFieldValue("country", value.label)
+        setSelectedCountry(value.value)
+      }
+    
+      const StateChangeHadler = (value, formik) => {
+        console.log("val", value)
+        formik.setFieldValue("state", value.label)
+        setSelectedState(value)
+      }
+
+
     const genderOptions = [{label: "MALE", value:"male"}, {label:"FEMALE", value: "female"}]
     const roleOptions = [{label: "ADMIN", value:"ADMIN"}, {label:"USER", value: "USER"}]
+    const maritialStatusOptions = [{label: "Married", value:"married"}, {label:"Single", value: "single"}]
 
     return <Row>
-        <Col sm="12" md="5">
+        <Col sm="12" md="6">
             <Card >
                 <CardHeader>
                     <CardTitle>Add Staff</CardTitle>
@@ -72,7 +117,7 @@ const AddStaff = () => {
                             return (
                                 <Form>
                                     <Row>
-                                        <Col sm="12" md="6">
+                                        <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label for="fullName">Full Name</Label>
                                                 <InputGroup>
@@ -87,26 +132,6 @@ const AddStaff = () => {
                                                 </InputGroup>
                                                 <ErrorMessage
                                                     name="fullName"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col sm="12" md="6">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label for="email">Email</Label>
-                                                <InputGroup>
-                                                    <Input
-                                                    type="text"
-                                                    name="email"
-                                                    id="email"
-                                                    {...formik.getFieldProps("email")}
-                                                    invalid={!!(formik.touched.email && formik.errors.email)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="email"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
@@ -188,6 +213,26 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
+                                                <Label for="email">Email</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="text"
+                                                    name="email"
+                                                    id="email"
+                                                    {...formik.getFieldProps("email")}
+                                                    invalid={!!(formik.touched.email && formik.errors.email)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="email"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
                                                 <Label for="password">Password</Label>
                                                 <InputGroup>
                                                     <Input
@@ -242,6 +287,179 @@ const AddStaff = () => {
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="epf">EPF</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="text"
+                                                    name="epf"
+                                                    id="epf"
+                                                    {...formik.getFieldProps("epf")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="panNo">PAN NO</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="number"
+                                                    name="panNo"
+                                                    id="panNo"
+                                                    {...formik.getFieldProps("panNo")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="aadhar">aadhar Number</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="number"
+                                                    name="aadhar"
+                                                    id="aadhar"
+                                                    {...formik.getFieldProps("aadhar")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup>
+                                                <Label for="maritialStatus">Marritial Status</Label>
+                                                <CustomSelectField
+                                                    value={formik.values.maritialStatus}
+                                                    options={maritialStatusOptions}
+                                                    onChange={(value) => formik.setFieldValue("maritialStatus", value.value)
+                                                } />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup>
+                                                <Label For="country">Country</Label>
+                                                <CustomSelectField
+                                                value={formik.values.country}
+                                                options={countryOptions}
+                                                onChange={(value) => countryChangeHadler(value, formik)}
+                                                />
+                                                <ErrorMessage
+                                                name="country"
+                                                component="div"
+                                                className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup>
+                                                <Label For="state">State</Label>
+                                                <CustomSelectField
+                                                value={formik.values.state}
+                                                options={stateOptions}
+                                                onChange={(value) => StateChangeHadler(value, formik) }
+                                                />
+                                                <ErrorMessage
+                                                name="state"
+                                                component="div"
+                                                className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup>
+                                                <Label For="city">City</Label>
+                                                <CustomSelectField
+                                                value={formik.values.city}
+                                                options={cityOptions}
+                                                onChange={(value) => formik.setFieldValue("city", value.label)}
+                                                />
+                                                <ErrorMessage
+                                                name="city"
+                                                component="div"
+                                                className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="bankName">Bank Name</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="number"
+                                                    name="bankName"
+                                                    id="bankName"
+                                                    {...formik.getFieldProps("bankName")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="branch">Branch</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="text"
+                                                    name="branch"
+                                                    id="branch"
+                                                    {...formik.getFieldProps("branch")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="acc">Account Number</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="number"
+                                                    name="acc"
+                                                    id="acc"
+                                                    {...formik.getFieldProps("acc")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="ifsc">IFSC Code</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="text"
+                                                    name="ifsc"
+                                                    id="ifsc"
+                                                    {...formik.getFieldProps("ifsc")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label for="address">Address</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="textarea"
+                                                    name="address"
+                                                    id="address"
+                                                    {...formik.getFieldProps("address")}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
                                             </FormGroup>
                                         </Col>
                                     </Row>

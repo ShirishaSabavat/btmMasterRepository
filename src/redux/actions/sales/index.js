@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 export const fetchAllSales = () => dispatch => {
   ServerApi().get('/purchases')
   .then(res => {
-    const data = res.data.map((values, index) => ({...values, sno: index + 1}))
+    const data = res.data.reverse().map((values, index) => ({...values, sno: index + 1}))
     dispatch({
       type: FETCH_ALL_SALES_DATA,
       payload: data

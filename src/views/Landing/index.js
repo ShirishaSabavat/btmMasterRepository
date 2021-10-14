@@ -139,7 +139,7 @@ const Landing = () => {
                 <Col className='d-lg-flex align-items-center' lg='8' sm='12'>
                 <div className='w-100 px-5 mt-4'>
                     <h2 style={{color: 'black'}}>Welcome to Business Aacharya</h2>
-                    <p>Br Shafi Shaik Shafiulla is Popularly Known as  Brother Shafi  is Founder President of Mission Nenu Saitham Samajam Kosam. Br Shafi  has done Masters Degree from Osmania University in MSW Medical and Psychiatric Social Work.   He Awarded Gold Medal for His best services in  social work from Roda MISTRY college of social work, Osmania University. by Deputy CM and Educational Minister of Telangana State Sri Kadiyam Srihari Garu. Br Shafi is Master Motivator, life skills trainer and international orator. He has given many motivational training programs and Personality Development work shops in many schools, colleges, corporate companies and Police officials.</p>
+                    <p className="text-justify">Br Shafi Shaik Shafiulla is Popularly Known as  Brother Shafi  is Founder President of Mission Nenu Saitham Samajam Kosam. Br Shafi  has done Masters Degree from Osmania University in MSW Medical and Psychiatric Social Work.   He Awarded Gold Medal for His best services in  social work from Roda MISTRY college of social work, Osmania University. by Deputy CM and Educational Minister of Telangana State Sri Kadiyam Srihari Garu. Br Shafi is Master Motivator, life skills trainer and international orator. He has given many motivational training programs and Personality Development work shops in many schools, colleges, corporate companies and Police officials.</p>
                 </div>
                 </Col>
                 <Col className='d-flex align-items-center auth-bg px-2' lg='4' sm='12'>
@@ -157,7 +157,7 @@ const Landing = () => {
                 <Col className='' lg='7' xs='12'>
                     <div className='w-100 px-5 mt-4'>
                         <h2 style={{fontWeight: 'bold', fontSize: 48}}>We Organize  <br /> Effective Learning</h2>
-                        <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                        <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
                         <Button onClick={() => history.push('about-us')} size="large" className="mt-2" variant="contained">About Us</Button>
                     </div>
                 </Col>
@@ -166,12 +166,12 @@ const Landing = () => {
         </Grid>
 
         <Grid item xs={12}>
-            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Top <br /> Courses</h2>
+            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Latest <br /> Courses</h2>
         </Grid>
 
         
         <Grid item container spacing={2}>
-            {courses.map((item) => (
+            {courses.slice(0, 10).filter(co => co.type !== "Bac").map((item) => (
                 <CourseCard key={item._id} data={item} />
             ))}
         </Grid>
@@ -203,13 +203,23 @@ const Landing = () => {
                 <Col className='' lg='8' xs='12'>
                 <div className='w-100 px-4 mt-4'>
                     <h2 style={{fontWeight: 'bold', fontSize: 48}}>Benefits of learning <br /> with BAC</h2>
-                    <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                    <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
                 </div>
                 </Col>
                 <Col className='' lg='4' xs='12'>
                     <img className='img-fluid' src="/assets/images/br2.webp" alt='Login V2' />
                 </Col>
             </Row>
+        </Grid>
+
+        <Grid item xs={12}>
+            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Latest <br /> BAC Courses</h2>
+        </Grid>
+
+        <Grid item container spacing={2}>
+            {courses.slice(0, 10).filter(co => co.type === "Bac").map((item) => (
+                <CourseCard key={item._id} data={item} />
+            ))}
         </Grid>
 
         <Grid className="bg-white pb-5" item xs={12}>
@@ -221,7 +231,7 @@ const Landing = () => {
                 <Col className='' lg='8' xs='12'>
                 <div className='w-100 px-4 mt-4'>
                     <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
-                    <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                    <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
                     <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
                 </div>
                 </Col>
