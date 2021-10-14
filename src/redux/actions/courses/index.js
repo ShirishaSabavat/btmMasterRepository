@@ -49,7 +49,7 @@ export const EditCourseAPI = (rawData) => dispatch => {
 export const fetchAllCourses = () => dispatch => {
   ServerApi().get('/courses')
   .then(res => {
-    const data = res.data.map(values => values)
+    const data = res.data.reverse()
     dispatch({
       type: GET_ALL_COURSES,
       payload: data
@@ -66,7 +66,7 @@ export const fetchAllCourses = () => dispatch => {
 export const fetchAllCoursesOptions = () => dispatch => {
   ServerApi().get('/courses')
   .then(res => {
-    const data = res.data.map(({ name, _id }) => ({ label: name, value: _id }))
+    const data = res.data.reverse().map(({ name, _id }) => ({ label: name, value: _id }))
     dispatch({
       type: GET_ALL_COURSES_OPTIONS,
       payload: data
@@ -99,7 +99,7 @@ export const fetchCourseById = (id) => dispatch => {
   .then(res => {
     dispatch({
       type: FETCH_WORKSHOP,
-      payload: res.data
+      payload: res.data.reverse()
     })
   })
   .catch(e => {
@@ -130,7 +130,7 @@ export const fetchMyCourses = () => dispatch => {
   .then(res => {
     dispatch({
       type: FETCH_MY_COURSES,
-      payload: res.data
+      payload: res.data.reverse()
     })
   })
   .catch(e => {
@@ -146,7 +146,7 @@ export const fetchMyWorkshops = () => dispatch => {
   .then(res => {
     dispatch({
       type: FETCH_MY_WORKSHOPS,
-      payload: res.data
+      payload: res.data.reverse()
     })
   })
   .catch(e => {

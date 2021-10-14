@@ -1,13 +1,13 @@
 import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User, Calendar, BarChart2 } from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
-let Navigation = [
+const Navigation = [
   {
     id: 'home',
     title: 'Dashboard',
     icon: <Home size={20} />,
     navLink: '/dashboard',
-    permissions: ["ADMIN", "USER"]
+    permissions: ["ADMIN", "BAC_USER", "USER"]
   },
   {
     id: 'user',
@@ -223,9 +223,9 @@ let Navigation = [
 ]
 
 // let newNavigation = [...Navigation]
-const user = getUserData()
-if (user !== null) {
-  Navigation = Navigation.filter(i => i.permissions.includes(user?.user?.role))
-}
+// const user = getUserData()
+// if (user !== null) {
+//   Navigation = Navigation.filter(i => i.permissions.includes(user?.user?.role))
+// }
 
 export default  Navigation

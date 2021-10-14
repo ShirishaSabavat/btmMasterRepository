@@ -166,12 +166,12 @@ const Landing = () => {
         </Grid>
 
         <Grid item xs={12}>
-            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Top <br /> Courses</h2>
+            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Latest <br /> Courses</h2>
         </Grid>
 
         
         <Grid item container spacing={2}>
-            {courses.map((item) => (
+            {courses.slice(0, 10).filter(co => co.type !== "Bac").map((item) => (
                 <CourseCard key={item._id} data={item} />
             ))}
         </Grid>
@@ -210,6 +210,16 @@ const Landing = () => {
                     <img className='img-fluid' src="/assets/images/br2.webp" alt='Login V2' />
                 </Col>
             </Row>
+        </Grid>
+
+        <Grid item xs={12}>
+            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Latest <br /> BAC Courses</h2>
+        </Grid>
+
+        <Grid item container spacing={2}>
+            {courses.slice(0, 10).filter(co => co.type === "Bac").map((item) => (
+                <CourseCard key={item._id} data={item} />
+            ))}
         </Grid>
 
         <Grid className="bg-white pb-5" item xs={12}>

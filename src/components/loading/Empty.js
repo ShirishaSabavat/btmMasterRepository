@@ -22,13 +22,13 @@ function Empty(props) {
     }
 
     return (
-        <div style={{marginTop: 54}}>
+        <div className="text-center" style={{marginTop: 54}}>
             <Lottie 
                 options={defaultOptions}
                 height={284}
                 width={284}
             />
-            <h6 style={{width: '100%', textAlign: 'center', marginTop: 14, paddingLeft: 54}}>{props.title || "No data available!"}</h6>
+            <h6 style={{width: '100%', textAlign: 'center', marginTop: 14, paddingLeft: 0}}>{props.title || "No data available!"}</h6>
             
             {props.button && (
                 <Button className="mt-1" onClick={() => history.push(props.buttonLink)} size="large" variant="contained">{props.buttonText}</Button>

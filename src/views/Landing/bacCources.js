@@ -34,15 +34,26 @@ const BacCources = () => {
             <h2 className="text-center mb-2">BAC Cources</h2>
         </Grid>
 
-        {courses.length === 0 && (
-            <Grid className="bg-white" item container spacing={2}>
-                <Empty title="No courses are available !" />
+        {courses.filter((i) => i.type === 'Bac').length === 0 && (
+            <Grid xs={12} className="" item>
+                <div className="p-5">
+                    <Empty 
+                        style="1" 
+                        title="No courses are available !"
+                        button={true}
+                        buttonLink="/all-courses"
+                        buttonText="View Normal Cources"
+                    />
+                </div> 
             </Grid>
         )}
 
         <Grid className="bg-white" item container spacing={2}>
             {courses.filter((i) => i.type === 'Bac').map((item) => (
-                <CourseCard key={item._id} data={item} />
+                <CourseCard 
+                    key={item._id}
+                    data={item}
+                />
             ))}
         </Grid>
 

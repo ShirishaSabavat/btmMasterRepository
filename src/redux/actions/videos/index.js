@@ -50,7 +50,7 @@ export const fetchAllVideos = () => dispatch => {
   ServerApi().get('/videos')
   .then(res => {
     // const data = res.data.map((values, index) => { return {values, sno: index + 1 } })
-    const data = res.data.map((values, index) => ({...values, sno: index + 1}))
+    const data = res.data.reverse().map((values, index) => ({...values, sno: index + 1}))
     dispatch({
       type: GET_ALL_VIDEOS,
       payload: data
@@ -67,7 +67,7 @@ export const fetchAllVideos = () => dispatch => {
 export const fetchVideoById = (id) => dispatch => {
   ServerApi().get(`/videos/${id}`)
   .then(res => {
-    const data = res.data
+    const data = res.data.reverse()
     dispatch({
       type: GET_VIDEO_BY_ID,
       payload: data

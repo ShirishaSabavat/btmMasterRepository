@@ -28,7 +28,7 @@ const statsData = [
         title: 'Videos',
         count: '0',
         color: 'bg-light-info',
-        role: ['ADMIN', 'USER', 'BAC_USER'],
+        role: ['ADMIN'],
         icon: <Video size={24} />
     },
     {
@@ -46,7 +46,7 @@ const statsData = [
         icon: <Users size={24} />
     },
     {
-        title: 'Schedules',
+        title: 'Workshops',
         count: '0',
         role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Activity size={24} />

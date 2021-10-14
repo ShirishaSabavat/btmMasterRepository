@@ -54,9 +54,9 @@ const MyWorkshops = () => {
                     <div className="col-md-4 col-sm-12">
                         <Card className='card-developer-meetup'>
                             <div className='meetup-img-wrapper rounded-top text-center'>
-                                <img src={`${BASE_URL}uploads/${item.courseId?.image}`} className='img-fluid' />
+                                <img src={`${BASE_URL}uploads/${item.courseId?.image}`} className='img-fluid' style={{maxHeight: 300}} />
                             </div>
-                            <div className="row">
+                            {/* <div className="row">
                                 <div className="col-6">
                                     <div className="pt-1 ml-2">
                                         <Chip variant="outlined" size="small" label="Purchased" color="primary" />
@@ -67,7 +67,7 @@ const MyWorkshops = () => {
                                         <Typography className="m-0"></Typography>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <CardBody>
                                 <div className='my-auto pb-1'>
                                     <CardTitle tag='h4' className='mb-25'>
@@ -127,6 +127,11 @@ const MyWorkshops = () => {
                                     <AccordionDetails>
                                         <Typography>Purchased Date: {new Date(item.purchaseDate).toLocaleTimeString()}</Typography>
                                         <Typography>Transaction Id: {item.paymentId}</Typography>
+                                        {item.courseId.type === "Bac" && (
+                                            <div className='my-auto pb-2'>
+                                                <Chip size="small" label="BAC Course" color="primary" />
+                                            </div>
+                                        )}
                                     </AccordionDetails>
                                 </Accordion>
 
