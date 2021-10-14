@@ -3,14 +3,27 @@ import React, { useEffect } from "react"
 import { Calendar, MapPin } from 'react-feather'
 import AvatarGroup from '@components/avatar-group'
 import { Card, CardTitle, CardBody, CardText, Media } from 'reactstrap'
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Chip, List, ListItem, IconButton, ListItemAvatar, Avatar, ListItemText } from '@mui/material'
+import { Accordion, 
+    AccordionSummary, 
+    AccordionDetails, 
+    Typography, 
+    Chip, 
+    List, 
+    ListItem, 
+    IconButton, 
+    ListItemAvatar, 
+    Avatar, 
+    ListItemText, 
+    ListItemButton, 
+    ListItemIcon} from '@mui/material'
 import { fetchMyWorkshops } from '../../redux/actions/courses'
 import { useDispatch, useSelector } from "react-redux"
 import { BASE_URL } from "../../utility/serverSettings"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { PlayCircleFilled as PlayCircleFilledIcon, Folder as FolderIcon} from '@mui/icons-material'
+import { PlayCircleFilled as PlayCircleFilledIcon, Folder as FolderIcon, Check} from '@mui/icons-material'
+import Empty from '../../components/loading/Empty'
+import Timeline from '@components/timeline'
 
- 
 const MyWorkshops = () => {
 
     const dispatch = useDispatch()
@@ -23,40 +36,70 @@ const MyWorkshops = () => {
 
     return (
         <div className="row">
+            
+            {myWorkshops.length === 0 && (
+                <div className="col-md-12 col-sm-12 text-center">
+                    <Empty 
+                        title="Looks like you haven't purchased any workshops yet." 
+                        button={true}
+                        buttonLink={'/all-courses'}
+                        buttonText={'Explore'}
+                    />
+                </div>
+            )}
+
             {myWorkshops && (
                 <>
                     {myWorkshops.map(item => (
                     <div className="col-md-4 col-sm-12">
                         <Card className='card-developer-meetup'>
                             <div className='meetup-img-wrapper rounded-top text-center'>
-                                <img src={`${BASE_URL}uploads/${item.worksopId.image}`} height='170' />
+                                <img src={`${BASE_URL}uploads/${item.courseId?.image}`} className='img-fluid' style={{maxHeight: 300}} />
                             </div>
-                            <div className="row">
-                                <div className="col-6 text-center">
-                                    <div className="pt-1">
-                                        <Chip size="small" label="Purchased" color="primary" />
+                            {/* <div className="row">
+                                <div className="col-6">
+                                    <div className="pt-1 ml-2">
+                                        <Chip variant="outlined" size="small" label="Purchased" color="primary" />
                                     </div>
                                 </div>
                                 <div className="col-6 text-center">
                                     <div className="pt-1">
-                                        <Typography className="m-0">{new Date(item.purchaseDate).toLocaleTimeString()}</Typography>
+                                        <Typography className="m-0"></Typography>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <CardBody>
-                                <div className='align-items-center'>
-                                {/* <div className='meetup-day'>
-                                    <h6 className='mb-0'>THU</h6>
-                                    <h3 className='mb-0'>24</h3>
-                                </div> */}
-                                <div className='my-auto'>
+                                <div className='my-auto pb-1'>
                                     <CardTitle tag='h4' className='mb-25'>
-                                        {item.worksopId.name}
+                                        {item.courseId.name}
                                     </CardTitle>
-                                    <CardText className='mb-0'>{item.worksopId.shortDescription}</CardText>
-                                    <CardText className='mb-0'>{new Date(item.purchaseDate).toLocaleTimeString()}</CardText>
+                                    <CardText className='mb-0'>{item.courseId.shortDescription}</CardText>
+                                    {/* <CardText className='mb-0'>{new Date(item.purchaseDate).toLocaleTimeString()}</CardText> */}
                                 </div>
+
+                                <div className='my-auto pb-2'>
+                                    <Chip size="small" label={item.workshopId.batchNo} color="primary" />
                                 </div>
+
+                                <Timeline data={[
+                                    {
+                                        title: 'Start',
+                                        content: new Date(item.workshopId?.startDate).toDateString(),
+                                        meta: '',
+                                        customContent: (
+                                        <h6>{new Date(item.workshopId?.startTime).toLocaleTimeString()}</h6>
+                                        )
+                                    },
+                                    {
+                                        title: 'End',
+                                        content: new Date(item.workshopId?.endDate).toDateString(),
+                                        meta: '',
+                                        color: 'secondary',
+                                        customContent: (
+                                        <h6>{new Date(item.workshopId?.endTime).toLocaleTimeString()}</h6>
+                                        )
+                                    }
+                                ]} />
                                 {/* <Media>
                                 <Avatar color='light-primary' className='rounded mr-1' icon={<Calendar size={18} />} />
                                 <Media body>
@@ -74,35 +117,24 @@ const MyWorkshops = () => {
                             </CardBody>
 
                             <Accordion>
-                                <AccordionSummary
+                                    <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls="panel1a-content"
                                     id="panel1a-header"
-                                >
-                                <Typography>Videos</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <List dense={true}>
-                                        <ListItem
-                                            secondaryAction={
-                                                <IconButton edge="end" aria-label="delete">
-                                                    <PlayCircleFilledIcon />
-                                                </IconButton>
-                                            }
-                                            >
-                                            <ListItemAvatar>
-                                                <Avatar>
-                                                    <FolderIcon />
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary="Single-line item"
-                                                secondary="Secondary text"
-                                            />
-                                        </ListItem>
-                                    </List>
-                                </AccordionDetails>
-                            </Accordion>
+                                    >
+                                        <Typography>Details</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography>Purchased Date: {new Date(item.purchaseDate).toLocaleTimeString()}</Typography>
+                                        <Typography>Transaction Id: {item.paymentId}</Typography>
+                                        {item.courseId.type === "Bac" && (
+                                            <div className='my-auto pb-2'>
+                                                <Chip size="small" label="BAC Course" color="primary" />
+                                            </div>
+                                        )}
+                                    </AccordionDetails>
+                                </Accordion>
+
                         </Card>
                     </div>
                     ))}

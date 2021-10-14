@@ -73,9 +73,9 @@ const Landing = (route) => {
             }
             document.body.appendChild(script)
         })
-      }
+    }
 
-    async function displayRazorpay(price, type) {
+    const displayRazorpay = async (price, type) => {
         if (!userData.access_token) {
 
             if (name === '' || email === '' || phone === '') {
@@ -91,32 +91,29 @@ const Landing = (route) => {
         )
         
         if (!res) {
-            alert("Razorpay SDK failed to load. Are you online?")
+            toast.error("Razorpay SDK failed to load. Are you online?", {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
             return
         }
 
         dispatch(toggleNetworkLoading())
             
         ServerApi().post("purchases/createOrder", {
-            userName: userData.access_token ? userData.user.name : name,
-            userEmail: userData.access_token ? userData.user.email : email,
-            userPhone: userData.access_token ? userData.user.phone : phone,
-            userPassword: password,
             courseId: course._id,
             purchaseType: type || purchaseType,
-            workshopId: chooseWorkshop
+            workshopId: type === "WORKSHOP" ? chooseWorkshop : ""
         })
         .then(result => {
             if (result.data.success === false) {
-                toast.error(result.data.message || "Unable to register.", {
+                toast.error(result.data.message || "Unable to purchase.", {
                     position: toast.POSITION.BOTTOM_CENTER
                 })
+                dispatch(toggleNetworkLoading())
                 return
             }
 
             const { orderId } = result.data
-            // console.log('amount')
-            // console.log(amount)
 
             //rzp_live_yQridN4TIi2mEm
             //CxNzVTZRYv72mLsoof5eYiCg
@@ -141,34 +138,13 @@ const Landing = (route) => {
 
                     const result = await ServerApi().post(`/purchases/completePurchase`, data)
 
-                    // updateUser()
-                    // setLoading(false)
-                    // setPaymentDone(true)
-                    
-                    // setTimeout(() => {
-                    //     setRechargeModal(false)
-                    //     setPaymentDone(false)
-                    //     history.push('/transactions')
-                    // }, 3000)
-
-                    // enqueueSnackbar('Payment Done!', {variant: 'success'})
-                    // dispatch({ type: "UPDATE_BALANCE", payload: getUser().wallet.balance })
-
-                    // console.log(result.data)
-                    dispatch({
-                        type: DO_LOGIN,
-                        payload: {...result.data, access_token: result.data.access_token}
-                    })
-                  
-                    localStorage.setItem('userData', JSON.stringify({...result.data, access_token: result.data.access_token}))
-
                     history.push('/dashboard')
 
                 },
                 prefill: {
-                    name,
-                    email,
-                    contact: phone
+                    name: userData.access_token ? userData.user.name : name,
+                    email: userData.access_token ? userData.user.email : email,
+                    contact: userData.access_token ? userData.user.phone : phone
                 },
                 notes: {
                     address: ''
@@ -186,7 +162,49 @@ const Landing = (route) => {
         .catch(e => {
             console.log(e)
             dispatch(toggleNetworkLoading())
-            alert("Unable to make payment!")
+            toast.error("Unable to make payment!", {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
+        })
+    }
+
+    const doRegister = () => {
+        if (name === '' || email === '' || phone === '' || password === '') {
+            toast.error("Please enter all fields.", {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
+            return
+        }
+
+        const raw = {
+            name,
+            email,
+            phone,
+            password
+        }
+
+        ServerApi().post('users/register', raw)
+        .then(res => {
+            if (!res.data.success) {
+                toast.error(res.data.message ?? 'Unable to register!', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                })
+                return
+            }
+
+            dispatch({
+                type: DO_LOGIN,
+                payload: res.data
+            })
+          
+            localStorage.setItem('userData', JSON.stringify(res.data))
+
+            //continue purchase
+            displayRazorpay(course.price, purchaseType)
+
+        })
+        .catch(e => {
+            console.log(e.response)
         })
     }
 
@@ -199,6 +217,9 @@ const Landing = (route) => {
         }
 
         dispatch(handleLogin({email, password}))
+
+        //continue purchase
+        displayRazorpay(course.price, purchaseType)
 
     }
 
@@ -225,20 +246,22 @@ const Landing = (route) => {
     <Grid container spacing={2}>
         <NavBar />
 
-        <Grid className="bg-white py-5" item xs={12} md={9}>
+        <Grid className="bg-white py-5" item xs={12} md={8}>
             <div className='w-100 px-5'>
                 <img className='img-fluid' src={`${BASE_URL}uploads/${course.image}`} alt='image' style={{maxHeight: 340}} />
                 
                 <h2 style={{fontSize: 42, fontWeight: 'bold'}} className="mt-2">{course.name}</h2>
-                <Chip color="primary" size="small" label="BAC Cource" onClick={() => null} />
+                {course.type === 'Bac' && (
+                    <Chip color="primary" size="small" label="BAC Cource" onClick={() => null} />
+                )}
                 
                 <h2 style={{fontSize: 32, fontWeight: 'bold'}} className="mt-2">₹ {course.price} /-</h2>
                 
-                <p className="mt-1">{course.details}</p>
+                <p className="mt-1 text-justify">{course.details}</p>
             </div>
         
         </Grid>
-        <Grid className="bg-white py-5" item xs={12} md={3}>
+        <Grid className="bg-white py-5" item xs={12} md={4}>
 
             <div className="p-2">
                 <Card style={{borderRadius: 12}} elevation={6} >
@@ -254,7 +277,6 @@ const Landing = (route) => {
                                 variant="contained" 
                                 style={{borderRadius: 2}}
                                 onClick={() => initPurchase('ONLINE')}
-                                endIcon={<Send />}
                             >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                         </div>
                     </CardContent>
@@ -270,11 +292,13 @@ const Landing = (route) => {
                         <CardContent>
 
                             {workshops.map((work) => (
+                                <>
                                 <Media>
-                                    <Avatar color='light-primary' className='rounded mr-1' icon={<Calendar size={18} />} />
+                                    <Avatar color='light-primary' className='rounded mr-1' icon={<Chip color="primary" size="small" label={work.batchNo} onClick={() => null} />} />
                                     <Media body>
-                                        <h6 className='mb-0'>{new Date(work.startDate).toDateString()}</h6>
-                                        <small>{new Date(work.startTime).toLocaleTimeString().replace(':00', '')} to {new Date(work.endTime).toLocaleTimeString().replace(':00', '')}</small>
+                                        <h4 style={{fontWeight: 'bold'}} className='mb-0'> {new Date(work.startDate).toDateString()}</h4>
+                                        <p className="mb-0"><small>{new Date(work.startTime).toLocaleTimeString().replace(':00', '')} to {new Date(work.endTime).toLocaleTimeString().replace(':00', '')}</small></p>
+                                        <p> <MapPin size={16} className="mr-1" /><a href={work.location} target="_blank" rel="noopener">{work.address}</a></p>
                                     </Media>
                                     <Radio
                                         checked={chooseWorkshop === work._id}
@@ -284,6 +308,8 @@ const Landing = (route) => {
                                         inputProps={{ 'aria-label': work.startDate }}
                                     />
                                 </Media>
+                                <Divider />
+                                </>
                             ))}
 
                             <div className="text-center mt-2">
@@ -293,7 +319,6 @@ const Landing = (route) => {
                                     variant="contained" 
                                     style={{borderRadius: 2}}
                                     onClick={() => initPurchase('WORKSHOP')}
-                                    endIcon={<Send />}
                                 >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                             </div>
                         </CardContent>
@@ -314,7 +339,7 @@ const Landing = (route) => {
                     <Col className='' lg='8' xs='12'>
                     <div className='w-100 px-4 mt-4'>
                         <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
-                        <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
+                        <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
                         <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
                     </div>
                     </Col>
@@ -390,8 +415,7 @@ const Landing = (route) => {
                     loadingPosition="start"
                     variant="contained" 
                     style={{borderRadius: 2}}
-                    onClick={() => displayRazorpay(course.price)}
-                    endIcon={<Send />}
+                    onClick={() => doRegister()}
                 >{!userData.access_token ? "Register & Join" : "Buy Now" }</Button>
             </div>
 
@@ -436,7 +460,6 @@ const Landing = (route) => {
                     variant="contained" 
                     style={{borderRadius: 2}}
                     onClick={() => doLogin()}
-                    endIcon={<Send />}
                 >{"Login"}</LoadingButton>
             </div>
 

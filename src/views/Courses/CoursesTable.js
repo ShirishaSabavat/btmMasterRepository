@@ -91,17 +91,7 @@ const CourseTable = () => {
                             <Eye size={15} />
                           </Link>
                         </Button>
-                    </li>      
-                    <li className="list-inline-item">
-                        <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-info"
-                        >
-                          <Link to="/schedule">
-                            <Calendar size={15} />
-                          </Link>
-                        </Button>
-                    </li>      
+                    </li>            
                     <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"

@@ -6,7 +6,7 @@ export const fetchAllUsersData = () => dispatch => {
   ServerApi().get('/users')
   .then(res => {
     console.log("res", res)
-    const data = res.data.map((values, index) => ({...values, sno: index + 1}))
+    const data = res.data.reverse().map((values, index) => ({...values, sno: index + 1}))
     dispatch({
       type: FETCH_ALL_USER_DATA,
       payload: data

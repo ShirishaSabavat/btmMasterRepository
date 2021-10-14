@@ -1,5 +1,6 @@
 // ** React Imports
-import { Fragment, useState, useRef } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 // ** Vertical Menu Items Array
 import navigation from '@src/navigation/vertical'
@@ -47,6 +48,17 @@ const Sidebar = props => {
     }
   }
 
+  // update side nav based on permissions
+  const [newNavigation, setNewNavigation] = useState(navigation)
+  const userData = useSelector(state => state.auth.userData)
+
+  useEffect(() => {
+    if (userData.access_token) {
+      const n = navigation.filter(i => i.permissions.includes(userData.user.role))
+      setNewNavigation(n)
+    }
+  }, [userData])
+
   return (
     <Fragment>
       <div
@@ -74,7 +86,7 @@ const Sidebar = props => {
             >
               <ul className='navigation navigation-main'>
                 <VerticalNavMenuItems
-                  items={navigation}
+                  items={newNavigation}
                   groupActive={groupActive}
                   setGroupActive={setGroupActive}
                   activeItem={activeItem}

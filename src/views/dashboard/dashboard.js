@@ -1,6 +1,9 @@
 import { Card, CardBody, CardText, Row, Col } from 'reactstrap'
 import Avatar from '@components/avatar'
 import {getUserData} from '../../utility/Utils'
+import PieChart from "./Charts/PieChart"
+import LineChart from './Charts/LineChart'
+import BarChart from './Charts/BarChart'
 
 // import decorationLeft from '@src/assets/images/elements/decore-left.png'
 // import decorationRight from '@src/assets/images/elements/decore-right.png'
@@ -25,7 +28,7 @@ const statsData = [
         title: 'Videos',
         count: '0',
         color: 'bg-light-info',
-        role: ['ADMIN', 'USER', 'BAC_USER'],
+        role: ['ADMIN'],
         icon: <Video size={24} />
     },
     {
@@ -43,7 +46,7 @@ const statsData = [
         icon: <Users size={24} />
     },
     {
-        title: 'Schedules',
+        title: 'Workshops',
         count: '0',
         role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Activity size={24} />
@@ -63,13 +66,14 @@ const statsData = [
 ]
 
 const Dashboard = () => {
+
   return (
     <>
     <Row>
       {<StatsCard data={statsData} />}
     </Row>
 
-    {getUserData().role === 'BAC_USER' && (
+    {getUserData()?.user?.role === 'BAC_USER' && (
     <Row>
         <Card className='card-congratulations'>
             <CardBody className='text-center'>
@@ -85,6 +89,31 @@ const Dashboard = () => {
             </CardBody>
         </Card>
     </Row>
+    )}
+
+
+    {getUserData()?.user?.role === 'ADMIN' && (
+    <>
+        <Row>
+            <Col sm="12" md="4">
+                <PieChart title="Online Courses" data={{series:[400, 600]}} />
+            </Col>
+            <Col sm="12" md="4">
+                <PieChart title="WorkShop" data={{series:[351, 649]}} />
+            </Col>
+            <Col sm="12" md="4">
+                <PieChart title="Users" data={{series:[600, 400]}} />
+            </Col>
+        </Row>
+        <Row>
+            <Col sm='12' md="8">
+                <LineChart />
+            </Col>
+            <Col sm='12' md="4">
+                <BarChart />
+            </Col>
+        </Row>
+    </>
     )}
     </>
   )

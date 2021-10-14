@@ -26,10 +26,12 @@ const courseCard = (props) => {
                 </Typography>
 
                 <Stack direction="row" spacing={2}>
-                    <Avatar style={{width: 24, height: 24}} alt="" src="/assets/images/deafault-user.jpg" />
-                    <Typography style={{paddingTop: 3}} variant="body2" color="text.secondary">
-                        {props.data.faculty}
-                    </Typography>
+                    {props.data.faculty && (
+                        <><Avatar style={{width: 24, height: 24}} alt="" src="/assets/images/deafault-user.jpg" />
+                        <Typography style={{paddingTop: 3}} variant="body2" color="text.secondary">
+                            {props.data.faculty.name}
+                        </Typography></>
+                    )}
                     <Typography style={{marginLeft: 'auto', marginRight: 12}} variant="h5" color="text.primary">
                         ₹ {props.data.price}
                     </Typography>

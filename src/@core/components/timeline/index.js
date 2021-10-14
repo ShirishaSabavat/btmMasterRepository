@@ -39,7 +39,7 @@ const Timeline = props => {
                   'mb-sm-0 mb-1': item.meta
                 })}
               >
-                <h6>{item.title}</h6>
+                <h4 style={{fontWeight: 'bold'}}>{item.title}</h4>
                 {item.meta ? (
                   <span
                     className={classnames('timeline-event-time', {
@@ -51,9 +51,8 @@ const Timeline = props => {
                 ) : null}
               </div>
               <p
-                className={classnames({
-                  'mb-0': i === data.length - 1 && !item.customContent
-                })}
+                style={{fontWeight: 'bold'}}
+                className="mb-0"
               >
                 {item.content}
               </p>
