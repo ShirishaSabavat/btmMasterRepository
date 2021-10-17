@@ -1,11 +1,13 @@
+import React, { useEffect } from 'react'
 import { Card, CardBody, CardText, Row, Col, CardHeader, CardTitle, Button, Input } from 'reactstrap'
 import Avatar from '@components/avatar'
 import {getUserData} from '../../utility/Utils'
 import PieChart from "./Charts/PieChart"
 import LineChart from './Charts/LineChart'
-import BarChart from './Charts/BarChart'
+import EarningCard from './Charts/EarningCard'
 import { toast } from 'react-toastify'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { loadDashboardData } from '../../redux/actions/user'
 
 // import decorationLeft from '@src/assets/images/elements/decore-left.png'
 // import decorationRight from '@src/assets/images/elements/decore-right.png'
@@ -19,70 +21,77 @@ import {
     Share2,
     Video
   } from 'react-feather'
-import { useSelector } from 'react-redux'
-
-const statsData = [
-    {
-        title: 'Users',
-        count: '0',
-        role: ['ADMIN'],
-        color: 'bg-light-danger',
-        icon: <Users size={24} />
-    },
-    {
-        title: 'Videos',
-        count: '0',
-        color: 'bg-light-info',
-        role: ['ADMIN'],
-        icon: <Video size={24} />
-    },
-    {
-        title: 'Courses',
-        count: '0',
-        color: 'bg-light-success',
-        role: ['ADMIN', 'USER', 'BAC_USER'],
-        icon: <Award size={24} />
-    },
-    {
-        title: 'Workshops',
-        count: '0',
-        role: ['ADMIN', 'USER', 'BAC_USER'],
-        icon: <Activity size={24} />
-    },
-    {
-        title: 'My Clients',
-        count: '0',
-        role: ['BAC_USER'],
-        color: 'bg-light-danger',
-        icon: <Users size={24} />
-    },
-    {
-        title: 'Total Sales',
-        count: '0',
-        role: ['BAC_USER'],
-        icon: <ShoppingBag size={24} />
-    },
-    {
-        title: 'Earningss',
-        count: '0',
-        role: ['BAC_USER'],
-        icon: <Activity size={24} />
-    }
-]
+import { useDispatch, useSelector } from 'react-redux'
 
 const Dashboard = () => {
 
+    const dispatch = useDispatch()
+
     const userData = useSelector(state => state.auth.userData)
+    const dashboardData = useSelector(state => state.user.dashboardData)
+
+    const statsData = [
+        {
+            title: 'Users',
+            count: (dashboardData.bacUsersCount + dashboardData.normalUsersCount),
+            role: ['ADMIN'],
+            color: 'bg-light-danger',
+            icon: <Users size={24} />
+        },
+        {
+            title: 'Videos',
+            count: dashboardData.videosCount,
+            color: 'bg-light-info',
+            role: ['ADMIN'],
+            icon: <Video size={24} />
+        },
+        {
+            title: 'Courses',
+            count: dashboardData.onlinePurchaseCount ? dashboardData.onlinePurchaseCount : (dashboardData.bacCourcesCount + dashboardData.regularCourcesCount),
+            color: 'bg-light-success',
+            role: ['ADMIN', 'USER', 'BAC_USER'],
+            icon: <Award size={24} />
+        },
+        {
+            title: 'Workshops',
+            count: dashboardData.workshopPurchaseCount ? dashboardData.workshopPurchaseCount :  dashboardData.workshopsCount,
+            role: ['ADMIN', 'USER', 'BAC_USER'],
+            icon: <Activity size={24} />
+        },
+        {
+            title: 'My Clients',
+            count: (dashboardData.bacUsersCount + dashboardData.normalUsersCount),
+            role: ['BAC_USER'],
+            color: 'bg-light-danger',
+            icon: <Users size={24} />
+        },
+        // {
+        //     title: 'Total Sales',
+        //     count: '0',
+        //     role: ['BAC_USER'],
+        //     icon: <ShoppingBag size={24} />
+        // },
+        {
+            title: 'Earnings',
+            count: `₹ ${dashboardData.netEarnings ? dashboardData.netEarnings[0]?.comissions : 0}`,
+            role: ['BAC_USER'],
+            icon: <Activity size={24} />
+        }
+    ]
+
+    useEffect(() => {
+        dispatch(loadDashboardData())
+    }, [])
 
     const handleCopy = ({ target: { value } }) => {
         setValue(value)
       }
     
-      const onCopy = () => {
+    const onCopy = () => {
         toast.success("Referral link copied!", {
             position: toast.POSITION.BOTTOM_CENTER
         })
-      }
+    }
 
   return (
     <>
@@ -128,13 +137,33 @@ const Dashboard = () => {
     <>
         <Row>
             <Col sm="12" md="4">
-                <PieChart title="Online Courses" data={{series:[400, 600]}} />
+                <PieChart 
+                    title="Courses" 
+                    data={{
+                        series: [dashboardData.bacCourcesCount, dashboardData.regularCourcesCount],
+                        labels: ['Regular', 'Bac'],
+                        styles: '1'
+                    }}
+                />
             </Col>
             <Col sm="12" md="4">
-                <PieChart title="WorkShop" data={{series:[351, 649]}} />
+                <PieChart 
+                    title="Sale Types" 
+                    data={{
+                        series: [dashboardData.regularCourcesCount, dashboardData.referralPurchaseCount],
+                        labels: ['Regular', 'Referral'],
+                        styles: '2'
+                    }} 
+                />
             </Col>
             <Col sm="12" md="4">
-                <PieChart title="Users" data={{series:[600, 400]}} />
+                <PieChart 
+                    title="Users" 
+                    data={{
+                        series: [dashboardData.bacUsersCount, dashboardData.normalUsersCount],
+                        labels: ['Regular', 'Bac']
+                    }}
+                />
             </Col>
         </Row>
         <Row>
@@ -142,7 +171,7 @@ const Dashboard = () => {
                 <LineChart />
             </Col>
             <Col sm='12' md="4">
-                <BarChart />
+                <EarningCard data={dashboardData} />
             </Col>
         </Row>
     </>

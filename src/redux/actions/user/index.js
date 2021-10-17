@@ -1,4 +1,4 @@
-import { FETCH_ALL_USER_DATA, FETCH_USER_BY_ID, FETCH_ALL_CLIENTS, FETCH_MY_COMMISIONS, FETCH_MY_TRANSACTIONS } from '../../types/user'
+import { FETCH_ALL_USER_DATA, FETCH_USER_BY_ID, FETCH_ALL_CLIENTS, FETCH_MY_COMMISIONS, FETCH_MY_TRANSACTIONS, DASHBOARD_DATA } from '../../types/user'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 import { updateUserKyc } from '../auth'
@@ -127,6 +127,22 @@ export const loadMyTransactions = () => dispatch => {
     dispatch({
       type: FETCH_MY_TRANSACTIONS,
       payload: data
+    })
+  })
+  .catch(e => {
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
+export const loadDashboardData = () => dispatch => {
+  ServerApi().get('/reports/dashboard')
+  .then(res => {
+    dispatch({
+      type: DASHBOARD_DATA,
+      payload: res.data
     })
   })
   .catch(e => {

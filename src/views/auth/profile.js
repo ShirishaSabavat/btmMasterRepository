@@ -60,26 +60,29 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className='d-flex align-items-center user-total-numbers'>
-              <div className='d-flex align-items-center mr-2'>
-                <div className='color-box p-1 bg-light-primary'>
-                ₹
+            {userData.user.role === 'BAC_USER' && (
+                <div className='d-flex align-items-center user-total-numbers'>
+                <div className='d-flex align-items-center mr-2'>
+                    <div className='color-box p-1 bg-light-primary'>
+                    ₹
+                    </div>
+                    <div className='ml-1'>
+                    <h5 className='mb-0'>N/A</h5>
+                    <small>Monthly Sales</small>
+                    </div>
                 </div>
-                <div className='ml-1'>
-                  <h5 className='mb-0'>N/A</h5>
-                  <small>Monthly Sales</small>
+                <div className='d-flex align-items-center'>
+                    <div className='color-box p-1 bg-light-success'>
+                    <TrendingUp className='text-success' />
+                    </div>
+                    <div className='ml-1'>
+                    <h5 className='mb-0'>N/A</h5>
+                    <small>Annual Profit</small>
+                    </div>
                 </div>
-              </div>
-              <div className='d-flex align-items-center'>
-                <div className='color-box p-1 bg-light-success'>
-                  <TrendingUp className='text-success' />
                 </div>
-                <div className='ml-1'>
-                  <h5 className='mb-0'>N/A</h5>
-                  <small>Annual Profit</small>
-                </div>
-              </div>
-            </div>
+            )}
+
           </Col>
 
           <Col xl='6' lg='12' className='mt-2 mt-xl-0'>
@@ -88,10 +91,10 @@ const Profile = () => {
                 <div className='user-info-title'>
                   <User className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Username
+                    Username: 
                   </CardText>
                 </div>
-                <CardText className='mb-0'>
+                <CardText className='mb-0 ml-1'>
                   {userData.user.email}
                 </CardText>
               </div>
@@ -99,10 +102,10 @@ const Profile = () => {
                 <div className='user-info-title'>
                   <Check className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Status
+                    Status: 
                   </CardText>
                 </div>
-                <CardText className='text-capitalize mb-0'>
+                <CardText className='text-capitalize mb-0 ml-1'>
                   {userData.user.status}
                 </CardText>
               </div>
@@ -110,10 +113,10 @@ const Profile = () => {
                 <div className='user-info-title'>
                   <Star className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Role
+                    Role: 
                   </CardText>
                 </div>
-                <CardText className='text-capitalize mb-0'>
+                <CardText className='text-capitalize mb-0 ml-1'>
                   {userData.user.role}
                 </CardText>
               </div>
@@ -130,10 +133,10 @@ const Profile = () => {
                 <div className='user-info-title'>
                   <Phone className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
-                    Contact
+                    Contact: 
                   </CardText>
                 </div>
-                <CardText className='mb-0'>{userData.user.phone}</CardText>
+                <CardText className='mb-0 ml-1'> {userData.user.phone}</CardText>
               </div>
             </div>
           </Col>
