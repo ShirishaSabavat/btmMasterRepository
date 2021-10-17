@@ -25,13 +25,15 @@ const PieChart = ({title, data}) => {
   // }, [])
   const context = useContext(ThemeColors)
 
+  const themeColor = data.styles === '1' ? [context.colors.primary.main, context.colors.success.main] : data.styles === '2' ? [context.colors.info.main, context.colors.success.main] : [context.colors.warning.main, context.colors.primary.main] 
+
   const options = {
       chart: {
         toolbar: {
           show: false
         }
       },
-      labels: ['Regular', 'BAC'],
+      labels: data.labels,
       dataLabels: {
         enabled: false
       },
@@ -39,33 +41,29 @@ const PieChart = ({title, data}) => {
       stroke: {
         width: 4
       },
-      colors: [context.colors.primary.main, context.colors.warning.main]
+      colors: themeColor
     },
     series = data.series
 
   const renderChartInfo = () => {
-    // return data.listData.map((item, index) => {
-
-      return (
-        <div
-          // key={}
-          className={classnames('d-flex justify-content-between', {
-            'mb-1': 1 !== 1
-          })}
-        >
-          <div className='d-flex align-items-center'>
-            <Circle
-              size={15}
-              className={classnames({
-                // [item.iconColor]: item.iconColor
-              })}
-            />
-            <span className='font-weight-bold ml-75'>Regular</span>
-          </div>
-          <span>500</span>
+    return data.labels.map((item, index) => (
+      <div
+        className={classnames('d-flex justify-content-between', {
+          'mb-1': 1 !== 1
+        })}
+      >
+        <div className='d-flex align-items-center'>
+          <Circle
+            size={15}
+            className={classnames({
+              // [item.iconColor]: item.iconColor
+            })}
+          />
+          <span className='font-weight-bold ml-75'>{item}</span>
         </div>
-      )
-    // })
+        <span>{data.series[index]}</span>
+      </div>
+    ))
   }
 
   return (
@@ -74,7 +72,7 @@ const PieChart = ({title, data}) => {
         <CardTitle tag='h4'>{title}</CardTitle>
         <UncontrolledDropdown className='chart-dropdown'>
           <DropdownToggle color='' className='bg-transparent btn-sm border-0 p-50'>
-            Last 7 days
+            All Time
           </DropdownToggle>
           <DropdownMenu right>
             {/* {data.last_days.map(item => ( */}

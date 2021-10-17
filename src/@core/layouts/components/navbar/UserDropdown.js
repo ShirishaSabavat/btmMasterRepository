@@ -31,10 +31,14 @@ const UserDropdown = () => {
           <User size={14} className='mr-75' />
           <span className='align-middle'>Profile</span>
         </DropdownItem>
+
+        {userData?.user.role !== 'USER' && (
         <DropdownItem tag={Link} to='/wallet' >
           <List size={14} className='mr-75' />
           <span className='align-middle'>Transactions</span>
         </DropdownItem>
+        )}
+
         <DropdownItem tag={Link} to='/home' >
           <Globe size={14} className='mr-75' />
           <span className='align-middle'>View Site</span>
