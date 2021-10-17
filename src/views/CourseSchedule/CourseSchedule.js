@@ -45,7 +45,7 @@ const CourseSchedule = () => {
           sortable: true,
           cell: (row) => (
                 <p>
-                  {row.courseId.name}
+                  {row.courseId?.name}
                 </p>
           )
         },
