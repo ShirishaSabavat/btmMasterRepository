@@ -28,50 +28,43 @@ const Navigation = [
     title: 'My Courses',
     icon: <Video size={20} />,
     navLink: '/my-courses',
-    permissions: ["USER"]
+    permissions: ["BAC_USER", "USER"]
   },
   {
     id: 'myworkshops',
     title: 'My Workshops',
     icon: <Calendar size={20} />,
     navLink: '/my-workshops',
-    permissions: ["USER"]
+    permissions: ["BAC_USER", "USER"]
   },
   {
     id: 'mycustomers',
-    title: 'My Customers',
+    title: 'Customers',
     icon: <Users size={20} />,
     navLink: '/admin/my-customers',
     permissions: ["BAC_USER"]
   },
   {
     id: 'mycommission',
-    title: 'My Commission',
+    title: 'Commission',
     icon: <Briefcase size={20} />,
     navLink: '/admin/my-commission',
-    permissions: ["BAC_USER"]
-  },
-  {
-    id: 'mypayouts',
-    title: 'My Payouts',
-    icon: <CreditCard size={20} />,
-    navLink: '/admin/my-payouts',
-    permissions: ["BAC_USER"]
+    permissions: ["ADMIN", "BAC_USER"]
   },
   {
     id: 'myreports',
-    title: 'My Reports',
+    title: 'Reports',
     icon: <FileText size={20} />,
     navLink: '/admin/my-reports',
     permissions: ["BAC_USER"]
   },
-  {
-    id: 'mymessages',
-    title: 'My Messages',
-    icon: <MessageSquare size={20} />,
-    navLink: '/admin/my-messages',
-    permissions: ["BAC_USER"]
-  },
+  // {
+  //   id: 'mymessages',
+  //   title: 'Messages',
+  //   icon: <MessageSquare size={20} />,
+  //   navLink: '/admin/my-messages',
+  //   permissions: ["BAC_USER"]
+  // },
   {
     id: 'videos',
     title: 'Video Links',
@@ -104,15 +97,8 @@ const Navigation = [
     id: 'kyc',
     title: 'KYC',
     icon: <CheckCircle size={20} />,
-    navLink: '/admin/kyc',
+    navLink: '/kyc',
     permissions: ["BAC_USER"]
-  },
-  {
-    id: 'socialMedia',
-    title: 'Social Media',
-    icon: <Share2 size={20} />,
-    navLink: '/admin/social-media',
-    permissions: ["ADMIN"]
   },
   {
     id: "cms",
@@ -158,6 +144,13 @@ const Navigation = [
         title: 'Gallery',
         icon: <ChevronRight size={15} />,
         navLink: '/admin/gallery',
+        permissions: ["ADMIN"]
+      },
+      {
+        id: 'socialMedia',
+        title: 'Social Media',
+        icon: <ChevronRight size={15} />,
+        navLink: '/admin/social-media',
         permissions: ["ADMIN"]
       }
       // {

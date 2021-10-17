@@ -9,6 +9,10 @@ const UserRoute = [
   {
     path: '/view-user-data',
     component: lazy(() => import('../../views/Users/UserData'))
+  },
+  {
+    path: '/wallet',
+    component: lazy(() => import('../../views/wallet'))
   }
 ]
 

@@ -43,6 +43,14 @@ const LandingRoute = [
     }
   },
   {
+    path: '/contact-us',
+    component: lazy(() => import('../../views/Landing/contactUs')),
+    layout: 'BlankLayout',
+    meta: {
+      publicRoute: true
+    }
+  },
+  {
     path: '/gallery',
     component: lazy(() => import('../../views/Landing/gallery')),
     layout: 'BlankLayout',

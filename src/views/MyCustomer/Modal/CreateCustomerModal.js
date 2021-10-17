@@ -31,7 +31,7 @@ const CreateCustomerModal = ({modalState, onClose}) => {
                             <Row>
                                 <Col sm="12" md="12">
                                     <FormGroup className="has-icon-left position-relative">
-                                        <Label for="email">Email</Label>
+                                        <Label htmlFor="email">Email</Label>
                                         <InputGroup>
                                             <InputGroupAddon addonType='prepend'>
                                             <InputGroupText className={ !!(formik.touched.email && formik.errors.email) ? "border border-danger" : null}>
@@ -56,7 +56,7 @@ const CreateCustomerModal = ({modalState, onClose}) => {
                                 </Col>
                                 <Col sm="12" md="12">
                                     <FormGroup className="has-icon-left position-relative">
-                                        <Label for="phoneNo">Phone Number</Label>
+                                        <Label htmlFor="phoneNo">Phone Number</Label>
                                         <InputGroup>
                                             <InputGroupAddon addonType='prepend'>
                                             <InputGroupText className={ !!(formik.touched.phoneNo && formik.errors.phoneNo) ? "border border-danger" : null}>

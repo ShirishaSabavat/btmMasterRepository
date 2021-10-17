@@ -7,6 +7,10 @@ const AuthRoute = [
     component: lazy(() => import('../../views/dashboard/dashboard'))
   },
   {
+    path: '/profile',
+    component: lazy(() => import('../../views/auth/profile'))
+  },
+  {
     path: '/login',
     component: lazy(() => import('../../views/auth/login')),
     layout: 'BlankLayout',

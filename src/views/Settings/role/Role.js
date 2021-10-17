@@ -103,7 +103,7 @@ const Role = () => {
                         {(formik) => {
                             return (<Form>
                                 <FormGroup className="has-icon-left position-relative">
-                                    <Label for="roleName">Role Name</Label>
+                                    <Label htmlFor="roleName">Role Name</Label>
                                     <Input
                                     type="text"
                                     name="roleName"

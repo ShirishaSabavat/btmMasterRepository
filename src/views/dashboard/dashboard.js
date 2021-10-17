@@ -1,9 +1,11 @@
-import { Card, CardBody, CardText, Row, Col } from 'reactstrap'
+import { Card, CardBody, CardText, Row, Col, CardHeader, CardTitle, Button, Input } from 'reactstrap'
 import Avatar from '@components/avatar'
 import {getUserData} from '../../utility/Utils'
 import PieChart from "./Charts/PieChart"
 import LineChart from './Charts/LineChart'
 import BarChart from './Charts/BarChart'
+import { toast } from 'react-toastify'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 // import decorationLeft from '@src/assets/images/elements/decore-left.png'
 // import decorationRight from '@src/assets/images/elements/decore-right.png'
@@ -13,8 +15,11 @@ import {
     Activity,
     Users,
     Star,
+    Share,
+    Share2,
     Video
   } from 'react-feather'
+import { useSelector } from 'react-redux'
 
 const statsData = [
     {
@@ -39,17 +44,17 @@ const statsData = [
         icon: <Award size={24} />
     },
     {
-        title: 'MyClients',
-        count: '0',
-        role: ['BAC_USER'],
-        color: 'bg-light-danger',
-        icon: <Users size={24} />
-    },
-    {
         title: 'Workshops',
         count: '0',
         role: ['ADMIN', 'USER', 'BAC_USER'],
         icon: <Activity size={24} />
+    },
+    {
+        title: 'My Clients',
+        count: '0',
+        role: ['BAC_USER'],
+        color: 'bg-light-danger',
+        icon: <Users size={24} />
     },
     {
         title: 'Total Sales',
@@ -58,7 +63,7 @@ const statsData = [
         icon: <ShoppingBag size={24} />
     },
     {
-        title: 'Total Earningss',
+        title: 'Earningss',
         count: '0',
         role: ['BAC_USER'],
         icon: <Activity size={24} />
@@ -67,24 +72,51 @@ const statsData = [
 
 const Dashboard = () => {
 
+    const userData = useSelector(state => state.auth.userData)
+
+    const handleCopy = ({ target: { value } }) => {
+        setValue(value)
+      }
+    
+      const onCopy = () => {
+        toast.success("Referral link copied!", {
+            position: toast.POSITION.BOTTOM_CENTER
+        })
+      }
+
   return (
     <>
     <Row>
       {<StatsCard data={statsData} />}
     </Row>
 
-    {getUserData()?.user?.role === 'BAC_USER' && (
+    {userData.user.role === 'BAC_USER' && (
     <Row>
         <Card className='card-congratulations'>
             <CardBody className='text-center'>
                 {/* <img className='congratulations-img-left' src={decorationLeft} alt='decor-left' /> */}
                 {/* <img className='congratulations-img-right' src={decorationRight} alt='decor-right' /> */}
-                <Avatar icon={<Star size={28} />} className='shadow' color='primary' size='xl' />
+                <Avatar icon={<Share2 size={28} />} className='shadow' color='success' size='xl' />
                 <div className='text-center'>
-                <h1 className='mb-1 text-white'>Rank</h1>
+                <h1 className='mb-1 text-white'>Share & Earn</h1>
                 <CardText className='m-auto w-75'>
-                    You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
+                    Now you can share your referral code and earn <strong>10%</strong> comissions on each purchase.
                 </CardText>
+
+                {userData?.user.kycStatus !== 'VERIFIED' && (
+                <Button.Ripple disabled className="mt-2" size="small" color='secondary'>
+                    KYC not verified yet
+                </Button.Ripple>
+                )}
+
+                {userData?.user.kycStatus === 'VERIFIED' && (
+                <CopyToClipboard onCopy={onCopy} text={`https://businessaacharya.com/home?referral=${userData.user.referralCode}`}>
+                    <Button.Ripple className="mt-2" size="small" color='warning'>
+                      Copy!
+                    </Button.Ripple>
+                </CopyToClipboard>
+                )}  
+
                 </div>
             </CardBody>
         </Card>
@@ -92,7 +124,7 @@ const Dashboard = () => {
     )}
 
 
-    {getUserData()?.user?.role === 'ADMIN' && (
+    {userData.user.role === 'ADMIN' && (
     <>
         <Row>
             <Col sm="12" md="4">

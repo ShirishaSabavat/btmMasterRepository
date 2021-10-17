@@ -7,11 +7,9 @@ import '@styles/base/pages/page-auth.scss'
 import {Grid, Stack, Button, Card, CardActions, CardContent, CardMedia, Typography, Chip} from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import ServerApi from '../../utility/ServerApi'
-import NavBar from './components/navbar'
 import CourseCard from './components/courseCard'
 import {fetchAllCourses} from '../../redux/actions/courses'
 import { useEffect } from 'react'
-import Footer from './components/footer'
 import Empty from '../../components/loading/Empty'
 
 const BacCources = () => {
@@ -28,10 +26,9 @@ const BacCources = () => {
 
   return (
     <Grid className="bg-white" container spacing={2}>
-        <NavBar />
 
         <Grid item xs={12}>
-            <h2 className="text-center mb-2">BAC Cources</h2>
+            <h1 style={{fontWeight: 'bold'}} className="text-center my-2">BAC Cources</h1>
         </Grid>
 
         {courses.filter((i) => i.type === 'Bac').length === 0 && (
@@ -56,8 +53,6 @@ const BacCources = () => {
                 />
             ))}
         </Grid>
-
-        <Footer />
 
     </Grid>
   )

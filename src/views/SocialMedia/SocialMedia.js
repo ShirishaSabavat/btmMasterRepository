@@ -1,29 +1,55 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import {Card, CardHeader, CardBody, CardTitle, Row, Col, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
-import {Facebook, Twitter, Linkedin, Instagram} from "react-feather"
+import {Facebook, Twitter, Youtube, Instagram, MessageCircle} from "react-feather"
+import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
+import { useDispatch, useSelector } from 'react-redux'
 
 const SocialMedia = () => {
 
+    const dispatch = useDispatch()
+
+    const data = useSelector(state => state.cms.socialLinks[0]?.content)
+    const [content, setContent] = useState()
+
     const initialValues = {
-        facebook:"",
-        instagram:"",
-        twitter:"",
-        linkedin:"",
-        printrest:""
+        facebook: data ? JSON.parse(data).facebook : "",
+        instagram: data ? JSON.parse(data).instagram : "",
+        youtube: data ? JSON.parse(data).youtube : "",
+        twitter: data ? JSON.parse(data).twitter : "",
+        whatsapp: data ? JSON.parse(data).whatsapp : ""
     }
 
+    console.log({content})
+
     const validationSchema = Yup.object().shape({
-        facebook: Yup.string().required("Required"),
-        instagram: Yup.string().required("Required"),
-        twitter: Yup.string().required("Required"),
-        linkedin: Yup.string().required("Required"),
-        printrest: Yup.string().required("Required")
+        facebook: Yup.string(),
+        instagram: Yup.string(),
+        youtube: Yup.string(),
+        twitter: Yup.string(),
+        whatsapp: Yup.string()
     })
 
+    useEffect(() => {
+        dispatch(fetchCMS("social-links"))
+    }, [])
+
+    useEffect(() => {
+        setContent(data)
+    }, [data])
+
     const submitForm = (values) => {
-        console.log("values", values)
+        const rawData = {
+            type: "social-links",
+            content: JSON.stringify(values)
+        }
+        
+        if (content?.length > 0) {
+            dispatch(EditCMS('social-links', rawData))
+            return
+        }
+        dispatch(AddCMS('social-links', rawData))
     }
 
     return <Row>
@@ -36,7 +62,7 @@ const SocialMedia = () => {
                     {(formik) => {
                         return (<Form>
                              <FormGroup className="has-icon-left position-relative">
-                                <Label for="facebook">Facebook</Label>
+                                <Label htmlFor="facebook">Facebook</Label>
                                 <InputGroup>
                                     <InputGroupAddon addonType='prepend'>
                                     <InputGroupText className={ !!(formik.touched.facebook && formik.errors.facebook) ? "border border-danger" : null}>
@@ -59,7 +85,7 @@ const SocialMedia = () => {
                                 />
                             </FormGroup>
                              <FormGroup className="has-icon-left position-relative">
-                                <Label for="instagram">Instagram</Label>
+                                <Label htmlFor="instagram">Instagram</Label>
                                 <InputGroup>
                                     <InputGroupAddon addonType='prepend'>
                                     <InputGroupText className={ !!(formik.touched.instagram && formik.errors.instagram) ? "border border-danger" : null}>
@@ -81,8 +107,31 @@ const SocialMedia = () => {
                                     className="field-error text-danger"
                                 />
                             </FormGroup>
-                             <FormGroup className="has-icon-left position-relative">
-                                <Label for="twitter">Twitter</Label>
+                            <FormGroup className="has-icon-left position-relative">
+                                <Label htmlFor="youtube">Youtube</Label>
+                                <InputGroup>
+                                    <InputGroupAddon addonType='prepend'>
+                                    <InputGroupText className={ !!(formik.touched.youtube && formik.errors.youtube) ? "border border-danger" : null}>
+                                        <Youtube size={15} />
+                                    </InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input
+                                    type="text"
+                                    name="youtube"
+                                    id="youtube"
+                                    {...formik.getFieldProps("youtube")}
+                                    invalid={!!(formik.touched.youtube && formik.errors.youtube)}
+                                    >
+                                    </Input>
+                                </InputGroup>
+                                <ErrorMessage
+                                    name="twitter"
+                                    component="div"
+                                    className="field-error text-danger"
+                                />
+                            </FormGroup>
+                            <FormGroup className="has-icon-left position-relative">
+                                <Label htmlFor="twitter">Twitter</Label>
                                 <InputGroup>
                                     <InputGroupAddon addonType='prepend'>
                                     <InputGroupText className={ !!(formik.touched.twitter && formik.errors.twitter) ? "border border-danger" : null}>
@@ -105,46 +154,29 @@ const SocialMedia = () => {
                                 />
                             </FormGroup>
                              <FormGroup className="has-icon-left position-relative">
-                                <Label for="linkedin">Linkedin</Label>
+                                <Label htmlFor="whatsapp">Whatsapp</Label>
                                 <InputGroup>
                                     <InputGroupAddon addonType='prepend'>
-                                    <InputGroupText className={ !!(formik.touched.linkedin && formik.errors.linkedin) ? "border border-danger" : null}>
-                                        <Linkedin size={15} />
+                                    <InputGroupText className={ !!(formik.touched.whatsapp && formik.errors.whatsapp) ? "border border-danger" : null}>
+                                        <MessageCircle size={15} />
                                     </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
                                     type="text"
-                                    name="linkedin"
-                                    id="linkedin"
-                                    {...formik.getFieldProps("linkedin")}
-                                    invalid={!!(formik.touched.linkedin && formik.errors.linkedin)}
+                                    name="whatsapp"
+                                    id="whatsapp"
+                                    {...formik.getFieldProps("whatsapp")}
+                                    invalid={!!(formik.touched.whatsapp && formik.errors.whatsapp)}
                                     >
                                     </Input>
                                 </InputGroup>
                                 <ErrorMessage
-                                    name="linkedin"
+                                    name="whatsapp"
                                     component="div"
                                     className="field-error text-danger"
                                 />
                             </FormGroup>
-                             <FormGroup className="has-icon-left position-relative">
-                                <Label for="printrest">Printrest</Label>
-                                <InputGroup>
-                                    <Input
-                                    type="text"
-                                    name="printrest"
-                                    id="printrest"
-                                    {...formik.getFieldProps("printrest")}
-                                    invalid={!!(formik.touched.printrest && formik.errors.printrest)}
-                                    >
-                                    </Input>
-                                </InputGroup>
-                                <ErrorMessage
-                                    name="printrest"
-                                    component="div"
-                                    className="field-error text-danger"
-                                />
-                            </FormGroup>
+
                             <FormGroup className="d-flex justify-content-end">
                                 <Button type="submit" color="primary">Save</Button>
                             </FormGroup>

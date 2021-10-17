@@ -4,7 +4,7 @@ import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import {Edit, Trash, Eye} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
-
+import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import DeleteModal from "./Modals/DeleteModal"
 import {fetchAllCourseSchedules, deleteCourseSchedule} from "../../redux/actions/courseSchedule/index"
 
@@ -56,17 +56,21 @@ const CourseSchedule = () => {
           height:"200px",
           cell: (row) => (
             <div className="d-flex flex-wrap">
-              <p className="text-bold-500 text-wrap mb-0">From: {new Date(row.startDate).toDateString()}</p>
-              <p className="text-bold-500 mb-0">To: {new Date(row.endDate).toDateString()}</p>
+              <p className="text-bold-500 text-wrap mb-0">From: {new Date(row.startDate).toLocaleDateString()}</p>
+              <p className="text-bold-500 mb-0">To: {new Date(row.endDate).toLocaleDateString()}</p>
             </div>
           )
         },
         {
-          name: "Location",
-          selector: "location",
+          name: "Address",
+          selector: "address",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.location}</p>
+            <p className="mb-0">
+              <a href={row.location} title="View On Map" target="_blank" rel="noopener">
+                {row.address}
+              </a>
+            </p>
           )
         },
         {
@@ -173,14 +177,9 @@ const CourseSchedule = () => {
                     <Button color="primary" type="button"><Link to="/add-course-schedule" className="text-white">Add</Link></Button>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={workshopData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
-                    customStyles={customStyles}
-                />
+
+                <CustomDataTable data={workshopData} columns={tableColumns} />
+                
                  {defaultAlert.alert ? (
                   <DeleteModal
                     defaultAlertHandler={defaultAlertHandler}
