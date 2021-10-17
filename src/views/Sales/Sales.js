@@ -1,9 +1,10 @@
 import React, {useEffect} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, CardBody, Button, Badge} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
-import {Eye} from "react-feather"
+import {Eye, ArrowUpCircle, Award, BarChart2, BarChart} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
+import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
 import { fetchAllSales } from "../../redux/actions/sales/index"
 
@@ -22,8 +23,16 @@ const Sales = () => {
             selector: "sno",
             sortable: true,
             cell: (row) => (
-              <p className="text-bold-500 text-truncate mb-0">{row.sno}</p>
+              <p className="mb-0">{row.sno}</p>
             )
+        },
+        {
+          name: "Course Name",
+          selector: "courseName",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 mb-0">{row.courseId?.name}</p>
+          )
         },
         {
           name: "Purchase Type",
@@ -31,17 +40,33 @@ const Sales = () => {
           sortable: true,
           minWidth: "200px",
           cell: (row) => (
-            <Badge color={row.status === "WORKSHOP" ? "danger" : "success"} pill>
+            <Badge color={row.purchaseType === "WORKSHOP" ? "info" : "primary"} pill>
             <span>{row.purchaseType}</span>
           </Badge>
           )
         },
         {
-          name: "Name",
+          name: "Course Type",
+          selector: "courseType",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 mb-0">{row.courseId?.type}</p>
+          )
+        },
+        {
+          name: "User Name",
           selector: "name",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.name}</p>
+            <p className="text-bold-500 mb-0">{row.userId?.name}</p>
+          )
+        },
+        {
+          name: "Referral",
+          selector: "eeferral",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 mb-0">{row.referral}</p>
           )
         },
         {
@@ -49,7 +74,7 @@ const Sales = () => {
           selector: "purchaseDate",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{new Date(row.purchaseDate).toDateString()}</p>
+            <p className="text-bold-500 mb-0">{new Date(row.purchaseDate).toDateString()}</p>
           )
         },
         {
@@ -57,7 +82,23 @@ const Sales = () => {
           selector: "paidAmount",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.paidAmount}</p>
+            <p className="text-bold-500 mb-0">₹ {row.paid}</p>
+          )
+        },
+        {
+          name: "Commisions",
+          selector: "commisions",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 mb-0">₹ {row.comissions}</p>
+          )
+        },
+        {
+          name: "Profit",
+          selector: "paidAmount",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 mb-0">₹ {row.netProfit}</p>
           )
         },
         {
@@ -65,7 +106,7 @@ const Sales = () => {
           selector: "status",
           sortable: true,
           cell: (row) => (
-            <Badge color={row.status === "ACTIVE" ? "success" : "danger"} pill>
+            <Badge color={row.status === "COMPLETED" ? "success" : "danger"} pill>
                 <span>{row.status.toUpperCase()}</span>
             </Badge>
           )
@@ -116,20 +157,61 @@ const Sales = () => {
     // const salesData = [{sno: "1", _id:"124", purchaseType: "WORKSHOP", name: "Sample 1", date: "2-2-2021", paidAmount: "100", status: "ACTIVE" }]
 
     return <Row>
+        <Col md="3" sm="12">
+            <Card>
+                <CardBody>
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <div>
+                            <h2 className='font-weight-bolder mb-0'>Sales</h2>
+                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.paid ? c.paid : 0), 0)} ({salesData.length})</p>
+                        </div>
+                        <div className={`avatar avatar-stats p-50 m-0 bg-light-success`}>
+                            <div className='avatar-content'><BarChart size={28} /></div>
+                        </div>
+                    </div>
+                </CardBody>
+            </Card>
+        </Col>
+        <Col md="3" sm="12">
+            <Card>
+                <CardBody>
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <div>
+                            <h2 className='font-weight-bolder mb-0'>Commisions</h2>
+                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.comissions ? c.comissions : 0), 0)} ({salesData.filter(i => (i.comissions !== undefined)).length})</p>
+                        </div>
+                        <div className={`avatar avatar-stats p-50 m-0 bg-light-danger`}>
+                            <div className='avatar-content'><Award size={28} /></div>
+                        </div>
+                    </div>
+                </CardBody>
+            </Card>
+        </Col>
+        <Col md="3" sm="12">
+            <Card>
+                <CardBody>
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <div>
+                            <h2 className='font-weight-bolder mb-0'>Profit</h2>
+                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.netProfit ? c.netProfit : 0), 0)}</p>
+                        </div>
+                        <div className={`avatar avatar-stats p-50 m-0 bg-light-success`}>
+                            <div className='avatar-content'><BarChart2 size={28} /></div>
+                        </div>
+                    </div>
+                </CardBody>
+            </Card>
+        </Col>
+
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
                     <CardTitle>Sales</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={salesData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
-                    customStyles={customStyles}
-                />
+
+                <CustomDataTable data={salesData} columns={tableColumns} />
+
             </Card>
         </Col>
     </Row>

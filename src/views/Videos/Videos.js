@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import {Edit, Trash} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
+import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
 import ScheduleModal from "./Modals/Modal"
 import DeleteModal from "./Modals/DeleteModal"
@@ -180,14 +181,9 @@ const Videos = () => {
                     <Link to="/add-video" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={videosData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
-                    customStyles={customStyles}
-                />
+                
+                <CustomDataTable data={videosData} columns={tableColumns} />
+
                  {editModal.modal ? (
                     <ScheduleModal
                       modalState={editModal.modal}

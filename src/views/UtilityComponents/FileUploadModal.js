@@ -24,7 +24,7 @@ const FileUploadModal = () => {
         <form>
             <Card className="ml-2 justify-content-center align-items-center m-0" style={{minWidth: "200px", minHeight: "200px", maxHeigth: "250px", maxWidth: "250px"}}>
                 <div  role="button">
-                    <label for="image" role="button" className="d-flex flex-column justify-content-center align-items-center"> 
+                    <label htmlFor="image" role="button" className="d-flex flex-column justify-content-center align-items-center"> 
                         <PlusCircle size={50} />
                         <h3>Upload</h3>
                     </label>

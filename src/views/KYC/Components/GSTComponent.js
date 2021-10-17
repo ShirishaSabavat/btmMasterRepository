@@ -3,10 +3,10 @@ import {Row, Col, Button, FormGroup, Label, Input, InputGroup, Card, CardBody} f
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import { State }  from 'country-state-city'
-
+import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const GSTComponent  = () => {
+const GSTComponent  = ({stepper, type, setKycFormData}) => {
 
     const [stateOptions] = useState(State.getStatesOfCountry("IN").map(values => { return {label : values.name, value : values.countryCode } }))
 
@@ -19,28 +19,30 @@ const GSTComponent  = () => {
     }
 
     const validationSchema = Yup.object().shape({
-        gstType: Yup.string().required("Required"),
-        legalname: Yup.string().required("Required"),
-        tradename: Yup.string().required("Required"),
-        address: Yup.string().required("Required"),
-        state: Yup.string().required("Required")
+        gstType: Yup.string(),
+        legalname: Yup.string(),
+        tradename: Yup.string(),
+        address: Yup.string(),
+        state: Yup.string()
     })
 
     const submitForm = (values) => {
+        setKycFormData(values)
+        stepper.next()
         console.log("values", values)
     }
 
     const gstTypeOptions = [{label: "Consumer", value: "consumer"}]
 
     return <Row>
-        <Col sm="12" md="6">
+        <Col sm="12" md="12">
             <Card>
                 <CardBody>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
                 {(formik) => {
-                    return (<Form>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="legalname">Legal legalname</Label>
+                    return (<Form className="row">
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="legalname">Legal Name</Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -57,8 +59,8 @@ const GSTComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="tradename">Trade Name</Label>
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="tradename">Trade Name</Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -75,7 +77,7 @@ const GSTComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup className="col-md-6">
                             <Label For="state">State</Label>
                             <CustomSelectField
                                 value={formik.values.state}
@@ -88,8 +90,8 @@ const GSTComponent  = () => {
                             className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="address">Address</Label>
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="address">Address</Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -106,7 +108,7 @@ const GSTComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup className="col-md-6">
                             <Label For="gstType">GST Type</Label>
                             <CustomSelectField
                                 value={formik.values.gstType}
@@ -119,9 +121,18 @@ const GSTComponent  = () => {
                             className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="d-flex justify-content-end">
-                            <Button type="submit" color="success">Save</Button>
-                        </FormGroup>
+                        
+                        <div className='col-md-12 mt-3 d-flex justify-content-between'>
+                            <Button.Ripple onClick={() => stepper.previous()} color='secondary' className='btn-prev' outline>
+                                <ArrowLeft size={14} className='align-middle mr-sm-25 mr-0'></ArrowLeft>
+                                <span className='align-middle d-sm-inline-block d-none'>Previous</span>
+                            </Button.Ripple>
+                            <Button.Ripple type='submit' color='primary' className='btn-next'>
+                                <span className='align-middle d-sm-inline-block d-none'>Next</span>
+                                <ArrowRight size={14} className='align-middle ml-sm-25 ml-0'></ArrowRight>
+                            </Button.Ripple>
+                        </div>
+
                     </Form>)
                 }}
             </Formik>          

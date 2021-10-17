@@ -71,7 +71,7 @@ const AddFacultyComponent = () => {
                                     <Row className="pl-1 pr-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="facultyName">Faculty Name</Label>
+                                                <Label htmlFor="facultyName">Faculty Name</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -93,7 +93,7 @@ const AddFacultyComponent = () => {
                                     <Row className="pl-1 pr-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="facultyDetails">Faculty Details</Label>
+                                                <Label htmlFor="facultyDetails">Faculty Details</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="textarea"

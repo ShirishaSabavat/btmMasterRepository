@@ -149,7 +149,7 @@ const OrganizationSettings = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="orgName">Organization Name</Label>
+                                                <Label htmlFor="orgName">Organization Name</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.orgName && formik.errors.orgName) ? "border border-danger" : null}>
@@ -175,7 +175,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="regNo">Registration No</Label>
+                                                <Label htmlFor="regNo">Registration No</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.regNo && formik.errors.regNo) ? "border border-danger" : null}>
@@ -247,7 +247,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="pincode">Pincode</Label>
+                                                <Label htmlFor="pincode">Pincode</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.pincode && formik.errors.pincode) ? "border border-danger" : null}>
@@ -272,7 +272,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="email">Mail Id</Label>
+                                                <Label htmlFor="email">Mail Id</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.email && formik.errors.email) ? "border border-danger" : null}>
@@ -297,7 +297,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="webaddress">Web Address</Label>
+                                                <Label htmlFor="webaddress">Web Address</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.webaddress && formik.errors.webaddress) ? "border border-danger" : null}>
@@ -323,7 +323,7 @@ const OrganizationSettings = () => {
                                     </Row>
                                     <Row className="mb-1">
                                         <Col sm="12">
-                                            <Label for="address">Address</Label>
+                                            <Label htmlFor="address">Address</Label>
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Input
                                                     type="textarea"
@@ -346,7 +346,7 @@ const OrganizationSettings = () => {
                                     <Row>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="phNo">Phone No</Label>
+                                                <Label htmlFor="phNo">Phone No</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.phNo && formik.errors.phNo) ? "border border-danger" : null}>
@@ -371,7 +371,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="personName">Person Name</Label>
+                                                <Label htmlFor="personName">Person Name</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.personName && formik.errors.personName) ? "border border-danger" : null}>
@@ -396,7 +396,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="username">User Name</Label>
+                                                <Label htmlFor="username">User Name</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.username && formik.errors.username) ? "border border-danger" : null}>
@@ -421,7 +421,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="password">Password</Label>
+                                                <Label htmlFor="password">Password</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.password && formik.errors.password) ? "border border-danger" : null}>
@@ -451,7 +451,7 @@ const OrganizationSettings = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="panNo">Pan No</Label>
+                                                <Label htmlFor="panNo">Pan No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="string"
@@ -470,7 +470,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="gstNo">GST No</Label>
+                                                <Label htmlFor="gstNo">GST No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="string"
@@ -490,7 +490,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="prdNo">Provident Fund No</Label>
+                                                <Label htmlFor="prdNo">Provident Fund No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="string"
@@ -510,7 +510,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="esiNo">ESI No</Label>
+                                                <Label htmlFor="esiNo">ESI No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="string"
@@ -532,7 +532,7 @@ const OrganizationSettings = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="cinNo">CIN No</Label>
+                                                <Label htmlFor="cinNo">CIN No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="string"
@@ -552,7 +552,7 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="pfNo">PF No</Label>
+                                                <Label htmlFor="pfNo">PF No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="string"

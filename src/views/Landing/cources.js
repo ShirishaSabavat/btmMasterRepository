@@ -28,10 +28,9 @@ const Landing = () => {
 
   return (
     <Grid className="bg-white" container spacing={2}>
-        <NavBar />
 
         <Grid item xs={12}>
-            <h2 className="text-center mb-2">Cources</h2>
+            <h1 style={{fontWeight: 'bold'}} className="text-center my-2">Cources</h1>
         </Grid>
 
         <Grid className="bg-white" item container spacing={2}>
@@ -41,7 +40,11 @@ const Landing = () => {
         </Grid>
 
         {courses.length === 0 && (
-            <Empty title="No courses are available !" />
+            <Grid xs={12} className="" item>
+                <div className="p-5">
+                    <Empty title="No courses are available !" />
+                </div> 
+            </Grid>
         )}
 
         <Grid className="bg-white pb-5" item xs={12}>
@@ -58,8 +61,6 @@ const Landing = () => {
                 </Col>
             </Row>
         </Grid>
-
-        <Footer />
 
     </Grid>
   )

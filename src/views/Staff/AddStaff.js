@@ -119,7 +119,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="fullName">Full Name</Label>
+                                                <Label htmlFor="fullName">Full Name</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -141,7 +141,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="phone">Phone</Label>
+                                                <Label htmlFor="phone">Phone</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -161,7 +161,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="dob">DOB</Label>
+                                                <Label htmlFor="dob">DOB</Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -181,7 +181,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="gender">Gender</Label>
+                                                <Label htmlFor="gender">Gender</Label>
                                                 <CustomSelectField
                                                     value={formik.values.gender}
                                                     options={genderOptions}
@@ -196,7 +196,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="role">Role</Label>
+                                                <Label htmlFor="role">Role</Label>
                                                 <CustomSelectField
                                                     value={formik.values.role}
                                                     options={roleOptions}
@@ -213,7 +213,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="email">Email</Label>
+                                                <Label htmlFor="email">Email</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -233,7 +233,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="password">Password</Label>
+                                                <Label htmlFor="password">Password</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="password"
@@ -253,7 +253,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="dateOfJoining">Date of Joining</Label>
+                                                <Label htmlFor="dateOfJoining">Date of Joining</Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -271,7 +271,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="salary">Salary</Label>
+                                                <Label htmlFor="salary">Salary</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -293,7 +293,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="epf">EPF</Label>
+                                                <Label htmlFor="epf">EPF</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -307,7 +307,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="panNo">PAN NO</Label>
+                                                <Label htmlFor="panNo">PAN NO</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -321,7 +321,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="aadhar">aadhar Number</Label>
+                                                <Label htmlFor="aadhar">aadhar Number</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -335,7 +335,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="maritialStatus">Marritial Status</Label>
+                                                <Label htmlFor="maritialStatus">Marritial Status</Label>
                                                 <CustomSelectField
                                                     value={formik.values.maritialStatus}
                                                     options={maritialStatusOptions}
@@ -390,7 +390,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="bankName">Bank Name</Label>
+                                                <Label htmlFor="bankName">Bank Name</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -406,7 +406,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="branch">Branch</Label>
+                                                <Label htmlFor="branch">Branch</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -420,7 +420,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="acc">Account Number</Label>
+                                                <Label htmlFor="acc">Account Number</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -434,7 +434,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="ifsc">IFSC Code</Label>
+                                                <Label htmlFor="ifsc">IFSC Code</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -450,7 +450,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="address">Address</Label>
+                                                <Label htmlFor="address">Address</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="textarea"

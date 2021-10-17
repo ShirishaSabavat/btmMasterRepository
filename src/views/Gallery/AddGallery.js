@@ -4,11 +4,19 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import FileUploadModal from "../UtilityComponents/FileUploadModal"
+import { useSelector, useDispatch} from 'react-redux'
+import {BASE_URL} from '../../utility/serverSettings'
+import { saveGallery } from '../../redux/actions/gallery'
 
 // import sampleImg from "/assets/images/default-image.jpg"
 
 const AddGallery = () => {
 
+    const dispatch = useDispatch()
+
+    const imagesData = useSelector(state => state.media.medias)
+    
+    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image.jpg')
     const [fileModalState, setFileModalState] = useState(false)
 
     const [editModal, setModal] = useState({
@@ -26,17 +34,23 @@ const AddGallery = () => {
     }
 
     const initialValues = {
-        title:"",
-        image:""
+        name: "",
+        file: selectedImg
     }
 
     const validationSchema = Yup.object().shape({
-        title: Yup.string().required("Required"),
-        image: Yup.string().required("Required")
+        name: Yup.string().required("Required")
     })
 
-    const submitForm = (values) => {
-        console.log("values", values)
+    const submitForm = (values, { resetForm }) => {
+        if (selectedImg === '/assets/images/default-image.jpg') return
+        
+        values.file = selectedImg.replace(`${BASE_URL}uploads/`, '')
+        
+        dispatch(saveGallery(values))
+
+        resetForm()
+        setSelectedImg('/assets/images/default-image.jpg')
     }
 
 
@@ -55,19 +69,19 @@ const AddGallery = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="title">Image Title</Label>
+                                                <Label htmlFor="name">Image Title</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
-                                                    name="title"
-                                                    id="title"
-                                                    {...formik.getFieldProps("title")}
-                                                    invalid={!!(formik.touched.title && formik.errors.title)}
+                                                    name="name"
+                                                    id="name"
+                                                    {...formik.getFieldProps("name")}
+                                                    invalid={!!(formik.touched.name && formik.errors.name)}
                                                     >
                                                     </Input>
                                                 </InputGroup>
                                                 <ErrorMessage
-                                                    name="title"
+                                                    name="name"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
@@ -76,7 +90,7 @@ const AddGallery = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={'/assets/images/default-image.jpg'} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    <img src={selectedImg} alt="choosen image" className="img-thumbnail img-fluid" />
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
@@ -96,7 +110,10 @@ const AddGallery = () => {
                 <ImagePickerComponent
                     modalState={editModal.modal}
                     onClose={toggleModel}
-                    toggleFileModal={toggleFileModal}
+                    toggleFileModal={toggleModel}
+                    imagesData={imagesData}
+                    selectedImg={selectedImg}
+                    setSelectedImg={setSelectedImg}
                 />
                 ) : null}
                 {fileModalState ? (

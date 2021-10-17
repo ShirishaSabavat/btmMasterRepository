@@ -47,7 +47,7 @@ const EditCustomer = () => {
                                     <Row>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="custName">Customer Name</Label>
+                                                <Label htmlFor="custName">Customer Name</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.custName && formik.errors.custName) ? "border border-danger" : null}>
@@ -72,7 +72,7 @@ const EditCustomer = () => {
                                         </Col>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="email">Email</Label>
+                                                <Label htmlFor="email">Email</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.email && formik.errors.email) ? "border border-danger" : null}>
@@ -99,7 +99,7 @@ const EditCustomer = () => {
                                     <Row>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="phoneNo">Phone Number</Label>
+                                                <Label htmlFor="phoneNo">Phone Number</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.phoneNo && formik.errors.phoneNo) ? "border border-danger" : null}>
@@ -126,7 +126,7 @@ const EditCustomer = () => {
                                     <Row>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="custType">Customer Type</Label>
+                                                <Label htmlFor="custType">Customer Type</Label>
                                                 <CustomSelectField
                                                     value={formik.values.custType}
                                                     options={customerTypeOptions}

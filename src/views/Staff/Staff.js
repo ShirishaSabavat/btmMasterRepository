@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import { Edit } from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
+import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
 import { fetchAllStaff } from "../../redux/actions/staff/index"
 
@@ -128,14 +129,9 @@ const Staff = () => {
                     <Link to="/add-staff" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={staffData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
-                    customStyles={customStyles}
-                />
+
+                <CustomDataTable data={staffData} columns={tableColumns} />
+                
             </Card>
         </Col>
     </Row>

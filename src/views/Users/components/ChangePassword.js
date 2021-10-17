@@ -30,7 +30,7 @@ const ChangePassword = () => {
               <Row>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label for='newPassword'>Password</Label>
+                    <Label htmlFor='newPassword'>Password</Label>
                         <Input
                         type="password"
                         name="newPassword"
@@ -48,7 +48,7 @@ const ChangePassword = () => {
                 </Col>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label for='reNewPassword'>Retype Password</Label>
+                    <Label htmlFor='reNewPassword'>Retype Password</Label>
                         <Input
                         type="password"
                         name="reNewPassword"

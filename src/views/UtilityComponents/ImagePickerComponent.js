@@ -25,9 +25,7 @@ const ImagePickerComponent = (props) => {
             
             <FileUploadModal />
 
-                {console.log({images})}
-
-                {images.reverse().map(values => <div className="col-auto"><img 
+                {images.reverse().map((values, indx) => <div key={String(indx)} className="col-auto"><img 
                         src={`${BASE_URL}uploads/${values.file}`} 
                         alt="image" 
                         name="imgName1" 

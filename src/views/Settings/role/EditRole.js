@@ -29,21 +29,21 @@ const EditRole = () => {
                         {(formik) => {
                             return (<Form>
                                 <FormGroup className="d-flex align-items-center ">
-                                    <Label for="courses"><strong>Courses:</strong></Label>
+                                    <Label htmlFor="courses"><strong>Courses:</strong></Label>
                                     <div className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="viewCourse">View</Label>
+                                        <Label htmlFor="viewCourse">View</Label>
                                         <CustomInput type="checkbox" name="courses" id="viewCourse" {...formik.getFieldProps("courses")} value="view" />
                                     </div>
                                     <div  className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="addCourse">Add</Label>
+                                        <Label htmlFor="addCourse">Add</Label>
                                         <CustomInput type="checkbox" name="courses" id="addCourse" {...formik.getFieldProps("courses")} value="add" />
                                     </div>
                                     <div  className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="editCourse">Edit</Label>
+                                        <Label htmlFor="editCourse">Edit</Label>
                                         <CustomInput type="checkbox" name="courses" id="editCourse" {...formik.getFieldProps("courses")} value="edit" />
                                     </div>
                                     <div  className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="deleteCourse">Delete</Label>
+                                        <Label htmlFor="deleteCourse">Delete</Label>
                                         <CustomInput type="checkbox" name="courses" id="deleteCourse" {...formik.getFieldProps("courses")} value="delete" />
                                     </div>
                                     <ErrorMessage
@@ -53,21 +53,21 @@ const EditRole = () => {
                                     />
                                 </FormGroup>
                                 <FormGroup className="d-flex align-items-center ">
-                                    <Label for="videos"><strong>Videos:</strong></Label>
+                                    <Label htmlFor="videos"><strong>Videos:</strong></Label>
                                     <div className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="viewVideo">View</Label>
+                                        <Label htmlFor="viewVideo">View</Label>
                                         <CustomInput type="checkbox" name="coursevideoss" id="viewVideo" {...formik.getFieldProps("videos")}  value="view" />
                                     </div>
                                     <div  className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="addVideo">Add</Label>
+                                        <Label htmlFor="addVideo">Add</Label>
                                         <CustomInput type="checkbox" name="videos" id="addVideo" {...formik.getFieldProps("videos")}  value="add" />
                                     </div>
                                     <div  className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="editVideo">Edit</Label>
+                                        <Label htmlFor="editVideo">Edit</Label>
                                         <CustomInput type="checkbox" name="videos" id="editVideo" {...formik.getFieldProps("videos")}  value="edit" />
                                     </div>
                                     <div  className="mx-1 d-flex flex-column align-items-center">
-                                        <Label for="deleteVideo">Delete</Label>
+                                        <Label htmlFor="deleteVideo">Delete</Label>
                                         <CustomInput type="checkbox" name="videos" id="deleteVideo" {...formik.getFieldProps("videos")}  value="delete" />
                                     </div>
                                     <ErrorMessage

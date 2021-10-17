@@ -5,7 +5,7 @@ import {Trash, Eye} from "react-feather"
 import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import { DataGrid } from '@mui/x-data-grid'
-
+import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import DeleteModal from "./Modals/DeleteModal"
 import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
 
@@ -75,27 +75,39 @@ const UserTable = () => {
           selector: "role",
           sortable: true,
           cell: (row) => (
-                <p
-                  className="text-bold-500 text-truncate mb-0"
-                >
-                  {row.role}
-                </p>
+            <Badge color={row.role === "USER" ? "primary" : "warning"} pill>
+              <span>{row.role.replace('_USER', '')}</span>
+            </Badge>
           )
         },
         {
-        name: "Phone No",
-        selector: "phone",
-        sortable: true,
-        cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
-        )
+          name: "Parent",
+          selector: "parent",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 text-truncate mb-0">{row.referral}</p>
+          )
         },
+        // {
+        // name: "Phone No",
+        // selector: "phone",
+        // sortable: true,
+        // cell: (row) => (
+        //     <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
+        // )
+        // },
         {
-        name: "Email",
-        selector: "email",
+        name: "KYC",
+        selector: "kyc",
         sortable: true,
         cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.email}</p>
+          <>
+            {row.role === 'BAC_USER' && (
+              <Badge color={row.kycStatus === "VERIFIED" ? "success" : row.kycStatus === "PROCESSING" ? "warning" : "danger"} pill>
+                <span>{row.kycStatus.toUpperCase()}</span>
+              </Badge>
+            )}
+          </>
         )
         },
         {
@@ -105,7 +117,7 @@ const UserTable = () => {
           height:"200px",
           cell: (row) => (
             <div className="d-flex flex-wrap">
-              <p className="text-bold-500 text-wrap mb-0">{row.date}</p>
+              <p className="text-bold-500 text-wrap mb-0">{(new Date(row.createdAt)).toLocaleString()}</p>
             </div>
           )
         },
@@ -194,25 +206,20 @@ const UserTable = () => {
                     <CardTitle>Users Data</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={usersData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
-                    customStyles={customStyles}
-                />
+
+                <CustomDataTable data={usersData} columns={tableColumns} />
+
                 <hr />
                 <div style={{ height: 300, width: '99%', margin: "auto" }}>
 
-                <DataGrid
+                {/* <DataGrid
                   rows={rows} 
                   columns={columns}
                   filterModel={{
                     items: [{ columnField: 'Name', operatorValue: 'contains', value: 'rice' }]
                   }}
                 
-                />
+                /> */}
                 </div>
                  {defaultAlert.alert ? (
                   <DeleteModal

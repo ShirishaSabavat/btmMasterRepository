@@ -17,7 +17,7 @@ import { toggleNetworkLoading } from '../../redux/actions/common'
 import { DO_LOGIN } from '../../redux/types/auth'
 import Footer from './components/footer'
 import { BASE_URL } from '../../utility/serverSettings'
-import { handleLogin } from '../../redux/actions/auth'
+import { handleLogin, updateUserRole } from '../../redux/actions/auth'
 // import { getUserData } from '../../utility/Utils'
 // import CourseCard from './components/courseCard'
 
@@ -42,6 +42,7 @@ const Landing = (route) => {
     const { id } = useParams()
  
     const userData = useSelector(state => state.auth.userData)
+    const referralCode = useSelector(state => state.common.referralCode)
     const course = useSelector(state => state.courses.course)
     const workshops = useSelector(state => state.courses.workshops)
     const courses = useSelector(state => state.courses.courses)
@@ -98,12 +99,16 @@ const Landing = (route) => {
         }
 
         dispatch(toggleNetworkLoading())
-            
-        ServerApi().post("purchases/createOrder", {
+
+        const raw = {
             courseId: course._id,
-            purchaseType: type || purchaseType,
-            workshopId: type === "WORKSHOP" ? chooseWorkshop : ""
-        })
+            purchaseType: type || purchaseType
+        }    
+        if (type === "WORKSHOP") {
+            raw.workshopId = chooseWorkshop
+        }
+
+        ServerApi().post("purchases/createOrder", raw)
         .then(result => {
             if (result.data.success === false) {
                 toast.error(result.data.message || "Unable to purchase.", {
@@ -123,7 +128,7 @@ const Landing = (route) => {
 
             const options = {
                 key: "rzp_test_tZ8WCE2tCPXW63", 
-                amount: price.toString(),
+                amount: (price + ((price * 18) / 100)).toString(),
                 currency: "INR",
                 name: "Business Acharaya Consultancy",
                 description: `Purchase Course.`,
@@ -136,7 +141,13 @@ const Landing = (route) => {
                         signature: response.razorpay_signature
                     }
 
-                    const result = await ServerApi().post(`/purchases/completePurchase`, data)
+                    ServerApi().post(`/purchases/completePurchase`, data)
+                    .then(res => {
+                        //update role if Bac course
+                        if (course.type === 'Bac') {
+                            dispatch(updateUserRole('BAC_USER'))
+                        }
+                    })
 
                     history.push('/dashboard')
 
@@ -181,6 +192,10 @@ const Landing = (route) => {
             email,
             phone,
             password
+        }
+
+        if (referralCode) {
+            raw.referral = referralCode
         }
 
         ServerApi().post('users/register', raw)
@@ -244,7 +259,6 @@ const Landing = (route) => {
 
   return (
     <Grid container spacing={2}>
-        <NavBar />
 
         <Grid className="bg-white py-5" item xs={12} md={8}>
             <div className='w-100 px-5'>
@@ -406,6 +420,19 @@ const Landing = (route) => {
                         onChange={e => setPassword(e.target.value)}
                     />
                 </FormControl>
+
+                {referralCode && (
+                    <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                        <TextField
+                            id="referral"
+                            label="referral"
+                            defaultValue=""
+                            value={referralCode}
+                            variant="standard"
+                            disabled
+                        />
+                    </FormControl>
+                )}
                 </>
             )}
 
@@ -469,8 +496,6 @@ const Landing = (route) => {
         
             </DialogContent>
         </Dialog>
-
-        <Footer />
 
     </Grid>
   )
