@@ -118,7 +118,7 @@ const EditCourse = () => {
                         {(formik) => {
                             return (
                                 <Form>
-                                     <Label for="courseName">Preview Image</Label>
+                                     <Label htmlFor="courseName">Preview Image</Label>
                                       <Row className="d-flex justify-content-center">
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
@@ -134,7 +134,7 @@ const EditCourse = () => {
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseName">Course Name</Label>
+                                                <Label htmlFor="courseName">Course Name</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -156,7 +156,7 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="6">
                                         <FormGroup>
-                                                <Label for="courseType">Course Type</Label>
+                                                <Label htmlFor="courseType">Course Type</Label>
                                                 <CustomSelectField
                                                 value={formik.values.courseType}
                                                 options={courseOptions}
@@ -171,7 +171,7 @@ const EditCourse = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseCode">Course Code</Label>
+                                                <Label htmlFor="courseCode">Course Code</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -193,7 +193,7 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseValidity">Course Validity(Days)</Label>
+                                                <Label htmlFor="courseValidity">Course Validity(Days)</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -213,7 +213,7 @@ const EditCourse = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="price">Price</Label>
+                                                <Label htmlFor="price">Price</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -235,7 +235,7 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="faculty">Faculty</Label>
+                                                <Label htmlFor="faculty">Faculty</Label>
                                                 <CustomSelectField
                                                     value={formik.values.faculty}
                                                     options={facultyOptions.map(values => values)}
@@ -252,7 +252,7 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="videoLink">Video Link</Label>
+                                                <Label htmlFor="videoLink">Video Link</Label>
                                                 <CustomSelectField
                                                 // value={formik.values.videoLink}
                                                 options={videoOptions}
@@ -271,7 +271,7 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseDetails">Course Details</Label>
+                                                <Label htmlFor="courseDetails">Course Details</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="textarea"

@@ -7,7 +7,7 @@ import { handleLogout } from '@store/actions/auth'
 import { Chip } from '@mui/material'
 
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
-import { User, Power } from 'react-feather'
+import { User, Power, Globe, List } from 'react-feather'
 
 const UserDropdown = () => {
   const dispatch = useDispatch()
@@ -27,9 +27,17 @@ const UserDropdown = () => {
         <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status='online' />
       </DropdownToggle>
       <DropdownMenu right>
-        <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
+        <DropdownItem tag={Link} to='/profile' >
           <User size={14} className='mr-75' />
           <span className='align-middle'>Profile</span>
+        </DropdownItem>
+        <DropdownItem tag={Link} to='/wallet' >
+          <List size={14} className='mr-75' />
+          <span className='align-middle'>Transactions</span>
+        </DropdownItem>
+        <DropdownItem tag={Link} to='/home' >
+          <Globe size={14} className='mr-75' />
+          <span className='align-middle'>View Site</span>
         </DropdownItem>
         <DropdownItem onClick={() => { dispatch(handleLogout()); history.push('/login') }}>
           <Power size={14} className='mr-75' />

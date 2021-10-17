@@ -11,6 +11,7 @@ import NavBar from './components/navbar'
 import Footer from './components/footer'
 import CourseCard from './components/courseCard'
 import { fetchAllCourses } from '../../redux/actions/courses'
+import { saveReferral } from '../../redux/actions/common'
 import { useEffect } from 'react'
 
 const Landing = () => {
@@ -23,6 +24,18 @@ const Landing = () => {
 
     useEffect(() => {
         dispatch(fetchAllCourses())
+    }, [])
+
+    useEffect(() => {
+        const search = window.location.search
+        const params = new URLSearchParams(search)
+        const referral = params.get('referral')
+
+        if (referral) {
+            dispatch(saveReferral(referral))
+        }
+
+        // console.log({referral})
     }, [])
 
     function loadScript(src) {
@@ -132,7 +145,6 @@ const Landing = () => {
 
   return (
     <Grid container spacing={2}>
-        <NavBar />
 
         <Grid className="" style={{backgroundColor: 'silver'}} item xs={12}>
             <Row className=''>
@@ -247,8 +259,6 @@ const Landing = () => {
 
             <img src="/assets/images/demo6.png" /> 
         </Grid>
-
-        <Footer />
 
     </Grid>
   )

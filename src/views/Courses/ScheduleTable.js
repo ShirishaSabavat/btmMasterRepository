@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import {Edit, Trash} from "react-feather"
 import DeleteModal from "./Modals/DeleteModal"
+import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
 const CourseTable = () => {
 
@@ -146,14 +147,9 @@ const CourseTable = () => {
                     <Button color="primary" type="button"><Link to="/schedule" className="text-white">Add Schedule</Link></Button>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={schoolData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
-                    customStyles={customStyles}
-                />
+
+                <CustomDataTable data={schoolData} columns={tableColumns} />
+                 
                  {defaultAlert.alert ? (
                   <DeleteModal
                     defaultAlertHandler={defaultAlertHandler}

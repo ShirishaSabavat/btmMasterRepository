@@ -2,7 +2,7 @@ import { FETCH_ALL_SCHEDULES, FETCH_SCHEDULES_BY_ID } from '../../types/courseSc
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 
-export const AddCourseScheduleAPI = (rawData) => dispatch => {
+export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
   ServerApi().post('/workshops', rawData)
   .then(res => {
     console.log("ress", res)
@@ -10,6 +10,7 @@ export const AddCourseScheduleAPI = (rawData) => dispatch => {
       toast.success("Created course", {
         position: toast.POSITION.BOTTOM_CENTER
       })
+      resetForm({})
     } else {
       toast.error("Error in Creating Course", {
         position: toast.POSITION.BOTTOM_CENTER

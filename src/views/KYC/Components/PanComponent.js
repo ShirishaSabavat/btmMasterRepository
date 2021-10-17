@@ -5,8 +5,9 @@ import * as Yup from "yup"
 // import "react-datepicker/dist/react-datepicker.css"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
+import {ArrowLeft, ArrowRight} from 'react-feather'
 
-const PanComponent  = () => {
+const PanComponent  = ({stepper, type, setKycFormData}) => {
 
     const initialValues = {
         panNo:"",
@@ -16,27 +17,28 @@ const PanComponent  = () => {
     }
 
     const validationSchema = Yup.object().shape({
-        panNo: Yup.number().positive().required("Required"),
+        panNo: Yup.string().required("Required"),
         panname: Yup.string().required("Required"),
-        dob: Yup.date().required("Required"),
-        panAttachment: Yup.string().required("Required")
+        dob: Yup.string(),
+        panAttachment: Yup.string()
     })
 
     const submitForm = (values) => {
+        setKycFormData(values)
+        stepper.next()
         console.log("values", values)
     }
 
     return <Row>
-        <Col sm="12" md="6">
+        <Col sm="12" md="12">
             <Card>
                 <CardBody>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
                 {(formik) => {
-                    return (<Form>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="panNo">PAN NO</Label>
+                    return (<Form className="row">
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="panNo">PAN NO</Label>
                             <Input
-                            type="number"
                             name="panNo"
                             id="panNo"
                             {...formik.getFieldProps("panNo")}
@@ -49,8 +51,8 @@ const PanComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="panname">Name as per PAN</Label>
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="panname">Name as per PAN</Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -67,8 +69,8 @@ const PanComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="dob">DOB as per PAN</Label>
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="dob">DOB as per PAN</Label>
                             <Flatpickr
                                 className="form-control"
                                 name="dob"
@@ -82,8 +84,8 @@ const PanComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="panAttachment">PAN Attachment No</Label>
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="panAttachment">PAN Attachment No</Label>
                             <CustomInput
                             type="file"
                             name="panAttachment"
@@ -98,9 +100,18 @@ const PanComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="d-flex justify-content-end">
-                            <Button type="submit" color="success">Save</Button>
-                        </FormGroup>
+                        
+                        <div className='col-md-12 mt-3 d-flex justify-content-between'>
+                            <Button.Ripple onClick={() => stepper.previous()} color='secondary' className='btn-prev' outline>
+                                <ArrowLeft size={14} className='align-middle mr-sm-25 mr-0'></ArrowLeft>
+                                <span className='align-middle d-sm-inline-block d-none'>Previous</span>
+                            </Button.Ripple>
+                            <Button.Ripple type='submit' color='primary' className='btn-next'>
+                                <span className='align-middle d-sm-inline-block d-none'>Next</span>
+                                <ArrowRight size={14} className='align-middle ml-sm-25 ml-0'></ArrowRight>
+                            </Button.Ripple>
+                        </div>
+
                     </Form>)
                 }}
             </Formik>          

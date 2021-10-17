@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import {Calendar, Edit, Trash, Eye} from "react-feather"
 import { useDispatch, useSelector } from "react-redux"
+import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
 import DeleteModal from "./Modals/DeleteModal"
 import {fetchAllCourses, deleteCourseById} from "../../redux/actions/courses/index"
@@ -158,14 +159,9 @@ const CourseTable = () => {
                     <Link to="/add-course" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={courseData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
-                    customStyles={customStyles}
-                />
+
+                <CustomDataTable data={courseData} columns={tableColumns} />
+                
                  {defaultAlert.alert ? (
                   <DeleteModal
                     defaultAlertHandler={defaultAlertHandler}

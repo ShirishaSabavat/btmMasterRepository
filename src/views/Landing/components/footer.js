@@ -4,8 +4,9 @@ import { Facebook, Instagram, Youtube, Mail, Phone, MapPin } from 'react-feather
 import '@styles/base/pages/page-auth.scss'
 import {Grid, ButtonGroup, Divider, IconButton} from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import parse from 'html-react-parser'
 
-const Footer = () => {
+const Footer = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const [skin, setSkin] = useSkin()
@@ -18,16 +19,20 @@ const Footer = () => {
         <Grid item xs={12} md={4}>
             <div className="p-4">
                 <h3 style={{fontWeight: 'bold'}} className="text-white mb-2">About</h3>
-                <h5 className="mb-2" style={{fontSize: 16, fontWeight: 300, color: '#a5a5a5'}}>Mr. Br SHAFI (MSW)  Shaikh Shafiullah is popularly knows as brother Shafi. He is founder president of mission Nenu Saitham Samajam kosam. Br Shafi has done Masters Degree from Osmaniya university in MSW, master in social work with medical and psychiatric social work specialization.</h5>  
+                {props.landingCms.filter(i => i.type === 'about').length > 0 && (
+                <h5 className="mb-2" style={{fontSize: 16, fontWeight: 300, color: '#a5a5a5'}}>
+                    {parse(props.landingCms.filter(i => i.type === 'about')[0]?.content)}
+                </h5>  
+                )}
 
                 <ButtonGroup >
-                    <IconButton onClick={() => window.open("https://www.facebook.com/BRSHAFI/", "_blank")} color="info" component="span">
+                    <IconButton onClick={() => window.open(JSON.parse(props.landingCms.filter(i => i.type === 'social-links')[0]?.content).facebook, "_blank")} color="info" component="span">
                         <Facebook />
                     </IconButton>
-                    <IconButton onClick={() => window.open("https://www.instagram.com/brshafi/", "_blank")} color="warning" component="span">
+                    <IconButton onClick={() => window.open(JSON.parse(props.landingCms.filter(i => i.type === 'social-links')[0]?.content).instagram, "_blank")} color="warning" component="span">
                         <Instagram />
                     </IconButton>
-                    <IconButton onClick={() => window.open("https://www.youtube.com/c/BRSHAFI", "_blank")} color="error" component="span">
+                    <IconButton onClick={() => window.open(JSON.parse(props.landingCms.filter(i => i.type === 'social-links')[0]?.content).youtube, "_blank")} color="error" component="span">
                         <Youtube />
                     </IconButton>
 

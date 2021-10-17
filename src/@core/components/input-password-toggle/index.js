@@ -38,7 +38,7 @@ const InputPasswordToggle = props => {
 
   return (
     <Fragment>
-      {label ? <Label for={htmlFor}>{label}</Label> : null}
+      {label ? <Label htmlFor={htmlFor}>{label}</Label> : null}
       <InputGroup
         className={classnames({
           [className]: className

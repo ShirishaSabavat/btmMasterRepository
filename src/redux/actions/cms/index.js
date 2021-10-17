@@ -1,6 +1,6 @@
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
-import { GET_MISSION, GET_ABOUT, GET_VISSION } from "../../types/cms/index"
+import { GET_MISSION, GET_ABOUT, GET_VISSION, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS } from "../../types/cms/index"
 
 export const AddCMS = (type, rawData) => dispatch => {
   ServerApi().post(`/cms`, rawData)
@@ -64,8 +64,29 @@ export const fetchCMS = (type) => dispatch => {
         type: GET_VISSION,
         payload: res.data
       })
+    } else if (type === "social-links") {
+      dispatch({
+        type: GET_SOCIAL_LINKS,
+        payload: res.data
+      })
     }
    
+  })
+  .catch(e => {
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
+export const fetchAllLandingCms = () => dispatch => {
+  ServerApi().get(`/cms/all`)
+  .then(res => {
+    dispatch({
+      type: GET_ALL_LANDING_CMS,
+      payload: res.data
+    })
   })
   .catch(e => {
     toast.error("Error in Fetching Data", {

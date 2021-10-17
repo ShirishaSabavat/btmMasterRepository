@@ -1,3 +1,5 @@
 export const GET_ABOUT = "GET_ABOUT"
 export const GET_MISSION = "GET_MISSION"
 export const GET_VISSION = "GET_VISSION"
+export const GET_SOCIAL_LINKS = "GET_SOCIAL_LINKS"
+export const GET_ALL_LANDING_CMS = "GET_ALL_LANDING_CMS"

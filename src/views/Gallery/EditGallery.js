@@ -55,7 +55,7 @@ const EditGallery = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="title">Image Title</Label>
+                                                <Label htmlFor="title">Image Title</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"

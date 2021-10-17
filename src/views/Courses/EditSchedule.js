@@ -56,7 +56,7 @@ const Schedule = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="batchNo">Batch No</Label>
+                                                <Label htmlFor="batchNo">Batch No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -76,7 +76,7 @@ const Schedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="seatsAllowed">Seats Allowed</Label>
+                                                <Label htmlFor="seatsAllowed">Seats Allowed</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.seatsAllowed && formik.errors.seatsAllowed) ? "border border-danger" : null}>
@@ -101,7 +101,7 @@ const Schedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="startTime">Start Time</Label>
+                                                <Label htmlFor="startTime">Start Time</Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -117,7 +117,7 @@ const Schedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="endTime">End Time</Label>
+                                                <Label htmlFor="endTime">End Time</Label>
                                                 <br />  
                                                 <Flatpickr
                                                 className="form-control"
@@ -135,7 +135,7 @@ const Schedule = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="locationLink">Location Link</Label>
+                                                <Label htmlFor="locationLink">Location Link</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.locationLink && formik.errors.locationLink) ? "border border-danger" : null}>
@@ -180,7 +180,7 @@ const Schedule = () => {
                                     <Row className="mb-1">
                                         <Col>
                                         <FormGroup className="has-icon-left position-relative">
-                                            <Label for="venuAddress">Venu Address</Label>
+                                            <Label htmlFor="venuAddress">Venu Address</Label>
                                             <InputGroup>
                                                 <Input
                                                 type="textarea"

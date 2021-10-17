@@ -30,7 +30,7 @@ const UserDetails = ({userData}) => {
               <Row>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label for='name'>Name</Label>
+                    <Label htmlFor='name'>Name</Label>
                         <Input
                         type="text"
                         name="name"
@@ -48,7 +48,7 @@ const UserDetails = ({userData}) => {
                 </Col>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label for='email'>Email</Label>
+                    <Label htmlFor='email'>Email</Label>
                         <Input
                         type="text"
                         name="email"
@@ -66,7 +66,7 @@ const UserDetails = ({userData}) => {
                 </Col>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label for='phNo'>Phone Number</Label>
+                    <Label htmlFor='phNo'>Phone Number</Label>
                         <Input
                         type="number"
                         name="phNo"

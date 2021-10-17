@@ -16,6 +16,7 @@ import user from "./user"
 import common from "./common"
 import sales from "./sales"
 import staff from "./staff"
+import gallery from "./gallery"
 
 const rootReducer = combineReducers({
   auth,
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   user,
   common,
   sales,
-  staff
+  staff,
+  gallery
 })
 
 export default rootReducer

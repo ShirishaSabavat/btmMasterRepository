@@ -43,7 +43,6 @@ const Login = () => {
 
   return (
     <>
-    <NavBar />
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/'>
@@ -64,14 +63,14 @@ const Login = () => {
             <CardText className='mb-2'></CardText>
             <Form className='auth-login-form mt-2' onSubmit={e => e.preventDefault()}>
               <FormGroup>
-                <Label className='form-label' for='login-email'>
+                <Label className='form-label' htmlFor='login-email'>
                   Email
                 </Label>
                 <Input onChange={(e) => setEmail(e.target.value)} type='email' id='login-email' placeholder='' autoFocus />
               </FormGroup>
               <FormGroup>
                 <div className='d-flex justify-content-between'>
-                  <Label className='form-label' for='login-password'>
+                  <Label className='form-label' htmlFor='login-password'>
                     Password
                   </Label>
                   {/* <Link to='/'>
@@ -116,8 +115,6 @@ const Login = () => {
         </Col>
       </Row>
     </div>
-
-    <Footer />
     </>
   )
 }

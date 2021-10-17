@@ -3,10 +3,10 @@ import {Row, Col, Button, FormGroup, Label, Input, InputGroup, Card, CardBody, C
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import { Country, State, City }  from 'country-state-city'
-
+import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const AddressComponent  = () => {
+const AddressComponent  = ({stepper, type, setKycFormData}) => {
    
   const allCountries = Country.getAllCountries().map(values => { return {label : values.name, value : values.isoCode } })
 
@@ -28,8 +28,7 @@ const AddressComponent  = () => {
   }, [selectedState])
 
     const initialValues = {
-        address1:"",
-        address2:"",
+        address:"",
         country:"",
         state:"",
         city:"",
@@ -38,18 +37,19 @@ const AddressComponent  = () => {
     }
 
     const validationSchema = Yup.object().shape({
-        address1: Yup.string().required("Required"),
-        address2: Yup.string().required("Required"),
+        address: Yup.string().required("Required"),
         country: Yup.string().required("Required"),
         state: Yup.string().required("Required"),
         city: Yup.string().required("Required"),
         zipCode: Yup.number().positive().integer().required("Required"),
-        addressAttachment: Yup.string().required("Required")
+        addressAttachment: Yup.string()
 
     })
 
     const submitForm = (values) => {
-        console.log("values", values)
+        // console.log("values", values)
+        setKycFormData(values)
+        stepper.next()
     }
 
     const countryChangeHadler = (value, formik) => {
@@ -64,88 +64,32 @@ const AddressComponent  = () => {
       }
 
     return <Row>
-        <Col sm="12" md="6">
+        <Col sm="12" md="12">
             <Card>
                 <CardBody>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
                 {(formik) => {
-                    return (<Form>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="address1">Address1</Label>
+                    return (<Form className="row">
+                        <FormGroup className="col-md-12 has-icon-left position-relative">
+                            <Label htmlFor="address">Address</Label>
                             <InputGroup>
                                 <Input
                                 type="textarea"
-                                name="address1"
-                                id="address1"
-                                {...formik.getFieldProps("address1")}
-                                invalid={!!(formik.touched.address1 && formik.errors.address1)}
+                                name="address"
+                                id="address"
+                                {...formik.getFieldProps("address")}
+                                invalid={!!(formik.touched.address && formik.errors.address)}
                                 >
                                 </Input>
                             </InputGroup>
                             <ErrorMessage
-                                name="address1"
+                                name="address"
                                 component="div"
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="address2">Address2</Label>
-                            <InputGroup>
-                                <Input
-                                type="textarea"
-                                name="address2"
-                                id="address2"
-                                {...formik.getFieldProps("address2")}
-                                invalid={!!(formik.touched.address2 && formik.errors.address2)}
-                                >
-                                </Input>
-                            </InputGroup>
-                            <ErrorMessage
-                                name="address2"
-                                component="div"
-                                className="field-error text-danger"
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label For="country">Country</Label>
-                            <CustomSelectField
-                              value={formik.values.country}
-                              options={countryOptions}
-                              onChange={(value) => countryChangeHadler(value, formik)}
-                            />
-                            <ErrorMessage
-                            name="country"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label For="state">State</Label>
-                            <CustomSelectField
-                              value={formik.values.state}
-                              options={stateOptions}
-                              onChange={(value) => StateChangeHadler(value, formik) }
-                            />
-                            <ErrorMessage
-                            name="state"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label For="city">City</Label>
-                            <CustomSelectField
-                              value={formik.values.city}
-                              options={cityOptions}
-                              onChange={(value) => formik.setFieldValue("city", value.label)}
-                            />
-                            <ErrorMessage
-                            name="city"
-                            component="div"
-                            className="field-error text-danger"
-                            />
-                        </FormGroup> <FormGroup className="has-icon-left position-relative">
-                            <Label for="zipCode">Zip Code</Label>
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="zipCode">Zip Code</Label>
                             <InputGroup>
                                 <Input
                                 type="number"
@@ -162,8 +106,8 @@ const AddressComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="has-icon-left position-relative">
-                            <Label for="addressAttachment">Address Documnet</Label>
+                        <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <Label htmlFor="addressAttachment">Address Documnet</Label>
                             <CustomInput
                             type="file"
                             name="addressAttachment"
@@ -178,9 +122,58 @@ const AddressComponent  = () => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="d-flex justify-content-end">
-                            <Button type="submit" color="success">Save</Button>
+
+                        <FormGroup className="col-md-4">
+                            <Label For="country">Country</Label>
+                            <CustomSelectField
+                              value={formik.values.country}
+                              options={countryOptions}
+                              onChange={(value) => countryChangeHadler(value, formik)}
+                            />
+                            <ErrorMessage
+                            name="country"
+                            component="div"
+                            className="field-error text-danger"
+                            />
                         </FormGroup>
+                        <FormGroup className="col-md-4">
+                            <Label For="state">State</Label>
+                            <CustomSelectField
+                              value={formik.values.state}
+                              options={stateOptions}
+                              onChange={(value) => StateChangeHadler(value, formik) }
+                            />
+                            <ErrorMessage
+                            name="state"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </FormGroup>
+                        <FormGroup className="col-md-4">
+                            <Label For="city">City</Label>
+                            <CustomSelectField
+                              value={formik.values.city}
+                              options={cityOptions}
+                              onChange={(value) => formik.setFieldValue("city", value.label)}
+                            />
+                            <ErrorMessage
+                            name="city"
+                            component="div"
+                            className="field-error text-danger"
+                            />
+                        </FormGroup> 
+                        
+                        <div className='col-md-12 mt-3 d-flex justify-content-between'>
+                            <Button.Ripple onClick={() => stepper.previous()} color='secondary' className='btn-prev' outline>
+                                <ArrowLeft size={14} className='align-middle mr-sm-25 mr-0'></ArrowLeft>
+                                <span className='align-middle d-sm-inline-block d-none'>Previous</span>
+                            </Button.Ripple>
+                            <Button.Ripple type='submit' color='primary' className='btn-next'>
+                                <span className='align-middle d-sm-inline-block d-none'>Next</span>
+                                <ArrowRight size={14} className='align-middle ml-sm-25 ml-0'></ArrowRight>
+                            </Button.Ripple>
+                        </div>
+
                     </Form>)
                 }}
             </Formik>          

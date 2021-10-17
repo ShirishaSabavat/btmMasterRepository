@@ -101,7 +101,7 @@ const AddVideo = () => {
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="title">Video Title</Label>
+                                                <Label htmlFor="title">Video Title</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -123,7 +123,7 @@ const AddVideo = () => {
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="videoLink">Video Link</Label>
+                                                <Label htmlFor="videoLink">Video Link</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
@@ -148,7 +148,7 @@ const AddVideo = () => {
                                         </Col>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="duration">Duration (Hours)</Label>
+                                                <Label htmlFor="duration">Duration (Hours)</Label>
                                                 <InputGroup>
                                                     <Input
                                                     name="duration"
@@ -169,7 +169,7 @@ const AddVideo = () => {
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="description">Description</Label>
+                                                <Label htmlFor="description">Description</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="textarea"

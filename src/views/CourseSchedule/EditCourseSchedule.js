@@ -124,7 +124,7 @@ const EditCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="startdate">Start Date</Label>
+                                                <Label htmlFor="startdate">Start Date</Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -138,7 +138,7 @@ const EditCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="enddate">End Date</Label>
+                                                <Label htmlFor="enddate">End Date</Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -152,7 +152,7 @@ const EditCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="starttime">Start Time</Label>
+                                                <Label htmlFor="starttime">Start Time</Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -175,7 +175,7 @@ const EditCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="endtime">End Time</Label>
+                                                <Label htmlFor="endtime">End Time</Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -199,7 +199,7 @@ const EditCourseSchedule = () => {
                                         <Row>
                                             <Col sm="12" md="12">
                                                 <FormGroup className="has-icon-left position-relative">
-                                                    <Label for="address">Address</Label>
+                                                    <Label htmlFor="address">Address</Label>
                                                     <InputGroup>
                                                         <Input
                                                         type="textarea"
@@ -221,7 +221,7 @@ const EditCourseSchedule = () => {
                                         <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="location">Location</Label>
+                                                <Label htmlFor="location">Location</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.location && formik.errors.location) ? "border border-danger" : null}>

@@ -65,7 +65,7 @@ const AddCourse = () => {
         faculty: Yup.string().required("Required")
     })
 
-    const submitForm = (values) => {
+    const submitForm = (values, {resetForm}) => {
         console.log("course values", values)
 
         const rawData =  {
@@ -76,7 +76,7 @@ const AddCourse = () => {
             schedule: "hh",
             shortDescription: "ok",
             validity: values.courseValidity,
-            videos: JSON.stringify(values.videoLink.map(i => i.value)),
+            videos: values.videoLink.map(i => i.value),
             price: values.price,
             details: values.courseDetails,
             code: values.courseCode,
@@ -85,7 +85,7 @@ const AddCourse = () => {
             faculty: values.faculty
         }
 
-        dispatch(AddCourseAPI(rawData))
+        dispatch(AddCourseAPI(rawData, resetForm))
     }
     
     useEffect(() => {
@@ -107,7 +107,7 @@ const AddCourse = () => {
                         {(formik) => {
                             return (
                                 <Form >
-                                    <Label for="courseName">Preview Image</Label>
+                                    <Label htmlFor="courseName">Preview Image</Label>
                                       <Row className="d-flex justify-content-center">
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
@@ -123,7 +123,7 @@ const AddCourse = () => {
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseName">Course Name</Label>
+                                                <Label htmlFor="courseName">Course Name</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -145,7 +145,7 @@ const AddCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label for="courseType">Course Type</Label>
+                                                <Label htmlFor="courseType">Course Type</Label>
                                                 <CustomSelectField
                                                     value={formik.values.courseType}
                                                     options={courseOptions}
@@ -160,7 +160,7 @@ const AddCourse = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseCode">Course Code</Label>
+                                                <Label htmlFor="courseCode">Course Code</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -182,7 +182,7 @@ const AddCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseValidity">Course Validity(Days)</Label>
+                                                <Label htmlFor="courseValidity">Course Validity(Days)</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -202,7 +202,7 @@ const AddCourse = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="price">Price</Label>
+                                                <Label htmlFor="price">Price</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -224,7 +224,7 @@ const AddCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="faculty">Faculty</Label>
+                                                <Label htmlFor="faculty">Faculty</Label>
                                                 <CustomSelectField
                                                     value={formik.values.faculty}
                                                     options={facultyOptions.map(values => values)}
@@ -241,7 +241,7 @@ const AddCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="videoLink">Video Link</Label>
+                                                <Label htmlFor="videoLink">Video Link</Label>
                                                 <CustomSelectField
                                                     value={formik.values.videoLink}
                                                     options={allVideos.map((i) => ({label: i.title, value: i._id}))}
@@ -260,7 +260,7 @@ const AddCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="courseDetails">Course Details</Label>
+                                                <Label htmlFor="courseDetails">Course Details</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="textarea"
@@ -282,7 +282,7 @@ const AddCourse = () => {
                                     {/* <Row>
                                         <Col sm="12">
                                             <FormGroup>
-                                                <Label for="tag">Tags</Label>
+                                                <Label htmlFor="tag">Tags</Label>
                                                 <TagsInput value={state.tags} onChange={handleChange} addOnBlur className="react-tagsinput rounded"  />
                                             </FormGroup>
                                         </Col>
@@ -290,7 +290,7 @@ const AddCourse = () => {
                                     {/* <Row>
                                         <Col sm="12">
                                             <FormGroup>
-                                                <Label for="tag">Tags</Label>
+                                                <Label htmlFor="tag">Tags</Label>
                                                 <ReactTagInput 
                                                     tags={state.tags} 
                                                     placeholder="Type and press enter"
@@ -306,7 +306,7 @@ const AddCourse = () => {
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label for="tags">Tags</Label>
+                                                <Label htmlFor="tags">Tags</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
