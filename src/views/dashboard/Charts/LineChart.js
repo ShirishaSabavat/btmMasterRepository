@@ -94,7 +94,7 @@ const LineChart = () => {
     series = [
       {
         name: 'Sales',
-        data: [140, 180, 150, 205, 160, 295, 125, 255, 205, 305, 240, 295]
+        data: []
       }
     ]
   return (
@@ -104,7 +104,7 @@ const LineChart = () => {
           <CardTitle className='mb-25' tag='h4'>
             Sales
           </CardTitle>
-          <CardText className='mb-0'>2020 Total Sales: 12.84k</CardText>
+          <CardText className='mb-0'></CardText>
         </div>
       </CardHeader>
       <CardBody className='pb-0'>

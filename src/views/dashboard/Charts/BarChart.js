@@ -70,7 +70,7 @@ const BarChart = () => {
         }
       }
     },
-    series = [83]
+    series = []
 
   return (
     <Card>
