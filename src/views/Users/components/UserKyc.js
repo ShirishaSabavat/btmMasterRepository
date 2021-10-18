@@ -23,7 +23,7 @@ const UserKyc  = ({userData}) => {
 
     const updateUserKyc = () => {
         dispatch(verifyUserKyc({
-            kycId: userData.kycId._id, 
+            kycId: userData.kycId?._id, 
             userId: userData._id, 
             status: kycStatus
         }))
@@ -44,9 +44,9 @@ const UserKyc  = ({userData}) => {
               <UncontrolledCollapse toggler='#pi'>
                 <ListGroup className='mt-1' flush>
                   <ListGroupItem className='list-group-item justify-content-between flex-wrap'>
-                    <p>Name : <span className='font-weight-bold'>{userData.kycId.name}</span></p>
-                    <p>Email : <span className='font-weight-bold'>{userData.kycId.email}</span></p>
-                    <p>Phone : <span className='font-weight-bold'>{userData.kycId.phone}</span></p>
+                    <p>Name : <span className='font-weight-bold'>{userData.kycId?.name}</span></p>
+                    <p>Email : <span className='font-weight-bold'>{userData.kycId?.email}</span></p>
+                    <p>Phone : <span className='font-weight-bold'>{userData.kycId?.phone}</span></p>
                   </ListGroupItem>
                 </ListGroup>
               </UncontrolledCollapse>
@@ -67,9 +67,9 @@ const UserKyc  = ({userData}) => {
                 <UncontrolledCollapse toggler='#pd'>
                   <ListGroup className='mt-1' flush>
                     <ListGroupItem className='list-group-item justify-content-between flex-wrap'>
-                        <p>PAN No : <span className='font-weight-bold'>{userData.kycId.panNo}</span></p>
-                        <p>Name as per PAN : <span className='font-weight-bold'>{userData.kycId.panname}</span></p>
-                        <p>DOB as per PAN : <span className='font-weight-bold'>{userData.kycId.dob}</span></p>
+                        <p>PAN No : <span className='font-weight-bold'>{userData.kycId?.panNo}</span></p>
+                        <p>Name as per PAN : <span className='font-weight-bold'>{userData.kycId?.panname}</span></p>
+                        <p>DOB as per PAN : <span className='font-weight-bold'>{userData.kycId?.dob}</span></p>
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -90,11 +90,11 @@ const UserKyc  = ({userData}) => {
                 <UncontrolledCollapse toggler='#bd'>
                   <ListGroup className='mt-1' flush>
                     <ListGroupItem className='list-group-item justify-content-between flex-wrap'>
-                        <p>Bank Name : <span className='font-weight-bold'>{userData.kycId.selectBank}</span></p>
-                        <p>Bank Branch : <span className='font-weight-bold'>{userData.kycId.banchName}</span></p>
-                        <p>Acc No : <span className='font-weight-bold'>{userData.kycId.accNo}</span></p>
-                        <p>Acc Holder Name : <span className='font-weight-bold'>{userData.kycId.accHolderName}</span></p>
-                        <p>IFSC : <span className='font-weight-bold'>{userData.kycId.ifscCode}</span></p>
+                        <p>Bank Name : <span className='font-weight-bold'>{userData.kycId?.selectBank}</span></p>
+                        <p>Bank Branch : <span className='font-weight-bold'>{userData.kycId?.banchName}</span></p>
+                        <p>Acc No : <span className='font-weight-bold'>{userData.kycId?.accNo}</span></p>
+                        <p>Acc Holder Name : <span className='font-weight-bold'>{userData.kycId?.accHolderName}</span></p>
+                        <p>IFSC : <span className='font-weight-bold'>{userData.kycId?.ifscCode}</span></p>
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -115,9 +115,9 @@ const UserKyc  = ({userData}) => {
                 <UncontrolledCollapse toggler='#gd'>
                   <ListGroup className='mt-1' flush>
                     <ListGroupItem className='list-group-item justify-content-between flex-wrap'>
-                        <p>GST Type : <span className='font-weight-bold'>{userData.kycId.gstType}</span></p>
-                        <p>Legal Name : <span className='font-weight-bold'>{userData.kycId.legalname}</span></p>
-                        <p>Trade Name : <span className='font-weight-bold'>{userData.kycId.tradename}</span></p>
+                        <p>GST Type : <span className='font-weight-bold'>{userData.kycId?.gstType}</span></p>
+                        <p>Legal Name : <span className='font-weight-bold'>{userData.kycId?.legalname}</span></p>
+                        <p>Trade Name : <span className='font-weight-bold'>{userData.kycId?.tradename}</span></p>
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -138,7 +138,7 @@ const UserKyc  = ({userData}) => {
                 <UncontrolledCollapse toggler='#aad'>
                   <ListGroup className='mt-1' flush>
                     <ListGroupItem className='list-group-item justify-content-between flex-wrap'>
-                        <p>Aadhar No : <span className='font-weight-bold'>{userData.kycId.aadharNo}</span></p>
+                        <p>Aadhar No : <span className='font-weight-bold'>{userData.kycId?.aadharNo}</span></p>
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -159,11 +159,11 @@ const UserKyc  = ({userData}) => {
                 <UncontrolledCollapse toggler='#ad'>
                   <ListGroup className='mt-1' flush>
                     <ListGroupItem className='list-group-item justify-content-between flex-wrap'>
-                        <p>Address : <span className='font-weight-bold'>{userData.kycId.address}</span></p>
-                        <p>County : <span className='font-weight-bold'>{userData.kycId.country}</span></p>
-                        <p>State : <span className='font-weight-bold'>{userData.kycId.state}</span></p>
-                        <p>City : <span className='font-weight-bold'>{userData.kycId.city}</span></p>
-                        <p>Pin Code : <span className='font-weight-bold'>{userData.kycId.zipCode}</span></p>
+                        <p>Address : <span className='font-weight-bold'>{userData.kycId?.address}</span></p>
+                        <p>County : <span className='font-weight-bold'>{userData.kycId?.country}</span></p>
+                        <p>State : <span className='font-weight-bold'>{userData.kycId?.state}</span></p>
+                        <p>City : <span className='font-weight-bold'>{userData.kycId?.city}</span></p>
+                        <p>Pin Code : <span className='font-weight-bold'>{userData.kycId?.zipCode}</span></p>
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>

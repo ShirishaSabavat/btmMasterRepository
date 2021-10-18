@@ -58,7 +58,9 @@ const Sales = () => {
           selector: "name",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">{row.userId?.name}</p>
+            <p className="text-bold-500 mb-0">
+                {row.userId?.name}
+            </p>
           )
         },
         {
