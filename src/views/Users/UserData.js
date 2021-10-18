@@ -1,7 +1,9 @@
 import {useState, useEffect } from 'react'
-import { Row, Col, TabContent, TabPane, Card, CardBody } from 'reactstrap'
+import { Row, Col, TabContent, TabPane, Card, CardBody, CardText } from 'reactstrap'
+import Avatar from '@components/avatar'
 import { useHistory } from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux"
+import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
 import { fetchUserById } from "../../redux/actions/user/index"
 import Tabs from './Tabs'
@@ -30,8 +32,143 @@ const UserData = () => {
     dispatch(fetchUserById(uid))
   }, [uid])
 
+  const renderUserImg = () => {
+    const stateNum = Math.floor(Math.random() * 6),
+        states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
+        color = states[stateNum]
+      return (
+        <Avatar
+          initials
+          color={color}
+          className='rounded'
+          content={userData.userData?.name ?? 'BA'}
+          contentStyles={{
+            borderRadius: 0,
+            fontSize: 'calc(36px)',
+            width: '100%',
+            height: '100%'
+          }}
+          style={{
+            height: '90px',
+            width: '90px'
+          }}
+        />
+      )
+  }
+
   return (
     <Row>
+        <Col md="12">
+          <Card>
+            <CardBody>
+              <Row>
+                <Col xl='6' lg='12' className='d-flex flex-column justify-content-between border-container-lg'>
+                  <div className='user-avatar-section mb-2'>
+                    <div className='d-flex justify-content-start'>
+                      {renderUserImg()}
+                      <div className='d-flex flex-column ml-1'>
+                        <div className='user-info mb-1'>
+                          <h4 className='mb-0'>{userData.userData?.name}</h4>
+                          <CardText tag='span'>
+                            {userData.userData?.email}
+                          </CardText>
+                        </div>
+                        <div className='d-flex flex-wrap align-items-center'>
+                          {/* <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
+                            Edit
+                          </Button.Ripple>
+                          <Button.Ripple className='ml-1' color='danger' outline>
+                            Delete
+                          </Button.Ripple> */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {userData.userData?.role === 'BAC_USER' && (
+                      <div className='d-flex align-items-center user-total-numbers'>
+                      <div className='d-flex align-items-center mr-2'>
+                          <div className='color-box p-1 bg-light-primary'>
+                          ₹
+                          </div>
+                          <div className='ml-1'>
+                          <h5 className='mb-0'>N/A</h5>
+                          <small>Monthly Sales</small>
+                          </div>
+                      </div>
+                      <div className='d-flex align-items-center'>
+                          <div className='color-box p-1 bg-light-success'>
+                          <TrendingUp className='text-success' />
+                          </div>
+                          <div className='ml-1'>
+                          <h5 className='mb-0'>N/A</h5>
+                          <small>Annual Profit</small>
+                          </div>
+                      </div>
+                      </div>
+                  )}
+
+                </Col>
+
+                <Col xl='6' lg='12' className='mt-2 mt-xl-0'>
+                  <div className='user-info-wrapper'>
+                    <div className='d-flex flex-wrap align-items-center'>
+                      <div className='user-info-title'>
+                        <User className='mr-1' size={14} />
+                        <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                          Username: 
+                        </CardText>
+                      </div>
+                      <CardText className='mb-0 ml-1'>
+                        {userData.userData?.email}
+                      </CardText>
+                    </div>
+                    <div className='d-flex flex-wrap align-items-center my-50'>
+                      <div className='user-info-title'>
+                        <Check className='mr-1' size={14} />
+                        <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                          Status: 
+                        </CardText>
+                      </div>
+                      <CardText className='text-capitalize mb-0 ml-1'>
+                        {userData.userData?.status}
+                      </CardText>
+                    </div>
+                    <div className='d-flex flex-wrap align-items-center my-50'>
+                      <div className='user-info-title'>
+                        <Star className='mr-1' size={14} />
+                        <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                          Role: 
+                        </CardText>
+                      </div>
+                      <CardText className='text-capitalize mb-0 ml-1'>
+                        {userData.userData?.role}
+                      </CardText>
+                    </div>
+                    {/* <div className='d-flex flex-wrap align-items-center my-50'>
+                      <div className='user-info-title'>
+                        <Flag className='mr-1' size={14} />
+                        <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                          Country
+                        </CardText>
+                      </div>
+                      <CardText className='mb-0'>{selectedUser !== null ? selectedUser.country : 'England'}</CardText>
+                    </div> */}
+                    <div className='d-flex flex-wrap align-items-center'>
+                      <div className='user-info-title'>
+                        <Phone className='mr-1' size={14} />
+                        <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                          Contact: 
+                        </CardText>
+                      </div>
+                      <CardText className='mb-0 ml-1'> {userData.userData?.phone}</CardText>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
+        </Col>
         <Col className='mb-2 mb-md-0' md='3'>
           <Tabs userRole={userData.userData?.role} activeTab={activeTab} toggleTab={toggleTab} />
         </Col>
