@@ -33,7 +33,7 @@ const UserData = () => {
   return (
     <Row>
         <Col className='mb-2 mb-md-0' md='3'>
-          <Tabs userRole={userData.userData.role} activeTab={activeTab} toggleTab={toggleTab} />
+          <Tabs userRole={userData.userData?.role} activeTab={activeTab} toggleTab={toggleTab} />
         </Col>
         
         <Col md='9'>
@@ -44,7 +44,7 @@ const UserData = () => {
                     <UserDetails userData={userData.userData} />
                   </TabPane>
 
-                  {userData.userData.role === 'BAC_USER' && (
+                  {userData.userData?.role === 'BAC_USER' && (
                     <TabPane tabId='5'>
                       <UserKyc userData={userData.userData} />
                     </TabPane>
