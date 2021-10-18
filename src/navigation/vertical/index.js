@@ -210,6 +210,14 @@ const Navigation = [
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
         navLink: "/role"
+      },
+      {
+        id: "payment",
+        title: "Payment",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/payment"
       }
     ]
   }

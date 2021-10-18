@@ -17,6 +17,8 @@ import common from "./common"
 import sales from "./sales"
 import staff from "./staff"
 import gallery from "./gallery"
+import roles from "./roles"
+import landingPage from "./landingPage"
 
 const rootReducer = combineReducers({
   auth,
@@ -33,7 +35,9 @@ const rootReducer = combineReducers({
   common,
   sales,
   staff,
-  gallery
+  gallery,
+  roles,
+  landingPage
 })
 
 export default rootReducer

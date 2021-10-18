@@ -67,23 +67,49 @@ const AddStaff = () => {
         role:Yup.string().required("Required"),
         password:Yup.string().required("Required"),
         dateOfJoining:Yup.date().required("Required"),
-        salary:Yup.number().positive().required("Required")
+        salary:Yup.number().positive().required("Required"),
+        epf:Yup.string().required("Required"),
+        panNo:Yup.string().required("Required"),
+        aadhar:Yup.number().positive().required("Required"),
+        maritialStatus:Yup.string().required("Required"),
+        country:Yup.string().required("Required"),
+        state:Yup.string().required("Required"),
+        city:Yup.string().required("Required"),
+        address:Yup.string().required("Required"),
+        bankName:Yup.string().required("Required"),
+        branch:Yup.string().required("Required"),
+        acc:Yup.number().positive().required("Required"),
+        ifsc:Yup.string().required("Required")
     })
 
     const submitForm = (values, {resetForm}) => {
         console.log("values", values)
 
         const rawData = {
-            fullName: values.fullName,
+            name: values.fullName,
             email:values.email,
+            password:values.password,
             phone:values.phone,
             dob:values.dob,
-            gender:values.gender,
             role:values.role,
-            password:values.password,
+            gender:values.gender,
             dateOfJoining:values.dateOfJoining,
-            salary:values.salary
+            salary:values.salary,
+            epf : values.epf,
+            pan : values.panNo,
+            aadhar : values.aadhar,
+            marritalStatus : values.maritialStatus,
+            country : values.country,
+            statue : values.state,
+            city : values.city,
+            bankName : values.bankName,
+            branchName : values.branch,
+            accountNo : values.acc,
+            address : values.address,
+            ifsc : values.ifsc
         }
+
+        console.log("rw", rawData)
 
         dispatch(AddStaffAPI(rawData, resetForm))
     }
@@ -310,7 +336,7 @@ const AddStaff = () => {
                                                 <Label htmlFor="panNo">PAN NO</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="text"
                                                     name="panNo"
                                                     id="panNo"
                                                     {...formik.getFieldProps("panNo")}
@@ -375,7 +401,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label For="city">City</Label>
+                                                <Label htmlFor="city">City</Label>
                                                 <CustomSelectField
                                                 value={formik.values.city}
                                                 options={cityOptions}
@@ -393,7 +419,7 @@ const AddStaff = () => {
                                                 <Label htmlFor="bankName">Bank Name</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="text"
                                                     name="bankName"
                                                     id="bankName"
                                                     {...formik.getFieldProps("bankName")}

@@ -34,4 +34,18 @@ export const postOrganizationSettings = (id, formdata) => (dispatch) => {
     console.log(e)
   })
 }
-
+export const UpdateOrganizationSettings = (id, formdata) => (dispatch) => {
+  ServerApi().patch(`/settings/${id}`, formdata).then(res => {
+    if (res.status === "200") {
+      toast.success("Successfully Updated Data", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      setReFetch(prevState => !prevState)
+    }
+  }).catch(e => {
+    toast.error("Error in Updating Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
