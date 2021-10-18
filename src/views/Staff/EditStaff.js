@@ -6,14 +6,23 @@ import {useDispatch, useSelector} from "react-redux"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
 import { Country, State, City }  from 'country-state-city'
+import {useHistory} from "react-router-dom"
 
-import {AddStaffAPI} from "../../redux/actions/staff/index"
+import {EditStaffAPI} from "../../redux/actions/staff/index"
+import {fetchUserById} from "../../redux/actions/user/index"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 
 const AddStaff = () => {
 
     const dispatch = useDispatch()
-    const staffData = useSelector(state => state.staff.staff)
+    const history = useHistory()
+    const staffData = useSelector(state => state.user.user)
+
+    const id = history.location?.params?.id
+
+    useEffect(() => {
+        dispatch(fetchUserById(id))
+    }, [id])
 
     const allCountries = Country.getAllCountries().map(values => { return {label : values.name, value : values.isoCode } })
 
@@ -36,46 +45,58 @@ const AddStaff = () => {
 
 
     const initialValues = {
-        fullName: staffData?.fullName || "",
-        email:staffData?.email || "",
-        phone:staffData?.phone || "",
-        dob:staffData?.dob || "",
-        gender:staffData?.gender || "",
-        role:staffData?.role || "",
-        password:staffData?.password || "",
-        dateOfJoining:staffData?.dateOfJoining || "",
-        salary:staffData?.salary || "",
-        epf:"",
-        panNo:"",
-        aadhar:"",
-        maritialStatus:"",
-        country:"",
-        state:"",
-        city:"",
-        address:"",
-        bankName:"",
-        branch:"",
-        acc:"",
-        ifsc:""
+        fullName: staffData?.userData?.name || "",
+        email:staffData?.userData?.email || "",
+        phone:staffData?.userData?.phone || "",
+        dob:staffData?.userData?.dob || "",
+        gender:staffData?.userData?.gender || "",
+        role:staffData?.userData?.role || "",
+        password:staffData?.userData?.password || "",
+        dateOfJoining:staffData?.userData?.dateOfJoining || "",
+        salary:staffData?.userData?.salary || "",
+        epf:staffData?.userData?.epf || "",
+        panNo:staffData?.userData?.pan || "",
+        aadhar:staffData?.userData?.aadhar || "",
+        marritalStatus:staffData?.userData?.marritalStatus || "",
+        country:staffData?.userData?.country || "",
+        state:staffData?.userData?.state || "",
+        city:staffData?.userData?.city || "",
+        address:staffData?.userData?.address || "",
+        bankName:staffData?.userData?.bankName || "",
+        branch:staffData?.userData?.branchName || "",
+        acc:staffData?.userData?.accountNo || "",
+        ifsc: staffData?.userData?.ifsc || ""
     }
 
     const validationSchema = Yup.object().shape({
         fullName:Yup.string().required("Required"),
         email:Yup.string().email().required("Required"),
         phone:Yup.number().positive().required("Required"),
-        dob:Yup.date().required("Required"),
+        dob:Yup.string().required("Required"),
         gender:Yup.string().required("Required"),
         role:Yup.string().required("Required"),
         password:Yup.string().required("Required"),
         dateOfJoining:Yup.date().required("Required"),
-        salary:Yup.number().positive().required("Required")
+        salary:Yup.number().positive().required("Required"),
+        epf:Yup.string().required("Required"),
+        panNo:Yup.string().required("Required"),
+        aadhar:Yup.number().positive().required("Required"),
+        marritalStatus:Yup.string().required("Required"),
+        // country:Yup.string().required("Required"),
+        // state:Yup.string().required("Required"),
+        // city:Yup.string().required("Required"),
+        address:Yup.string().required("Required"),
+        bankName:Yup.string().required("Required"),
+        branch:Yup.string().required("Required"),
+        acc:Yup.number().positive().required("Required"),
+        ifsc:Yup.string().required("Required")
     })
 
     const submitForm = (values, {resetForm}) => {
         console.log("values", values)
 
         const rawData = {
-            fullName: values.fullName,
+            name: values.fullName,
             email:values.email,
             phone:values.phone,
             dob:values.dob,
@@ -83,10 +104,22 @@ const AddStaff = () => {
             role:values.role,
             password:values.password,
             dateOfJoining:values.dateOfJoining,
-            salary:values.salary
+            salary:values.salary,
+            epf : values.epf,
+            pan : values.panNo,
+            aadhar : values.aadhar,
+            marritalStatus : values.marritalStatus,
+            country : values.country,
+            statue : values.state,
+            city : values.city,
+            bankName : values.bankName,
+            branchName : values.branch,
+            accountNo : values.acc,
+            address : values.address,
+            ifsc : values.ifsc
         }
 
-        dispatch(AddStaffAPI(rawData, resetForm))
+        dispatch(EditStaffAPI(id, rawData, resetForm))
     }
 
     const countryChangeHadler = (value, formik) => {
@@ -101,9 +134,9 @@ const AddStaff = () => {
       }
 
 
-    const genderOptions = [{label: "MALE", value:"male"}, {label:"FEMALE", value: "female"}]
-    const roleOptions = [{label: "ADMIN", value:"ADMIN"}, {label:"USER", value: "USER"}]
-    const maritialStatusOptions = [{label: "Married", value:"married"}, {label:"Single", value: "single"}]
+    const genderOptions = [{label: "MALE", value:"MALE"}, {label:"FEMALE", value: "FEMALE"}]
+    const roleOptions = [{label: "EMPLOYEE", value:"EMPLOYEE"}, {label:"USER", value: "USER"}]
+    const maritialStatusOptions = [{label: "MARRIED", value:"MARRIED"}, {label:"SINGLE", value: "SINGLE"}]
 
     return <Row>
         <Col sm="12" md="6">
@@ -311,7 +344,7 @@ const AddStaff = () => {
                                                 <Label htmlFor="panNo">PAN NO</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="text"
                                                     name="panNo"
                                                     id="panNo"
                                                     {...formik.getFieldProps("panNo")}
@@ -338,9 +371,9 @@ const AddStaff = () => {
                                             <FormGroup>
                                                 <Label htmlFor="maritialStatus">Marritial Status</Label>
                                                 <CustomSelectField
-                                                    value={formik.values.maritialStatus}
+                                                    value={formik.values.marritalStatus}
                                                     options={maritialStatusOptions}
-                                                    onChange={(value) => formik.setFieldValue("maritialStatus", value.value)
+                                                    onChange={(value) => formik.setFieldValue("marritalStatus", value.value)
                                                 } />
                                             </FormGroup>
                                         </Col>
@@ -394,7 +427,7 @@ const AddStaff = () => {
                                                 <Label htmlFor="bankName">Bank Name</Label>
                                                 <InputGroup>
                                                     <Input
-                                                    type="number"
+                                                    type="text"
                                                     name="bankName"
                                                     id="bankName"
                                                     {...formik.getFieldProps("bankName")}

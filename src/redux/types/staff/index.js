@@ -1,1 +1,2 @@
 export const FETCH_ALL_STAFF = "FETCH_ALL_STAFF"
+export const FETCH_STAFF_BY_ID = "FETCH_STAFF_BY_ID"

@@ -11,7 +11,7 @@ import { fetchAllStaff } from "../../redux/actions/staff/index"
 const Staff = () => {
 
   const dispatch = useDispatch()
-//   const staffData = useSelector(state => state.staff.staff)
+  const staffData = useSelector(state => state.staff.staff)
 
   useEffect(() => {
     dispatch(fetchAllStaff())
@@ -20,10 +20,10 @@ const Staff = () => {
     const tableColumns = [
         {
             name: "Full Name",
-            selector: "fullName",
+            selector: "name",
             sortable: true,
             cell: (row) => (
-              <p className="text-bold-500 text-truncate mb-0">{row.fullName}</p>
+              <p className="text-bold-500 text-truncate mb-0">{row.name}</p>
             )
         },
         {
@@ -119,7 +119,7 @@ const Staff = () => {
         }
       }
 
-    const staffData = [{fullName: "sample1", email:"124@123.com", phone: "9999999999", dob: "2-2-21", gender: "Male", role: "ADMIN", status: "ACTIVE" }]
+    // const staffData = [{fullName: "sample1", email:"124@123.com", phone: "9999999999", dob: "2-2-21", gender: "Male", role: "ADMIN", status: "ACTIVE" }]
 
     return <Row>
         <Col sm="12" md="12">

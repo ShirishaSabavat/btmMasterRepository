@@ -340,7 +340,6 @@ const OrganizationSettings = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <hr />
                                     <h3>Contact Details</h3>
                                     <hr />
                                     <Row>
@@ -394,58 +393,7 @@ const OrganizationSettings = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col sm="12" md="3">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="username">User Name</Label>
-                                                <InputGroup>
-                                                    <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.username && formik.errors.username) ? "border border-danger" : null}>
-                                                        <User size={15} />
-                                                    </InputGroupText>
-                                                    </InputGroupAddon>
-                                                    <Input
-                                                    type="text"
-                                                    name="username"
-                                                    id="username"
-                                                    {...formik.getFieldProps("username")}
-                                                    invalid={!!(formik.touched.username && formik.errors.username)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="username"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col sm="12" md="3">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="password">Password</Label>
-                                                <InputGroup>
-                                                    <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.password && formik.errors.password) ? "border border-danger" : null}>
-                                                        <Key size={15} />
-                                                    </InputGroupText>
-                                                    </InputGroupAddon>
-                                                    <Input
-                                                    type="password"
-                                                    name="password"
-                                                    id="password"
-                                                    {...formik.getFieldProps("password")}
-                                                    invalid={!!(formik.touched.password && formik.errors.password)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="password"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
                                     </Row>
-                                    <hr />
                                     <h3>Organization Details</h3>
                                     <hr />
                                     <Row className="mb-1">
@@ -571,7 +519,7 @@ const OrganizationSettings = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Row className="d-flex">
+                                    {/* <Row className="d-flex">
                                         <Col sm="12" md="5" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
@@ -582,8 +530,8 @@ const OrganizationSettings = () => {
                                                 </Col>
                                             </Row>
                                         </Col>
-                                    </Row>
-                                    {editModal.modal ? (
+                                    </Row> */}
+                                    {/* {editModal.modal ? (
                                     <ImagePickerComponent
                                         modalState={editModal.modal}
                                         onClose={toggleModel}
@@ -591,7 +539,7 @@ const OrganizationSettings = () => {
                                         selectedImg={selectedImg}
                                         setSelectedImg={setSelectedImg}
                                     />
-                                    ) : null}
+                                    ) : null} */}
                                     <FormGroup className="d-flex justify-content-end">
                                         <Button color="primary" type="submit" >Save</Button>
                                     </FormGroup>

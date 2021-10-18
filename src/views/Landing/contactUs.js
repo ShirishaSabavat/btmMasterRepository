@@ -1,15 +1,44 @@
-import { useState } from 'react'
 import { useSkin } from '@hooks/useSkin'
-import { Link, Redirect, useHistory } from 'react-router-dom'
-import { Facebook, Twitter, Mail, GitHub, Send } from 'react-feather'
-import InputPasswordToggle from '@components/input-password-toggle'
-import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap'
+import { useHistory } from 'react-router-dom'
+import { Mail, MapPin, Phone, User } from 'react-feather'
+import { Row, Col, FormGroup, Input, Button, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import {Grid, Stack, Button, Card, CardActions, CardContent, CardMedia, Typography, Chip} from '@mui/material'
-import { useSelector } from 'react-redux'
-import ServerApi from '../../utility/ServerApi'
+import {Grid} from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import {Formik, Form, ErrorMessage} from "formik"
+import * as Yup from "yup"
+
+import {AddMessage} from "../../redux/actions/landingPage/index"
 
 const ContactUs = () => {
+
+    const dispatch = useDispatch()
+
+    const initialValues = {
+        uname:"",
+        email:"",
+        phone:"",
+        message:""
+    }
+
+    const validationSchema = Yup.object().shape({
+        uname: Yup.string().required("Required"),
+        email: Yup.string().required("Required"),
+        phone: Yup.number().positive().required("Required"),
+        message: Yup.string().required("Required")
+    })
+
+    const submitForm = (values, {resetForm}) => {
+        console.log("values", values)
+        const rawData = {
+            name: values.uname,
+            email: values.email,
+            phone: values.phone,
+            message: values.message
+        }
+        dispatch(AddMessage(rawData, resetForm))
+    }
+
     const history = useHistory()
     const [skin, setSkin] = useSkin()
 
@@ -17,22 +46,156 @@ const ContactUs = () => {
 
   return (
     <Grid container spacing={2}>
-
-        <Grid className="bg-white" item xs={12}>
-            <h3 className="text-center my-2" style={{fontWeight: 'bold', fontSize: 38}}>Contact Us</h3>
-        </Grid>
-
-        <Grid className="bg-white" item xs={12}>
-            <Row className=''>
-                <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
-                    <img className='img-fluid' src="/assets/images/demo2.jpg" alt='Login V2' />
+        <Grid className="bg-white"  item xs={12} className="mt-2">
+            <Row>
+                <Col sm="12" md="8">
+                    <Row className=''>
+                        <Col className='d-lg-flex flex-column' lg='12' sm='12'>
+                        <h3 className="px-5 my-2" style={{fontWeight: 'bold', fontSize: 38}}>Contact Us</h3>
+                        <div className='w-100 px-5'>
+                            <h2>Business Acharaya</h2>
+                            <p>What is Spirituality? - Over the years many definitions have been given to it. One such definition is connecting one's soul with everything positive around us. It is the attempt to be at peace with oneself. It is the art of letting go. The yearning for this spiritual experience has led to demand for spirituality courses.
+        View more- Explore Online Courses and Certifications</p>
+                        </div>
+                        </Col>
+                    </Row>
+                    <Row className=''>
+                        <Col className='d-lg-flex flex-column' lg='12' sm='12'>
+                        <h3 className="px-5 my-2" style={{fontWeight: 'bold', fontSize: "2.5rem"}}>Get in Touch</h3>
+                        <div className='w-100 px-5'>
+                            <p>What is Spirituality? - Over the years many definitions have been given to it. One such definition is connecting one's soul with everything positive around us. It is the attempt to be at peace with oneself. It is the art of letting go. The yearning for this spiritual experience has led to demand for spirituality courses.
+        View more- Explore Online Courses and Certifications</p>
+                        </div>
+                        <div className='w-100 px-5 mb-1'>
+                            <div>
+                                <Phone />
+                                <strong className='ml-1' style={{fontWeight: 'bold', fontSize: "1.3rem"}}>Call us directly at</strong>
+                            </div>
+                            <div className='w-100 px-3' style={{ fontSize: 17}}>
+                                98-11-22-03-85
+                            </div>
+                        </div>
+                        <div className='w-100 px-5 mb-1'>
+                            <div>
+                                <Mail />
+                                <strong className='ml-1' style={{fontWeight: 'bold', fontSize: "1.3rem"}}>Chat with us</strong>
+                            </div>
+                            <div className='w-100 px-3' style={{ fontSize: 17}}>
+                                98-11-22-03-85
+                            </div>
+                        </div>
+                        <div className='w-100 px-5'>
+                            <div>
+                                <MapPin />
+                                <strong className='ml-1' style={{fontWeight: 'bold', fontSize: "1.3rem"}}>Address</strong>
+                            </div>
+                            <div className='w-100 px-3' style={{ fontSize: 17}}>
+                                98-11-22-03-85
+                            </div>
+                        </div>
+                        </Col>
+                    </Row>
                 </Col>
-                <Col className='d-lg-flex align-items-center p-5' lg='8' sm='12'>
-                <div className='w-100 px-5'>
-                    <h2>Business Acharaya</h2>
-                    <p>What is Spirituality? - Over the years many definitions have been given to it. One such definition is connecting one's soul with everything positive around us. It is the attempt to be at peace with oneself. It is the art of letting go. The yearning for this spiritual experience has led to demand for spirituality courses.
-View more- Explore Online Courses and Certifications</p>
-                </div>
+                <Col sm="12" md="4" className="d-flex justify-content-center align-items-center mt-3 mt-md-0">
+                    <div className='w-75'>
+                        
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+                        {(formik) => {
+                            return <Form>
+                                <FormGroup className="has-icon-left position-relative">
+                                    <Label htmlFor="uname">Name</Label>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType='prepend'>
+                                        <InputGroupText className={ !!(formik.touched.uname && formik.errors.uname) ? "border border-danger" : null}>
+                                            <User size={15} />
+                                        </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                        type="text"
+                                        name="uname"
+                                        id="uname"
+                                        {...formik.getFieldProps("uname")}
+                                        invalid={!!(formik.touched.uname && formik.errors.uname)}
+                                        >
+                                        </Input>
+                                    </InputGroup>
+                                    <ErrorMessage
+                                        name="uname"
+                                        component="div"
+                                        className="field-error text-danger"
+                                    />
+                                </FormGroup>
+                                <FormGroup className="has-icon-left position-relative">
+                                    <Label htmlFor="email">Email</Label>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType='prepend'>
+                                        <InputGroupText className={ !!(formik.touched.email && formik.errors.email) ? "border border-danger" : null}>
+                                            <Mail size={15} />
+                                        </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                        type="text"
+                                        name="email"
+                                        id="email"
+                                        {...formik.getFieldProps("email")}
+                                        invalid={!!(formik.touched.email && formik.errors.email)}
+                                        >
+                                        </Input>
+                                    </InputGroup>
+                                    <ErrorMessage
+                                        name="email"
+                                        component="div"
+                                        className="field-error text-danger"
+                                    />
+                                </FormGroup>
+                                <FormGroup className="has-icon-left position-relative">
+                                    <Label htmlFor="phone">Phone</Label>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType='prepend'>
+                                        <InputGroupText className={ !!(formik.touched.phone && formik.errors.phone) ? "border border-danger" : null}>
+                                            <Phone size={15} />
+                                        </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input
+                                        type="number"
+                                        name="phone"
+                                        id="phone"
+                                        {...formik.getFieldProps("phone")}
+                                        invalid={!!(formik.touched.phone && formik.errors.phone)}
+                                        >
+                                        </Input>
+                                    </InputGroup>
+                                    <ErrorMessage
+                                        name="phone"
+                                        component="div"
+                                        className="field-error text-danger"
+                                    />
+                                </FormGroup>
+                                <FormGroup className="has-icon-left position-relative">
+                                    <Label htmlFor="message">Message</Label>
+                                    <InputGroup>
+                                        <Input
+                                        type="textarea"
+                                        name="message"
+                                        id="message"
+                                        {...formik.getFieldProps("message")}
+                                        invalid={!!(formik.touched.message && formik.errors.message)}
+                                        >
+                                        </Input>
+                                    </InputGroup>
+                                    <ErrorMessage
+                                        name="message"
+                                        component="div"
+                                        className="field-error text-danger"
+                                    />
+                                </FormGroup>
+                                <FormGroup className="d-flex justify-content-end">
+                                    <Button color="primary" type="submit" >Submit</Button>
+                                </FormGroup>
+                            </Form>
+                        }}
+                    </Formik>
+                    </div>
                 </Col>
             </Row>
         </Grid>
