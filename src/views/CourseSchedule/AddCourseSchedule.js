@@ -42,7 +42,8 @@ const AddCourseSchedule = () => {
         endtime:"",
         location:"",
         faculty:"",
-        address:""
+        address:"",
+        seat:""
     }
 
     const validationSchema = Yup.object().shape({
@@ -53,7 +54,8 @@ const AddCourseSchedule = () => {
         endtime: Yup.date().required("Required"),
         location: Yup.string().required("Required"),
         faculty: Yup.string().required("Required"),
-        address: Yup.string().required("Required")
+        address: Yup.string().required("Required"),
+        seat: Yup.string().required("Required")
     })
 
     const submitForm = (values, {resetForm}) => {
@@ -68,6 +70,7 @@ const AddCourseSchedule = () => {
             faculty: values.faculty,
             address: values.address,
             location: values.location,
+            seat: values.seat,
             batchNo: course.code
         }
 
@@ -246,6 +249,28 @@ const AddCourseSchedule = () => {
                                                 </InputGroup>
                                                 <ErrorMessage
                                                     name="location"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label htmlFor="seat">Seat Capacity</Label>
+                                                <InputGroup>
+ 
+                                                    <Input
+                                                    type="text"
+                                                    name="seat"
+                                                    id="seat"
+
+                                                    {...formik.getFieldProps("seat")}
+                                                    invalid={!!(formik.touched.seat && formik.errors.seat)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="seat"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
