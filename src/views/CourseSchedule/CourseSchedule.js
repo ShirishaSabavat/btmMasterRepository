@@ -78,7 +78,7 @@ const CourseSchedule = () => {
           selector: "faculty",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.faculty}</p>
+            <p className="text-bold-500 text-truncate mb-0">{row.faculty?.name}</p>
           )
         },
         {
