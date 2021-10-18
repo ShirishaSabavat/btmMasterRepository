@@ -1,6 +1,7 @@
 import { FETCH_ALL_STAFF } from '../../types/staff'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const fetchAllStaff = () => dispatch => {
   ServerApi().get('')

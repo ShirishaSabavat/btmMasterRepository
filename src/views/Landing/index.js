@@ -4,7 +4,7 @@ import { Facebook, Instagram, Youtube, Mail, Phone, MapPin } from 'react-feather
 import InputPasswordToggle from '@components/input-password-toggle'
 import { Row, Col, CardTitle, Form, FormGroup, Label, Input, CustomInput } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import {Grid, ButtonGroup, Divider, IconButton, Stack, Button, Card, CardActions, CardContent, CardMedia, Typography, Chip} from '@mui/material'
+import {Grid, ButtonGroup, Divider, IconButton, Stack, Skeleton, Button, Card, CardActions, CardContent, CardMedia, Typography, Chip} from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import ServerApi from '../../utility/ServerApi'
 import NavBar from './components/navbar'
@@ -13,6 +13,7 @@ import CourseCard from './components/courseCard'
 import { fetchAllCourses } from '../../redux/actions/courses'
 import { saveReferral } from '../../redux/actions/common'
 import { useEffect } from 'react'
+import CoursesLoadingSkleton from '../../components/skleton/CoursesLoadingSkleton' 
 
 const Landing = () => {
     const dispatch = useDispatch()
@@ -21,6 +22,7 @@ const Landing = () => {
 
     const userData = useSelector(state => state.auth.userData)
     const courses = useSelector(state => state.courses.courses)
+    const loading = useSelector(state => state.common.loading)
 
     useEffect(() => {
         dispatch(fetchAllCourses())
@@ -178,15 +180,20 @@ const Landing = () => {
         </Grid>
 
         <Grid item xs={12}>
-            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Latest <br /> Courses</h2>
+            <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Latest <br /> Courses & Workshops</h2>
         </Grid>
 
-        
-        <Grid item container spacing={2}>
-            {courses.slice(0, 10).filter(co => co.type !== "Bac").map((item) => (
-                <CourseCard key={item._id} data={item} />
-            ))}
-        </Grid>
+        {!loading && (
+            <Grid item container spacing={2}>
+                {courses.slice(0, 10).filter(co => co.type !== "Bac").map((item) => (
+                    <CourseCard key={item._id} data={item} />
+                ))}
+            </Grid>
+        )}
+
+        {loading && (
+            <CoursesLoadingSkleton nos={6} />
+        )}
 
         <Grid style={{backgroundColor: '#3f1360'}} className="pb-5" item xs={12}>
             <Row className=''>
@@ -228,11 +235,17 @@ const Landing = () => {
             <h2 className="text-center mt-4 mb-2" style={{fontWeight: 'bold', fontSize: 34}}>Browse Our Latest <br /> BAC Courses</h2>
         </Grid>
 
+        {!loading && (
         <Grid item container spacing={2}>
             {courses.slice(0, 10).filter(co => co.type === "Bac").map((item) => (
                 <CourseCard key={item._id} data={item} />
             ))}
         </Grid>
+        )}
+
+        {loading && (
+            <CoursesLoadingSkleton nos={6} />
+        )}
 
         <Grid className="bg-white pb-5" item xs={12}>
             <Row className=''>
@@ -254,7 +267,7 @@ const Landing = () => {
             <div className='w-100 px-5 text-center'>
                 <h1 style={{fontSize: 45, marginBottom: 10, fontFamily: 'cursive', fontWeight: 'bold'}}>ACCOMPLISH MORE <br /> IN 2021</h1>
                 <p className="mb-2">MASTER YOUR TIME TO GET MORE DONE <br /> AND ACHIEVE MORE MEANINGFUL RESULTS</p>
-                <Button onClick={() => history.push('/all-courses')} size="large" variant="contained">Cources</Button>
+                <Button onClick={() => history.push('/all-courses')} size="large" variant="contained">Courses</Button>
             </div>
 
             <img src="/assets/images/demo6.png" /> 

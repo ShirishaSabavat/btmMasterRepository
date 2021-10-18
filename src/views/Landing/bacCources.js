@@ -11,6 +11,7 @@ import CourseCard from './components/courseCard'
 import {fetchAllCourses} from '../../redux/actions/courses'
 import { useEffect } from 'react'
 import Empty from '../../components/loading/Empty'
+import CoursesLoadingSkleton from '../../components/skleton/CoursesLoadingSkleton'
 
 const BacCources = () => {
     const history = useHistory()
@@ -23,6 +24,7 @@ const BacCources = () => {
 
     const userData = useSelector(state => state.auth.userData)
     const courses = useSelector(state => state.courses.courses)
+    const loading = useSelector(state => state.common.loading)
 
   return (
     <Grid className="bg-white" container spacing={2}>
@@ -31,6 +33,11 @@ const BacCources = () => {
             <h1 style={{fontWeight: 'bold'}} className="text-center my-2">BAC Cources</h1>
         </Grid>
 
+        {loading && (
+            <CoursesLoadingSkleton nos={6} />
+        )} 
+
+        
         {courses.filter((i) => i.type === 'Bac').length === 0 && (
             <Grid xs={12} className="" item>
                 <div className="p-5">
@@ -45,6 +52,7 @@ const BacCources = () => {
             </Grid>
         )}
 
+        {!loading && (
         <Grid className="bg-white" item container spacing={2}>
             {courses.filter((i) => i.type === 'Bac').map((item) => (
                 <CourseCard 
@@ -53,6 +61,7 @@ const BacCources = () => {
                 />
             ))}
         </Grid>
+        )}
 
     </Grid>
   )

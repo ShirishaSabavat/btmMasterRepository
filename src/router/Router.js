@@ -1,5 +1,5 @@
 // ** React Imports
-import { Suspense, useContext, lazy } from 'react'
+import { Suspense, useContext, lazy, useEffect } from 'react'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -12,7 +12,7 @@ import { useRouterTransition } from '@hooks/useRouterTransition'
 import LayoutWrapper from '@layouts/components/layout-wrapper'
 
 // ** Router Components
-import { BrowserRouter as AppRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter as AppRouter, Route, Switch, Redirect, useLocation } from 'react-router-dom'
 
 // ** Routes & Default Routes
 import { DefaultRoute, Routes } from './routes'
@@ -190,8 +190,20 @@ const Router = () => {
     })
   }
 
+  function ScrollToTop() {
+    const { pathname } = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname])
+
+    return null
+  }
+
+
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>
+      <ScrollToTop />
       <Switch>
         {/* If user is logged in Redirect user to DefaultRoute else to login */}
         {/* <Route

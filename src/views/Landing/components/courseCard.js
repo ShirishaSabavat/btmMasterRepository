@@ -10,7 +10,7 @@ const courseCard = (props) => {
 
   return (
     <Grid item md={4} xs={12}>
-        <Card onClick={() => history.push(`course/${props.data._id}`)} className="ml-3 mb-3 pointer" sx={{ maxWidth: 345 }}>
+        <Card onClick={() => history.push(`course/${props.data._id}`)} className="ml-1 mb-3 pointer" sx={{ maxWidth: 345 }}>
             <CardMedia
                 component="img"
                 alt="green iguana"

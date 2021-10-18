@@ -1,6 +1,7 @@
 import { FETCH_ALL_SCHEDULES, FETCH_SCHEDULES_BY_ID } from '../../types/courseSchedule'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
   ServerApi().post('/workshops', rawData)

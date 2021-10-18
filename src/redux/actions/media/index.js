@@ -1,6 +1,7 @@
 import { GET_ALL_MEDIA, GET_MEDIA_BY_ID } from '../../types/media'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const fetchAllMedia = () => dispatch => {
   ServerApi().get('/media')

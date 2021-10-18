@@ -1,6 +1,7 @@
 import { GET_GALLERY, SAVE_GALLERY, UPDATE_GALLERY, DELETE_GALLERY } from '../../types/gallery'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const fetchAllGallery = () => dispatch => {
   ServerApi().get('/gallery')

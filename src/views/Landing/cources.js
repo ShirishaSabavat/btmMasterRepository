@@ -13,6 +13,7 @@ import {fetchAllCourses} from '../../redux/actions/courses'
 import { useEffect } from 'react'
 import Footer from './components/footer'
 import Empty from '../../components/loading/Empty'
+import CoursesLoadingSkleton from '../../components/skleton/CoursesLoadingSkleton'
 
 const Landing = () => {
     const history = useHistory()
@@ -25,19 +26,27 @@ const Landing = () => {
 
     const userData = useSelector(state => state.auth.userData)
     const courses = useSelector(state => state.courses.courses)
+    const loading = useSelector(state => state.common.loading)
 
   return (
     <Grid className="bg-white" container spacing={2}>
 
         <Grid item xs={12}>
-            <h1 style={{fontWeight: 'bold'}} className="text-center my-2">Cources</h1>
+            <h1 style={{fontWeight: 'bold'}} className="text-center my-2">Courses</h1>
         </Grid>
 
-        <Grid className="bg-white" item container spacing={2}>
-            {courses.filter((i) => i.type === 'Regular').map((item) => (
-                <CourseCard key={item._id} data={item} />
-            ))}
-        </Grid>
+        {!loading && (
+            <Grid className="bg-white" item container spacing={2}>
+                {courses.filter((i) => i.type === 'Regular').map((item) => (
+                    <CourseCard key={item._id} data={item} />
+                ))}
+            </Grid>
+        )}
+
+
+        {loading && (
+            <CoursesLoadingSkleton nos={6} />
+        )}        
 
         {courses.length === 0 && (
             <Grid xs={12} className="" item>
@@ -56,7 +65,7 @@ const Landing = () => {
                 <div className='w-100 px-4 mt-4'>
                     <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
                     <p>Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
-                    <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
+                    <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Courses</Button>
                 </div>
                 </Col>
             </Row>

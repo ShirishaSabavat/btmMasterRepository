@@ -1,6 +1,7 @@
 import {GET_ALL_FACULTY, GET_ALL_FACULTY_OPTIONS} from "../../types/faculty/index"
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const AddFaculty = (rawData, resetForm) => dispatch => {
   ServerApi().post('/faculty', rawData)

@@ -1,8 +1,10 @@
 import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS, FETCH_WORKSHOP, FETCH_MY_COURSES, FETCH_MY_WORKSHOPS } from '../../types/courses'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const AddCourseAPI = (rawData, resetForm) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().post('/courses', rawData)
   .then(res => {
     console.log("ress", res)
@@ -16,8 +18,10 @@ export const AddCourseAPI = (rawData, resetForm) => dispatch => {
         position: toast.POSITION.BOTTOM_CENTER
       })
     }
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Creating Course", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -26,6 +30,7 @@ export const AddCourseAPI = (rawData, resetForm) => dispatch => {
 }
 
 export const EditCourseAPI = (rawData) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().patch('/courses', rawData)
   .then(res => {
     console.log("ress", res)
@@ -38,8 +43,10 @@ export const EditCourseAPI = (rawData) => dispatch => {
         position: toast.POSITION.BOTTOM_CENTER
       })
     }
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Updating Course", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -48,6 +55,7 @@ export const EditCourseAPI = (rawData) => dispatch => {
 }
 
 export const fetchAllCourses = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get('/courses')
   .then(res => {
     const data = res.data.reverse()
@@ -55,8 +63,10 @@ export const fetchAllCourses = () => dispatch => {
       type: GET_ALL_COURSES,
       payload: data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -65,6 +75,7 @@ export const fetchAllCourses = () => dispatch => {
 }
 
 export const fetchAllCoursesOptions = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get('/courses')
   .then(res => {
     const data = res.data.reverse().map(({ name, _id }) => ({ label: name, value: _id }))
@@ -72,8 +83,10 @@ export const fetchAllCoursesOptions = () => dispatch => {
       type: GET_ALL_COURSES_OPTIONS,
       payload: data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -82,28 +95,34 @@ export const fetchAllCoursesOptions = () => dispatch => {
 }
 
 export const fetchCourseById = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/courses/${id}`)
   .then(res => {
     dispatch({
       type: GET_COURSE_BY_ID,
       payload: res.data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
   })
 
+  // dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/workshops/courceWorkshops/${id}`)
   .then(res => {
     dispatch({
       type: FETCH_WORKSHOP,
       payload: res.data.reverse()
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -112,13 +131,16 @@ export const fetchCourseById = (id) => dispatch => {
 }
 
 export const deleteCourseById = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().delete(`/courses/${id}`)
   .then(res => {
     toast.success("Succesfuly Deleted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Deleting Course", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -127,14 +149,17 @@ export const deleteCourseById = (id) => dispatch => {
 }
 
 export const fetchMyCourses = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get(`purchases?purchaseType=cources`)
   .then(res => {
     dispatch({
       type: FETCH_MY_COURSES,
       payload: res.data.reverse()
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("unable to fetch purchased courses.", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -143,14 +168,17 @@ export const fetchMyCourses = () => dispatch => {
 }
 
 export const fetchMyWorkshops = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get(`purchases?purchaseType=workshops`)
   .then(res => {
     dispatch({
       type: FETCH_MY_WORKSHOPS,
       payload: res.data.reverse()
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("unable to fetch purchased courses.", {
       position: toast.POSITION.BOTTOM_CENTER
     })

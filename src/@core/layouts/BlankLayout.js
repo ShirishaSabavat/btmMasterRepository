@@ -38,7 +38,9 @@ const BlankLayout = ({ children, ...rest }) => {
         <div className='content-wrapper'>
           <div className='content-body'>
             <NavBar landingCms={landingCms} />
-              {children}
+              <div style={{minHeight: 550}}>
+                {children}
+              </div>
             <Footer landingCms={landingCms} />
           </div>
         </div>

@@ -20,6 +20,7 @@ import { BASE_URL } from '../../utility/serverSettings'
 import { handleLogin, updateUserRole } from '../../redux/actions/auth'
 // import { getUserData } from '../../utility/Utils'
 // import CourseCard from './components/courseCard'
+import CourseDetailLoadingSkleton from '../../components/skleton/CourseDetailLoadingSkleton'
 
 const Landing = (route) => {
     const history = useHistory()
@@ -98,7 +99,7 @@ const Landing = (route) => {
             return
         }
 
-        dispatch(toggleNetworkLoading())
+        // dispatch(toggleNetworkLoading(true))
 
         const raw = {
             courseId: course._id,
@@ -114,7 +115,7 @@ const Landing = (route) => {
                 toast.error(result.data.message || "Unable to purchase.", {
                     position: toast.POSITION.BOTTOM_CENTER
                 })
-                dispatch(toggleNetworkLoading())
+                // dispatch(toggleNetworkLoading(false))
                 return
             }
 
@@ -168,11 +169,11 @@ const Landing = (route) => {
             const paymentObject = new window.Razorpay(options)
             paymentObject.open()
 
-            dispatch(toggleNetworkLoading())
+            // dispatch(toggleNetworkLoading(false))
         })
         .catch(e => {
             console.log(e)
-            dispatch(toggleNetworkLoading())
+            // dispatch(toggleNetworkLoading(false))
             toast.error("Unable to make payment!", {
                 position: toast.POSITION.BOTTOM_CENTER
             })
@@ -260,6 +261,11 @@ const Landing = (route) => {
   return (
     <Grid container spacing={2}>
 
+        {networkLoading && (
+            <CourseDetailLoadingSkleton />
+        )}
+
+        {!networkLoading && (
         <Grid className="bg-white py-5" item xs={12} md={8}>
             <div className='w-100 px-5'>
                 <img className='img-fluid' src={`${BASE_URL}uploads/${course.image}`} alt='image' style={{maxHeight: 340}} />
@@ -269,12 +275,15 @@ const Landing = (route) => {
                     <Chip color="primary" size="small" label="BAC Cource" onClick={() => null} />
                 )}
                 
-                <h2 style={{fontSize: 32, fontWeight: 'bold'}} className="mt-2">₹ {course.price} /-</h2>
+                <h2 style={{fontSize: 32, fontWeight: 'bold'}} className="mt-2">₹ {course.price} /- <small>+ (18%) gst</small> </h2>
                 
                 <p className="mt-1 text-justify">{course.details}</p>
             </div>
         
         </Grid>
+        )}
+
+        {!networkLoading && (
         <Grid className="bg-white py-5" item xs={12} md={4}>
 
             <div className="p-2">
@@ -340,6 +349,7 @@ const Landing = (route) => {
                 </div>
             )}
         </Grid>
+        )}
 
         <Grid item md={12} xs={12}>
         </Grid>
@@ -354,7 +364,7 @@ const Landing = (route) => {
                     <div className='w-100 px-4 mt-4'>
                         <h2 style={{fontWeight: 'bold', fontSize: 48}}>Become a consultant <br /> of Business Aachrya</h2>
                         <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
-                        <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Cources</Button>
+                        <Button onClick={() => history.push('/bac-courses')} size="large" variant="contained">BAC Courses</Button>
                     </div>
                     </Col>
                 </Row>
@@ -381,7 +391,7 @@ const Landing = (route) => {
             <DialogContent style={{maxWidth: 370}}>
             {!userData.access_token && (
                 <>
-                <FormControl fullWidth sx={{ p: 1 }}>
+                <FormControl className="w-100" sx={{ p: 1 }}>
                     <TextField
                         id="name"
                         label="Name"
@@ -392,7 +402,7 @@ const Landing = (route) => {
                         onChange={e => setName(e.target.value)}
                     />
                 </FormControl>
-                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
                     <TextField
                         id="email"
                         label="Email"
@@ -401,7 +411,7 @@ const Landing = (route) => {
                         onChange={e => setEmail(e.target.value)}
                     />
                     </FormControl>
-                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
                     <TextField
                         id="phone"
                         label="Phone No."
@@ -410,7 +420,7 @@ const Landing = (route) => {
                         onChange={e => setPhone(e.target.value)}
                     />
                 </FormControl>
-                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
                     <TextField
                         id="password"
                         label="Password"
@@ -422,7 +432,7 @@ const Landing = (route) => {
                 </FormControl>
 
                 {referralCode && (
-                    <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                    <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
                         <TextField
                             id="referral"
                             label="referral"
@@ -437,13 +447,13 @@ const Landing = (route) => {
             )}
 
             <div className="text-center mt-2">
-                <Button 
+                <LoadingButton 
                     loading={networkLoading}
                     loadingPosition="start"
                     variant="contained" 
                     style={{borderRadius: 2}}
                     onClick={() => doRegister()}
-                >{!userData.access_token ? "Register & Join" : "Buy Now" }</Button>
+                >{!userData.access_token ? "Register & Join" : "Buy Now" }</LoadingButton>
             </div>
 
             <div className="text-center" style={{marginTop: 12}}>
@@ -459,7 +469,7 @@ const Landing = (route) => {
             <DialogContent style={{maxWidth: 370}}>
             {!userData.access_token && (
                 <>
-                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
                     <TextField
                         id="phone"
                         label="Email"
@@ -468,7 +478,7 @@ const Landing = (route) => {
                         onChange={e => setEmail(e.target.value)}
                     />
                 </FormControl>
-                <FormControl className="pt-1" fullWidth sx={{ p: 1 }}>
+                <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
                     <TextField
                         id="otp"
                         label="Password"

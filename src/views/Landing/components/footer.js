@@ -49,10 +49,10 @@ const Footer = (props) => {
                                 <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/about-us"> About </Link> <br />
                             </li>
                             <li style={{marginBottom: 5}}>
-                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/all-courses"> Cources </Link>
+                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/all-courses"> Courses </Link>
                             </li>
                             <li style={{marginBottom: 5}}>
-                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/bac-courses"> BAC Cources </Link>
+                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/bac-courses"> BAC Courses </Link>
                             </li>
                             <li style={{marginBottom: 5}}>
                                 <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/gallery"> Gallery </Link>

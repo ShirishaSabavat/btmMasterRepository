@@ -27,8 +27,12 @@ import {
   Col
 } from 'reactstrap'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
-
+import DataLoading from '../../components/loading/DataLoading'
+import { useSelector } from 'react-redux'
+ 
 const CustomDataTable = (props) => {
+
+  const networkLoading = useSelector(state => state.common.networkLoading)
 
   // ** States
   const [modal, setModal] = useState(false)
@@ -172,6 +176,12 @@ const CustomDataTable = (props) => {
 
   return (
     <Fragment>
+
+      {networkLoading && (
+        <DataLoading />
+      )}
+
+      {!networkLoading && (
       <Card>
         {/* <CardHeader className='flex-md-row flex-column align-md-items-center align-items-start border-bottom'>
           <CardTitle tag='h4'>DataTable with Buttons</CardTitle>
@@ -201,7 +211,7 @@ const CustomDataTable = (props) => {
         </DataTableExtensions>
 
       </Card>
-      {/* <AddNewModal open={modal} handleModal={handleModal} /> */}
+      )}
 
       <Dialog
         open={props.showDelete}

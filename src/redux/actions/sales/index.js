@@ -1,6 +1,7 @@
 import { FETCH_ALL_SALES_DATA } from '../../types/sales'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
+import { toggleNetworkLoading } from '../common'
 
 export const fetchAllSales = () => dispatch => {
   ServerApi().get('/purchases')

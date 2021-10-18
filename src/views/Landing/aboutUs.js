@@ -29,7 +29,9 @@ const Landing = () => {
         <Grid className="bg-white pb-5" item xs={12} md={8}>
             <div className='w-100 px-4 mt-4'>
                 <h2 style={{fontWeight: 'bold', fontSize: 48}}>About Us <br /> </h2>
-                <p className="text-justify">{parse(landingCms.filter(i => i.type === 'about')[0].content)}</p>
+                {landingCms.filter(i => i.type === 'about').length > 0 && (
+                    <p className="text-justify">{parse(landingCms.filter(i => i.type === 'about')[0].content)}</p>
+                )}
             </div>
         </Grid>
         <Grid className="bg-white pb-5" item xs={12} md={4}>
@@ -43,14 +45,18 @@ const Landing = () => {
         <Grid style={{backgroundColor: '#f1f1f3'}} className="pb-5" item xs={12} md={8}>
             <div className='w-100 px-4 mt-4'>
                 <h2 style={{fontWeight: 'bold', fontSize: 48}}>Mission <br /> </h2>
-                <p className="text-justify">{parse(landingCms.filter(i => i.type === 'mission')[0].content)}</p>
+                {landingCms.filter(i => i.type === 'mission').length > 0 && (
+                    <p className="text-justify">{parse(landingCms.filter(i => i.type === 'mission')[0].content)}</p>
+                )}
             </div>
         </Grid>
 
         <Grid style={{backgroundColor: '#00a6c0'}} className="pb-5" item xs={12} md={8}>
             <div className='w-100 px-4 mt-4'>
                 <h2 className="text-white" style={{fontWeight: 'bold', fontSize: 48}}>Vision <br /> </h2>
-                <p className="text-white text-justify">{parse(landingCms.filter(i => i.type === 'vission')[0].content)}</p>
+                {landingCms.filter(i => i.type === 'vission').length > 0 && (
+                    <p className="text-white text-justify">{parse(landingCms.filter(i => i.type === 'vission')[0].content)}</p>
+                )}
             </div>
         </Grid>
         <Grid style={{backgroundColor: '#00a6c0'}} className="pb-5" item xs={12} md={4}>

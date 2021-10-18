@@ -66,7 +66,7 @@ const NavBar = () => {
                 </Typography>
                 {/* <SearchIcon /> */}
                 <Button onClick={() => history.push('/home')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Home</Button>
-                <Button onClick={() => history.push('/all-courses')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Cources</Button>
+                <Button onClick={() => history.push('/all-courses')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Courses</Button>
                 <Button onClick={() => history.push('/about-us')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">About Us</Button>
                 <Button onClick={() => history.push('/contact-us')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Contact Us</Button>
                 <Button onClick={() => history.push('/gallery')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Gallery</Button>
@@ -101,7 +101,7 @@ const NavBar = () => {
                         <ListItemIcon>
                             <Book />
                         </ListItemIcon>
-                        <ListItemText primary={'Cources'} />
+                        <ListItemText primary={'Courses'} />
                     </ListItem>
                     <ListItem onClick={() => history.push('/all-courses')} button>
                         <ListItemIcon>
