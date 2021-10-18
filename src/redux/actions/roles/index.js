@@ -18,4 +18,21 @@ export const fetchAllRoles = () => dispatch => {
       console.log(e)
     })
   }
+
+export const updateRoles = (id) => dispatch => {
+    ServerApi().get(`/roles,${id}`)
+    .then(res => {
+      if (res.status === 200) {
+        toast.error("Updated Roles", {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+      }
+    })
+    .catch(e => {
+      toast.error("Error in Fetching Data", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      console.log(e)
+    })
+  }
   

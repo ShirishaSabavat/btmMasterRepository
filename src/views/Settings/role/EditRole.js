@@ -2,7 +2,7 @@ import {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, FormGroup, Button, CustomInput, Table} from "reactstrap"
 import {Formik, Form, ErrorMessage} from 'formik'
 import { useDispatch, useSelector } from "react-redux"
-import { fetchAllRoles } from "../../../redux/actions/roles"
+import { fetchAllRoles, updateRoles } from "../../../redux/actions/roles"
 
 const EditRole = () => {
 
@@ -21,7 +21,7 @@ const EditRole = () => {
         }) }
     }, [roleData])
 
-    console.log("rs", rolesState)
+    console.log("rs", roleData)
 
     const initialValues = {
         viewCourse: rolesState?.cources?.view || false,
@@ -52,6 +52,52 @@ const EditRole = () => {
 
     const submitForm = (values) => {
         console.log("values", values)
+
+        const rawData = {
+            name : "EMPLOYEEU",
+            permissions: [
+                {
+                    videos: {
+                        add: values.addVideo,
+                        edit: values.editVideo,
+                        view: values.viewVideo,
+                        delete: values.deleteVideo
+                    },
+                    cources: {
+                        add: values.add.addCource,
+                        edit: values.edit.editCource,
+                        view: values.view.viewCource,
+                        delete: values.deleteCource
+                    },
+                    workshops: {
+                        add: values.addWorkShop,
+                        edit: values.editWorkShop,
+                        view: values.viewWorkShop,
+                        delete: values.deleteWorkShop
+                    },
+                    purchase: {
+                        add: values.addPurchase,
+                        edit: values.editPurchase,
+                        view: values.viewPurchase,
+                        delete: values.deletePurchase
+                    },
+                    cms: {
+                        add: values.addCms,
+                        edit: values.editCms,
+                        view: values.viewCms,
+                        delete: values.deleteCms
+                    },
+                    users: {
+                        add: values.addUser,
+                        edit: values.editUser,
+                        view: values.viewUser,
+                        delete: values.deleteUser
+                    }
+                }
+            ]
+        }
+
+        dispatch(updateRoles(id, rawData))
     }
 
     return <Row>
