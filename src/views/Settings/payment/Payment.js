@@ -70,11 +70,7 @@ const Payment = () => {
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="liveApiKey">Live Razorpay Key</Label>
                                                 <InputGroup>
-                                                    <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.liveApiKey && formik.errors.liveApiKey) ? "border border-danger" : null}>
-                                                        <Home size={15} />
-                                                    </InputGroupText>
-                                                    </InputGroupAddon>
+                                                    
                                                     <Input
                                                     type="text"
                                                     name="liveApiKey"
@@ -95,11 +91,7 @@ const Payment = () => {
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="liveApiSecret">Live Razorpay Secret</Label>
                                                 <InputGroup>
-                                                    <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.liveApiSecret && formik.errors.liveApiSecret) ? "border border-danger" : null}>
-                                                        <Home size={15} />
-                                                    </InputGroupText>
-                                                    </InputGroupAddon>
+                                                    
                                                     <Input
                                                     type="text"
                                                     name="liveApiSecret"
@@ -122,11 +114,7 @@ const Payment = () => {
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="testApiKey">Test Razorpay Key</Label>
                                                 <InputGroup>
-                                                    <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.testApiKey && formik.errors.testApiKey) ? "border border-danger" : null}>
-                                                        <Home size={15} />
-                                                    </InputGroupText>
-                                                    </InputGroupAddon>
+                                                    
                                                     <Input
                                                     type="text"
                                                     name="testApiKey"
@@ -147,11 +135,7 @@ const Payment = () => {
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="testApiSecret">Test Razorpay Secret</Label>
                                                 <InputGroup>
-                                                    <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.testApiSecret && formik.errors.testApiSecret) ? "border border-danger" : null}>
-                                                        <Home size={15} />
-                                                    </InputGroupText>
-                                                    </InputGroupAddon>
+                                                    
                                                     <Input
                                                     type="text"
                                                     name="testApiSecret"

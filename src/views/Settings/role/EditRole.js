@@ -16,7 +16,7 @@ const EditRole = () => {
     const [rolesState, setRolesState] = useState({})
 
     useEffect(() => {
-        { roleData[0].permissions.map(values => {
+        { roleData[0]?.permissions.map(values => {
             setRolesState(values)
         }) }
     }, [roleData])
