@@ -1,0 +1,36 @@
+# workflow to build and push to server
+
+name: CI
+
+on:
+  push:
+    branches: [ release ]
+
+jobs:
+  buildAndTest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install Dependencies
+      run: yarn
+    
+    - name: Build
+      run: yarn build
+      
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.1.1
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "build/"
+          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
+          REMOTE_USER: "root"
+          TARGET: ${{ secrets.SERVER_TARGET }}
+    
+    #- name: Test
+    #  run: yarn test --watchAll=false
+
+    - name: Run a one-line script
+      run: echo Done!

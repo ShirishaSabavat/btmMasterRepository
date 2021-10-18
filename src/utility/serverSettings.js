@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 // export const BASE_URL = 'https://bac-api.amoghnya.com/'
 // export const BASE_URL = 'http://localhost:3000/'
 export const BASE_URL = "http://192.168.29.224:3000/"
+=======
+export const BASE_URL = 'https://bac-api.amoghnya.com/'
+// export const BASE_URL = 'http://localhost:3000/'
+>>>>>>> dc5f3e703ebd3e25728b2e27d85c3df0cb4dd15e
