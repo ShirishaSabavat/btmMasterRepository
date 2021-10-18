@@ -128,7 +128,7 @@ const Landing = (route) => {
 
             const options = {
                 key: "rzp_test_tZ8WCE2tCPXW63", 
-                amount: (price + ((price * 18) / 100)).toString(),
+                amount: (parseFloat(price) + ((parseFloat(price) * 18) / 100)).toString(),
                 currency: "INR",
                 name: "Business Acharaya Consultancy",
                 description: `Purchase Course.`,
