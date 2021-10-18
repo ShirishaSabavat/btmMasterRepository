@@ -101,7 +101,7 @@ const AddStaff = () => {
 
 
     const genderOptions = [{label: "MALE", value:"male"}, {label:"FEMALE", value: "female"}]
-    const roleOptions = [{label: "ADMIN", value:"ADMIN"}, {label:"USER", value: "USER"}]
+    const roleOptions = [{label: "ADMIN", value:"ADMIN"}, {label:"EMPLOYEE", value: "EMPLOYEE"}]
     const maritialStatusOptions = [{label: "Married", value:"married"}, {label:"Single", value: "single"}]
 
     return <Row>
