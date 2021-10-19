@@ -17,6 +17,14 @@ const SettingsRoute = [
   {
     path: '/banner',
     component: lazy(() => import('../../views/Settings/banner/Banner'))
+  },
+  {
+    path: '/add-banner',
+    component: lazy(() => import('../../views/Settings/banner/AddBanner'))
+  },
+  {
+    path: '/edit-banner',
+    component: lazy(() => import('../../views/Settings/banner/EditBanner'))
   }
 ]
 

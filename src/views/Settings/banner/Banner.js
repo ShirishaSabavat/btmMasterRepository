@@ -1,9 +1,10 @@
 import React, {useState} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
-import {Trash, Eye} from "react-feather"
+import {Trash, Edit} from "react-feather"
 import {Link} from "react-router-dom"
 import DeleteModal from "./Modals/DeleteModal"
 import CustomDataTable from '../../../components/dataTable/CustomDataTable'
+import {BASE_URL} from '../../../utility/serverSettings'
 
 const Banner = () => {
 
@@ -48,27 +49,11 @@ const Banner = () => {
           )
         },
         {
-          name: "Email",
-          selector: "email",
+          name: "Image",
+          selector: "image",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.email}</p>
-          )
-        },
-        {
-          name: "Phone",
-          selector: "phone",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
-          )
-        },
-        {
-          name: "Message",
-          selector: "message",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.message}</p>
+            <img style={{marginTop: "5px", marginBottom: "5px"}} src={`${BASE_URL}uploads/${row.image}`} width="58px" height="58px" alt="image" />
           )
         },
         {
@@ -80,16 +65,16 @@ const Banner = () => {
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">     
-                    {/* <li className="list-inline-item">
+                    <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/view-user-data", params: {id}}}>
-                            <Eye size={15} />
+                        <Link to={{pathname: "/edit-banner", params: {id}}}>
+                            <Edit size={15} />
                         </Link>
                         </Button>
-                    </li> */}
+                    </li>
                     <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
@@ -111,6 +96,7 @@ const Banner = () => {
             <Card >
                 <CardHeader>
                     <CardTitle> Banner Settings </CardTitle>
+                    <Link to="/add-banner" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
 
