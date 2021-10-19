@@ -1,4 +1,4 @@
-import { Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User, Calendar, BarChart2 } from 'react-feather'
+import { HelpCircle, Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User, Calendar, BarChart2 } from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 const Navigation = [
@@ -181,6 +181,13 @@ const Navigation = [
     ]
   },
   {
+    id: 'inquiry',
+    title: 'Inquiry',
+    icon: <HelpCircle size={20} />,
+    navLink: '/inquiry',
+    permissions: ["ADMIN"]
+  },
+  {
     id: "settings",
     title: "Settings",
     type: "collapse",
@@ -218,6 +225,14 @@ const Navigation = [
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
         navLink: "/payment"
+      },       
+      {
+        id: "banner",
+        title: "Banner",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/banner"
       }
     ]
   }

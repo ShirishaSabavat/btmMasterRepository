@@ -64,10 +64,10 @@ const EditRole = () => {
                         delete: values.deleteVideo
                     },
                     cources: {
-                        add: values.add.addCource,
-                        edit: values.edit.editCource,
-                        view: values.view.viewCource,
-                        delete: values.deleteCource
+                        add: values.add.addCourse,
+                        edit: values.edit.editCourse,
+                        view: values.view.viewCourse,
+                        delete: values.deleteCourse
                     },
                     workshops: {
                         add: values.addWorkShop,
