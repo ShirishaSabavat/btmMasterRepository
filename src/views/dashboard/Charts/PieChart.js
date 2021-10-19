@@ -39,7 +39,7 @@ const PieChart = ({title, data}) => {
       },
       legend: { show: false },
       stroke: {
-        width: 4
+        width: 8
       },
       colors: themeColor
     },
@@ -84,7 +84,7 @@ const PieChart = ({title, data}) => {
         </UncontrolledDropdown>
       </CardHeader>
       <CardBody>
-        <Chart options={options} series={series} type='pie' height={325} />
+        <Chart options={options} series={series} type='pie' height={214} />
         <div className='pt-25'>{renderChartInfo()}</div>
       </CardBody>
     </Card>

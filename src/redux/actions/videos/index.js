@@ -89,6 +89,8 @@ export const deleteVideoById = (id) => dispatch => {
     toast.success("Succesfuly Deleted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+
+    dispatch(fetchAllVideos())
   })
   .catch(e => {
     toast.error("Error Deleting Video", {

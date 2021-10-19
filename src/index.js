@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './redux/storeConfig/store'
 // ** Toast & ThemeColors Context
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import { ThemeContext } from './utility/context/ThemeColors'
 
 // ** Spinner (Splash Screen)
@@ -35,8 +35,6 @@ import './assets/scss/style.scss'
 // ** Service Worker
 import * as serviceWorker from './serviceWorker'
 
-import { SnackbarProvider } from 'notistack'
-
 // ** Lazy load app
 const LazyApp = lazy(() => import('./App'))
 
@@ -44,14 +42,21 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
     <Suspense fallback={<Spinner />}>
-      <SnackbarProvider>
-        <ThemeContext>
-          <LazyApp />
-          <ToastContainer newestOnTop />
-        </ThemeContext>
-      </SnackbarProvider>
+      <ThemeContext>
+        <LazyApp />
+      </ThemeContext>
     </Suspense>
     </PersistGate>
+
+    <ToastContainer 
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop
+        closeButton={false}
+        // theme="colored"
+      />
+
   </Provider>,
   document.getElementById('root')
 )

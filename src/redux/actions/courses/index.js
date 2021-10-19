@@ -137,6 +137,7 @@ export const deleteCourseById = (id) => dispatch => {
     toast.success("Succesfuly Deleted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    dispatch(fetchAllCourses())
     dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
