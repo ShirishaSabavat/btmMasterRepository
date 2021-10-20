@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
-import DataTable from "react-data-table-component"
 import {Trash, Eye} from "react-feather"
 import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import { DataGrid } from '@mui/x-data-grid'
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
-import DeleteModal from "./Modals/DeleteModal"
 import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
 
 const UserTable = () => {
@@ -14,40 +11,11 @@ const UserTable = () => {
   const dispatch = useDispatch()
   const usersData = useSelector(state => state.user.users)
 
-  const [defaultAlert, setDefaultAlert] = useState({
-    alert: false,
-    did: ""
-  })
-  const [confirmAlert, setConfirmAlert] = useState(false)
-  const [cancelAlert, setCancelAlert] = useState(false)
-  const [rows, setRows] = useState([])
-
-  const defaultAlertHandler = (value) => {
-    setDefaultAlert({ alert: value.alert, did: value.did })
-  }
-  const confirmAlertHandler = (value) => {
-    setConfirmAlert(value)
-  }
-  const cancelAlertHandler = (value) => {
-    setCancelAlert(value)
-  }
+  const [showDelete, setShowDelete] = useState(false)
 
   useEffect(() => {
-    setRows(usersData.map((values) => { return {id: values.sno, col1: values.sno, col2: values.name, col3: values.role, col4: values.phone, col5: values.email, col6: values.date, col7: values.status } }))
-  }, [usersData])
-
-
-  const columns = [
-    { field: 'col1', headerName: 'SNo', width: 150 },
-    { field: 'col2', headerName: 'Name', width: 150 },
-    { field: 'col3', headerName: 'Role', width: 150 },
-    { field: 'col4', headerName: 'Phone', width: 150 },
-    { field: 'col5', headerName: 'Email', width: 150 },
-    { field: 'col6', headerName: 'Date', width: 150 },
-    { field: 'col7', headerName: 'Status', width: 150},
-    { field: 'col8', headerName: 'Mode', width: 100 }
-  ]
-  
+    dispatch(fetchAllUsersData())
+  }, [])
 
     const tableColumns = [
         {
@@ -81,11 +49,29 @@ const UserTable = () => {
           )
         },
         {
+          name: "Referral Code",
+          selector: "referralCode",
+          sortable: true,
+          cell: (row) => (
+            <span style={{fontSize: 11}}>{row.referralCode}</span>
+          )
+        },
+        {
           name: "Parent",
           selector: "parent",
           sortable: true,
+          width:"184px",
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.referral}</p>
+            <p className="text-bold-500 mb-0" title="View Parent">
+              {row.referral !== 'DIRECT' && (
+                <Link to={`/view-user-data/${row.myParent}`}>
+                  {row.referral}
+                </Link>
+              )}
+              {row.referral === 'DIRECT' && (
+                <>{row.referral}</>
+              )}
+            </p>
           )
         },
         // {
@@ -136,7 +122,6 @@ const UserTable = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
-            const id = row._id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">     
@@ -145,7 +130,7 @@ const UserTable = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/view-user-data", params: {id}}}>
+                        <Link to={`/view-user-data/${row._id}`}>
                             <Eye size={15} />
                         </Link>
                         </Button>
@@ -154,7 +139,7 @@ const UserTable = () => {
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
+                        onClick={() => setShowDelete(row._id)}
                         >
                             <Trash size={15} />
                         </Button>
@@ -166,71 +151,21 @@ const UserTable = () => {
         }
       ]
 
-      
-  // Fetching Data 
-  useEffect(() => {
-    dispatch(fetchAllUsersData())
-  }, [confirmAlert])
-
-   //Deleting Data
-   const deleteid = defaultAlert.did
-   useEffect(() => {
-     if (confirmAlert) {
-       dispatch(deleteUser(deleteid))
-     }
-   }, [confirmAlert, deleteid, dispatch])
-
-  console.log("rows", rows)
-
-    const customStyles = {
-        headCells: {
-          style: {
-            fontSize: "15px",
-            fontWeight: "bolder"
-          }
-        },
-        rows: {
-          style: {
-            "&:hover": {
-              backgroundColor: "#eee"
-            },
-            cursor: "pointer"
-          }
-        }
-      }
-
     return <Row>
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
-                    <CardTitle>Users Data</CardTitle>
+                    <CardTitle>Users</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
 
-                <CustomDataTable data={usersData} columns={tableColumns} />
+                <CustomDataTable 
+                  setShowDelete={setShowDelete}
+                  showDelete={showDelete}
+                  confirmDelete={() => dispatch(deleteUser(showDelete))}
+                  data={usersData} 
+                  columns={tableColumns} />
 
-                <hr />
-                <div style={{ height: 300, width: '99%', margin: "auto" }}>
-
-                {/* <DataGrid
-                  rows={rows} 
-                  columns={columns}
-                  filterModel={{
-                    items: [{ columnField: 'Name', operatorValue: 'contains', value: 'rice' }]
-                  }}
-                
-                /> */}
-                </div>
-                 {defaultAlert.alert ? (
-                  <DeleteModal
-                    defaultAlertHandler={defaultAlertHandler}
-                    confirmAlertHandler={confirmAlertHandler}
-                    cancelAlertHandler={cancelAlertHandler}
-                    defaultAlert={defaultAlert.alert}
-                    confirmAlert={confirmAlert}
-                    cancelAlert={cancelAlert}
-                  />
-                ) : null}
             </Card>
         </Col>
     </Row>

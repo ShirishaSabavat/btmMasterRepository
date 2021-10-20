@@ -1,7 +1,7 @@
 import {useState, useEffect } from 'react'
 import { Row, Col, TabContent, TabPane, Card, CardBody, CardText } from 'reactstrap'
 import Avatar from '@components/avatar'
-import { useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux"
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
 
@@ -22,15 +22,14 @@ const UserData = () => {
     setActiveTab(tab)
   }
 
-  const history = useHistory()
   const dispatch = useDispatch()
   const userData = useSelector(state => state.user.user)
 
-  const uid = history.location?.params?.id
+  const {userId} = useParams()
 
   useEffect(() => {
-    dispatch(fetchUserById(uid))
-  }, [uid])
+    dispatch(fetchUserById(userId))
+  }, [])
 
   const renderUserImg = () => {
     const stateNum = Math.floor(Math.random() * 6),

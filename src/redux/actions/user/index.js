@@ -51,6 +51,7 @@ export const deleteUser = (id) => dispatch => {
       toast.success("Succesfuly Deleted", {
         position: toast.POSITION.BOTTOM_CENTER
       })
+      dispatch(fetchAllUsersData())
       dispatch(toggleNetworkLoading(false))
     })
     .catch(e => {

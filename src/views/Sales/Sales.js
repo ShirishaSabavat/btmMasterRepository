@@ -27,6 +27,17 @@ const Sales = () => {
             )
         },
         {
+          name: "User Name",
+          selector: "name",
+          minWidth: "200px",
+          sortable: true,
+          cell: (row) => (
+            <p className="text-bold-500 mb-0">
+                {row.userId?.name}
+            </p>
+          )
+        },
+        {
           name: "Course Name",
           selector: "courseName",
           sortable: true,
@@ -54,18 +65,9 @@ const Sales = () => {
           )
         },
         {
-          name: "User Name",
-          selector: "name",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 mb-0">
-                {row.userId?.name}
-            </p>
-          )
-        },
-        {
           name: "Referral",
-          selector: "eeferral",
+          selector: "referral",
+          minWidth: "200px",
           sortable: true,
           cell: (row) => (
             <p className="text-bold-500 mb-0">{row.referral}</p>
@@ -87,22 +89,22 @@ const Sales = () => {
             <p className="text-bold-500 mb-0">₹ {row.paid}</p>
           )
         },
-        {
-          name: "Commisions",
-          selector: "commisions",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 mb-0">₹ {row.comissions}</p>
-          )
-        },
-        {
-          name: "Profit",
-          selector: "paidAmount",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 mb-0">₹ {row.netProfit}</p>
-          )
-        },
+        // {
+        //   name: "Commisions",
+        //   selector: "commisions",
+        //   sortable: true,
+        //   cell: (row) => (
+        //     <p className="text-bold-500 mb-0">₹ {row.comissions}</p>
+        //   )
+        // },
+        // {
+        //   name: "Profit",
+        //   selector: "paidAmount",
+        //   sortable: true,
+        //   cell: (row) => (
+        //     <p className="text-bold-500 mb-0">₹ {row.netProfit}</p>
+        //   )
+        // },
         {
           name: "Status",
           selector: "status",
