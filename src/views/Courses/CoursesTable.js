@@ -59,7 +59,7 @@ const CourseTable = () => {
           selector: "price",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">₹ {row.price}</p>
+            <p className="text-bold-500 text-truncate mb-0">₹ {row.price.toLocaleString('en-IN')}</p>
           )
         },
         {

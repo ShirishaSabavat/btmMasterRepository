@@ -98,7 +98,7 @@ const Footer = (props) => {
     <Grid style={{backgroundColor: '#161616'}} className="p-3" item xs={12} md={12}>
         <div style={{    maxWidth: 960, margin: 'auto'}}>
             <div className="text-center mb-2">
-                <img src="https://amoghnya.com/assets/img/favicon.png" className="img-fluid" style={{width: 114}} />
+                <img src="/assets/images/logo.png" className="img-fluid" style={{width: 114}} />
             </div>
 
             <h5 className="text-center m-0" style={{ color: '#a5a5a5'}}>Mr. Br SHAFI (MSW)  Shaikh Shafiullah is popularly knows as brother Shafi. He is founder president of mission Nenu Saitham Samajam kosam. Br Shafi has done Masters Degree from Osmaniya university in MSW, master in social work with medical and psychiatric social work specialization.</h5>

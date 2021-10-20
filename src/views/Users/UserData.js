@@ -3,7 +3,7 @@ import { Row, Col, TabContent, TabPane, Card, CardBody, CardText, Badge, Uncontr
 import Avatar from '@components/avatar'
 import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux"
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
+import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Award, Anchor } from 'react-feather'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {toast} from 'react-toastify'
 import {PRODUCTION_URL} from '../../utility/serverSettings'
@@ -102,17 +102,17 @@ const UserData = () => {
                           ₹
                           </div>
                           <div className='ml-1'>
-                          <h5 className='mb-0'>N/A</h5>
-                          <small>Monthly Sales</small>
+                          <h5 className='mb-0'>{userData.userData?.wallet}</h5>
+                          <small>Wallet</small>
                           </div>
                       </div>
                       <div className='d-flex align-items-center'>
                           <div className='color-box p-1 bg-light-success'>
-                          <TrendingUp className='text-success' />
+                          <Award className='text-success' />
                           </div>
                           <div className='ml-1'>
-                          <h5 className='mb-0'>N/A</h5>
-                          <small>Annual Profit</small>
+                          <h5 className='mb-0'>{userData.userData?.rank}</h5>
+                          <small>Rank</small>
                           </div>
                       </div>
                       </div>
@@ -130,7 +130,7 @@ const UserData = () => {
                         </CardText>
                       </div>
                       <CardText className='mb-0 ml-1'>
-                        {userData.userData?.email}
+                        <a href={`mailto:${userData.userData?.email}`}>{userData.userData?.email}</a>
                       </CardText>
                     </div>
                     <div className='d-flex flex-wrap align-items-center my-50'>
@@ -152,7 +152,7 @@ const UserData = () => {
                         </CardText>
                       </div>
                       <CardText className='text-capitalize mb-0 ml-1'>
-                        {userData.userData?.role}
+                        {userData.userData?.role.replace('_USER', '')}
                       </CardText>
                     </div>
                     {/* <div className='d-flex flex-wrap align-items-center my-50'>
@@ -164,15 +164,26 @@ const UserData = () => {
                       </div>
                       <CardText className='mb-0'>{selectedUser !== null ? selectedUser.country : 'England'}</CardText>
                     </div> */}
-                    <div className='d-flex flex-wrap align-items-center'>
+                    <div className='d-flex flex-wrap align-items-center my-50'>
                       <div className='user-info-title'>
                         <Phone className='mr-1' size={14} />
                         <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
                           Contact: 
                         </CardText>
                       </div>
-                      <CardText className='mb-0 ml-1'> {userData.userData?.phone}</CardText>
+                      <CardText className='mb-0 ml-1'> <a href={`tel:${userData.userData?.phone}`}>{userData.userData?.phone}</a> </CardText>
                     </div>
+
+                    <div className='d-flex flex-wrap align-items-center'>
+                      <div className='user-info-title'>
+                        <Anchor className='mr-1' size={14} />
+                        <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                          KYC: 
+                        </CardText>
+                      </div>
+                      <CardText className='mb-0 ml-1'> {userData.userData?.kycStatus}</CardText>
+                    </div>
+
                   </div>
                 </Col>
               </Row>

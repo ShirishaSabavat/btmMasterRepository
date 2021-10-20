@@ -86,7 +86,7 @@ const Sales = () => {
           selector: "paidAmount",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">₹ {row.paid}</p>
+            <p className="text-bold-500 mb-0">₹ {row.paid.toLocaleString('en-IN')}</p>
           )
         },
         // {
@@ -167,7 +167,7 @@ const Sales = () => {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>Sales</h2>
-                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.paid ? c.paid : 0), 0)} ({salesData.length})</p>
+                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.paid ? c.paid : 0), 0).toLocaleString('en-IN')} ({salesData.length.toLocaleString('en-IN')})</p>
                         </div>
                         <div className={`avatar avatar-stats p-50 m-0 bg-light-success`}>
                             <div className='avatar-content'><BarChart size={28} /></div>
@@ -182,7 +182,7 @@ const Sales = () => {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>Commisions</h2>
-                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.comissions ? c.comissions : 0), 0)} ({salesData.filter(i => (i.comissions !== undefined)).length})</p>
+                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.comissions ? c.comissions : 0), 0).toLocaleString('en-IN')} ({salesData.filter(i => (i.comissions !== undefined)).length.toLocaleString('en-IN')})</p>
                         </div>
                         <div className={`avatar avatar-stats p-50 m-0 bg-light-danger`}>
                             <div className='avatar-content'><Award size={28} /></div>
@@ -197,7 +197,7 @@ const Sales = () => {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>Profit</h2>
-                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.netProfit ? c.netProfit : 0), 0)}</p>
+                            <p className='card-text'>₹ {salesData.reduce((p, c) => p + (c.netProfit ? c.netProfit : 0), 0).toLocaleString('en-IN')}</p>
                         </div>
                         <div className={`avatar avatar-stats p-50 m-0 bg-light-success`}>
                             <div className='avatar-content'><BarChart2 size={28} /></div>

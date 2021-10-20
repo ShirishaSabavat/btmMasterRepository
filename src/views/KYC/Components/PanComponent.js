@@ -37,7 +37,7 @@ const PanComponent  = ({stepper, type, setKycFormData}) => {
                 {(formik) => {
                     return (<Form className="row">
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="panNo">PAN NO</Label>
+                            <Label htmlFor="panNo">PAN NO <span className="text-danger">*</span></Label>
                             <Input
                             name="panNo"
                             id="panNo"
@@ -52,7 +52,7 @@ const PanComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="panname">Name as per PAN</Label>
+                            <Label htmlFor="panname">Name as per PAN <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -70,7 +70,7 @@ const PanComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="dob">DOB as per PAN</Label>
+                            <Label htmlFor="dob">DOB as per PAN <span className="text-danger">*</span></Label>
                             <Flatpickr
                                 className="form-control"
                                 name="dob"

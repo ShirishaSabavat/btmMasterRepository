@@ -32,7 +32,7 @@ const Wallet = () => {
         selector: "amount",
         sortable: true,
         cell: (row) => (
-          <h4 className={`text-bold-500 mb-0 ${row.type === 'CREDIT' ? 'text-success' : ''}`}> {row.type === 'CREDIT' ? "+" : "-"} ₹ {row.amount}</h4>
+          <h4 className={`text-bold-500 mb-0 ${row.type === 'CREDIT' ? 'text-success' : ''}`}> {row.type === 'CREDIT' ? "+" : "-"} ₹ {row.amount.toLocaleString('en-IN')}</h4>
         )
     },
     {
@@ -41,8 +41,8 @@ const Wallet = () => {
       sortable: true,
       cell: (row) => (
         <p className="text-bold-500 mb-0">
-            <small>{`Opening Balance: ₹ ${row.openingBalance}`}</small>
-            <small>{`Closing Balance: ₹ ${row.closingBalance}`}</small>
+            <small>{`Opening: ₹ ${row.openingBalance.toLocaleString('en-IN')}`}</small><br />
+            <small>{`Closing: ₹ ${row.closingBalance.toLocaleString('en-IN')}`}</small>
         </p>
       )
     },
@@ -68,8 +68,9 @@ const Wallet = () => {
         name: "Remark",
         selector: "remark",
         sortable: true,
+        width: '320px',
         cell: (row) => (
-          <p className="mb-0">{row.remarks}</p>
+          <p style={{fontSize: 10}} className="mb-0 p-1">{row.remarks}</p>
         )
     }
   ]
@@ -88,7 +89,7 @@ const Wallet = () => {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>Credits</h2>
-                            <p className='card-text'>₹ {transactions.reduce((p, c) => p + (c.type === 'CREDIT' ? c.amount : 0), 0)} ({transactions.filter(i => i.type === 'CREDIT').length})</p>
+                            <p className='card-text'>₹ {transactions.reduce((p, c) => p + (c.type === 'CREDIT' ? c.amount : 0), 0).toLocaleString('en-IN')} ({transactions.filter(i => i.type === 'CREDIT').length.toLocaleString('en-IN')})</p>
                         </div>
                         <div className={`avatar avatar-stats p-50 m-0 bg-light-success`}>
                             <div className='avatar-content'><CheckCircle size={28} /></div>
@@ -103,7 +104,7 @@ const Wallet = () => {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>Debits</h2>
-                            <p className='card-text'>₹ {transactions.reduce((p, c) => p + (c.type === 'DEBIT' ? c.amount : 0), 0)} ({transactions.filter(i => i.type === 'DEBIT').length})</p>
+                            <p className='card-text'>₹ {transactions.reduce((p, c) => p + (c.type === 'DEBIT' ? c.amount : 0), 0).toLocaleString('en-IN')} ({transactions.filter(i => i.type === 'DEBIT').length.toLocaleString('en-IN')})</p>
                         </div>
                         <div className={`avatar avatar-stats p-50 m-0 bg-light-danger`}>
                             <div className='avatar-content'><AlertOctagon size={28} /></div>

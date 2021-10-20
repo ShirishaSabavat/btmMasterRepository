@@ -91,6 +91,9 @@ const NavBar = () => {
                 onKeyDown={() => toggleDrawer(false)}
                 >
                 <List>
+                    <div className="text-center mb-2">
+                        <img src="/assets/images/logo.png" className="img-fluid" style={{width: 84}} />
+                    </div>
                     <ListItem onClick={() => history.push('/home')} button>
                         <ListItemIcon>
                             <Home />

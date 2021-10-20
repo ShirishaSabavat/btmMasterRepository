@@ -151,7 +151,7 @@ const Dashboard = () => {
                     title="Sale Types" 
                     data={{
                         series: [dashboardData.referralPurchaseCount, dashboardData.regularCourcesCount],
-                        labels: ['Regular', 'Referral'],
+                        labels: ['Online', 'Workshop'],
                         styles: '2'
                     }} 
                 />

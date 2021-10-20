@@ -71,7 +71,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                 {(formik) => {
                     return (<Form className="row">
                         <FormGroup className="col-md-12 has-icon-left position-relative">
-                            <Label htmlFor="address">Address</Label>
+                            <Label htmlFor="address">Address <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="textarea"
@@ -89,7 +89,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="zipCode">Zip Code</Label>
+                            <Label htmlFor="zipCode">Pin Code <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="number"
@@ -124,7 +124,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                         </FormGroup>
 
                         <FormGroup className="col-md-4">
-                            <Label For="country">Country</Label>
+                            <Label For="country">Country <span className="text-danger">*</span></Label>
                             <CustomSelectField
                               value={formik.values.country}
                               options={countryOptions}
@@ -137,7 +137,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-4">
-                            <Label For="state">State</Label>
+                            <Label For="state">State <span className="text-danger">*</span></Label>
                             <CustomSelectField
                               value={formik.values.state}
                               options={stateOptions}
@@ -150,7 +150,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-4">
-                            <Label For="city">City</Label>
+                            <Label For="city">City <span className="text-danger">*</span></Label>
                             <CustomSelectField
                               value={formik.values.city}
                               options={cityOptions}

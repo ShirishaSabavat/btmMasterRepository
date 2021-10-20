@@ -124,9 +124,9 @@ const EarningCard = ({title, data}) => {
           <Col xs='6'>
             <CardTitle className='mb-1'>Earnings</CardTitle>
             <div className='font-small-2'>All Time</div>
-            <h5 className='mb-1'>₹ {data.netEarnings[0].netAmount}</h5>
+            <h5 className='mb-1'>₹ {data.netEarnings[0].netAmount.toLocaleString('en-IN')}</h5>
             <CardText className='text-muted font-small-2'>
-              <span className='font-weight-bolder'>₹ {data.netComissions[0].comissions}</span>
+              <span className='font-weight-bolder'>₹ {data.netComissions[0].comissions.toLocaleString('en-IN')}</span>
               <span> spent in commisions.</span>
             </CardText>
           </Col>
