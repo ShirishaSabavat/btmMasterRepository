@@ -1,0 +1,2 @@
+export const GET_ALL_INQURIES = "GET_ALL_INQURIES"
+export const GET_INQURIE_BY_ID = "GET_INQURIE_BY_ID"

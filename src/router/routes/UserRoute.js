@@ -7,7 +7,7 @@ const UserRoute = [
     component: lazy(() => import('../../views/Users/Users'))
   },
   {
-    path: '/view-user-data',
+    path: '/view-user-data/:userId',
     component: lazy(() => import('../../views/Users/UserData'))
   },
   {

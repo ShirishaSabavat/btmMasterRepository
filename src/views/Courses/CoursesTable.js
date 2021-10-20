@@ -6,30 +6,18 @@ import {Calendar, Edit, Trash, Eye} from "react-feather"
 import { useDispatch, useSelector } from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
-import DeleteModal from "./Modals/DeleteModal"
 import {fetchAllCourses, deleteCourseById} from "../../redux/actions/courses/index"
 
 const CourseTable = () => {
 
   const dispatch = useDispatch()
   const courseData = useSelector(state => state.courses.courses)
+  
+  const [showDelete, setShowDelete] = useState(false)
 
-  const [defaultAlert, setDefaultAlert] = useState({
-    alert: false,
-    did: ""
-  })
-  const [confirmAlert, setConfirmAlert] = useState(false)
-  const [cancelAlert, setCancelAlert] = useState(false)
-
-  const defaultAlertHandler = (value) => {
-    setDefaultAlert({ alert: value.alert, did: value.did })
-  }
-  const confirmAlertHandler = (value) => {
-    setConfirmAlert(value)
-  }
-  const cancelAlertHandler = (value) => {
-    setCancelAlert(value)
-  }
+  useEffect(() => {
+    dispatch(fetchAllCourses())
+  }, [])
 
     const tableColumns = [
         {
@@ -107,7 +95,7 @@ const CourseTable = () => {
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
+                        onClick={() => setShowDelete(id)}
                         >
                             <Trash size={15} />
                         </Button>
@@ -119,38 +107,6 @@ const CourseTable = () => {
         }
       ]
 
-  // Fetching Data 
-  useEffect(() => {
-    dispatch(fetchAllCourses())
-  }, [confirmAlert, dispatch])
-
-  //Deleting Data
-  const deleteid = defaultAlert.did
-  useEffect(() => {
-    if (confirmAlert) {
-      dispatch(deleteCourseById(deleteid))
-    }
-  }, [confirmAlert, deleteid, dispatch])
-
-    // const courseData = [{courseName: "course1", code: "123", type: "BCA", price: 1000 }]
-
-    const customStyles = {
-        headCells: {
-          style: {
-            fontSize: "15px",
-            fontWeight: "bolder"
-          }
-        },
-        rows: {
-          style: {
-            "&:hover": {
-              backgroundColor: "#eee"
-            },
-            cursor: "pointer"
-          }
-        }
-      }
-
     return <Row>
         <Col sm="12" md="12">
             <Card >
@@ -160,18 +116,14 @@ const CourseTable = () => {
                 </CardHeader>
                 <hr className="m-0" />
 
-                <CustomDataTable data={courseData} columns={tableColumns} />
+                <CustomDataTable 
+                  setShowDelete={setShowDelete}
+                  showDelete={showDelete}
+                  confirmDelete={() => dispatch(deleteCourseById(showDelete))}
+                  data={courseData} 
+                  columns={tableColumns} 
+                />
                 
-                 {defaultAlert.alert ? (
-                  <DeleteModal
-                    defaultAlertHandler={defaultAlertHandler}
-                    confirmAlertHandler={confirmAlertHandler}
-                    cancelAlertHandler={cancelAlertHandler}
-                    defaultAlert={defaultAlert.alert}
-                    confirmAlert={confirmAlert}
-                    cancelAlert={cancelAlert}
-                  />
-                ) : null}
             </Card>
         </Col>
     </Row>

@@ -29,12 +29,12 @@ export const AddCourseAPI = (rawData, resetForm) => dispatch => {
   })
 }
 
-export const EditCourseAPI = (rawData) => dispatch => {
+export const EditCourseAPI = (id, rawData) => dispatch => {
   dispatch(toggleNetworkLoading(true))
-  ServerApi().patch('/courses', rawData)
+  ServerApi().patch(`/courses/${id}`, rawData)
   .then(res => {
     console.log("ress", res)
-    if (res.statusText === "Ok") {
+    if (res.status === 200) {
       toast.success("Updated course", {
         position: toast.POSITION.BOTTOM_CENTER
       })
@@ -137,6 +137,7 @@ export const deleteCourseById = (id) => dispatch => {
     toast.success("Succesfuly Deleted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    dispatch(fetchAllCourses())
     dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {

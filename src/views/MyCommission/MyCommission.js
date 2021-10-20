@@ -23,7 +23,7 @@ const MyCommission = () => {
         selector: "userName",
         sortable: true,
         cell: (row) => (
-          <h4 className="text-bold-500 mb-0">{row.userId?.name}</h4>
+          <h4 className="text-bold-500 mb-0">{row.parentId?.name}</h4>
         )
     },
     {

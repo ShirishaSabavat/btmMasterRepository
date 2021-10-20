@@ -52,6 +52,7 @@ export const fetchAllVideos = () => dispatch => {
   .then(res => {
     // const data = res.data.map((values, index) => { return {values, sno: index + 1 } })
     const data = res.data.reverse().map((values, index) => ({...values, sno: index + 1}))
+    console.log("req", data)
     dispatch({
       type: GET_ALL_VIDEOS,
       payload: data
@@ -68,7 +69,7 @@ export const fetchAllVideos = () => dispatch => {
 export const fetchVideoById = (id) => dispatch => {
   ServerApi().get(`/videos/${id}`)
   .then(res => {
-    const data = res.data.reverse()
+    const data = res.data
     dispatch({
       type: GET_VIDEO_BY_ID,
       payload: data
@@ -88,6 +89,8 @@ export const deleteVideoById = (id) => dispatch => {
     toast.success("Succesfuly Deleted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+
+    dispatch(fetchAllVideos())
   })
   .catch(e => {
     toast.error("Error Deleting Video", {

@@ -14,6 +14,17 @@ import { fetchAllCourses } from '../../redux/actions/courses'
 import { saveReferral } from '../../redux/actions/common'
 import { useEffect } from 'react'
 import CoursesLoadingSkleton from '../../components/skleton/CoursesLoadingSkleton' 
+import AwesomeSlider from 'react-awesome-slider'
+
+import CardCom from "./components/CardCom"
+import withAutoplay from 'react-awesome-slider/dist/autoplay'
+import coreStyles from 'react-awesome-slider/src/core/styles.scss'
+import animationStyles from 'react-awesome-slider/src/styled/fold-out-animation/fold-out-animation.scss'
+
+import img1 from "../../assets/images/pages/content-img-1.jpg"
+import img2 from "../../assets/images/pages/content-img-2.jpg"
+import img3 from "../../assets/images/pages/content-img-3.jpg"
+import img4 from "../../assets/images/pages/content-img-4.jpg"
 
 const Landing = () => {
     const dispatch = useDispatch()
@@ -145,9 +156,45 @@ const Landing = () => {
         })
     }
 
+    const AutoplaySlider = withAutoplay(AwesomeSlider)
+
+    const Slider = (
+        <div className="position-relative" >
+            <AutoplaySlider  play={true} cancelOnInteraction={false} interval={3000} animation="openAnimation" cssModule={[coreStyles, animationStyles]} style={{height: "70vh"}} bullets={false} >
+                <div data-src={img1} >
+                    <div style={{position: "absolute", top: "10%", right:"15%", zIndex: "2000", width: "300px"}}>
+                        <CardCom data={{ _id:"123", image: {img1}, name:"Sample", shortDescription: "This is description", faculty:{name: "Sample fac"}, price : "100"  }} />
+                    </div>
+                </div>
+                <div data-src={img2}>
+                    <div style={{position: "absolute", top: "10%", right:"15%", zIndex: "2000", width: "300px"}}>
+                        <CardCom data={{ _id:"123", image: {img2}, name:"Sample", shortDescription: "This is description", faculty:{name: "Sample fac"}, price : "200"  }} />
+                    </div>
+                </div>
+                <div data-src={img3}>
+                    <div style={{position: "absolute", top: "10%", right:"15%", zIndex: "2000", width: "300px"}}>
+                        <CardCom data={{ _id:"123", image: {img3}, name:"Sample", shortDescription: "This is description", faculty:{name: "Sample fac"}, price : "300"  }} />
+                    </div>
+                </div>
+                <div data-src={img4}>
+                    <div style={{position: "absolute", top: "10%", right:"15%", zIndex: "2000", width: "300px"}}>
+                        <CardCom data={{ _id:"123", image: {img4}, name:"Sample", shortDescription: "This is description", faculty:{name: "Sample fac"}, price : "400"  }} />
+                    </div>
+                </div>
+            </AutoplaySlider>
+        </div>
+        )
+
   return (
     <Grid container spacing={2}>
 
+        <Grid className="" style={{backgroundColor: 'silver'}} item xs={12}>
+            <Row >
+                <div className="h-75 w-100">
+                    {Slider}
+                </div>
+            </Row>
+        </Grid>
         <Grid className="" style={{backgroundColor: 'silver'}} item xs={12}>
             <Row className=''>
                 <Col className='d-lg-flex align-items-center' lg='8' sm='12'>

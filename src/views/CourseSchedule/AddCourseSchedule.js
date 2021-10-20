@@ -63,10 +63,10 @@ const AddCourseSchedule = () => {
 
         const rawData = {
             courseId: values.courseId,
-            startDate: values.startdate,
-            endDate: values.enddate,
-            startTime: values.starttime,
-            endTime: values.endtime,
+            startDate: new Date(values.startdate).toDateString(),
+            endDate: new Date(values.enddate).toDateString(),
+            startTime: new Date(values.starttime).toTimeString(),
+            endTime: new Date(values.endtime).toTimeString(),
             faculty: values.faculty,
             address: values.address,
             location: values.location,

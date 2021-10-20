@@ -140,7 +140,7 @@ const Dashboard = () => {
                 <PieChart 
                     title="Courses" 
                     data={{
-                        series: [dashboardData.bacCourcesCount, dashboardData.regularCourcesCount],
+                        series: [dashboardData.regularCourcesCount, dashboardData.bacCourcesCount],
                         labels: ['Regular', 'Bac'],
                         styles: '1'
                     }}
@@ -150,7 +150,7 @@ const Dashboard = () => {
                 <PieChart 
                     title="Sale Types" 
                     data={{
-                        series: [dashboardData.regularCourcesCount, dashboardData.referralPurchaseCount],
+                        series: [dashboardData.referralPurchaseCount, dashboardData.regularCourcesCount],
                         labels: ['Regular', 'Referral'],
                         styles: '2'
                     }} 
@@ -160,7 +160,7 @@ const Dashboard = () => {
                 <PieChart 
                     title="Users" 
                     data={{
-                        series: [dashboardData.bacUsersCount, dashboardData.normalUsersCount],
+                        series: [dashboardData.normalUsersCount, dashboardData.bacUsersCount],
                         labels: ['Regular', 'Bac']
                     }}
                 />

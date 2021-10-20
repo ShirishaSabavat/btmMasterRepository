@@ -44,7 +44,7 @@ const NavBar = () => {
             </Stack>
         </Box> */}
 
-        <AppBar position="static">
+        <AppBar style={{backgroundColor: '#c53b47'}} position="static">
             <Toolbar>
                 <IconButton
                     size="large"

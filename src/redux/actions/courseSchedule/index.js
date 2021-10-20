@@ -8,14 +8,10 @@ export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
   .then(res => {
     console.log("ress", res)
     if (res.statusText === "Created") {
-      toast.success("Created course", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
+      toast.success("Created course")
       resetForm({})
     } else {
-      toast.error("Error in Creating Course", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
+      toast.error("Error in Creating Course")
     }
   })
   .catch(e => {
@@ -31,13 +27,9 @@ export const EditCourseScheduleAPI = (id, rawData) => dispatch => {
   .then(res => {
     console.log("ress", res)
     if (res.status === 200) {
-      toast.success("Update Success", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
+      toast.success("Workshop Updated.")
     } else {
-      toast.error("Error in Updating", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
+      toast.error("Error in Updating")
     }
   })
   .catch(e => {
@@ -104,6 +96,7 @@ export const deleteCourseSchedule = (id) => dispatch => {
     toast.success("Succesfuly Deleted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    dispatch(fetchAllCourseSchedules())
   })
   .catch(e => {
     toast.error("Error Deleting Course", {

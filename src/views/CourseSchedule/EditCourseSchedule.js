@@ -49,10 +49,6 @@ const EditCourseSchedule = () => {
 
     const validationSchema = Yup.object().shape({
         courseId: Yup.string().required("Required"),
-        startdate: Yup.date().required("Required"),
-        enddate: Yup.date().required("Required"),
-        starttime: Yup.string().required("Required"),
-        endtime: Yup.string().required("Required"),
         location: Yup.string().required("Required"),
         faculty: Yup.string().required("Required"),
         address: Yup.string().required("Required")
@@ -63,10 +59,11 @@ const EditCourseSchedule = () => {
 
         const rawData = {
             courseId: values.courseId,
+            startDate: new Date(values.startdate).toDateString(),
+            endDate: new Date(values.enddate).toDateString(),
+            startTime: new Date(values.starttime.toString()).toTimeString(),
+            endTime: values.endtime.toString(),
             startDate: values.startdate,
-            endDate: values.enddate,
-            startTime: values.starttime,
-            endTime: values.endtime,
             faculty: values.faculty,
             address: values.address,
             location: values.location

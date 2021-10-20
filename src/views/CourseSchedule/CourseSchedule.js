@@ -11,24 +11,13 @@ import {fetchAllCourseSchedules, deleteCourseSchedule} from "../../redux/actions
 const CourseSchedule = () => {
 
   const dispatch = useDispatch()
-  const workshopData = useSelector(state => state.courseSchedule.courseSchedules) 
+  const workshopData = useSelector(state => state.courseSchedule.courseSchedules)
+  
+  const [showDelete, setShowDelete] = useState(false)
 
-  const [defaultAlert, setDefaultAlert] = useState({
-    alert: false,
-    did: ""
-  })
-  const [confirmAlert, setConfirmAlert] = useState(false)
-  const [cancelAlert, setCancelAlert] = useState(false)
-
-  const defaultAlertHandler = (value) => {
-    setDefaultAlert({ alert: value.alert, did: value.did })
-  }
-  const confirmAlertHandler = (value) => {
-    setConfirmAlert(value)
-  }
-  const cancelAlertHandler = (value) => {
-    setCancelAlert(value)
-  }
+  useEffect(() => {
+    dispatch(fetchAllCourseSchedules())
+  }, [])
 
     const tableColumns = [
         {
@@ -124,7 +113,7 @@ const CourseSchedule = () => {
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
+                        onClick={() => setShowDelete(id)}
                         >
                             <Trash size={15} />
                         </Button>
@@ -136,39 +125,6 @@ const CourseSchedule = () => {
         }
       ]
 
-      
-  // Fetching Data 
-  useEffect(() => {
-    dispatch(fetchAllCourseSchedules())
-  }, [confirmAlert])
-
-   //Deleting Data
-   const deleteid = defaultAlert.did
-   useEffect(() => {
-     if (confirmAlert) {
-       dispatch(deleteCourseSchedule(deleteid))
-     }
-   }, [confirmAlert, deleteid, dispatch])
-
-    // const workshopData = [{_id: "123", batchNo: 1, courseName: "sample1", startdate: "2-2-2021", enddate:"4-4-2021", location: "HYD", faculty: "sir 1", status: "ACTIVE" }]
-
-    const customStyles = {
-        headCells: {
-          style: {
-            fontSize: "15px",
-            fontWeight: "bolder"
-          }
-        },
-        rows: {
-          style: {
-            "&:hover": {
-              backgroundColor: "#eee"
-            },
-            cursor: "pointer"
-          }
-        }
-      }
-
     return <Row>
         <Col sm="12" md="12">
             <Card >
@@ -178,18 +134,13 @@ const CourseSchedule = () => {
                 </CardHeader>
                 <hr className="m-0" />
 
-                <CustomDataTable data={workshopData} columns={tableColumns} />
+                <CustomDataTable 
+                  setShowDelete={setShowDelete}
+                  showDelete={showDelete}
+                  confirmDelete={() => dispatch(deleteCourseSchedule(showDelete))}
+                  data={workshopData} 
+                  columns={tableColumns} />
                 
-                 {defaultAlert.alert ? (
-                  <DeleteModal
-                    defaultAlertHandler={defaultAlertHandler}
-                    confirmAlertHandler={confirmAlertHandler}
-                    cancelAlertHandler={cancelAlertHandler}
-                    defaultAlert={defaultAlert.alert}
-                    confirmAlert={confirmAlert}
-                    cancelAlert={cancelAlert}
-                  />
-                ) : null}
             </Card>
         </Col>
     </Row>
