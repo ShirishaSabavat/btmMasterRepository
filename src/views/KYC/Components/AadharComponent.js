@@ -30,7 +30,7 @@ const AadharComponent  = ({stepper, type, setKycFormData}) => {
                 {(formik) => {
                     return (<Form className="row">
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="aadharNo">Aadhar Number</Label>
+                            <Label htmlFor="aadharNo">Aadhar Number <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="number"

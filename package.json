@@ -20,6 +20,7 @@
     "bs-stepper": "1.7.0",
     "chart.js": "2.9.4",
     "classnames": "2.2.6",
+    "cleave.js": "^1.6.0",
     "country-state-city": "^3.0.1",
     "draft-js": "0.11.7",
     "formik": "^2.2.9",

@@ -83,7 +83,7 @@ const AddVideo = () => {
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="title">Video Title</Label>
+                                                <Label htmlFor="title">Video Title <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -103,7 +103,7 @@ const AddVideo = () => {
                                         </Col>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="videoLink">Video Link</Label>
+                                                <Label htmlFor="videoLink">Video Link <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>

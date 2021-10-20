@@ -19,7 +19,7 @@ const MyCommission = () => {
 
   const tableColumns = [
     {
-        name: "User Name",
+        name: "Name",
         selector: "userName",
         sortable: true,
         cell: (row) => (
@@ -27,11 +27,19 @@ const MyCommission = () => {
         )
     },
     {
+        name: "Referral",
+        selector: "referral",
+        sortable: true,
+        cell: (row) => (
+          <h6 style={{fontSize: 11}} className="mb-0">{row.referral}</h6>
+        )
+    },
+    {
         name: "Commision",
         selector: "commision",
         sortable: true,
         cell: (row) => (
-          <h4 className="text-bold-500 mb-0">₹ {row.commision}</h4>
+          <h4 className="text-bold-500 mb-0">₹ {row.commision.toLocaleString('en-IN')}</h4>
         )
     },
     {
@@ -40,6 +48,16 @@ const MyCommission = () => {
       sortable: true,
       cell: (row) => (
         <p className="text-bold-500 mb-0">{row.commisionPercentage} %</p>
+      )
+    },
+    {
+      name: "Level",
+      selector: "level",
+      sortable: true,
+      cell: (row) => (
+        <Badge color={row.commisionLevel === 1 ? "light-primary" : row.commisionLevel === 1 ? "light-info" : "light-danger"} pill>
+          <span className="px-1">{row.commisionLevel === 1 ? "D" : (row.commisionLevel - 1) }</span>
+        </Badge>
       )
     },
     {
@@ -54,8 +72,9 @@ const MyCommission = () => {
       name: "Remark",
       selector: "remark",
       sortable: true,
+      width: '250px',
       cell: (row) => (
-        <p className="mb-0">{row.remarks}</p>
+        <p style={{fontSize: 10}} className="p-1 mb-0">{row.remarks}</p>
       )
     },
     {

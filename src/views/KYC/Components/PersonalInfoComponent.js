@@ -4,6 +4,8 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {User, Mail, Phone, ArrowLeft, ArrowRight} from "react-feather"
 import { useSelector } from "react-redux"
+import Cleave from 'cleave.js/react'
+import 'cleave.js/dist/addons/cleave-phone.us'
 
 const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
 
@@ -18,7 +20,7 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Required"),
         email: Yup.string().email().required("Required"),
-        phone: Yup.string().required("Required")
+        phone: Yup.string().min(13, 'Enter valid phone no.').required("Required")
     })
 
     const submitForm = (values) => {
@@ -35,7 +37,7 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
                 {(formik) => {
                     return (<Form className="row">
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="name">Name <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <InputGroupAddon addonType='prepend'>
                                 <InputGroupText className={ !!(formik.touched.name && formik.errors.name) ? "border border-danger" : null}>
@@ -58,7 +60,7 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">Email <span className="text-danger">*</span></Label>
                             <InputGroup>
                             <InputGroupAddon addonType='prepend'>
                             <InputGroupText className={ !!(formik.touched.email && formik.errors.email) ? "border border-danger" : null}>
@@ -81,22 +83,32 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="phone">Mobile No</Label>
-                            <InputGroup>
+                            <Label htmlFor="phone">Mobile No <span className="text-danger">*</span></Label>
+
+                            <Cleave placeholder="Enter phone number"
+                                options={{blocks: [3, 3, 3, 4], prefix: '+91'}}
+                                name="phone"
+                                className="form-control"
+                                id="phone"
+                                {...formik.getFieldProps("phone")}
+                                invalid={!!(formik.touched.phone && formik.errors.phone)}
+                                />
+
+                            {/* <InputGroup>
                             <InputGroupAddon addonType='prepend'>
                             <InputGroupText className={ !!(formik.touched.phone && formik.errors.phone) ? "border border-danger" : null}>
                                 <Phone size={15} />
                             </InputGroupText>
                             </InputGroupAddon>
                                 <Input
-                                type="text"
-                                name="phone"
-                                id="phone"
-                                {...formik.getFieldProps("phone")}
-                                invalid={!!(formik.touched.phone && formik.errors.phone)}
+                                    type="text"
+                                    name="phone"
+                                    id="phone"
+                                    {...formik.getFieldProps("phone")}
+                                    invalid={!!(formik.touched.phone && formik.errors.phone)}
                                 >
                                 </Input>
-                            </InputGroup>
+                            </InputGroup> */}
                             <ErrorMessage
                                 name="phone"
                                 component="div"

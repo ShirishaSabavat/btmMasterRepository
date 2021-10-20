@@ -52,10 +52,10 @@ const AddCourseSchedule = () => {
         enddate: Yup.date().required("Required"),
         starttime: Yup.date().required("Required"),
         endtime: Yup.date().required("Required"),
-        location: Yup.string().required("Required"),
-        faculty: Yup.string().required("Required"),
+        location: Yup.string(),
+        faculty: Yup.string(),
         address: Yup.string().required("Required"),
-        seat: Yup.string().required("Required")
+        seat: Yup.string()
     })
 
     const submitForm = (values, {resetForm}) => {
@@ -95,7 +95,7 @@ const AddCourseSchedule = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label For="courseId">Course Name</Label>
+                                                <Label For="courseId">Course Name <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                     value={formik.values.courseId}
                                                     options={courseOptions.map(values => values)}
@@ -125,7 +125,7 @@ const AddCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="startdate">Start Date</Label>
+                                                <Label htmlFor="startdate">Start Date <span className="text-danger">*</span></Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -143,7 +143,7 @@ const AddCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="enddate">End Date</Label>
+                                                <Label htmlFor="enddate">End Date <span className="text-danger">*</span></Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -161,7 +161,7 @@ const AddCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="starttime">Start Time</Label>
+                                                <Label htmlFor="starttime">Start Time <span className="text-danger">*</span></Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -184,7 +184,7 @@ const AddCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="endtime">End Time</Label>
+                                                <Label htmlFor="endtime">End Time <span className="text-danger">*</span></Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -208,7 +208,7 @@ const AddCourseSchedule = () => {
                                         <Row>
                                             <Col sm="12" md="12">
                                                 <FormGroup className="has-icon-left position-relative">
-                                                    <Label htmlFor="address">Address</Label>
+                                                    <Label htmlFor="address">Address <span className="text-danger">*</span></Label>
                                                     <InputGroup>
                                                         <Input
                                                         type="textarea"
@@ -231,6 +231,7 @@ const AddCourseSchedule = () => {
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="location">Location</Label>
+                                                <span style={{fontSize: 11}}> (<a href="https://www.google.com/maps/" target="_blank" rel="noopener">Select on map</a>)</span>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.location && formik.errors.location) ? "border border-danger" : null}>
@@ -256,7 +257,7 @@ const AddCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="seat">Seat Capacity</Label>
+                                                <Label htmlFor="seat">Seat Capacity </Label>
                                                 <InputGroup>
  
                                                     <Input

@@ -145,7 +145,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="fullName">Full Name</Label>
+                                                <Label htmlFor="fullName">Full Name <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -167,7 +167,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="phone">Phone</Label>
+                                                <Label htmlFor="phone">Phone <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -187,7 +187,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="dob">DOB</Label>
+                                                <Label htmlFor="dob">DOB <span className="text-danger">*</span></Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -207,7 +207,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="gender">Gender</Label>
+                                                <Label htmlFor="gender">Gender <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                     value={formik.values.gender}
                                                     options={genderOptions}
@@ -222,7 +222,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="role">Role</Label>
+                                                <Label htmlFor="role">Role <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                     value={formik.values.role}
                                                     options={roleOptions}
@@ -239,7 +239,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="email">Email</Label>
+                                                <Label htmlFor="email">Email <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -259,7 +259,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="password">Password</Label>
+                                                <Label htmlFor="password">Password <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="password"
@@ -371,7 +371,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label For="country">Country</Label>
+                                                <Label For="country">Country <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                 value={formik.values.country}
                                                 options={countryOptions}
@@ -386,7 +386,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label For="state">State</Label>
+                                                <Label For="state">State <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                 value={formik.values.state}
                                                 options={stateOptions}
@@ -401,7 +401,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="city">City</Label>
+                                                <Label htmlFor="city">City <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                 value={formik.values.city}
                                                 options={cityOptions}

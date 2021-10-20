@@ -55,7 +55,7 @@ const BankAccountComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup> */}
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="selectBank">Bank Name</Label>
+                            <Label htmlFor="selectBank">Bank Name <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -73,7 +73,7 @@ const BankAccountComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="banchName">Branch Name</Label>
+                            <Label htmlFor="banchName">Branch Name <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -91,7 +91,7 @@ const BankAccountComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="ifscCode">IFSC Code</Label>
+                            <Label htmlFor="ifscCode">IFSC Code <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="text"
@@ -109,7 +109,7 @@ const BankAccountComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="accNo">Account Number</Label>
+                            <Label htmlFor="accNo">Account Number <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="number"
@@ -127,7 +127,7 @@ const BankAccountComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="accHolderName">Account Holder Name</Label>
+                            <Label htmlFor="accHolderName">Account Holder Name <span className="text-danger">*</span></Label>
                             <InputGroup>
                                 <Input
                                 type="text"

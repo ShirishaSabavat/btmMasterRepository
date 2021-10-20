@@ -131,7 +131,7 @@ const EditCourse = () => {
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="courseName">Course Name</Label>
+                                                <Label htmlFor="courseName">Course Name <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -153,7 +153,7 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12" md="6">
                                         <FormGroup>
-                                                <Label htmlFor="courseType">Course Type</Label>
+                                                <Label htmlFor="courseType">Course Type <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                 value={formik.values.courseType}
                                                 options={courseOptions}
@@ -168,7 +168,7 @@ const EditCourse = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="courseCode">Course Code</Label>
+                                                <Label htmlFor="courseCode">Course Code <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -210,7 +210,7 @@ const EditCourse = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="price">Price</Label>
+                                                <Label htmlFor="price">Price <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="number"
@@ -266,7 +266,7 @@ const EditCourse = () => {
                                         </Col> */}
                                          <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="videoLink">Video Link</Label>
+                                                <Label htmlFor="videoLink">Youtube Video Link <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                     value={formik.values.videoLink}
                                                     defaultValue={allVideos.map((i) => ({label: i.title, value: i._id}))}
@@ -286,7 +286,7 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="courseDetails">Course Details</Label>
+                                                <Label htmlFor="courseDetails">Course Details <span className="text-danger">*</span></Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="textarea"
