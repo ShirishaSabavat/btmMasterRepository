@@ -1,4 +1,4 @@
-import { HelpCircle, Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, CreditCard, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User, Calendar, BarChart2 } from 'react-feather'
+import { HelpCircle, Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, TrendingUp, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User, Calendar, BarChart2 } from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 const Navigation = [
@@ -47,17 +47,17 @@ const Navigation = [
   {
     id: 'mycommission',
     title: 'Commission',
-    icon: <Briefcase size={20} />,
+    icon: <TrendingUp size={20} />,
     navLink: '/admin/my-commission',
     permissions: ["ADMIN", "BAC_USER"]
   },
-  {
-    id: 'myreports',
-    title: 'Reports',
-    icon: <FileText size={20} />,
-    navLink: '/admin/my-reports',
-    permissions: ["BAC_USER"]
-  },
+  // {
+  //   id: 'myreports',
+  //   title: 'Reports',
+  //   icon: <FileText size={20} />,
+  //   navLink: '/admin/my-reports',
+  //   permissions: ["BAC_USER"]
+  // },
   // {
   //   id: 'mymessages',
   //   title: 'Messages',

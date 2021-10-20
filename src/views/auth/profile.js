@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
-import { Card, CardBody, CardText, Button, Row, Col } from 'reactstrap'
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
+import { Card, CardBody, CardText, Badge, Button, Row, Col, UncontrolledTooltip } from 'reactstrap'
+import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Award, Anchor } from 'react-feather'
 import { useSelector } from 'react-redux'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import {toast} from 'react-toastify'
+import {PRODUCTION_URL} from '../../utility/serverSettings'
 
 const Profile = () => {
 
@@ -44,9 +47,17 @@ const Profile = () => {
                 <div className='d-flex flex-column ml-1'>
                   <div className='user-info mb-1'>
                     <h4 className='mb-0'>{userData.user.name}</h4>
-                    <CardText tag='span'>
-                      {userData.user.email}
-                    </CardText>
+                    
+                    <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${userData.user.referralCode}`}
+                      onCopy={() => toast.success("Referral link copied!")}>
+                      <Badge id="user-referral-link" pill className="mt-1 cursor pointer" color='primary'>
+                        {userData.user.referralCode}
+                      </Badge>
+                    </CopyToClipboard>
+                    <UncontrolledTooltip placement='top' target='user-referral-link'>
+                      Click to copy referral link
+                    </UncontrolledTooltip>
+
                   </div>
                   <div className='d-flex flex-wrap align-items-center'>
                     {/* <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
@@ -67,17 +78,17 @@ const Profile = () => {
                     ₹
                     </div>
                     <div className='ml-1'>
-                    <h5 className='mb-0'>N/A</h5>
-                    <small>Monthly Sales</small>
+                    <h5 className='mb-0'>{userData.user.wallet.toLocaleString('en-IN')}</h5>
+                    <small>Wallet</small>
                     </div>
                 </div>
                 <div className='d-flex align-items-center'>
                     <div className='color-box p-1 bg-light-success'>
-                    <TrendingUp className='text-success' />
+                    <Award className='text-success' />
                     </div>
                     <div className='ml-1'>
-                    <h5 className='mb-0'>N/A</h5>
-                    <small>Annual Profit</small>
+                    <h5 className='mb-0'>{userData.user.rank}</h5>
+                    <small>Rank</small>
                     </div>
                 </div>
                 </div>
@@ -129,7 +140,7 @@ const Profile = () => {
                 </div>
                 <CardText className='mb-0'>{selectedUser !== null ? selectedUser.country : 'England'}</CardText>
               </div> */}
-              <div className='d-flex flex-wrap align-items-center'>
+              <div className='d-flex flex-wrap align-items-center my-50'>
                 <div className='user-info-title'>
                   <Phone className='mr-1' size={14} />
                   <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
@@ -137,6 +148,16 @@ const Profile = () => {
                   </CardText>
                 </div>
                 <CardText className='mb-0 ml-1'> {userData.user.phone}</CardText>
+              </div>
+
+              <div className='d-flex flex-wrap align-items-center'>
+                <div className='user-info-title'>
+                  <Anchor className='mr-1' size={14} />
+                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                    KYC: 
+                  </CardText>
+                </div>
+                <CardText className='mb-0 ml-1'> {userData.user.kycStatus}</CardText>
               </div>
             </div>
           </Col>

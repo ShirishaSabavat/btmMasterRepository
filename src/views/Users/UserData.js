@@ -102,7 +102,7 @@ const UserData = () => {
                           ₹
                           </div>
                           <div className='ml-1'>
-                          <h5 className='mb-0'>{userData.userData?.wallet}</h5>
+                          <h5 className='mb-0'>{userData.userData?.wallet?.toLocaleString('en-IN')}</h5>
                           <small>Wallet</small>
                           </div>
                       </div>
