@@ -269,10 +269,10 @@ const EditCourse = () => {
                                                 <Label htmlFor="videoLink">Video Link</Label>
                                                 <CustomSelectField
                                                     value={formik.values.videoLink}
-                                                    defaultValue={formik.values.videoLink.map((i) => ({label: i.title, value: i._id}))}
+                                                    defaultValue={allVideos.map((i) => ({label: i.title, value: i._id}))}
                                                     options={allVideos.map((i) => ({label: i.title, value: i._id}))}
                                                     name="videoLink"
-                                                    onChange={(value) => formik.setFieldValue("videoLink", value)} 
+                                                    onChange={(value) => { formik.setFieldValue("videoLink", value.map(val => val.value)) }} 
                                                     isMulti={true}
                                                 />
                                                 <ErrorMessage

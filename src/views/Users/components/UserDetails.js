@@ -2,24 +2,30 @@ import { Button, Label, Row, Col, Input, FormGroup } from 'reactstrap'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 
+import CustomSelectField from "../../UtilityComponents/CustomSelectField"
+
 const UserDetails = ({userData}) => {
 
   const initialValues = {
     name: userData?.name || "",
     email: userData?.email || "",
-    phNo: userData?.phone || ""
+    phNo: userData?.phone || "",
+    status: userData?.status || ""
   }
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
     email: Yup.string().email().required("Required"),
-    phNo: Yup.number().positive().integer().required("Required")
+    phNo: Yup.number().positive().integer().required("Required"),
+    status: Yup.string().required("Required")
   })
 
 
   const submitForm = values => {
     console.log("val", values)
   }
+
+  const statusOptions = [{label:"ACTIVE", value:"ACTIVE"}, {label: "IN-ACTIVE", value: "IN-ACTIVE"}, {label: "BLOCK", value: "BLOCK"}]
 
   return (
     <>
@@ -81,6 +87,21 @@ const UserDetails = ({userData}) => {
                         className="field-error text-danger"
                     />
                   </FormGroup>
+                </Col>
+                <Col sm="12" md="6">
+                    <FormGroup>
+                        <Label htmlFor="status">Status</Label>
+                        <CustomSelectField
+                            value={formik.values.status}
+                            options={statusOptions}
+                            onChange={(value) => formik.setFieldValue("status", value.value)
+                        } />
+                        <ErrorMessage
+                        name="status"
+                        component="div"
+                        className="field-error text-danger"
+                        />
+                    </FormGroup>
                 </Col>
                 <Col className='mt-2 d-flex justify-content-end' sm='12'>
                   <Button.Ripple type='submit' className='mr-1' color='primary'>
