@@ -152,6 +152,14 @@ const Navigation = [
         icon: <ChevronRight size={15} />,
         navLink: '/admin/social-media',
         permissions: ["ADMIN"]
+      },       
+      {
+        id: "banner",
+        title: "Banner",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/banner"
       }
       // {
       //   id: "gallery",
@@ -225,14 +233,6 @@ const Navigation = [
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
         navLink: "/payment"
-      },       
-      {
-        id: "banner",
-        title: "Banner",
-        type: "item",
-        icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
-        navLink: "/banner"
       }
     ]
   }

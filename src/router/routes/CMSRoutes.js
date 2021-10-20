@@ -25,6 +25,18 @@ const CMSRoutes = [
   {
     path: '/gallery-videos-page-settings',
     component: lazy(() => import('../../views/CMS/GalleryModules/Videos'))
+  },
+  {
+    path: '/banner',
+    component: lazy(() => import('../../views/CMS/banner/Banner'))
+  },
+  {
+    path: '/add-banner',
+    component: lazy(() => import('../../views/CMS/banner/AddBanner'))
+  },
+  {
+    path: '/edit-banner',
+    component: lazy(() => import('../../views/CMS/banner/EditBanner'))
   }
 ]
 

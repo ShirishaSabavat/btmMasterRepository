@@ -13,18 +13,6 @@ const SettingsRoute = [
   {
     path: '/add-faculty',
     component: lazy(() => import('../../views/Settings/faculty/AddFaculty'))
-  },
-  {
-    path: '/banner',
-    component: lazy(() => import('../../views/Settings/banner/Banner'))
-  },
-  {
-    path: '/add-banner',
-    component: lazy(() => import('../../views/Settings/banner/AddBanner'))
-  },
-  {
-    path: '/edit-banner',
-    component: lazy(() => import('../../views/Settings/banner/EditBanner'))
   }
 ]
 

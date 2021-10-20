@@ -15,11 +15,14 @@ import { useDispatch } from 'react-redux'
 import { verifyUserKyc } from '../../../redux/actions/user'
 import { updateUserKyc } from "../../../redux/actions/auth"
 
+import EditForm from "./EditForm"
+
 const UserKyc  = ({userData}) => {
 
     const dispatch = useDispatch()
 
     const [kycStatus, setKycStatus] = useState('')
+    const [showEdit, setShowEdit] = useState(false)
 
     const updateUserKyc = () => {
         dispatch(verifyUserKyc({
@@ -187,9 +190,14 @@ const UserKyc  = ({userData}) => {
                         ]}
                     />
                 </div>
-                <Button onClick={() => updateUserKyc()} size='sm' color='primary' id='reportToggler2'>
-                  Save
-                </Button>
+                <div className="d-flex justify-content-end">
+                  <Button className="mr-1" onClick={() => updateUserKyc()} size='sm' color='primary' id='reportToggler2'>
+                    Save
+                  </Button>
+                  <Button onClick={() => setShowEdit(true)} size='sm' color='success' id='reportToggler3'>
+                    Edit
+                  </Button>
+                </div>
               </>
             )
         }
@@ -238,7 +246,7 @@ const UserKyc  = ({userData}) => {
                     </div>
                 )}
 
-                <Timeline data={iconsData} />
+                {showEdit ? <EditForm setShowEdit={setShowEdit} />  : <Timeline data={iconsData} />}
             </CardBody>
         </Card> 
 

@@ -1,29 +1,30 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
 import {Trash, Eye} from "react-feather"
-import {Link} from "react-router-dom"
-import DeleteModal from "./Modals/DeleteModal"
+import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
+
+import Modal from "./Modals/Modal"
+import {fetchAllInquires, deleteInquiryById} from "../../redux/actions/inquiry/index"
 
 const Inquiry = () => {
 
-  const usersData = [{sno: 1, name: "sample", email: "sam@sam.com", phone: 8099009900, message: "This is sample"}]
+  const dispatch = useDispatch()
+  const usersData = useSelector(state => state.inquiry.inquries)
 
-  const [defaultAlert, setDefaultAlert] = useState({
-    alert: false,
-    did: ""
-  })
-  const [confirmAlert, setConfirmAlert] = useState(false)
-  const [cancelAlert, setCancelAlert] = useState(false)
+  useEffect(() => {
+    dispatch(fetchAllInquires())
+  }, [])
 
-  const defaultAlertHandler = (value) => {
-    setDefaultAlert({ alert: value.alert, did: value.did })
-  }
-  const confirmAlertHandler = (value) => {
-    setConfirmAlert(value)
-  }
-  const cancelAlertHandler = (value) => {
-    setCancelAlert(value)
+  const [showDelete, setShowDelete] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [data, setData] = useState("")
+
+  console.log("mm", showModal)
+
+  const showMessageModalHandler = (message) => {
+    setShowModal(prevState => !prevState)
+    setData(message)
   }
 
     const tableColumns = [
@@ -80,21 +81,20 @@ const Inquiry = () => {
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">     
-                    {/* <li className="list-inline-item">
+                    <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-warning"
+                        onClick={() => showMessageModalHandler(row.message)}
                         >
-                        <Link to={{pathname: "/view-user-data", params: {id}}}>
-                            <Eye size={15} />
-                        </Link>
+                          <Eye size={15} />
                         </Button>
-                    </li> */}
+                    </li>
                     <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
+                        onClick={() => setShowDelete(id)}
                         >
                             <Trash size={15} />
                         </Button>
@@ -114,21 +114,18 @@ const Inquiry = () => {
                 </CardHeader>
                 <hr className="m-0" />
 
-                <CustomDataTable data={usersData} columns={tableColumns} />
+                <CustomDataTable 
+                  data={usersData}
+                  columns={tableColumns}
+                  setShowDelete={setShowDelete}
+                  showDelete={showDelete}
+                  confirmDelete={() => dispatch(deleteInquiryById(showDelete))} 
+                  />
 
                 <hr />
                 <div style={{ height: 300, width: '99%', margin: "auto" }}>
                 </div>
-                 {defaultAlert.alert ? (
-                  <DeleteModal
-                    defaultAlertHandler={defaultAlertHandler}
-                    confirmAlertHandler={confirmAlertHandler}
-                    cancelAlertHandler={cancelAlertHandler}
-                    defaultAlert={defaultAlert.alert}
-                    confirmAlert={confirmAlert}
-                    cancelAlert={cancelAlert}
-                  />
-                ) : null}
+                {showModal ? <Modal showModal={showModal} setShowModal={setShowModal} formTitle="Inquiry Message" data={data} /> : null}
             </Card>
         </Col>
     </Row>
