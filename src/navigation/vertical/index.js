@@ -189,13 +189,6 @@ const Navigation = [
     ]
   },
   {
-    id: 'inquiry',
-    title: 'Inquiry',
-    icon: <HelpCircle size={20} />,
-    navLink: '/inquiry',
-    permissions: ["ADMIN"]
-  },
-  {
     id: "settings",
     title: "Settings",
     type: "collapse",
@@ -235,6 +228,13 @@ const Navigation = [
         navLink: "/payment"
       }
     ]
+  },
+  {
+    id: 'inquiry',
+    title: 'Inquiry',
+    icon: <HelpCircle size={20} />,
+    navLink: '/inquiry',
+    permissions: ["ADMIN"]
   }
 ]
 

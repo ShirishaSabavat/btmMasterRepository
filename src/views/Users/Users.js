@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, Button, Badge, UncontrolledTooltip} from "reactstrap"
 import {Trash, Eye} from "react-feather"
 import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
+import {toast} from 'react-toastify'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import {PRODUCTION_URL} from '../../utility/serverSettings'
 
 const UserTable = () => {
 
@@ -32,7 +35,7 @@ const UserTable = () => {
           sortable: true,
           cell: (row) => (
                 <p
-                  className="d-block text-bold-500 text-truncate mb-0"
+                  className="d-block text-bold-500 mb-0"
                 >
                   {row.name}
                 </p>
@@ -43,7 +46,7 @@ const UserTable = () => {
           selector: "role",
           sortable: true,
           cell: (row) => (
-            <Badge color={row.role === "USER" ? "primary" : "warning"} pill>
+            <Badge color={row.role === "USER" ? "light-primary" : "light-warning"} pill>
               <span>{row.role.replace('_USER', '')}</span>
             </Badge>
           )
@@ -51,9 +54,30 @@ const UserTable = () => {
         {
           name: "Referral Code",
           selector: "referralCode",
+          width:"154px",
           sortable: true,
           cell: (row) => (
-            <span style={{fontSize: 11}}>{row.referralCode}</span>
+            <>
+            <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${row.referralCode}`}
+              onCopy={() => toast.success("Referral link copied!")}>
+                <span className="pointer cursor" style={{fontSize: 11}} id={`${row.referralCode}-user-referral-link`}>
+                  {row.referralCode}
+                </span>
+            </CopyToClipboard>
+            <UncontrolledTooltip placement='top' target={`${row.referralCode}-user-referral-link`}>
+              Click to copy referral link
+            </UncontrolledTooltip>
+            </>
+          )
+        },
+        {
+          name: "Rank",
+          selector: "rank",
+          sortable: true,
+          cell: (row) => (
+            <Badge className="badge-glow" color={row.rank === "BAC" ? "primary" : row.rank === "BASC" ? "info" : row.rank === "BACGM" ? "success" : "warning"} pill>
+              <span>{row.rank}</span>
+            </Badge>
           )
         },
         {
@@ -89,7 +113,7 @@ const UserTable = () => {
         cell: (row) => (
           <>
             {row.role === 'BAC_USER' && (
-              <Badge color={row.kycStatus === "VERIFIED" ? "success" : row.kycStatus === "PROCESSING" ? "warning" : "danger"} pill>
+              <Badge color={row.kycStatus === "VERIFIED" ? "light-success" : row.kycStatus === "PROCESSING" ? "light-warning" : "light-danger"} pill>
                 <span>{row.kycStatus.toUpperCase()}</span>
               </Badge>
             )}
@@ -100,10 +124,10 @@ const UserTable = () => {
           name: "Date",
           selector: "date",
           sortable: true,
-          height:"200px",
+          width:"124px",
           cell: (row) => (
             <div className="d-flex flex-wrap">
-              <p className="text-bold-500 text-wrap mb-0">{(new Date(row.createdAt)).toLocaleString()}</p>
+              <p style={{fontSize: 11}} className="text-bold-500 text-wrap mb-0">{(new Date(row.createdAt)).toLocaleString()}</p>
             </div>
           )
         },
@@ -112,7 +136,7 @@ const UserTable = () => {
           selector: "status",
           sortable: true,
           cell: (row) => (
-            <Badge color={row.status === "ACTIVE" ? "success" : "danger"} pill>
+            <Badge color={row.status === "ACTIVE" ? "light-success" : "light-danger"} pill>
                 <span>{row.status.toUpperCase()}</span>
             </Badge>
           )

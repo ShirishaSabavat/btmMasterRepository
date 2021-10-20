@@ -1,10 +1,12 @@
 import {useState, useEffect } from 'react'
-import { Row, Col, TabContent, TabPane, Card, CardBody, CardText } from 'reactstrap'
+import { Row, Col, TabContent, TabPane, Card, CardBody, CardText, Badge, UncontrolledTooltip } from 'reactstrap'
 import Avatar from '@components/avatar'
 import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux"
 import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone } from 'react-feather'
-
+import {CopyToClipboard} from 'react-copy-to-clipboard'
+import {toast} from 'react-toastify'
+import {PRODUCTION_URL} from '../../utility/serverSettings'
 import { fetchUserById } from "../../redux/actions/user/index"
 import Tabs from './Tabs'
 import UserDetails from './components/UserDetails'
@@ -68,9 +70,18 @@ const UserData = () => {
                       <div className='d-flex flex-column ml-1'>
                         <div className='user-info mb-1'>
                           <h4 className='mb-0'>{userData.userData?.name}</h4>
-                          <CardText tag='span'>
-                            {userData.userData?.email}
-                          </CardText>
+
+                          <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${userData.userData?.referralCode}`}
+                            onCopy={() => toast.success("Referral link copied!")}>
+                            <Badge id="user-referral-link" pill className="mt-1 cursor pointer" color='primary'>
+                              {userData.userData?.referralCode}
+                            </Badge>
+                          </CopyToClipboard>
+                          <UncontrolledTooltip placement='top' target='user-referral-link'>
+                            Click to copy referral link
+                          </UncontrolledTooltip>
+
+
                         </div>
                         <div className='d-flex flex-wrap align-items-center'>
                           {/* <Button.Ripple tag={Link} to={`/apps/user/edit/${selectedUser.id}`} color='primary'>
