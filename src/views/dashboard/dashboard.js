@@ -73,7 +73,7 @@ const Dashboard = () => {
         // },
         {
             title: 'Earnings',
-            count: `₹ ${dashboardData.netEarnings ? dashboardData.netEarnings[0]?.comissions : 0}`,
+            count: `₹ ${dashboardData.netEarnings ? dashboardData.netEarnings[0]?.comissions?.toLocaleString('en-IN') : 0}`,
             role: ['BAC_USER'],
             icon: <Activity size={24} />
         }

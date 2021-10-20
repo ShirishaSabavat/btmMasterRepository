@@ -47,7 +47,7 @@ const NavbarUser = props => {
         {userData?.user.role === 'BAC_USER' && (
         <div className="ml-2">
           <Chip 
-            label={`₹ ${userData?.user.wallet}`} 
+            label={`₹ ${userData?.user.wallet?.toLocaleString('en-IN')}`} 
             title="Wallet"
             onClick={() => history.push('/wallet')} 
             color="info"  />
