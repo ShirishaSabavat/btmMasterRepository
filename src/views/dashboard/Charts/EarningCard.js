@@ -25,8 +25,8 @@ const EarningCard = ({title, data}) => {
     const context = useContext(ThemeColors)
 
     const calculateEarningPercentage = () => {
-        const profit  = data.netEarnings[0].netAmount - data.netComissions[0].comissions
-        const profitPercentage = (Math.round(((profit / data.netEarnings[0].netAmount) + Number.EPSILON) * 100) / 100) * 100
+        const profit  = data.netEarnings[0]?.netAmount - data.netComissions[0]?.comissions
+        const profitPercentage = (Math.round(((profit / data.netEarnings[0]?.netAmount) + Number.EPSILON) * 100) / 100) * 100
         const result = [profitPercentage, 100 - profitPercentage]
         console.log({result})
         return result 
@@ -124,9 +124,9 @@ const EarningCard = ({title, data}) => {
           <Col xs='6'>
             <CardTitle className='mb-1'>Earnings</CardTitle>
             <div className='font-small-2'>All Time</div>
-            <h5 className='mb-1'>₹ {data.netEarnings[0].netAmount.toLocaleString('en-IN')}</h5>
+            <h5 className='mb-1'>₹ {data.netEarnings[0]?.netAmount.toLocaleString('en-IN')}</h5>
             <CardText className='text-muted font-small-2'>
-              <span className='font-weight-bolder'>₹ {data.netComissions[0].comissions.toLocaleString('en-IN')}</span>
+              <span className='font-weight-bolder'>₹ {data.netComissions[0]?.comissions.toLocaleString('en-IN')}</span>
               <span> spent in commisions.</span>
             </CardText>
           </Col>
