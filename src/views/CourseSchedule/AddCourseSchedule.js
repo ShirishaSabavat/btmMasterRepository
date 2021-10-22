@@ -30,9 +30,11 @@ const AddCourseSchedule = () => {
         dispatch(fetchAllCoursesOptions())
       }, [])
 
-      useEffect(() => {
-         dispatch(fetchCourseById(courseID))
-      }, [courseID])
+    useEffect(() => {
+        if (courseID !== "") {
+            dispatch(fetchCourseById(courseID))
+        }
+    }, [courseID])
 
     const initialValues = {
         courseId:"",
@@ -278,9 +280,13 @@ const AddCourseSchedule = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row> 
-                                    <div className="float-right mt-1">
-                                        <Button color="primary" type="submit">Save</Button>
-                                    </div>
+                                    
+                                    <Row className="mt-1">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Save</Button>
+                                        </Col>
+                                    </Row>
+
                                 </Form>
                             )
                         }}

@@ -31,7 +31,7 @@ const Staff = () => {
             selector: "email",
             sortable: true,
             cell: (row) => (
-              <p className="text-bold-500 text-truncate mb-0">{row.email}</p>
+              <p className="text-bold-500 mb-0">{row.email}</p>
             )
         },
         {
@@ -39,23 +39,7 @@ const Staff = () => {
           selector: "phone",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
-          )
-        },
-        {
-          name: "DOB",
-          selector: "dob",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.dob}</p>
-          )
-        },
-        {
-          name: "Gender",
-          selector: "gender",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.gender}</p>
+            <p className="text-bold-500 mb-0">{row.phone}</p>
           )
         },
         {
@@ -63,7 +47,7 @@ const Staff = () => {
           selector: "role",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.role}</p>
+            <p className="text-bold-500 mb-0">{row.role}</p>
           )
         },
         {

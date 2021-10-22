@@ -27,7 +27,7 @@ const ContactSettings = () => {
                 tabIndex={1} 
                 onBlur={newContent => setContent(newContent)} 
             />
-            <div className="d-flex justify-content-end m-1">
+            <div className="mt-2">
                 <Button type="button" color="success" onClick={submitForm}>Save</Button>
             </div>
         </CardBody>

@@ -13,3 +13,11 @@
 .data-table-extensions {
     z-index: 9999;
 }
+
+.menu-collapsed .admin-logo {
+    max-width: 44px!important;
+}
+
+.menu-expanded .admin-logo {
+    max-width: 184px!important;
+}

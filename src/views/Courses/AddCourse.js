@@ -50,7 +50,8 @@ const AddCourse = () => {
         price:"",
         videoLink:[],
         tags:"",
-        faculty:""
+        faculty:"",
+        featured: false
     }
 
     const validationSchema = Yup.object().shape({
@@ -82,7 +83,8 @@ const AddCourse = () => {
             code: values.courseCode,
             type: values.courseType,
             name: values.courseName,
-            faculty: values.faculty
+            faculty: values.faculty,
+            featured: values.featured
         }
 
         dispatch(AddCourseAPI(rawData, resetForm))
@@ -306,7 +308,7 @@ const AddCourse = () => {
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="tags">Tags</Label>
+                                                <Label htmlFor="tags">Tags <small>(seperated by comma)</small> </Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="text"
@@ -325,9 +327,27 @@ const AddCourse = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
-                                        <Button color="primary" type="submit">Save</Button>
-                                    </div>
+
+                                    <Row>
+                                        <Col sm="12">
+                                            <div className="p-2">
+                                                <h6>More Options</h6>
+                                                <FormGroup check inline>
+                                                    <Input type='checkbox' defaultChecked={formik.values.featured} name='featured' id='featured' {...formik.getFieldProps("featured")} />
+                                                    <Label for='featured' check>
+                                                        Featured
+                                                    </Label>
+                                                </FormGroup>
+                                            </div>
+                                        </Col>
+                                    </Row>
+
+                                    <Row className="mt-1">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Save</Button>
+                                        </Col>
+                                    </Row>
+
                                 </Form>
                             )
                         }}

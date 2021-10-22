@@ -85,7 +85,6 @@ const CourseSchedule = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
-            const id = row._id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">     
@@ -94,7 +93,7 @@ const CourseSchedule = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/view-course-schedule", params: {id}}}>
+                        <Link to={{pathname: "/view-course-schedule", params: row._id}}>
                             <Eye size={15} />
                         </Link>
                         </Button>
@@ -104,7 +103,7 @@ const CourseSchedule = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/edit-course-schedule", params: {id}}}>
+                        <Link to={`/edit-course-schedule/${row._id}`}>
                             <Edit size={15} />
                         </Link>
                         </Button>
@@ -113,7 +112,7 @@ const CourseSchedule = () => {
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => setShowDelete(id)}
+                        onClick={() => setShowDelete(row._id)}
                         >
                             <Trash size={15} />
                         </Button>

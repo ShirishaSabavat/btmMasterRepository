@@ -3,8 +3,9 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Business Acharya',
-    appLogoImage: require('@src/assets/images/logo/logo.png').default
+    appName: 'Business Aacharya',
+    appLogoImage: require('@src/assets/images/logo/logo-h.png').default,
+    appFaviconLogoImage: require('@src/assets/images/logo/logo-fav.png').default
   },
   layout: {
     isRTL: false,

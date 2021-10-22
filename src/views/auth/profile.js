@@ -1,25 +1,27 @@
 import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
-import { Card, CardBody, CardText, Badge, Button, Row, Col, UncontrolledTooltip } from 'reactstrap'
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Award, Anchor } from 'react-feather'
+import { Card, CardBody, CardText, Badge, Button, Row, Col, UncontrolledTooltip, TabPane, Nav, NavItem, TabContent, NavLink } from 'reactstrap'
+import { DollarSign, TrendingUp, User, Check, Star, Lock, Phone, Award, Anchor } from 'react-feather'
 import { useSelector } from 'react-redux'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {toast} from 'react-toastify'
 import {PRODUCTION_URL} from '../../utility/serverSettings'
+import UserDetails from '../Users/components/UserDetails'
+import ChangePassword from '../Users/components/ChangePassword'
+import { useState } from 'react'
 
 const Profile = () => {
 
-    const userData = useSelector(state => state.auth.userData)
+  const userData = useSelector(state => state.auth.userData)
+
+  const [tab, setTab] = useState('1')
 
   // ** render user img
   const renderUserImg = () => {
-    const stateNum = Math.floor(Math.random() * 6),
-        states = ['light-success', 'light-danger', 'light-warning', 'light-info', 'light-primary', 'light-secondary'],
-        color = states[stateNum]
       return (
         <Avatar
           initials
-          color={color}
+          color={'light-success'}
           className='rounded'
           content={userData.user.name ?? 'BA'}
           contentStyles={{
@@ -37,6 +39,7 @@ const Profile = () => {
   }
 
   return (
+    <>
     <Card>
       <CardBody>
         <Row>
@@ -150,6 +153,7 @@ const Profile = () => {
                 <CardText className='mb-0 ml-1'> {userData.user.phone}</CardText>
               </div>
 
+              {userData.user.role === 'BAC_USER' && (
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
                   <Anchor className='mr-1' size={14} />
@@ -159,11 +163,52 @@ const Profile = () => {
                 </div>
                 <CardText className='mb-0 ml-1'> {userData.user.kycStatus}</CardText>
               </div>
+              )}
+              
             </div>
           </Col>
         </Row>
       </CardBody>
     </Card>
+
+    <Row>
+      <Col className='mb-2 mb-md-0' md='3'>
+        <Nav className='nav-left' pills vertical>
+          <NavItem>
+            <NavLink active={tab === '1'} onClick={() => setTab('1')}>
+              <User size={18} className='mr-1' />
+              <span className='font-weight-bold'>General Settings</span>
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink active={tab === '2'} onClick={() => setTab('2')}>
+              <Lock size={18} className='mr-1' />
+              <span className='font-weight-bold'>Change Password</span>
+            </NavLink>
+          </NavItem>
+        </Nav>
+      </Col>
+      
+      <Col md='9'>
+        <Card>
+            <CardBody>
+            <TabContent activeTab={tab}>
+              <TabPane tabId='1'>
+                <UserDetails profile={true} userData={userData.user} />
+              </TabPane>
+              
+              <TabPane tabId='2'>
+                <ChangePassword profile={true} />
+              </TabPane>
+
+            </TabContent>
+            </CardBody>
+        </Card>
+      </Col>
+    </Row>
+    
+    </>
   )
 }
 

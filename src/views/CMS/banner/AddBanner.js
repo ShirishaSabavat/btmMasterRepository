@@ -89,7 +89,7 @@ const AddBanner = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
+                                    <div className="mt-1 pl-2">
                                         <Button color="primary" type="submit">Save</Button>
                                     </div>
                                 </Form>

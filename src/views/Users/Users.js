@@ -75,9 +75,13 @@ const UserTable = () => {
           selector: "rank",
           sortable: true,
           cell: (row) => (
-            <Badge className="badge-glow" color={row.rank === "BAC" ? "primary" : row.rank === "BASC" ? "info" : row.rank === "BACGM" ? "success" : "warning"} pill>
-              <span>{row.rank}</span>
-            </Badge>
+            <>
+              {row.rank && (
+                <Badge className="badge-glow" color={row.rank === "BAC" ? "primary" : row.rank === "BASC" ? "info" : row.rank === "BACGM" ? "success" : "warning"} pill>
+                  <span>{row.rank}</span>
+                </Badge>
+              )}
+            </>
           )
         },
         {
@@ -179,7 +183,7 @@ const UserTable = () => {
         <Col sm="12" md="12">
             <Card >
                 <CardHeader>
-                    <CardTitle>Users</CardTitle>
+                    <CardTitle>Customers</CardTitle>
                 </CardHeader>
                 <hr className="m-0" />
 

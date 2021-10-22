@@ -99,11 +99,11 @@ const UserData = () => {
                       <div className='d-flex align-items-center user-total-numbers'>
                       <div className='d-flex align-items-center mr-2'>
                           <div className='color-box p-1 bg-light-primary'>
-                          ₹
+                            ₹
                           </div>
                           <div className='ml-1'>
-                          <h5 className='mb-0'>{userData.userData?.wallet?.toLocaleString('en-IN')}</h5>
-                          <small>Wallet</small>
+                            <h5 className='mb-0'>{userData.userData?.wallet?.toLocaleString('en-IN')}</h5>
+                            <small>Wallet</small>
                           </div>
                       </div>
                       <div className='d-flex align-items-center'>

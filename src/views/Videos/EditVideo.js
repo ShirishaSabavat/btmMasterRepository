@@ -4,7 +4,7 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {Link} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
-import {useHistory} from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 
 import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
@@ -12,16 +12,16 @@ import { BASE_URL } from '../../utility/serverSettings'
 
 const AddVideo = () => {
 
+    const { videoId } = useParams()
+
     const dispatch = useDispatch()
     const history = useHistory()
     const oldData = useSelector(state => state.videos.video)
     const imagesData = useSelector(state => state.media.medias)
 
-    const id = history.location?.params?.id
-
     useEffect(() => {
-        dispatch(fetchVideoById(id))
-    }, [id])
+        dispatch(fetchVideoById(videoId))
+    }, [])
 
     const [fileModalState, setFileModalState] = useState(false)
 
@@ -46,7 +46,8 @@ const AddVideo = () => {
         image:  selectedImg.replace(`${BASE_URL}uploads/`, '') || "",
         videoLink: oldData?.link || "",
         duration: oldData.duration || "",
-        description: oldData.description || ""
+        description: oldData.description || "",
+        bacOnly: oldData.bacOnly || false
     }
 
 
@@ -66,7 +67,8 @@ const AddVideo = () => {
             description: values.description,
             link: values.videoLink,
             image: values.image,
-            title: values.title
+            title: values.title,
+            bacOnly: values.bacOnly
         }
 
         dispatch(EditVideoAPI(id, rawData))
@@ -188,9 +190,29 @@ const AddVideo = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
-                                        <Button color="primary" type="submit">Update</Button>
-                                    </div>
+
+                                    <Row className="mb-1 pr-2 pl-2">
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                {/* <Label htmlFor="bacOnly">Bac Only</Label> */}
+
+                                                <CustomInput
+                                                    type='switch'
+                                                    id='bacOnly'
+                                                    name='bacOnly'
+                                                    label='Bac Only'
+                                                    inline
+                                                    onChange={(e) => formik.setFieldValue('bacOnly', e.target.checked)}
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+
+                                    <Row className="mb-1 pr-2 pl-2">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Update</Button>
+                                        </Col>
+                                    </Row>
                                 </Form>
                             )
                         }}

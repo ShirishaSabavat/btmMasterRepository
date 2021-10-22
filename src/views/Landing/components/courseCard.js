@@ -15,7 +15,7 @@ const courseCard = (props) => {
                 component="img"
                 alt="green iguana"
                 height="224"
-                image={`${BASE_URL}uploads/${props.data.image}`}
+                image={(props.data.image === '/assets/images/default-image.jpg' || props.data.image === undefined) ? '/assets/images/default-image.jpg' : `${BASE_URL}uploads/${props.data.image}`}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

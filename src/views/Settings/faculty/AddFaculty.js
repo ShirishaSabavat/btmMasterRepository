@@ -36,7 +36,7 @@ const AddFacultyComponent = () => {
         facultyDetails: Yup.string().required("Required"),
         image: Yup.string().required("required")
     })
-    const submitForm = (values, resetForm) => {
+    const submitForm = (values, {resetForm}) => {
         const rawData = {
             name: values.facultyName,
             details: values.facultyDetails,
@@ -112,13 +112,13 @@ const AddFacultyComponent = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col>
-                                            <div className="float-right">
-                                                <Button type="submit" color="primary">Save</Button>
-                                            </div>
+                                    
+                                    <Row className="mt-1">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Save</Button>
                                         </Col>
                                     </Row>
+
                                 </Form>
                             )
                         }}

@@ -1,6 +1,6 @@
 import { useSkin } from '@hooks/useSkin'
 import { useHistory } from 'react-router-dom'
-import { Mail, MapPin, Phone, User } from 'react-feather'
+import { Mail, MapPin, Phone, User, Send } from 'react-feather'
 import { Row, Col, FormGroup, Input, Button, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
 import {Grid} from '@mui/material'
@@ -53,51 +53,17 @@ const ContactUs = () => {
                         <Col className='d-lg-flex flex-column' lg='12' sm='12'>
                         <h3 className="px-5 my-2" style={{fontWeight: 'bold', fontSize: 38}}>Contact Us</h3>
                         <div className='w-100 px-5'>
-                            <h2>Business Acharaya</h2>
+                            <h2>Business Aacharaya</h2>
                             <p>What is Spirituality? - Over the years many definitions have been given to it. One such definition is connecting one's soul with everything positive around us. It is the attempt to be at peace with oneself. It is the art of letting go. The yearning for this spiritual experience has led to demand for spirituality courses.
         View more- Explore Online Courses and Certifications</p>
-                        </div>
-                        </Col>
-                    </Row>
-                    <Row className=''>
-                        <Col className='d-lg-flex flex-column' lg='12' sm='12'>
-                        <h3 className="px-5 my-2" style={{fontWeight: 'bold', fontSize: "2.5rem"}}>Get in Touch</h3>
-                        <div className='w-100 px-5'>
-                            <p>What is Spirituality? - Over the years many definitions have been given to it. One such definition is connecting one's soul with everything positive around us. It is the attempt to be at peace with oneself. It is the art of letting go. The yearning for this spiritual experience has led to demand for spirituality courses.
-        View more- Explore Online Courses and Certifications</p>
-                        </div>
-                        <div className='w-100 px-5 mb-1'>
-                            <div>
-                                <Phone />
-                                <strong className='ml-1' style={{fontWeight: 'bold', fontSize: "1.3rem"}}>Call us directly at</strong>
-                            </div>
-                            <div className='w-100 px-3' style={{ fontSize: 17}}>
-                                98-11-22-03-85
-                            </div>
-                        </div>
-                        <div className='w-100 px-5 mb-1'>
-                            <div>
-                                <Mail />
-                                <strong className='ml-1' style={{fontWeight: 'bold', fontSize: "1.3rem"}}>Chat with us</strong>
-                            </div>
-                            <div className='w-100 px-3' style={{ fontSize: 17}}>
-                                98-11-22-03-85
-                            </div>
-                        </div>
-                        <div className='w-100 px-5'>
-                            <div>
-                                <MapPin />
-                                <strong className='ml-1' style={{fontWeight: 'bold', fontSize: "1.3rem"}}>Address</strong>
-                            </div>
-                            <div className='w-100 px-3' style={{ fontSize: 17}}>
-                                98-11-22-03-85
-                            </div>
                         </div>
                         </Col>
                     </Row>
                 </Col>
-                <Col sm="12" md="4" className="d-flex justify-content-center align-items-center mt-3 mt-md-0">
-                    <div className='w-75'>
+                <Col sm="12" md="4" className="card card-body mt-3 mt-md-0">
+                    <div className='p-2'>
+
+                    <h2 className="mb-1">Inquiry Form</h2>  
                         
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
                         {(formik) => {
@@ -189,8 +155,8 @@ const ContactUs = () => {
                                         className="field-error text-danger"
                                     />
                                 </FormGroup>
-                                <FormGroup className="d-flex justify-content-end">
-                                    <Button color="primary" type="submit" >Submit</Button>
+                                <FormGroup className="">
+                                    <Button color="primary" className="btn-sm" type="submit" ><Send size={16} /> Send</Button>
                                 </FormGroup>
                             </Form>
                         }}
@@ -200,11 +166,11 @@ const ContactUs = () => {
             </Row>
         </Grid>
 
-        <Grid className="bg-white" item xs={12}>
+        <Grid className="" item xs={12}>
             <h2 className="text-center">Locate Us</h2>
         </Grid>
 
-        <Grid className="bg-white" item xs={12}>
+        <Grid className="" item xs={12}>
             <Row className=''>
                 <Col className='d-lg-flex align-items-center' lg='12' sm='12'>
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243480.07874631535!2d78.43127257375757!3d17.537265291617135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb84ad48255d29%3A0x410841a999b3433!2sSecunderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1634330966804!5m2!1sen!2sin" width="100%" height="450" allowfullscreen="" loading="lazy"></iframe>

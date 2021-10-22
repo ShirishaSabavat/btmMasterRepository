@@ -98,7 +98,7 @@ const AddGallery = () => {
                                             </Row>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
+                                    <div className="mt-1">
                                         <Button color="primary" type="submit">Save</Button>
                                     </div>
                                 </Form>

@@ -44,7 +44,7 @@ const NavBar = () => {
             </Stack>
         </Box> */}
 
-        <AppBar style={{backgroundColor: '#c53b47'}} position="static">
+        <AppBar style={{backgroundColor: '#895b05e6'}} position="static">
             <Toolbar>
                 <IconButton
                     size="large"
@@ -62,7 +62,7 @@ const NavBar = () => {
                     component="div"
                     sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
                 >
-                    Business Acharaya
+                    Business Aacharaya
                 </Typography>
                 {/* <SearchIcon /> */}
                 <Button onClick={() => history.push('/home')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Home</Button>
@@ -92,7 +92,7 @@ const NavBar = () => {
                 >
                 <List>
                     <div className="text-center mb-2">
-                        <img src="/assets/images/logo.png" className="img-fluid" style={{width: 84}} />
+                        <img src="/assets/images/logo-h.png" className="img-fluid" style={{width: 194}} />
                     </div>
                     <ListItem onClick={() => history.push('/home')} button>
                         <ListItemIcon>

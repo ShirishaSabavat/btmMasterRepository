@@ -62,24 +62,20 @@ const AddStaff = () => {
         fullName:Yup.string().required("Required"),
         email:Yup.string().email().required("Required"),
         phone:Yup.number().positive().required("Required"),
-        dob:Yup.date().required("Required"),
-        gender:Yup.string().required("Required"),
+        dob:Yup.string(),
+        gender:Yup.string(),
         role:Yup.string().required("Required"),
         password:Yup.string().required("Required"),
-        dateOfJoining:Yup.date().required("Required"),
-        salary:Yup.number().positive().required("Required"),
-        epf:Yup.string().required("Required"),
-        panNo:Yup.string().required("Required"),
-        aadhar:Yup.number().positive().required("Required"),
-        maritialStatus:Yup.string().required("Required"),
-        country:Yup.string().required("Required"),
-        state:Yup.string().required("Required"),
-        city:Yup.string().required("Required"),
-        address:Yup.string().required("Required"),
-        bankName:Yup.string().required("Required"),
-        branch:Yup.string().required("Required"),
-        acc:Yup.number().positive().required("Required"),
-        ifsc:Yup.string().required("Required")
+        dateOfJoining:Yup.string(),
+        salary:Yup.number().positive(),
+        epf:Yup.string(),
+        panNo:Yup.string(),
+        aadhar:Yup.number().positive(),
+        maritialStatus:Yup.string(),
+        country:Yup.string(),
+        state:Yup.string(),
+        city:Yup.string(),
+        address:Yup.string()
     })
 
     const submitForm = (values, {resetForm}) => {
@@ -127,7 +123,13 @@ const AddStaff = () => {
 
 
     const genderOptions = [{label: "MALE", value:"male"}, {label:"FEMALE", value: "female"}]
-    const roleOptions = [{label: "ADMIN", value:"ADMIN"}, {label:"EMPLOYEE", value: "EMPLOYEE"}]
+    const roleOptions = [
+        {label: "IT MANAGER", value:"IT MANAGER"}, 
+        {label:"EXECUTIVE", value: "EXECUTIVE"},
+        {label:"ACCOUNTANT", value: "ACCOUNTANT"},
+        {label:"MANAGER", value: "MANAGER"}
+    ]
+
     const maritialStatusOptions = [{label: "Married", value:"married"}, {label:"Single", value: "single"}]
 
     return <Row>
@@ -187,7 +189,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="dob">DOB <span className="text-danger">*</span></Label>
+                                                <Label htmlFor="dob">DOB </Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -207,7 +209,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="gender">Gender <span className="text-danger">*</span></Label>
+                                                <Label htmlFor="gender">Gender </Label>
                                                 <CustomSelectField
                                                     value={formik.values.gender}
                                                     options={genderOptions}
@@ -371,7 +373,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label For="country">Country <span className="text-danger">*</span></Label>
+                                                <Label For="country">Country </Label>
                                                 <CustomSelectField
                                                 value={formik.values.country}
                                                 options={countryOptions}
@@ -386,7 +388,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label For="state">State <span className="text-danger">*</span></Label>
+                                                <Label For="state">State </Label>
                                                 <CustomSelectField
                                                 value={formik.values.state}
                                                 options={stateOptions}
@@ -401,7 +403,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="city">City <span className="text-danger">*</span></Label>
+                                                <Label htmlFor="city">City </Label>
                                                 <CustomSelectField
                                                 value={formik.values.city}
                                                 options={cityOptions}
@@ -489,7 +491,7 @@ const AddStaff = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
+                                    <div className="mt-1">
                                         <Button color="primary" type="submit">Save</Button>
                                     </div>
                                 </Form>

@@ -177,7 +177,7 @@ const SocialMedia = () => {
                                 />
                             </FormGroup>
 
-                            <FormGroup className="d-flex justify-content-end">
+                            <FormGroup className="mt-1">
                                 <Button type="submit" color="primary">Save</Button>
                             </FormGroup>
                         </Form>)
