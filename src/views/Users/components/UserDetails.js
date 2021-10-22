@@ -4,20 +4,20 @@ import * as Yup from "yup"
 
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const UserDetails = ({userData}) => {
+const UserDetails = (props) => {
 
   const initialValues = {
-    name: userData?.name || "",
-    email: userData?.email || "",
-    phNo: userData?.phone || "",
-    status: userData?.status || ""
+    name: props.userData?.name || "",
+    email: props.userData?.email || "",
+    phNo: props.userData?.phone || "",
+    status: props.userData?.status || ""
   }
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
     email: Yup.string().email().required("Required"),
     phNo: Yup.number().positive().integer().required("Required"),
-    status: Yup.string().required("Required")
+    status: Yup.string()
   })
 
 
@@ -59,6 +59,7 @@ const UserDetails = ({userData}) => {
                         type="text"
                         name="email"
                         id="email"
+                        disabled={props.profile}
                         {...formik.getFieldProps("email")}
                         invalid={!!(formik.touched.email && formik.errors.email)}
                         >
@@ -88,6 +89,7 @@ const UserDetails = ({userData}) => {
                     />
                   </FormGroup>
                 </Col>
+                {!props.profile && (
                 <Col sm="12" md="6">
                     <FormGroup>
                         <Label htmlFor="status">Status</Label>
@@ -103,7 +105,8 @@ const UserDetails = ({userData}) => {
                         />
                     </FormGroup>
                 </Col>
-                <Col className='mt-2 d-flex justify-content-end' sm='12'>
+                )}
+                <Col className='mt-2' sm='12'>
                   <Button.Ripple type='submit' className='mr-1' color='primary'>
                     Save
                   </Button.Ripple>

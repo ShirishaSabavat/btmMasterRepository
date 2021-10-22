@@ -21,6 +21,8 @@ const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [forgotPassword, setForgotPassword] = useState(false)
+    const [forgotPhone, setForgotPhone] = useState('')
 
     const doLogin = () => {
 
@@ -32,6 +34,16 @@ const Login = () => {
     }
 
     dispatch(handleLogin({email, password}))
+  }
+
+  const doForgotPassword = () => {
+    if (forgotPhone === '' || forgotPhone.length !== 10) {
+      toast.error("Invalid Phone no.", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      // return
+    }
+
   }
 
   //go to dashboard on successful login
@@ -46,45 +58,73 @@ const Login = () => {
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/'>
-          {/* <h2 className='brand-text text-primary ml-1'>Business Acharaya Consultancy</h2> */}
+          {/* <h2 className='brand-text text-primary ml-1'>Business Aacharaya</h2> */}
         </Link>
         <Col style={{backgroundColor: '#161749'}} className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
           <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
-            <img className='img-fluid' src='/assets/images/demo5.jpg' alt='Login V2' />
+            <img className='img-fluid' src='/assets/images/logo-h.png' alt='Login V2' />
           </div>
         </Col>
-        <Col style={{backgroundColor: '#161749'}} className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+        <Col style={{backgroundColor: '#161749'}} className='d-flex align-items-center auth-bg px-1 p-lg-4' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <Card className="p-2">
             <CardContent>
             <CardTitle tag='h2' className='font-weight-bold'>
-              Welcome to Business Aachrya
+              {forgotPassword ? "Forgot Password" : Login}
             </CardTitle>
             <CardText className='mb-2'></CardText>
-            <Form className='auth-login-form mt-2' onSubmit={e => e.preventDefault()}>
-              <FormGroup>
-                <Label className='form-label' htmlFor='login-email'>
-                  Email
-                </Label>
-                <Input onChange={(e) => setEmail(e.target.value)} type='email' id='login-email' placeholder='' autoFocus />
-              </FormGroup>
-              <FormGroup>
-                <div className='d-flex justify-content-between'>
-                  <Label className='form-label' htmlFor='login-password'>
-                    Password
-                  </Label>
-                  {/* <Link to='/'>
-                    <small>Forgot Password?</small>
-                  </Link> */}
-                </div>
-                <InputPasswordToggle onChange={(e) => setPassword(e.target.value)} className='input-group-merge' id='login-password' />
-              </FormGroup>
-              <FormGroup>
-                <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
-              </FormGroup>
-              <Button.Ripple onClick={() => doLogin()} color='primary' block>
-                Log in
+            <Form className='auth-login-form mt-2' onSubmit={() => (forgotPassword ? doForgotPassword() : doLogin())}>
+              {!forgotPassword && (
+
+                <>
+                  <FormGroup>
+                    <Label className='form-label' htmlFor='login-email'>
+                      Email
+                    </Label>
+                    <Input onChange={(e) => setEmail(e.target.value)} type='email' id='login-email' placeholder='' autoFocus />
+                  </FormGroup>
+                  <FormGroup>
+                    <div className='d-flex justify-content-between'>
+                      <Label className='form-label' htmlFor='login-password'>
+                        Password
+                      </Label>
+                      {/* <Link to='/'>
+                        <small>Forgot Password?</small>
+                      </Link> */}
+                    </div>
+                    <InputPasswordToggle onChange={(e) => setPassword(e.target.value)} className='input-group-merge' id='login-password' />
+                  </FormGroup>
+
+                  <FormGroup className="mb-3">
+                    <Row>
+                      <Col>
+                        <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
+                      </Col>
+                    </Row>
+                  </FormGroup>
+
+                </>
+
+              )}
+
+              {forgotPassword && (
+                  <FormGroup className="mb-3">
+                    <Label className='form-label' htmlFor='login-email'>
+                      Phone No.
+                    </Label>
+                    <Input onChange={(e) => setForgotPhone(e.target.value)} type='number' placeholder='Enter your account phone no.' autoFocus />
+                  </FormGroup>
+              )}
+
+              <Button.Ripple onClick={() => (forgotPassword ? doForgotPassword() : doLogin())} color='primary' block>
+                {forgotPassword ? "Send OTP" : "Log in" }
               </Button.Ripple>
+
+              <div className="mt-1 text-center">
+                <span onClick={() => (forgotPassword ? setForgotPassword(false) : setForgotPassword(true))} style={{fontSize: 11}} className="text-info cursor pointer">{forgotPassword ? 'Back to Login' : 'Forgot Password ?'}</span>
+              </div>
+
+
             </Form>
             </CardContent>
             </Card>

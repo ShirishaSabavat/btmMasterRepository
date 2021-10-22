@@ -19,6 +19,14 @@ const MyCommission = () => {
 
   const tableColumns = [
     {
+      name: "Date",
+      selector: "date",
+      sortable: true,
+      cell: (row) => (
+        <p className="text-bold-500 mb-0">{new Date(row.createdAt).toLocaleString()}</p>
+      )
+    },
+    {
         name: "Name",
         selector: "userName",
         sortable: true,
@@ -58,14 +66,6 @@ const MyCommission = () => {
         <Badge color={row.commisionLevel === 1 ? "light-primary" : row.commisionLevel === 1 ? "light-info" : "light-danger"} pill>
           <span className="px-1">{row.commisionLevel === 1 ? "D" : (row.commisionLevel - 1) }</span>
         </Badge>
-      )
-    },
-    {
-      name: "Date",
-      selector: "date",
-      sortable: true,
-      cell: (row) => (
-        <p className="text-bold-500 mb-0">{new Date(row.createdAt).toLocaleString()}</p>
       )
     },
     {

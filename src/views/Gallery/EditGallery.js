@@ -84,7 +84,7 @@ const EditGallery = () => {
                                             </Row>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
+                                    <div className="mt-1">
                                         <Button color="success" type="submit">Update</Button>
                                     </div>
                                 </Form>

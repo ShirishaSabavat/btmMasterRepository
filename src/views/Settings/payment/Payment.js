@@ -57,7 +57,7 @@ const Payment = () => {
                         return (
                             <Form>
                                 <CardHeader >
-                                    <CardTitle>Payment Settings</CardTitle>
+                                    <CardTitle>Razorpay Settings</CardTitle>
                                     <div className="d-flex align-items-center">
                                         <div className='mr-1'>Live</div>
                                         <CustomInput type='switch' id='switch-primary' name='liveSwitch' {...formik.getFieldProps("liveSwitch")} value="LIVE" inline defaultChecked={formik.values.liveSwitch === "LIVE"} />
@@ -153,9 +153,12 @@ const Payment = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <FormGroup className="d-flex justify-content-end">
-                                        <Button color="primary" type="submit" >Save</Button>
-                                    </FormGroup>
+
+                                    <Row className="mt-1">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Save</Button>
+                                        </Col>
+                                    </Row>
                             </CardBody>
                         </Form>
                             )

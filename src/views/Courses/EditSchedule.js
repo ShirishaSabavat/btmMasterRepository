@@ -199,9 +199,13 @@ const Schedule = () => {
                                         </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
-                                        <Button color="primary" type="submit">Update</Button>
-                                    </div>
+                                    
+                                    <Row className="mt-1">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Update</Button>
+                                        </Col>
+                                    </Row>
+
                                 </Form>
                             )
                         }}

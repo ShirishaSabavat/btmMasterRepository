@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, CustomInput, InputGroupText} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
@@ -27,11 +27,13 @@ const AddVideo = () => {
     }
 
     const initialValues = {
-        title:"",
-        image:selectedImg,
-        videoLink:"",
-        duration:"",
-        description:""
+        title: "",
+        image: selectedImg,
+        videoLink: "",
+        duration: "",
+        description: "",
+        bacOnly: false,
+        embededVideo: false
     }
 
     const validationSchema = Yup.object().shape({
@@ -50,7 +52,9 @@ const AddVideo = () => {
             description: values.description,
             link: values.videoLink,
             image: selectedImg.replace(`${BASE_URL}uploads/`, ''),
-            title: values.title
+            title: values.title,
+            bacOnly: values.bacOnly,
+            embededVideo: values.embededVideo
         }
 
         dispatch(AddVideoAPI(rawData, resetForm))
@@ -101,9 +105,10 @@ const AddVideo = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
+
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="videoLink">Video Link <span className="text-danger">*</span></Label>
+                                                <Label htmlFor="videoLink">{formik.values.embededVideo ? "Embded code" : "Video Link" } <span className="text-danger">*</span> <small>( <a href="https://youtube.com" target="_blank" rel="noopener">Pick from youtube</a> )</small> </Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
@@ -126,6 +131,22 @@ const AddVideo = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
+
+                                        <Row className="mb-1 pr-2 pl-2">
+                                            <Col sm="12" md="12">
+                                                <FormGroup className="has-icon-left position-relative">
+                                                    <CustomInput
+                                                        type='switch'
+                                                        id='embededVideo'
+                                                        name='embededVideo'
+                                                        label='Use Embded Video'
+                                                        inline
+                                                        onChange={(e) => formik.setFieldValue('embededVideo', e.target.checked)}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+
                                     </Row>
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
@@ -170,9 +191,35 @@ const AddVideo = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
-                                        <Button color="primary" type="submit">Save</Button>
-                                    </div>
+
+                                    <Row className="mb-1 pr-2 pl-2">
+                                        <Col sm="12" md="12">
+                                            <div className="p-1">
+                                                <h6>More Options</h6>
+                                                <FormGroup className="has-icon-left position-relative">
+                                                    {/* <Label htmlFor="bacOnly">Bac Only</Label> */}
+
+                                                    <CustomInput
+                                                        type='switch'
+                                                        id='bacOnly'
+                                                        name='bacOnly'
+                                                        label='Bac Only'
+                                                        inline
+                                                        onChange={(e) => formik.setFieldValue('bacOnly', e.target.checked)}
+                                                    />
+                                                </FormGroup>
+                                            </div>
+                                        </Col>
+                                    </Row>
+
+                                    <Row className="mb-1 pr-2 pl-2">
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Button color="primary" type="submit">Save</Button>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+
                                 </Form>
                             )
                         }}

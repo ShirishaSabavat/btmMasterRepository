@@ -131,7 +131,7 @@ const Landing = (route) => {
                 key: "rzp_test_tZ8WCE2tCPXW63", 
                 amount: (parseFloat(price) + ((parseFloat(price) * 18) / 100)).toString(),
                 currency: "INR",
-                name: "Business Acharaya Consultancy",
+                name: "Business Aacharaya",
                 description: `Purchase Course.`,
                 image: 'https://amoghnya.com/assets/img/favicon.png',
                 order_id: orderId,
@@ -407,6 +407,7 @@ const Landing = (route) => {
                         id="email"
                         label="Email"
                         defaultValue=""
+                        type="email"
                         variant="standard"
                         onChange={e => setEmail(e.target.value)}
                     />
@@ -416,6 +417,8 @@ const Landing = (route) => {
                         id="phone"
                         label="Phone No."
                         defaultValue=""
+                        length={10}
+                        type="number"
                         variant="standard"
                         onChange={e => setPhone(e.target.value)}
                     />

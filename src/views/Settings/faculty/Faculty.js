@@ -56,7 +56,7 @@ const Videos = () => {
           selector: "image",
           sortable: true,
           cell: (row) => (
-            <img style={{marginTop: "5px", marginBottom: "5px"}} src={`${BASE_URL}uploads/${row.image}`} width="58px" height="58px" alt="image" />
+            <img style={{marginTop: "5px", marginBottom: "5px"}} src={(row.image === '/assets/images/default-image.jpg') ? row.image : `${BASE_URL}uploads/${row.image}`} width="58px" height="58px" alt="image" />
           )
         },
         {

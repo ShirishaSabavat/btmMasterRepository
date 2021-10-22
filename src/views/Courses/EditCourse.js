@@ -3,7 +3,7 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
-import {useHistory} from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 
 import { fetchAllVideos } from "../../redux/actions/videos"
 import {EditCourseAPI, fetchCourseById} from "../../redux/actions/courses/index"
@@ -14,6 +14,8 @@ import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 
 const EditCourse = () => {
 
+    const { courseId } = useParams()
+
     const [fileModalState, setFileModalState] = useState(false)
     
     const dispatch = useDispatch()
@@ -23,11 +25,9 @@ const EditCourse = () => {
     const imagesData = useSelector(state => state.media.medias) 
     const allVideos = useSelector(state => state.videos.videos)
 
-    const id = history.location?.params?.id
-
     useEffect(() => {
-        dispatch(fetchCourseById(id))
-    }, [id])
+        dispatch(fetchCourseById(courseId))
+    }, [])
 
     useEffect(() => {
         dispatch(fetchAllFacultyOptions())
@@ -58,7 +58,8 @@ const EditCourse = () => {
         courseValidity: CourseData?.validity || "",
         price: CourseData?.price || "",
         videoLink: allVideos || "",
-        faculty: CourseData?.faculty || ""
+        faculty: CourseData?.faculty || "",
+        featured: CourseData?.featured || ""
     }
 
     const validationSchema = Yup.object().shape({
@@ -90,7 +91,8 @@ const EditCourse = () => {
             type: values.courseType,
             name: values.courseName,
             image: values.image.replace(`${BASE_URL}uploads/`, ''),
-            faculty: values.faculty
+            faculty: values.faculty,
+            featured: values.featured
         }
 
         dispatch(EditCourseAPI(id, rawData))
@@ -305,9 +307,27 @@ const EditCourse = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
-                                        <Button color="primary" type="submit">Update</Button>
-                                    </div>
+
+                                    <Row>
+                                        <Col sm="12">
+                                            <div className="p-2">
+                                                <h6>More Options</h6>
+                                                <FormGroup check inline>
+                                                    <Input type='checkbox' defaultChecked={formik.values.featured} name='featured' id='featured' {...formik.getFieldProps("featured")} />
+                                                    <Label for='featured' check>
+                                                        Featured
+                                                    </Label>
+                                                </FormGroup>
+                                            </div>
+                                        </Col>
+                                    </Row>
+
+                                    <Row className="mt-1">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Update</Button>
+                                        </Col>
+                                    </Row>
+
                                 </Form>
                             )
                         }}

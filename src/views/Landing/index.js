@@ -102,7 +102,7 @@ const Landing = () => {
                 key: "rzp_test_tZ8WCE2tCPXW63", 
                 amount: price.toString(),
                 currency: "INR",
-                name: "Business Acharaya Consultancy",
+                name: "Business Aacharaya",
                 description: `Purchase Course.`,
                 image: '/asstes/images/demo1.jpg',
                 order_id: orderId,

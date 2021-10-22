@@ -11,7 +11,7 @@ const Navigation = [
   },
   {
     id: 'user',
-    title: 'User',
+    title: 'Customers',
     icon: <Users size={20} />,
     navLink: '/users',
     permissions: ["ADMIN"]
@@ -46,7 +46,7 @@ const Navigation = [
   },
   {
     id: 'mycommission',
-    title: 'Commission',
+    title: 'Commision',
     icon: <TrendingUp size={20} />,
     navLink: '/admin/my-commission',
     permissions: ["ADMIN", "BAC_USER"]
@@ -221,7 +221,7 @@ const Navigation = [
       },
       {
         id: "payment",
-        title: "Payment",
+        title: "Razorpay",
         type: "item",
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],

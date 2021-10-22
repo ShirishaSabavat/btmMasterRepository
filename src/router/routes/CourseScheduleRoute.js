@@ -11,7 +11,7 @@ const CourseScheduleRoute = [
     component: lazy(() => import('../../views/CourseSchedule/AddCourseSchedule'))
   },
   {
-    path: '/edit-course-schedule',
+    path: '/edit-course-schedule/:workshopId',
     component: lazy(() => import('../../views/CourseSchedule/EditCourseSchedule'))
   },
   {

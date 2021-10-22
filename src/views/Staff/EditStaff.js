@@ -51,7 +51,7 @@ const AddStaff = () => {
         dob:staffData?.userData?.dob || "",
         gender:staffData?.userData?.gender || "",
         role:staffData?.userData?.role || "",
-        password:staffData?.userData?.password || "",
+        password: "",
         dateOfJoining:staffData?.userData?.dateOfJoining || "",
         salary:staffData?.userData?.salary || "",
         epf:staffData?.userData?.epf || "",
@@ -72,24 +72,7 @@ const AddStaff = () => {
         fullName:Yup.string().required("Required"),
         email:Yup.string().email().required("Required"),
         phone:Yup.number().positive().required("Required"),
-        dob:Yup.string().required("Required"),
-        gender:Yup.string().required("Required"),
-        role:Yup.string().required("Required"),
-        password:Yup.string().required("Required"),
-        dateOfJoining:Yup.date().required("Required"),
-        salary:Yup.number().positive().required("Required"),
-        epf:Yup.string().required("Required"),
-        panNo:Yup.string().required("Required"),
-        aadhar:Yup.number().positive().required("Required"),
-        marritalStatus:Yup.string().required("Required"),
-        // country:Yup.string().required("Required"),
-        // state:Yup.string().required("Required"),
-        // city:Yup.string().required("Required"),
-        address:Yup.string().required("Required"),
-        bankName:Yup.string().required("Required"),
-        branch:Yup.string().required("Required"),
-        acc:Yup.number().positive().required("Required"),
-        ifsc:Yup.string().required("Required")
+        role:Yup.string().required("Required")
     })
 
     const submitForm = (values, {resetForm}) => {
@@ -97,14 +80,14 @@ const AddStaff = () => {
 
         const rawData = {
             name: values.fullName,
-            email:values.email,
-            phone:values.phone,
-            dob:values.dob,
-            gender:values.gender,
-            role:values.role,
-            password:values.password,
-            dateOfJoining:values.dateOfJoining,
-            salary:values.salary,
+            email: values.email,
+            phone: values.phone,
+            dob: values.dob,
+            gender: values.gender,
+            role: values.role,
+            password: values.password,
+            dateOfJoining: values.dateOfJoining,
+            salary: values.salary,
             epf : values.epf,
             pan : values.panNo,
             aadhar : values.aadhar,
@@ -117,6 +100,10 @@ const AddStaff = () => {
             accountNo : values.acc,
             address : values.address,
             ifsc : values.ifsc
+        }
+
+        if (!rawData.password || rawData.password === '') {
+            rawData.password = null
         }
 
         dispatch(EditStaffAPI(id, rawData, resetForm))
@@ -195,7 +182,7 @@ const AddStaff = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="dob">DOB <span className="text-danger">*</span></Label>
+                                                <Label htmlFor="dob">DOB </Label>
                                                 <br />
                                                 <Flatpickr
                                                 className="form-control"
@@ -215,7 +202,7 @@ const AddStaff = () => {
                                     <Row>
                                         <Col sm="12" md="6">
                                             <FormGroup>
-                                                <Label htmlFor="gender">Gender <span className="text-danger">*</span></Label>
+                                                <Label htmlFor="gender">Gender </Label>
                                                 <CustomSelectField
                                                     value={formik.values.gender}
                                                     options={genderOptions}
@@ -497,7 +484,7 @@ const AddStaff = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <div className="float-right mt-1">
+                                    <div className="mt-1">
                                         <Button color="success" type="submit">Update</Button>
                                     </div>
                                 </Form>

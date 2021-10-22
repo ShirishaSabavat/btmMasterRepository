@@ -30,7 +30,7 @@ const ChangePassword = () => {
               <Row>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label htmlFor='newPassword'>Password</Label>
+                    <Label htmlFor='newPassword'>New Password</Label>
                         <Input
                         type="password"
                         name="newPassword"
@@ -48,7 +48,7 @@ const ChangePassword = () => {
                 </Col>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label htmlFor='reNewPassword'>Retype Password</Label>
+                    <Label htmlFor='reNewPassword'>Confirm Password</Label>
                         <Input
                         type="password"
                         name="reNewPassword"
@@ -64,7 +64,7 @@ const ChangePassword = () => {
                     />
                   </FormGroup>
                 </Col>
-                <Col className='mt-2 d-flex justify-content-end' sm='12'>
+                <Col className='mt-2' sm='12'>
                   <Button.Ripple type='submit' className='mr-1' color='primary'>
                     Save
                   </Button.Ripple>

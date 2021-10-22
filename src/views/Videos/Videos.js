@@ -53,7 +53,7 @@ const Videos = () => {
       selector: "image",
       sortable: true,
       cell: (row) => (
-        <img style={{marginTop: "5px", marginBottom: "5px"}} src={`${BASE_URL}uploads/${row.image}`} width="58px" height="58px" alt="image" />
+        <img style={{marginTop: "5px", marginBottom: "5px"}} src={(row.image === '/assets/images/default-image.jpg') ? row.image : `${BASE_URL}uploads/${row.image}`} width="58px" height="58px" alt="image" />
       )
     },
     {
@@ -79,7 +79,6 @@ const Videos = () => {
       selector: "",
       sortable: true,
       cell: (row) => {
-        const id = row._id
         return (
           <div className="d-flex flex-column align-items-center">
             <ul className="list-inline mb-0">
@@ -88,7 +87,7 @@ const Videos = () => {
                     className="btn-icon rounded-circle"
                     color="flat-warning"
                     >
-                    <Link to={{pathname: "/edit-video", params:{id}}}>
+                    <Link to={`/edit-video/${row._id}`}>
                         <Edit size={15} />
                     </Link>
                     </Button>
@@ -97,7 +96,7 @@ const Videos = () => {
                     <Button
                     className="btn-icon rounded-circle"
                     color="flat-danger"
-                    onClick={() => setShowDelete(id)}
+                    onClick={() => setShowDelete(row._id)}
                     >
                         <Trash size={15} />
                     </Button>

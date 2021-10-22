@@ -11,7 +11,7 @@ const Videos = [
     component: lazy(() => import('../../views/Videos/AddVideo'))
   },
   {
-    path: '/edit-video',
+    path: '/edit-video/:videoId',
     component: lazy(() => import('../../views/Videos/EditVideo'))
   }
 ]

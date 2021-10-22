@@ -1,4 +1,4 @@
-import { GET_ALL_ROLES } from "../../types/roles"
+import { GET_ALL_ROLES, ROLE_DETAILS, UPDATE_PERMISSIONS } from "../../types/roles"
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 
@@ -19,11 +19,28 @@ export const fetchAllRoles = () => dispatch => {
     })
   }
 
-export const updateRoles = (id) => dispatch => {
-    ServerApi().get(`/roles,${id}`)
+export const fetchRoleDetails = (payload) => dispatch => {
+  ServerApi().get(`roles/${payload}`)
+  .then(res => {
+    const data = res.data
+    dispatch({
+      type: ROLE_DETAILS,
+      payload: data
+    })
+  })
+  .catch(e => {
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
+export const updateRoles = (paload) => dispatch => {
+    ServerApi().patch(`/roles/${paload.id}`, paload.data)
     .then(res => {
       if (res.status === 200) {
-        toast.error("Updated Roles", {
+        toast.success("Permissions Updated", {
           position: toast.POSITION.BOTTOM_CENTER
         })
       }
@@ -36,3 +53,6 @@ export const updateRoles = (id) => dispatch => {
     })
   }
   
+export const updatePermission = (payload) => dispatch => {
+  dispatch({type: UPDATE_PERMISSIONS, payload})
+}

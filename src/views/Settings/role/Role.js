@@ -51,18 +51,17 @@ const Role = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
-            const id = row._id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">
                 <li className="list-inline-item">
                         <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-warning"
+                          className="btn-icon rounded-circle"
+                          color="flat-warning"
                         >
-                        <Link to={{pathname: "/edit-role", params:{id}}}>
-                            <Edit size={15} />
-                        </Link>
+                          <Link to={`/edit-role/${row.role}`}>
+                              <Edit size={15} />
+                          </Link>
                         </Button>
                     </li>        
                 </ul>
@@ -89,10 +88,15 @@ const Role = () => {
         }
       }
 
-      const rolesData = [{sno: 1, role: "ADMIN", status: "ACTIVE"}]
+      const rolesData = [
+        { sno: 1, role: "IT MANAGER", status: "ACTIVE" },
+        { sno: 2, role: "EXECUTIVE", status: "ACTIVE" },
+        { sno: 3, role: "ACCOUNTANT", status: "ACTIVE" },
+        { sno: 4, role: "MANAGER", status: "ACTIVE" }
+      ]
 
     return <Row>
-        <Col sm="12" md="4">
+        {/* <Col sm="12" md="4">
             <Card>
                 <CardHeader>
                     <CardTitle>Role</CardTitle>
@@ -126,7 +130,7 @@ const Role = () => {
                     </Formik>
                 </CardBody>
             </Card>
-        </Col>
+        </Col> */}
         <Col sm="12" md="8">
             <Card>
                 <CardHeader>

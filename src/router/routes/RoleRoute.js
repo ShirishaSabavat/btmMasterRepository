@@ -7,7 +7,7 @@ const RoleRoute = [
     component: lazy(() => import('../../views/Settings/role/Role'))
   },
   {
-    path: '/edit-role',
+    path: '/edit-role/:roleId',
     component: lazy(() => import('../../views/Settings/role/EditRole'))
   }
 ]

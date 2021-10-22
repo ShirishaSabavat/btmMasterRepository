@@ -55,6 +55,29 @@ const Sidebar = props => {
   useEffect(() => {
     if (userData.access_token) {
       const n = navigation.filter(i => i.permissions.includes(userData.user.role))
+      if (userData.user.role !== 'USER' && userData.user.role !== 'ADMIN' && userData.user.role !== 'BAC_USER') {
+        // console.log(userData.permissions.filter(i => Object.keys(i)[0] === 'videos')[0].videos.view)
+        if (userData.permissions.filter(i => Object.keys(i)[0] === 'videos')[0].videos.view === true) {
+          n.push(navigation.filter(i => i.id === 'videos')[0])
+        }
+        if (userData.permissions.filter(i => Object.keys(i)[0] === 'cources')[0].cources.view === true) {
+          n.push(navigation.filter(i => i.id === 'courses')[0])
+        }
+        if (userData.permissions.filter(i => Object.keys(i)[0] === 'workshops')[0].workshops.view === true) {
+          n.push(navigation.filter(i => i.id === 'courseSchedule')[0])
+        }
+        if (userData.permissions.filter(i => Object.keys(i)[0] === 'sales')[0].sales.view === true) {
+          n.push(navigation.filter(i => i.id === 'sales')[0])
+        }
+        if (userData.permissions.filter(i => Object.keys(i)[0] === 'cms')[0].cms.view === true) {
+          n.push(navigation.filter(i => i.id === 'cms')[0])
+        }
+        if (userData.permissions.filter(i => Object.keys(i)[0] === 'commisions')[0].commisions.view === true) {
+          n.push(navigation.filter(i => i.id === 'mycommission')[0])
+        }
+
+      }
+
       setNewNavigation(n)
     }
   }, [userData])

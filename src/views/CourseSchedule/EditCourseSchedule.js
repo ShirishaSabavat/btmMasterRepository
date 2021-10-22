@@ -6,7 +6,7 @@ import {Link} from "react-feather"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
 import {useDispatch, useSelector} from "react-redux"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 import {EditCourseScheduleAPI, fetchCourseScheduleById} from "../../redux/actions/courseSchedule/index"
@@ -16,13 +16,13 @@ import "react-datepicker/dist/react-datepicker.css"
 
 const EditCourseSchedule = () => {
 
+    const { workshopId } = useParams()
+ 
     const dispatch = useDispatch()
     const history = useHistory() 
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)   
     const courseOptions = useSelector(state => state.courses.courseOptions)   
     const courseScheduleData = useSelector(state => state.courseSchedule.courseSchedule)
-
-    const courseScheduleID = history.location?.params?.id 
 
     const courseOptionsHandler = (value, formik) => {
         formik.setFieldValue("courseId", value.value)
@@ -31,7 +31,7 @@ const EditCourseSchedule = () => {
     useEffect(() => {
         dispatch(fetchAllFacultyOptions())
         dispatch(fetchAllCoursesOptions())
-        dispatch(fetchCourseScheduleById(courseScheduleID))
+        dispatch(fetchCourseScheduleById(workshopId))
       }, [])
 
       console.log("courseScheduleData", courseScheduleData)
@@ -243,9 +243,13 @@ const EditCourseSchedule = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row> 
-                                    <div className="float-right mt-1">
-                                        <Button color="success" type="submit">Update</Button>
-                                    </div>
+                                    
+                                    <Row className="mt-1">
+                                        <Col sm="12" md="12">
+                                            <Button color="primary" type="submit">Update</Button>
+                                        </Col>
+                                    </Row>
+
                                 </Form>
                             )
                         }}

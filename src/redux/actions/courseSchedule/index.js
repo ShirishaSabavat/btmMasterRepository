@@ -8,7 +8,7 @@ export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
   .then(res => {
     console.log("ress", res)
     if (res.statusText === "Created") {
-      toast.success("Created course")
+      toast.success("Workshop course")
       resetForm({})
     } else {
       toast.error("Error in Creating Course")
