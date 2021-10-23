@@ -18,14 +18,14 @@ const EditRole = () => {
     }, [])
 
     const savePermissions = () => {
-        dispatch(updateRoles({id: roleData._id, data: {name: roleData.name, permissions: roleData.permissions}}))
+        dispatch(updateRoles({id: roleData?._id, data: {name: roleData?.name, permissions: roleData?.permissions}}))
     }
 
     const checkPermission = (role) => {
         return false
     }
 
-    if (!roleData.permissions) {
+    if (!roleData?.permissions) {
         return (<></>)
     }
 
@@ -49,7 +49,7 @@ const EditRole = () => {
                     </thead>
                         <tbody>
 
-                        {roleData.permissions.map((i, index) => (
+                        {roleData?.permissions.map((i, index) => (
                             <tr key={index.toString()}>
                                 <td>{Object.keys(i)[0]}</td>
                                 <td>

@@ -32,7 +32,7 @@ const UserDropdown = () => {
           <span className='align-middle'>Profile</span>
         </DropdownItem>
 
-        {userData?.user.role !== 'USER' && (
+        {(userData?.user.role === 'BAC_USER' || userData?.user.role === 'ADMIN') && (
         <DropdownItem tag={Link} to='/wallet' >
           <List size={14} className='mr-75' />
           <span className='align-middle'>Transactions</span>

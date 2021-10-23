@@ -44,7 +44,7 @@ const NavBar = () => {
             </Stack>
         </Box> */}
 
-        <AppBar style={{backgroundColor: '#895b05e6'}} position="static">
+        <AppBar style={{backgroundColor: '#161749'}} position="static">
             <Toolbar>
                 <IconButton
                     size="large"
@@ -56,14 +56,17 @@ const NavBar = () => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography
+                {/* <Typography
                     variant="h6"
                     noWrap
                     component="div"
                     sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
                 >
                     Business Aacharaya
-                </Typography>
+                </Typography> */}
+                
+                <img style={{width: 110, marginRight: 'auto'}} src="/assets/images/logo-h.png" />
+
                 {/* <SearchIcon /> */}
                 <Button onClick={() => history.push('/home')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Home</Button>
                 <Button onClick={() => history.push('/all-courses')} sx={{ display: { xs: 'none', sm: 'block' } }} color="inherit">Courses</Button>

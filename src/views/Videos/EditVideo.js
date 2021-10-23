@@ -39,7 +39,7 @@ const AddVideo = () => {
         setFileModalState((prevState) => !prevState)
     }
 
-    const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${oldData?.image}`)
+    const [selectedImg, setSelectedImg] = useState('')
 
     const initialValues = {
         title: oldData?.title || "",
@@ -92,7 +92,12 @@ const AddVideo = () => {
                                         <Col sm="12" md="8" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
                                                 <Col sm="12" md="8">
-                                                    <img src={`${BASE_URL}uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    {selectedImg === '' && (
+                                                        <img src={(oldData?.image === '/assets/images/default-image.jpg') ? oldData.image : `${BASE_URL}uploads/${oldData?.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    )}
+                                                    {selectedImg !== '' && (
+                                                        <img src={`${BASE_URL}uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
+                                                    )}
                                                 </Col>
                                                 <Col sm="12" md="4">
                                                     <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>

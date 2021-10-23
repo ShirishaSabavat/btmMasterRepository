@@ -103,7 +103,7 @@ const MyCommission = () => {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>Direct</h2>
-                            <p className='card-text'>₹ {commisions.reduce((p, c) => p + (c.commisionLevel === 1 ? c.commision : 0), 0).toLocaleString('en-IN')} ({commisions.filter(i => i.commisionLevel === 1).length.toLocaleString('en-IN')})</p>
+                            <p className='card-text'>₹ {commisions?.reduce((p, c) => p + (c.commisionLevel === 1 ? c.commision : 0), 0).toLocaleString('en-IN')} ({commisions?.filter(i => i.commisionLevel === 1).length.toLocaleString('en-IN')})</p>
                         </div>
                         <div className={`avatar avatar-stats p-50 m-0 bg-light-success`}>
                             <div className='avatar-content'><User size={28} /></div>
@@ -118,7 +118,7 @@ const MyCommission = () => {
                     <div className='d-flex justify-content-between align-items-center'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>Indirect</h2>
-                            <p className='card-text'>₹ {commisions.reduce((p, c) => p + (c.commisionLevel > 1 ? c.commision : 0), 0).toLocaleString('en-IN')} ({commisions.filter(i => i.commisionLevel > 1).length.toLocaleString('en-IN')})</p>
+                            <p className='card-text'>₹ {commisions?.reduce((p, c) => p + (c.commisionLevel > 1 ? c.commision : 0), 0).toLocaleString('en-IN')} ({commisions?.filter(i => i.commisionLevel > 1).length.toLocaleString('en-IN')})</p>
                         </div>
                         <div className={`avatar avatar-stats p-50 m-0 bg-light-danger`}>
                             <div className='avatar-content'><Users size={28} /></div>

@@ -33,34 +33,34 @@ const Dashboard = () => {
     const statsData = [
         {
             title: 'Users',
-            count: (dashboardData.bacUsersCount + dashboardData.normalUsersCount),
+            count: (dashboardData?.bacUsersCount + dashboardData?.normalUsersCount),
             role: ['ADMIN'],
             color: 'bg-light-danger',
             icon: <Users size={24} />
         },
         {
             title: 'Videos',
-            count: dashboardData.videosCount,
+            count: dashboardData?.videosCount,
             color: 'bg-light-info',
             role: ['ADMIN'],
             icon: <Video size={24} />
         },
         {
             title: 'Courses',
-            count: dashboardData.onlinePurchaseCount ? dashboardData.onlinePurchaseCount : (dashboardData.bacCourcesCount + dashboardData.regularCourcesCount),
+            count: dashboardData?.onlinePurchaseCount ? dashboardData?.onlinePurchaseCount : (dashboardData?.bacCourcesCount + dashboardData?.regularCourcesCount),
             color: 'bg-light-success',
             role: ['ADMIN', 'USER', 'BAC_USER'],
             icon: <Award size={24} />
         },
         {
             title: 'Workshops',
-            count: dashboardData.workshopPurchaseCount ? dashboardData.workshopPurchaseCount :  dashboardData.workshopsCount,
+            count: dashboardData?.workshopPurchaseCount ? dashboardData?.workshopPurchaseCount :  dashboardData?.workshopsCount,
             role: ['ADMIN', 'USER', 'BAC_USER'],
             icon: <Activity size={24} />
         },
         {
             title: 'My Clients',
-            count: (dashboardData.bacUsersCount + dashboardData.normalUsersCount),
+            count: (dashboardData?.bacUsersCount + dashboardData?.normalUsersCount),
             role: ['BAC_USER'],
             color: 'bg-light-danger',
             icon: <Users size={24} />
@@ -73,7 +73,7 @@ const Dashboard = () => {
         // },
         {
             title: 'Earnings',
-            count: `₹ ${dashboardData.netEarnings ? dashboardData.netEarnings[0]?.comissions?.toLocaleString('en-IN') : 0}`,
+            count: `₹ ${dashboardData?.netEarnings ? dashboardData?.netEarnings[0]?.comissions?.toLocaleString('en-IN') : 0}`,
             role: ['BAC_USER'],
             icon: <Activity size={24} />
         }
@@ -140,7 +140,7 @@ const Dashboard = () => {
                 <PieChart 
                     title="Courses" 
                     data={{
-                        series: [dashboardData.regularCourcesCount, dashboardData.bacCourcesCount],
+                        series: [dashboardData?.regularCourcesCount, dashboardData?.bacCourcesCount],
                         labels: ['Regular', 'Bac'],
                         styles: '1'
                     }}
@@ -150,7 +150,7 @@ const Dashboard = () => {
                 <PieChart 
                     title="Sale Types" 
                     data={{
-                        series: [dashboardData.referralPurchaseCount, dashboardData.regularCourcesCount],
+                        series: [dashboardData?.referralPurchaseCount, dashboardData?.regularCourcesCount],
                         labels: ['Online', 'Workshop'],
                         styles: '2'
                     }} 
@@ -160,7 +160,7 @@ const Dashboard = () => {
                 <PieChart 
                     title="Users" 
                     data={{
-                        series: [dashboardData.normalUsersCount, dashboardData.bacUsersCount],
+                        series: [dashboardData?.normalUsersCount, dashboardData?.bacUsersCount],
                         labels: ['Regular', 'Bac']
                     }}
                 />
