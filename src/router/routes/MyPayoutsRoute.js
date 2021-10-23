@@ -3,8 +3,8 @@ import { lazy } from 'react'
 // ** Merge Routes
 const MyPayoutsRoute = [
   {
-    path: '/admin/my-payouts',
-    component: lazy(() => import('../../views/MyPayouts/MyPayouts'))
+    path: '/admin/payouts',
+    component: lazy(() => import('../../views/payout/Payout'))
   }
 ]
 
