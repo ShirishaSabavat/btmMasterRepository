@@ -31,7 +31,7 @@ const ImagePickerComponent = (props) => {
                         name="imgName1" 
                         id="imgName1" 
                         style={{height: 200, width: 224, margin: 5, borderWidth: `${selectedImg === "imgName1" ? "7px" : "" }`, borderColor: `${selectedImg === "imgName1" ? "green" : ""}` }} 
-                        className="img-thumbnail img-fluid"  
+                        className="img-thumbnail img-fluid cursor pointer"  
                         onClick={() => { props.setSelectedImg(`${BASE_URL}uploads/${values.file}`); props.toggleFileModal() }} /></div>)}
             </div>
         </ModalBody>

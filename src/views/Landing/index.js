@@ -159,8 +159,8 @@ const Landing = () => {
     const AutoplaySlider = withAutoplay(AwesomeSlider)
 
     const Slider = (
-        <div className="position-relative" >
-            <AutoplaySlider  play={true} cancelOnInteraction={false} interval={3000} animation="openAnimation" cssModule={[coreStyles, animationStyles]} style={{height: "70vh"}} bullets={false} >
+        <div className="position-relative d-none" >
+            <AutoplaySlider  play={true} cancelOnInteraction={false} interval={4000} animation="openAnimation" cssModule={[coreStyles, animationStyles]} style={{height: "70vh"}} bullets={false} >
                 <div data-src={img1} >
                     <div style={{position: "absolute", top: "10%", right:"15%", zIndex: "2000", width: "300px"}}>
                         <CardCom data={{ _id:"123", image: {img1}, name:"Sample", shortDescription: "This is description", faculty:{name: "Sample fac"}, price : "100"  }} />

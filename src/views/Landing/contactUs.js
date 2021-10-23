@@ -45,7 +45,7 @@ const ContactUs = () => {
     const userData = useSelector(state => state.auth.userData)
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={4}>
         <Grid className="bg-white"  item xs={12} className="mt-2">
             <Row>
                 <Col sm="12" md="8">
@@ -60,8 +60,8 @@ const ContactUs = () => {
                         </Col>
                     </Row>
                 </Col>
-                <Col sm="12" md="4" className="card card-body mt-3 mt-md-0">
-                    <div className='p-2'>
+                <Col sm="12" md="4" className=" mt-3">
+                    <div className='m-2 card card-body'>
 
                     <h2 className="mb-1">Inquiry Form</h2>  
                         

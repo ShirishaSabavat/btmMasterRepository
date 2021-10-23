@@ -60,17 +60,17 @@ const Login = () => {
         <Link className='brand-logo' to='/'>
           {/* <h2 className='brand-text text-primary ml-1'>Business Aacharaya</h2> */}
         </Link>
-        <Col style={{backgroundColor: '#161749'}} className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
+        <Col style={{backgroundColor: '#393a50'}} className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
           <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
             <img className='img-fluid' src='/assets/images/logo-h.png' alt='Login V2' />
           </div>
         </Col>
-        <Col style={{backgroundColor: '#161749'}} className='d-flex align-items-center auth-bg px-1 p-lg-4' lg='4' sm='12'>
+        <Col style={{backgroundColor: '#393a50'}} className='d-flex align-items-center auth-bg px-1 p-lg-4' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <Card className="p-2">
             <CardContent>
             <CardTitle tag='h2' className='font-weight-bold'>
-              {forgotPassword ? "Forgot Password" : Login}
+              {forgotPassword ? "Forgot Password" : "Login" }
             </CardTitle>
             <CardText className='mb-2'></CardText>
             <Form className='auth-login-form mt-2' onSubmit={() => (forgotPassword ? doForgotPassword() : doLogin())}>
