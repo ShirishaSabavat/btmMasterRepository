@@ -48,7 +48,7 @@ export const EditUser = (id, userData) => dispatch => {
   ServerApi().patch(`/users/${id}`, userData)
   .then(res => {
     if (res.status === 200) {
-      toast.error("Succesfully Updated User Details!", {
+      toast.success("Succesfully Updated User Details!", {
         position: toast.POSITION.BOTTOM_CENTER
       })
       return

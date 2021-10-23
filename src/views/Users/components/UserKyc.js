@@ -190,13 +190,13 @@ const UserKyc  = ({userData}) => {
                         ]}
                     />
                 </div>
-                <div className="d-flex justify-content-end">
-                  <Button className="mr-1" onClick={() => updateUserKyc()} size='sm' color='primary' id='reportToggler2'>
+                <div className="">
+                  <Button className="mr-1" onClick={() => updateUserKyc()}  color='primary' id='reportToggler2'>
                     Save
                   </Button>
-                  <Button onClick={() => setShowEdit(true)} size='sm' color='success' id='reportToggler3'>
+                  {/* <Button onClick={() => setShowEdit(true)}  color='success' id='reportToggler3'>
                     Edit
-                  </Button>
+                  </Button> */}
                 </div>
               </>
             )
