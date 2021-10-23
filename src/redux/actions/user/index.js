@@ -44,6 +44,27 @@ export const fetchUserById = (id) => dispatch => {
   })
 }
 
+export const EditUser = (id, userData) => dispatch => {
+  ServerApi().patch(`/users/${id}`, userData)
+  .then(res => {
+    if (res.status === 200) {
+      toast.error("Succesfully Updated User Details!", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      return
+    }
+    toast.error("Failed Updating User Details!", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+  })
+  .catch(e => {
+    toast.error("Error in Fetching User Data!", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
 export const deleteUser = (id) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().delete(`/users/${id}`)

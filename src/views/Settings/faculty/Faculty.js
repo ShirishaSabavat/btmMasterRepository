@@ -83,7 +83,7 @@ const Videos = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/edit-faculty", params:{id}}}>
+                        <Link to={`/edit-faculty/${id}`}>
                             <Edit size={15} />
                         </Link>
                         </Button>

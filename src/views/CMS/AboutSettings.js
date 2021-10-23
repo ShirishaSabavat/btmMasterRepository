@@ -29,7 +29,7 @@ const AboutSettings = () => {
             type: "about",
             content
         }
-        if (content !== "") {
+        if (data) {
             dispatch(EditCMS('ABOUT', rawData))
             return
         }

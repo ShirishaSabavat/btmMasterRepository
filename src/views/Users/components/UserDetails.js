@@ -1,10 +1,19 @@
+import {useEffect} from "react"
 import { Button, Label, Row, Col, Input, FormGroup } from 'reactstrap'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
+import { useDispatch, useSelector } from 'react-redux'
+import {useParams} from "react-router-dom"
+
+import {fetchUserById, EditUser} from "../../../redux/actions/user/index"
 
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
 const UserDetails = (props) => {
+
+  const { userId } = useParams()
+
+  const dispatch = useDispatch()
 
   const initialValues = {
     name: props.userData?.name || "",
@@ -22,7 +31,23 @@ const UserDetails = (props) => {
 
 
   const submitForm = values => {
-    console.log("val", values)
+    console.log("val", values, userId)
+    if (userId) {
+      const userData = {
+        name: values.name,
+        email: values.email,
+        phone: values.phNo,
+        status: values.status
+      }
+      dispatch(EditUser(userId, userData))
+    } else if (props.userData._id) {
+      const userData = {
+        name: values.name,
+        email: values.email,
+        phone: values.phNo
+      }
+        dispatch(EditUser(props.userData._id, userData))
+    }
   }
 
   const statusOptions = [{label:"ACTIVE", value:"ACTIVE"}, {label: "IN-ACTIVE", value: "IN-ACTIVE"}, {label: "BLOCK", value: "BLOCK"}]

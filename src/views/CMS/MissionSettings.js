@@ -29,8 +29,8 @@ const MissionSettings = () => {
             type: "mission",
             content
         }
-        
-        if (content !== "") {
+
+        if (data) {
             dispatch(EditCMS('MISSION', rawData))
             return
         }
