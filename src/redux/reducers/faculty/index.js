@@ -1,8 +1,9 @@
-import { GET_ALL_FACULTY, GET_ALL_FACULTY_OPTIONS } from '../../types/faculty'
+import { GET_ALL_FACULTY, GET_ALL_FACULTY_OPTIONS, GET_ALL_FACULTY_BY_ID } from '../../types/faculty'
 
 const initialState = {
   faculty: [],
-  facultyOptions: []
+  facultyOptions: [],
+  facultyData: {}
 }
 
 const faculty = (state = initialState, action) => {
@@ -10,6 +11,9 @@ const faculty = (state = initialState, action) => {
     case GET_ALL_FACULTY:
       return {...state, faculty: action.payload}
 
+    case GET_ALL_FACULTY_BY_ID:
+      return {...state, facultyData: action.payload}
+    
     case GET_ALL_FACULTY_OPTIONS:
       return {...state, facultyOptions: action.payload}
     

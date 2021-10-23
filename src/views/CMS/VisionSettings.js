@@ -30,7 +30,7 @@ const VisionSettings = () => {
             type: "vission",
             content
         }
-        if (content !== "") {
+        if (data) {
             dispatch(EditCMS('VISSION', rawData))
             return
         }

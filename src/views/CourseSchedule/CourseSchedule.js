@@ -88,7 +88,7 @@ const CourseSchedule = () => {
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">     
-                    <li className="list-inline-item">
+                    {/* <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-warning"
@@ -97,7 +97,7 @@ const CourseSchedule = () => {
                             <Eye size={15} />
                         </Link>
                         </Button>
-                    </li>
+                    </li> */}
                     <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
