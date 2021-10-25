@@ -1,31 +1,25 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
 import {Trash, Edit} from "react-feather"
 import {Link} from "react-router-dom"
-import DeleteModal from "./Modals/DeleteModal"
+import { useDispatch, useSelector } from "react-redux"
+
+import { fetchAllBanners, deleteBannerById } from "../../../redux/actions/banner"
 import CustomDataTable from '../../../components/dataTable/CustomDataTable'
 import {BASE_URL} from '../../../utility/serverSettings'
 
 const Banner = () => {
 
-  const usersData = [{sno: 1, name: "sample", email: "sam@sam.com", phone: 8099009900, message: "This is sample"}]
+  const dispatch = useDispatch()
+  const bannerData = useSelector(state => state.banner.banners)
 
-  const [defaultAlert, setDefaultAlert] = useState({
-    alert: false,
-    did: ""
-  })
-  const [confirmAlert, setConfirmAlert] = useState(false)
-  const [cancelAlert, setCancelAlert] = useState(false)
+  useEffect(() => {
+    dispatch(fetchAllBanners())
+  }, [])
 
-  const defaultAlertHandler = (value) => {
-    setDefaultAlert({ alert: value.alert, did: value.did })
-  }
-  const confirmAlertHandler = (value) => {
-    setConfirmAlert(value)
-  }
-  const cancelAlertHandler = (value) => {
-    setCancelAlert(value)
-  }
+  const usersData = bannerData?.map(data => { return {id: data._id, sno: data.sno, name: data.title, image: data.file} })
+
+  const [showDelete, setShowDelete] = useState(false)
 
     const tableColumns = [
         {
@@ -61,7 +55,7 @@ const Banner = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
-            const id = row._id
+            const id = row.id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">     
@@ -79,7 +73,7 @@ const Banner = () => {
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
+                        onClick={() => setShowDelete(id)}
                         >
                             <Trash size={15} />
                         </Button>
@@ -100,21 +94,17 @@ const Banner = () => {
                 </CardHeader>
                 <hr className="m-0" />
 
-                <CustomDataTable data={usersData} columns={tableColumns} />
+                <CustomDataTable
+                  data={usersData}
+                  columns={tableColumns}
+                  setShowDelete={setShowDelete}
+                  showDelete={showDelete}
+                  confirmDelete={() => dispatch(deleteBannerById(showDelete))}
+                />
 
                 <hr />
                 <div style={{ height: 300, width: '99%', margin: "auto" }}>
                 </div>
-                 {defaultAlert.alert ? (
-                  <DeleteModal
-                    defaultAlertHandler={defaultAlertHandler}
-                    confirmAlertHandler={confirmAlertHandler}
-                    cancelAlertHandler={cancelAlertHandler}
-                    defaultAlert={defaultAlert.alert}
-                    confirmAlert={confirmAlert}
-                    cancelAlert={cancelAlert}
-                  />
-                ) : null}
             </Card>
         </Col>
     </Row>

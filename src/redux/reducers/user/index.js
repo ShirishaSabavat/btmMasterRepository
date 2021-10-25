@@ -1,4 +1,4 @@
-import { FETCH_ALL_USER_DATA, FETCH_USER_BY_ID, FETCH_ALL_CLIENTS, FETCH_MY_COMMISIONS, FETCH_MY_TRANSACTIONS, DASHBOARD_DATA } from '../../types/user'
+import { FETCH_ALL_USER_DATA, FETCH_USER_BY_ID, FETCH_ALL_CLIENTS, FETCH_MY_COMMISIONS, FETCH_MY_TRANSACTIONS, DASHBOARD_DATA, FETCH_ALL_BAC_USER_DATA } from '../../types/user'
 
 const initialState = {
   users:[],
@@ -27,6 +27,8 @@ const mediaReducer = (state = initialState, action) => {
     
     case DASHBOARD_DATA:
       return {...state, dashboardData: action.payload}
+    case FETCH_ALL_BAC_USER_DATA:
+      return {...state, users: action.payload}
 
     default:
       return state

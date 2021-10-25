@@ -20,6 +20,7 @@ import gallery from "./gallery"
 import roles from "./roles"
 import landingPage from "./landingPage"
 import inquiry from "./inquery/index"
+import banner from "./banner"
 
 const rootReducer = combineReducers({
   auth,
@@ -39,7 +40,8 @@ const rootReducer = combineReducers({
   gallery,
   roles,
   landingPage,
-  inquiry
+  inquiry,
+  banner
 })
 
 export default rootReducer

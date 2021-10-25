@@ -11,17 +11,18 @@ const SocialMedia = () => {
     const dispatch = useDispatch()
 
     const data = useSelector(state => state.cms.socialLinks[0]?.content)
+    const parsedData = JSON.parse(data)
     const [content, setContent] = useState()
 
     const initialValues = {
-        facebook: data ? JSON.parse(data).facebook : "",
-        instagram: data ? JSON.parse(data).instagram : "",
-        youtube: data ? JSON.parse(data).youtube : "",
-        twitter: data ? JSON.parse(data).twitter : "",
-        whatsapp: data ? JSON.parse(data).whatsapp : ""
+        facebook: data ? parsedData.facebook : "",
+        instagram: data ? parsedData.instagram : "",
+        youtube: data ? parsedData.youtube : "",
+        twitter: data ? parsedData.twitter : "",
+        whatsapp: data ? parsedData.whatsapp : ""
     }
 
-    console.log({content})
+    console.log("parsedData", parsedData)
 
     const validationSchema = Yup.object().shape({
         facebook: Yup.string(),
@@ -45,7 +46,7 @@ const SocialMedia = () => {
             content: JSON.stringify(values)
         }
         
-        if (content?.length > 0) {
+        if (parsedData) {
             dispatch(EditCMS('social-links', rawData))
             return
         }

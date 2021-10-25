@@ -7,11 +7,13 @@ import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import DeleteModal from "./Modals/DeleteModal"
 import {fetchAllCourseSchedules, deleteCourseSchedule} from "../../redux/actions/courseSchedule/index"
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const CourseSchedule = () => {
 
   const dispatch = useDispatch()
   const workshopData = useSelector(state => state.courseSchedule.courseSchedules)
+  const loading = useSelector(state => state.common.loading)
   
   const [showDelete, setShowDelete] = useState(false)
 
@@ -123,6 +125,12 @@ const CourseSchedule = () => {
           }
         }
       ]
+    
+    if (loading) {
+      return (
+        <TableDataLoadingSkleton />
+      )
+    }
 
     return <Row>
         <Col sm="12" md="12">

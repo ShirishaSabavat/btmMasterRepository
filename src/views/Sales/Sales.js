@@ -7,11 +7,13 @@ import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
 import { fetchAllSales } from "../../redux/actions/sales/index"
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const Sales = () => {
 
   const dispatch = useDispatch()
   const salesData = useSelector(state => state.sales.sales)
+  const loading = useSelector(state => state.common.loading)
 
   useEffect(() => {
     dispatch(fetchAllSales())
@@ -120,7 +122,6 @@ const Sales = () => {
           selector: "",
           sortable: true,
           cell: (row) => {
-            const id = row._id
             return (
               <div className="d-flex flex-column align-items-center">
                 <ul className="list-inline mb-0">
@@ -129,7 +130,7 @@ const Sales = () => {
                         className="btn-icon rounded-circle"
                         color="flat-warning"
                         >
-                        <Link to={{pathname: "/view-sales", params:{id}}}>
+                        <Link to={`/view-sales/${row._id}`}>
                             <Eye size={15} />
                         </Link>
                         </Button>
@@ -159,6 +160,12 @@ const Sales = () => {
       }
 
     // const salesData = [{sno: "1", _id:"124", purchaseType: "WORKSHOP", name: "Sample 1", date: "2-2-2021", paidAmount: "100", status: "ACTIVE" }]
+
+    if (loading) {
+      return (
+        <TableDataLoadingSkleton />
+      )
+    }
 
     return <Row>
         <Col md="3" sm="12">
