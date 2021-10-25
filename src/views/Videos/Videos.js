@@ -9,11 +9,13 @@ import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import {fetchAllVideos, deleteVideoById} from "../../redux/actions/videos/index"
 // import sampleImg from "/assets/images/default-image.jpg"
 import {BASE_URL} from '../../utility/serverSettings'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const Videos = () => {
 
   const dispatch = useDispatch()
   const videosData = useSelector(state => state.videos.videos)
+  const loading = useSelector(state => state.common.loading)
 
   useEffect(() => {
     dispatch(fetchAllVideos())
@@ -107,6 +109,12 @@ const Videos = () => {
       }
     }
   ]
+
+  if (loading) {
+    return (
+      <TableDataLoadingSkleton />
+    )
+  }
 
     return <Row>
         <Col sm="12" md="12">

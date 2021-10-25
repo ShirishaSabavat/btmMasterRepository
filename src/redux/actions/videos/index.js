@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
 
 export const AddVideoAPI = (rawData, resetForm) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().post('/videos', rawData)
   .then(res => {
     if (res.statusText === "Created") {
@@ -16,8 +17,10 @@ export const AddVideoAPI = (rawData, resetForm) => dispatch => {
         position: toast.POSITION.BOTTOM_CENTER
       })
     }
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Adding Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -48,6 +51,7 @@ export const EditVideoAPI = (id, rawData) => dispatch => {
 }
 
 export const fetchAllVideos = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get('/videos')
   .then(res => {
     // const data = res.data.map((values, index) => { return {values, sno: index + 1 } })
@@ -57,8 +61,10 @@ export const fetchAllVideos = () => dispatch => {
       type: GET_ALL_VIDEOS,
       payload: data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })

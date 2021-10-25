@@ -8,6 +8,7 @@ import EarningCard from './Charts/EarningCard'
 import { toast } from 'react-toastify'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { loadDashboardData } from '../../redux/actions/user'
+import DashboardDataLoadingSkleton from '../../components/skleton/DashboardDataLoadingSkleton'
 
 // import decorationLeft from '@src/assets/images/elements/decore-left.png'
 // import decorationRight from '@src/assets/images/elements/decore-right.png'
@@ -29,6 +30,7 @@ const Dashboard = () => {
 
     const userData = useSelector(state => state.auth.userData)
     const dashboardData = useSelector(state => state.user.dashboardData)
+    const loading = useSelector(state => state.common.loading)
 
     const statsData = [
         {
@@ -93,7 +95,13 @@ const Dashboard = () => {
         })
     }
 
-  return (
+    if (loading) {
+        return (
+          <DashboardDataLoadingSkleton />
+        )
+    }
+
+    return (
     <>
     <Row>
       {<StatsCard data={statsData} />}

@@ -3,6 +3,7 @@ import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 
 export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().post('/workshops', rawData)
   .then(res => {
     console.log("ress", res)
@@ -12,8 +13,10 @@ export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
     } else {
       toast.error("Error in Creating Workshop")
     }
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Creating Workshop", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -22,6 +25,7 @@ export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
 }
 
 export const EditCourseScheduleAPI = (id, rawData) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/workshops/${id}`, rawData)
   .then(res => {
     console.log("ress", res)
@@ -30,8 +34,10 @@ export const EditCourseScheduleAPI = (id, rawData) => dispatch => {
     } else {
       toast.error("Error in Updating")
     }
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Updating", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -40,6 +46,7 @@ export const EditCourseScheduleAPI = (id, rawData) => dispatch => {
 }
 
 export const fetchAllCourseSchedules = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get('/workshops')
   .then(res => {
     const data = res.data.map(values => values)
@@ -47,8 +54,10 @@ export const fetchAllCourseSchedules = () => dispatch => {
       type: FETCH_ALL_SCHEDULES,
       payload: data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -74,14 +83,17 @@ export const fetchAllCourseScheduleOptions = () => dispatch => {
 }
 
 export const fetchCourseScheduleById = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(trrue))
   ServerApi().get(`/workshops/${id}`)
   .then(res => {
     dispatch({
       type: FETCH_SCHEDULES_BY_ID,
       payload: res.data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })

@@ -7,7 +7,7 @@ const SalesRoute = [
     component: lazy(() => import('../../views/Sales/Sales'))
   },
   {
-    path: '/view-sales',
+    path: '/view-sales/:saleId',
     component: lazy(() => import('../../views/Sales/ViewSales'))
   }
 ]

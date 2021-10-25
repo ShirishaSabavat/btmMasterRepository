@@ -85,26 +85,26 @@ const OrganizationSettings = () => {
     }
 
     const validationSchema = Yup.object().shape({
-        orgName: Yup.string().required("Required"),
-        regNo: Yup.string().required("Required"),
-        country: Yup.string().required("Required"),
-        state:  Yup.string().required("Required"),
-        city:  Yup.string().required("Required"),
-        pincode: Yup.number().positive().integer().required("Required"),
-        email:Yup.string().email().required("Required"),
-        webaddress:Yup.string().required("Required"),
-        phNo: Yup.number().positive().integer().required("Required"),
-        personName:Yup.string().required("Required"),
-        address:Yup.string().required("Required"),
-        username:Yup.string().required("Required"),
-        password:Yup.string().required("Required"),
-        panNo: Yup.string().required("Required"),
-        gstNo: Yup.string().required("Required"),
-        cinNo: Yup.string().required("Required"),
-        pfNo: Yup.string().required("Required"),
-        prdNo: Yup.string().required("Required"),
-        esiNo: Yup.string().required("Required"),
-        logo:Yup.string().required("Required")
+        orgName: Yup.string(),
+        regNo: Yup.string(),
+        country: Yup.string(),
+        state:  Yup.string(),
+        city:  Yup.string(),
+        pincode: Yup.number().positive().integer(),
+        email:Yup.string().email(),
+        webaddress:Yup.string(),
+        phNo: Yup.number().positive().integer(),
+        personName:Yup.string(),
+        address:Yup.string(),
+        username:Yup.string(),
+        password:Yup.string(),
+        panNo: Yup.string(),
+        gstNo: Yup.string(),
+        cinNo: Yup.string(),
+        pfNo: Yup.string(),
+        prdNo: Yup.string(),
+        esiNo: Yup.string(),
+        logo:Yup.string()
     })
 
     const submitForm = (values) => {
@@ -270,7 +270,7 @@ const OrganizationSettings = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col sm="12" md="3">
+                                        {/* <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="email">Mail Id</Label>
                                                 <InputGroup>
@@ -319,7 +319,7 @@ const OrganizationSettings = () => {
                                                     className="field-error text-danger"
                                                 />
                                             </FormGroup>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
                                     <Row className="mb-1">
                                         <Col sm="12">
@@ -340,8 +340,11 @@ const OrganizationSettings = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <h3>Contact Details</h3>
+
+                                    <h3 className="mt-3">Contact Details</h3>
+                                    
                                     <hr />
+                                    
                                     <Row>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
@@ -370,7 +373,32 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="personName">Person Name</Label>
+                                                <Label htmlFor="email">Mail Id</Label>
+                                                <InputGroup>
+                                                    <InputGroupAddon addonType='prepend'>
+                                                    <InputGroupText className={ !!(formik.touched.email && formik.errors.email) ? "border border-danger" : null}>
+                                                        <Mail size={15} />
+                                                    </InputGroupText>
+                                                    </InputGroupAddon>
+                                                    <Input
+                                                    type="email"
+                                                    name="email"
+                                                    id="email"
+                                                    {...formik.getFieldProps("email")}
+                                                    invalid={!!(formik.touched.email && formik.errors.email)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="email"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="3">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label htmlFor="personName">Authorized Person Name</Label>
                                                 <InputGroup>
                                                     <InputGroupAddon addonType='prepend'>
                                                     <InputGroupText className={ !!(formik.touched.personName && formik.errors.personName) ? "border border-danger" : null}>
@@ -394,8 +422,11 @@ const OrganizationSettings = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <h3>Organization Details</h3>
+
+                                    <h3 className="mt-3">Organization Details</h3>
+                                    
                                     <hr />
+                                    
                                     <Row className="mb-1">
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">

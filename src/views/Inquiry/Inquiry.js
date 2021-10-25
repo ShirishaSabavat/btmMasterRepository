@@ -6,11 +6,13 @@ import CustomDataTable from '../../components/dataTable/CustomDataTable'
 
 import Modal from "./Modals/Modal"
 import {fetchAllInquires, deleteInquiryById} from "../../redux/actions/inquiry/index"
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const Inquiry = () => {
 
   const dispatch = useDispatch()
   const usersData = useSelector(state => state.inquiry.inquries)
+  const loading = useSelector(state => state.common.loading)
 
   useEffect(() => {
     dispatch(fetchAllInquires())
@@ -105,6 +107,12 @@ const Inquiry = () => {
           }
         }
       ]
+
+    if (loading) {
+      return (
+        <TableDataLoadingSkleton />
+      )
+    }
 
     return <Row>
         <Col sm="12" md="12">

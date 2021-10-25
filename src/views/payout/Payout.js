@@ -5,68 +5,68 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {Edit, Trash, Trash2, Clock, ArrowUpCircle, User, Users, CheckCircle} from "react-feather"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
-import { loadMyCommisions } from '../../redux/actions/user'
+import { fetchAllBAcUsers } from '../../redux/actions/user'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const Payout = () => {
 
   const dispatch = useDispatch()
-  const commisions = useSelector(state => state.user.commisions)
-  const userData = useSelector(state => state.auth.userData)
+  const users = useSelector(state => state.user.users)
+  const loading = useSelector(state => state.common.loading)
 
   useEffect(() => {
-    dispatch(loadMyCommisions())
+    dispatch(fetchAllBAcUsers())
   }, [])
 
   const tableColumns = [
-    {
-      name: "Date",
-      selector: "date",
-      sortable: true,
-      cell: (row) => (
-        <p className="text-bold-500 mb-0">{new Date(row.createdAt).toLocaleString()}</p>
-      )
-    },
+    // {
+    //   name: "Date",
+    //   selector: "date",
+    //   sortable: true,
+    //   cell: (row) => (
+    //     <p className="text-bold-500 mb-0">{new Date(row.createdAt).toLocaleString()}</p>
+    //   )
+    // },
     {
         name: "Name",
         selector: "userName",
         sortable: true,
         cell: (row) => (
-          <h4 className="text-bold-500 mb-0">{row.parentId?.name}</h4>
+          <h4 className="text-bold-500 mb-0">{row.name}</h4>
         )
     },
     {
-        name: "Referral",
-        selector: "referral",
+        name: "Rank",
+        selector: "rank",
         sortable: true,
         cell: (row) => (
-          <h6 style={{fontSize: 11}} className="mb-0">{row.referral}</h6>
+          <h6 style={{fontSize: 11}} className="mb-0">{row.rank}</h6>
         )
     },
     {
-        name: "Amount",
+        name: "Balance",
         selector: "commision",
         sortable: true,
         cell: (row) => (
-          <h4 className="text-bold-500 mb-0">₹ {row.commision.toLocaleString('en-IN')}</h4>
+          <h4 className="text-bold-500 mb-0">₹ {row.wallet.toLocaleString('en-IN')}</h4>
         )
     },
-    {
-      name: "Status",
-      selector: "status",
-      sortable: true,
-      cell: (row) => (
-        <Badge color={row.status === 'DONE' ? "success" : "warning"}>
-            {row.status}
-        </Badge>
-      )
-    },
+    // {
+    //   name: "Status",
+    //   selector: "status",
+    //   sortable: true,
+    //   cell: (row) => (
+    //     <Badge color={row.status === 'DONE' ? "success" : "warning"}>
+    //         {row.status}
+    //     </Badge>
+    //   )
+    // },
     {
       name: "Action",
       selector: "action",
       sortable: true,
       cell: (row) => (
-        <>
-        </>
+        <Button className="btn btn-sm btn-danger">Payout</Button>
       )
     }
   ]
@@ -77,9 +77,15 @@ const Payout = () => {
     // dispatch(fetchAllVideos())
     // }, [confirmAlert, formUpdate, dispatch])
 
+    if (loading) {
+      return (
+        <TableDataLoadingSkleton />
+      )
+    }
+
 
     return <Row>
-        <Col md="3" sm="12">
+        {/* <Col md="3" sm="12">
             <Card>
                 <CardBody>
                     <div className='d-flex justify-content-between align-items-center'>
@@ -109,7 +115,7 @@ const Payout = () => {
                     </div>
                 </CardBody>
             </Card>
-        </Col>
+        </Col> */}
 
         <Col sm="12" md="12">
             <Card>
@@ -119,7 +125,7 @@ const Payout = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 
-                <CustomDataTable slCheckBox={false} data={[]} columns={tableColumns} />
+                <CustomDataTable slCheckBox={false} data={users} columns={tableColumns} />
 
             </Card>
         </Col>
