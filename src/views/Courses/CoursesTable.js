@@ -5,6 +5,7 @@ import {Link} from "react-router-dom"
 import {Calendar, Edit, Trash, Eye} from "react-feather"
 import { useDispatch, useSelector } from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 import {fetchAllCourses, deleteCourseById} from "../../redux/actions/courses/index"
 
@@ -12,6 +13,7 @@ const CourseTable = () => {
 
   const dispatch = useDispatch()
   const courseData = useSelector(state => state.courses.courses)
+  const loading = useSelector(state => state.common.loading)
   
   const [showDelete, setShowDelete] = useState(false)
 
@@ -106,6 +108,12 @@ const CourseTable = () => {
           }
         }
       ]
+    
+    if (loading) {
+      return (
+        <TableDataLoadingSkleton />
+      )
+    }
 
     return <Row>
         <Col sm="12" md="12">

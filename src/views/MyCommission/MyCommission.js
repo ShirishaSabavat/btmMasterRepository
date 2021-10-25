@@ -6,12 +6,14 @@ import {Link} from "react-router-dom"
 import {Edit, Trash, Trash2, Clock, ArrowUpCircle, User, Users} from "react-feather"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import { loadMyCommisions } from '../../redux/actions/user'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const MyCommission = () => {
 
   const dispatch = useDispatch()
   const commisions = useSelector(state => state.user.commisions)
   const userData = useSelector(state => state.auth.userData)
+  const loading = useSelector(state => state.common.loading)
 
   useEffect(() => {
     dispatch(loadMyCommisions())
@@ -89,11 +91,11 @@ const MyCommission = () => {
     }
   ]
   
-
-    // Fetching Data 
-    // useEffect(() => {
-    // dispatch(fetchAllVideos())
-    // }, [confirmAlert, formUpdate, dispatch])
+  if (loading) {
+    return (
+      <TableDataLoadingSkleton />
+    )
+  }
 
 
     return <Row>

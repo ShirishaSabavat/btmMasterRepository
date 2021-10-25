@@ -6,12 +6,14 @@ import {Link} from "react-router-dom"
 import {Edit, ArrowUpCircle, AlertOctagon, CheckCircle} from "react-feather"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import { loadMyTransactions } from '../../redux/actions/user'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const Wallet = () => {
 
   const dispatch = useDispatch()
   const transactions = useSelector(state => state.user.transactions)
   const userData = useSelector(state => state.auth.userData)
+  const loading = useSelector(state => state.common.loading)
   
 
   useEffect(() => {
@@ -79,6 +81,13 @@ const Wallet = () => {
     // useEffect(() => {
     // dispatch(fetchAllVideos())
     // }, [confirmAlert, formUpdate, dispatch])
+
+
+    if (loading) {
+        return (
+          <TableDataLoadingSkleton />
+        )
+    }
 
 
     return (

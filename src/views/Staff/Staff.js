@@ -5,6 +5,7 @@ import {Link} from "react-router-dom"
 import { Edit } from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 import { fetchAllStaff } from "../../redux/actions/staff/index"
 
@@ -12,6 +13,7 @@ const Staff = () => {
 
   const dispatch = useDispatch()
   const staffData = useSelector(state => state.staff.staff)
+  const loading = useSelector(state => state.common.loading)
 
   useEffect(() => {
     dispatch(fetchAllStaff())
@@ -102,6 +104,12 @@ const Staff = () => {
           }
         }
       }
+      
+    if (loading) {
+      return (
+        <TableDataLoadingSkleton />
+      )
+    }
 
     // const staffData = [{fullName: "sample1", email:"124@123.com", phone: "9999999999", dob: "2-2-21", gender: "Male", role: "ADMIN", status: "ACTIVE" }]
 

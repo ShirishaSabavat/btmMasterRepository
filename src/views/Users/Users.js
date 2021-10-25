@@ -8,11 +8,13 @@ import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
 import {toast} from 'react-toastify'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {PRODUCTION_URL} from '../../utility/serverSettings'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const UserTable = () => {
 
   const dispatch = useDispatch()
   const usersData = useSelector(state => state.user.users)
+  const loading = useSelector(state => state.common.loading)
 
   const [showDelete, setShowDelete] = useState(false)
 
@@ -178,6 +180,12 @@ const UserTable = () => {
           }
         }
       ]
+    
+    if (loading) {
+      return (
+        <TableDataLoadingSkleton />
+      )
+    }
 
     return <Row>
         <Col sm="12" md="12">

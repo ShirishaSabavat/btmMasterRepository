@@ -118,7 +118,7 @@ const EarningCard = ({title, data}) => {
 
   return (
     <Card className='earnings-card'>
-      {data.netComissions && (
+      {data?.netComissions && (
       <CardBody>
         <Row>
           <Col xs='6'>

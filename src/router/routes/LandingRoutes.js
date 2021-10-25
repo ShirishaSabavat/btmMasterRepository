@@ -55,9 +55,25 @@ const LandingRoute = [
     component: lazy(() => import('../../views/Landing/gallery')),
     layout: 'BlankLayout',
     meta: {
-      publicRoute: true
+        publicRoute: true
+      }
+    },
+    {
+      path: '/privacy-policy',
+      component: lazy(() => import('../../views/Landing/privacyPolicy')),
+      layout: 'BlankLayout',
+      meta: {
+        publicRoute: true
+      }
+    },
+    {
+      path: '/terms-of-use',
+      component: lazy(() => import('../../views/Landing/TermsOfUse')),
+      layout: 'BlankLayout',
+      meta: {
+        publicRoute: true
+      }
     }
-  }
 ]
 
 export default LandingRoute
