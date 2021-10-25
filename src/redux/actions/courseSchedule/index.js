@@ -1,7 +1,6 @@
-import { FETCH_ALL_SCHEDULES, FETCH_SCHEDULES_BY_ID } from '../../types/courseSchedule'
+import { FETCH_ALL_SCHEDULES, FETCH_SCHEDULES_BY_ID, GET_ALL_SCHEDULE_OPTIONS } from '../../types/courseSchedule'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
-import { toggleNetworkLoading } from '../common'
 
 export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
   ServerApi().post('/workshops', rawData)
@@ -57,22 +56,22 @@ export const fetchAllCourseSchedules = () => dispatch => {
   })
 }
 
-// export const fetchAllCoursesOptions = () => dispatch => {
-//   ServerApi().get('/courses')
-//   .then(res => {
-//     const data = res.data.map(({ name, _id }) => ({ label: name, value: _id }))
-//     dispatch({
-//       type: GET_ALL_COURSES_OPTIONS,
-//       payload: data
-//     })
-//   })
-//   .catch(e => {
-//     toast.error("Error in Fetching Data", {
-//       position: toast.POSITION.BOTTOM_CENTER
-//     })
-//     console.log(e)
-//   })
-// }
+export const fetchAllCourseScheduleOptions = () => dispatch => {
+  ServerApi().get('/workshops')
+  .then(res => {
+    const data = res.data.map(({ batchNo, _id }) => ({ label: batchNo, value: _id }))
+    dispatch({
+      type: GET_ALL_SCHEDULE_OPTIONS,
+      payload: data
+    })
+  })
+  .catch(e => {
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
 
 export const fetchCourseScheduleById = (id) => dispatch => {
   ServerApi().get(`/workshops/${id}`)

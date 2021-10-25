@@ -1,8 +1,9 @@
-import { FETCH_ALL_SCHEDULES, FETCH_SCHEDULES_BY_ID } from '../../types/courseSchedule'
+import { FETCH_ALL_SCHEDULES, FETCH_SCHEDULES_BY_ID, GET_ALL_SCHEDULE_OPTIONS } from '../../types/courseSchedule'
 
 const initialState = {
   courseSchedules: [],
-  courseSchedule: ""
+  courseSchedule: "",
+  courseScheuleOptions: []
 }
 
 const courseSchedule = (state = initialState, action) => {
@@ -12,6 +13,9 @@ const courseSchedule = (state = initialState, action) => {
     
     case FETCH_SCHEDULES_BY_ID:
       return {...state, courseSchedule: action.payload}
+
+    case GET_ALL_SCHEDULE_OPTIONS:
+      return {...state, courseScheuleOptions: action.payload}
 
     default:
       return state

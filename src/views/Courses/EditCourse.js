@@ -24,6 +24,10 @@ const EditCourse = () => {
     const facultyOptions = useSelector(state => state.faculty.facultyOptions) 
     const imagesData = useSelector(state => state.media.medias) 
     const allVideos = useSelector(state => state.videos.videos)
+    const videoLinks = CourseData?.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink)) 
+    const videoOptions = videoLinks?.map(videoData => {
+        return { label: videoData[0].title, value: videoData[0]._id }
+    })
 
     useEffect(() => {
         dispatch(fetchCourseById(courseId))
@@ -32,6 +36,10 @@ const EditCourse = () => {
     useEffect(() => {
         dispatch(fetchAllFacultyOptions())
       }, [])
+
+    useEffect(() => {
+        dispatch(fetchAllVideos())
+    }, [])
 
     const [editModal, setModal] = useState({
         modal: false
@@ -57,7 +65,7 @@ const EditCourse = () => {
         courseDetails: CourseData?.details || "",
         courseValidity: CourseData?.validity || "",
         price: CourseData?.price || "",
-        videoLink: allVideos || "",
+        videoLink: videoOptions || "",
         faculty: CourseData?.faculty || "",
         featured: CourseData?.featured || ""
     }
@@ -75,8 +83,6 @@ const EditCourse = () => {
     })
 
     const submitForm = (values) => {
-        console.log("values", values)
-
         const rawData = {
             gst: 18,
             tags: values.tags,
@@ -97,10 +103,6 @@ const EditCourse = () => {
 
         dispatch(EditCourseAPI(courseId, rawData))
     }
-
-    useEffect(() => {
-        dispatch(fetchAllVideos())
-    }, [])
 
     const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
 
@@ -257,29 +259,12 @@ const EditCourse = () => {
                                         </Col>
                                     </Row>
                                     <Row className="mb-1">
-                                        {/* <Col sm="12" md="12">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="videoLink">Video Link</Label>
-                                                <CustomSelectField
-                                                // value={formik.values.videoLink}
-                                                options={videoOptions}
-                                                onChange={(value) => formik.setFieldValue("videoLink", [...formik.values.videoLink, value.value])
-                                                } 
-                                                isMulti={true}
-                                                />
-                                                <ErrorMessage
-                                                    name="videoLink"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col> */}
                                          <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="videoLink">Youtube Video Link <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                     value={formik.values.videoLink}
-                                                    defaultValue={allVideos.map((i) => ({label: i.title, value: i._id}))}
+                                                    defaultValue={videoOptions}
                                                     options={allVideos.map((i) => ({label: i.title, value: i._id}))}
                                                     name="videoLink"
                                                     onChange={(value) => { formik.setFieldValue("videoLink", value.map(val => val.value)) }} 
