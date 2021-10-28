@@ -195,7 +195,7 @@ const Landing = () => {
                 </div>
             </Row>
         </Grid>
-        <Grid className="" style={{backgroundColor: 'silver'}} item xs={12}>
+        <Grid className="" style={{backgroundColor: '#eefffc8c'}} item xs={12}>
             <Row className=''>
                 <Col className='d-lg-flex align-items-center' lg='8' sm='12'>
                 <div className='w-100 px-5 mt-4'>
@@ -204,15 +204,15 @@ const Landing = () => {
                 </div>
                 </Col>
                 <Col className='d-flex align-items-center auth-bg px-2' lg='4' sm='12'>
-                    <img className='img-fluid' src="/assets/images/br5.jpg" alt='Login V2' />
+                    <img className='img-fluid' src="/assets/images/br2.webp" alt='Login V2' />
                 </Col>
             </Row>
         </Grid>
 
         <Grid style={{backgroundColor: '#e2ecf5'}} className="pb-5" item xs={12}>
             <Row className=''>
-                <Col className=' auth-bg' lg='5' xs='12'>
-                    <img className='img-fluid' src="/assets/images/q3.jpg" alt='Login V2' />
+                <Col className='auth-bg text-center' lg='5' xs='12'>
+                    <img className='img-fluid' style={{width: '75%'}} src="/assets/svg/goals.svg" alt='Login V2' />
                 </Col>
  
                 <Col className='' lg='7' xs='12'>
@@ -242,10 +242,10 @@ const Landing = () => {
             <CoursesLoadingSkleton nos={6} />
         )}
 
-        <Grid style={{backgroundColor: '#3f1360'}} className="pb-5" item xs={12}>
+        <Grid style={{backgroundColor: '#133960b0'}} className="pb-5" item xs={12}>
             <Row className=''>
-                <Col className='' lg='5' xs='12'>
-                    <img style={{width: '70%'}} className='img-fluid ml-2' src="/assets/images/w2.jpg" alt='Login V2' />
+                <Col className='text-center' lg='5' xs='12'>
+                    <img style={{width: '70%'}} className='img-fluid ml-2' src="/assets/svg/tracking.svg" alt='Login V2' />
                 </Col>
 
                 <Col className='' lg='7' xs='12'>
@@ -272,8 +272,8 @@ const Landing = () => {
                     <p className="text-justify">Br Shafi is Master motivator, life skill trainer and international orator. He has given many public talks life changing motivational seminars, life skill training program and personality development workshops for School, Colleges, NGOs, Corporate companies, Doctors and Hospital staff and police officials. Is an Author, Educator, Business Consultant and a much sought-after speaker. </p>
                 </div>
                 </Col>
-                <Col className='' lg='4' xs='12'>
-                    <img className='img-fluid' src="/assets/images/br2.webp" alt='Login V2' />
+                <Col className='text-center' lg='4' xs='12'>
+                    <img className='img-fluid' style={{width: '70%'}} src="/assets/svg/environment.svg" alt='Login V2' />
                 </Col>
             </Row>
         </Grid>
@@ -310,14 +310,14 @@ const Landing = () => {
             </Row>
         </Grid>
 
-        <Grid className="pt-4" style={{background: 'floralwhite'}} item xs={12}>
+        <Grid className="text-center pt-4" style={{background: 'floralwhite'}} item xs={12}>
             <div className='w-100 px-5 text-center'>
                 <h1 style={{fontSize: 45, marginBottom: 10, fontFamily: 'cursive', fontWeight: 'bold'}}>ACCOMPLISH MORE <br /> IN 2021</h1>
                 <p className="mb-2">MASTER YOUR TIME TO GET MORE DONE <br /> AND ACHIEVE MORE MEANINGFUL RESULTS</p>
                 <Button onClick={() => history.push('/all-courses')} size="large" variant="contained">Courses</Button>
             </div>
 
-            <img src="/assets/images/demo6.png" /> 
+            <img className="mt-3" src="/assets/svg/online_learning.svg" /> 
         </Grid>
 
     </Grid>

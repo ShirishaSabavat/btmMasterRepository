@@ -268,7 +268,11 @@ const Landing = (route) => {
         {!networkLoading && (
         <Grid className="bg-white py-5" item xs={12} md={8}>
             <div className='w-100 px-5'>
-                <img className='img-fluid' src={`${BASE_URL}uploads/${course.image}`} alt='image' style={{maxHeight: 340}} />
+                <img 
+                  className='img-fluid' 
+                  src={(course.image === '/assets/images/default-image.jpg' || course.image === undefined) ? '/assets/images/default-image.jpg' : `${BASE_URL}uploads/${course.image}`} 
+                  alt='image' 
+                  style={{maxHeight: 340}} />
                 
                 <h2 style={{fontSize: 42, fontWeight: 'bold'}} className="mt-2">{course.name}</h2>
                 {course.type === 'Bac' && (
