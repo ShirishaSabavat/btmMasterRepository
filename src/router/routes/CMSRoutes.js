@@ -37,6 +37,10 @@ const CMSRoutes = [
   {
     path: '/edit-banner',
     component: lazy(() => import('../../views/CMS/banner/EditBanner'))
+  },
+  {
+    path: '/static-pages',
+    component: lazy(() => import('../../views/CMS/StaticPages'))
   }
 ]
 

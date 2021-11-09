@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, CustomInput, Button, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
@@ -11,7 +11,8 @@ const Payment = () => {
 
     const dispatch = useDispatch()
     const organizationData = useSelector(state => state.organization.organization)
-    
+    const [validationType, setValidationType] = useState(false)
+
     useEffect(() => {
         dispatch(fetchAllOrganizationSettings())
     }, [])
@@ -26,9 +27,11 @@ const Payment = () => {
         liveSwitch: organizationData[0]?.razorPayMode || ""
     }
 
-    const validationSchema = Yup.object().shape({
+    const validationSchema1 = Yup.object().shape({
         liveApiKey: Yup.string().required("Required"),
-        liveApiSecret: Yup.string().required("Required"),
+        liveApiSecret: Yup.string().required("Required")
+    })
+    const validationSchema2 = Yup.object().shape({
         testApiKey: Yup.string().required("Required"),
         testApiSecret: Yup.string().required("Required")
         
@@ -48,10 +51,14 @@ const Payment = () => {
         dispatch(UpdateOrganizationSettings(organizationData[0]?._id, rawData))
     }
 
+    const changeHandler = () => {
+        setValidationType(prevState => !prevState)
+    }
+
     return <Row className="w-100 h-100 ">
         <Col sm="12" md="5">
             <Card>
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
+                <Formik initialValues={initialValues} validationSchema={validationType ? validationSchema1 : validationSchema2}  onSubmit={submitForm} enableReinitialize>
                     {(formik) => {
                         console.log("formik", formik.values)
                         return (
@@ -60,7 +67,7 @@ const Payment = () => {
                                     <CardTitle>Razorpay Settings</CardTitle>
                                     <div className="d-flex align-items-center">
                                         <div className='mr-1'>Live</div>
-                                        <CustomInput type='switch' id='switch-primary' name='liveSwitch' {...formik.getFieldProps("liveSwitch")} value="LIVE" inline defaultChecked={formik.values.liveSwitch === "LIVE"} />
+                                        <CustomInput type='switch' id='switch-primary' name='liveSwitch'  value="LIVE" onChange={formik.handleChange, changeHandler} inline defaultChecked={formik.values.liveSwitch === "LIVE"} />
                                     </div>
                                 </CardHeader>
                                 <hr className="m-0" />

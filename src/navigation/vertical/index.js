@@ -167,6 +167,14 @@ const Navigation = [
         icon: <ChevronRight size={15} />,
         permissions: ["admin", "editor"],
         navLink: "/banner"
+      },
+      {
+        id: "staticPages",
+        title: "Static Pages",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin", "editor"],
+        navLink: "/static-pages"
       }
       // {
       //   id: "gallery",
