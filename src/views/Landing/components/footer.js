@@ -73,7 +73,10 @@ const Footer = (props) => {
                                 <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/privacy-policy"> Privacy Policy </Link> <br />
                             </li>
                             <li style={{marginBottom: 5}}>
-                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/terms-of-use"> Terms Of Use </Link>
+                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/terms-and-conditions"> Terms And Conditions </Link>
+                            </li>
+                            <li style={{marginBottom: 5}}>
+                                <Link className="hover-highlight" style={{color: '#b3bbc6'}} to="/refund-policy"> Refund Policy </Link>
                             </li>
                         </ul>
                     </Grid>

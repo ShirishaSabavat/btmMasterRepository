@@ -8,9 +8,9 @@ import JoditEditor from "jodit-react"
 const StaticPages = () => {
 
     const dispatch = useDispatch()
-    const data1 = useSelector(state => state.cms?.privacyPolicy[0]?.content)
-    const data2 = useSelector(state => state.cms?.termsAndConditions[0]?.content)
-    const data3 = useSelector(state => state.cms?.refundPolicy[0]?.content)
+    const data1 = useSelector(state => (state.cms?.privacyPolicy ? state.cms?.privacyPolicy[0]?.content : ''))
+    const data2 = useSelector(state => (state.cms?.termsAndConditions ? state.cms?.termsAndConditions[0]?.content : ''))
+    const data3 = useSelector(state => (state.cms?.refundPolicy ? state.cms?.refundPolicy[0]?.content : ''))
 
     const editor1 = useRef(null)
     const editor2 = useRef(null)

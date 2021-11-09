@@ -11,7 +11,7 @@ const SocialMedia = () => {
     const dispatch = useDispatch()
 
     const data = useSelector(state => state.cms.socialLinks[0]?.content)
-    const parsedData = JSON.parse(data)
+    const parsedData = data ? JSON.parse(data) : ''
     const [content, setContent] = useState()
 
     const initialValues = {

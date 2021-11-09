@@ -30,7 +30,8 @@ export const AddCMS = (type, rawData) => dispatch => {
 
 export const EditCMS = (type, content) => dispatch => {
   dispatch(toggleNetworkLoading(true))
-  ServerApi().patch(`/cms/${type.toLowerCase()}`, content)
+  // ServerApi().patch(`/cms/${type.toLowerCase()}`, content)
+  ServerApi().patch(`/cms/${type}`, content)
   .then(res => {
     console.log("ress", res, content)
     if (res.status === 200) {
