@@ -1,6 +1,6 @@
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
-import { GET_MISSION, GET_ABOUT, GET_VISSION, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS } from "../../types/cms/index"
+import { GET_MISSION, GET_ABOUT, GET_VISSION, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS, GET_PRIVACY_POLICY, GET_TERMS_AND_CONDITIONS, GET_REFUND_POLICY } from "../../types/cms/index"
 import { toggleNetworkLoading } from '../common'
 
 export const AddCMS = (type, rawData) => dispatch => {
@@ -75,6 +75,22 @@ export const fetchCMS = (type) => dispatch => {
     } else if (type === "social-links") {
       dispatch({
         type: GET_SOCIAL_LINKS,
+        payload: res.data
+      })
+    } else if (type === "PRIVACY_POLICY") {
+      dispatch({
+        type: GET_PRIVACY_POLICY,
+        payload: res.data
+      })
+    } else if (type === "TERMS_AND_CONDITIONS") {
+      console.log(res.data, 'TERMS_AND_CONDITIONS')
+      dispatch({
+        type: GET_TERMS_AND_CONDITIONS,
+        payload: res.data
+      })
+    } else if (type === "REFUND_POLICY") {
+      dispatch({
+        type: GET_REFUND_POLICY,
         payload: res.data
       })
     }
