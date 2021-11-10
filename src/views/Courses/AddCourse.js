@@ -62,8 +62,8 @@ const AddCourse = () => {
         courseValidity: Yup.number().positive().integer().required("Required"),
         price: Yup.number().positive().integer().required("Required"),
         videoLink: Yup.array().required("Required"),
-        tags: Yup.string(),
-        faculty: Yup.string().required("Required")
+        tags: Yup.string()
+        // faculty: Yup.string().required("Required")
     })
 
     const submitForm = (values, {resetForm}) => {
