@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import { useSkin } from '@hooks/useSkin'
 import { Link, useHistory } from 'react-router-dom'
 import { Facebook, Instagram, Youtube, Mail, Phone, MapPin } from 'react-feather'
@@ -5,6 +6,7 @@ import '@styles/base/pages/page-auth.scss'
 import {Grid, ButtonGroup, Divider, IconButton} from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import parse from 'html-react-parser'
+import { getLandingPageData } from '../../../redux/actions/landingPage/index'
 
 const Footer = (props) => {
     const dispatch = useDispatch()
@@ -12,6 +14,11 @@ const Footer = (props) => {
     const [skin, setSkin] = useSkin()
 
     const userData = useSelector(state => state.auth.userData)
+    const landingPageData = useSelector(state => state.landingPage.landingPage[0])
+
+    useEffect(() => {
+        dispatch(getLandingPageData())
+    }, [])
 
   return (
     <>
@@ -84,13 +91,13 @@ const Footer = (props) => {
             <div className="p-4">
                 <h3 style={{fontWeight: 'bold'}} className="text-white mb-2">Enquiry</h3>
                 <h4 style={{color: '#a5a5a5'}} ><Phone size={20} style={{color: '#76a4eb', marginRight: 5}} /> Phone</h4>
-                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a className="hover-highlight" style={{color: "white"}} href="tel:9811220385">98-11-22-03-85</a></p>
+                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a className="hover-highlight" style={{color: "white"}} href={`tel:${landingPageData.phoneNo}`}>{landingPageData.phoneNo}</a></p>
                 
                 <h4 style={{color: '#a5a5a5'}}><Mail size={20} style={{color: '#76a4eb', marginRight: 5}} /> Email</h4>
-                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a className="hover-highlight" style={{color: "white"}} href="mailto:brshafi@brshafi.com">brshafi@brshafi.com</a></p>
+                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a className="hover-highlight" style={{color: "white"}} href={`mailto:${landingPageData.email}`}>{landingPageData.email}</a></p>
                 
                 <h4 style={{color: '#a5a5a5'}} ><MapPin size={20} style={{color: '#76a4eb', marginRight: 5}} /> Address</h4>
-                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a target="_blank" className="hover-highlight" style={{color: "white"}} href="https://goo.gl/maps/LuusffEaxx5aH1bF8">Hyderabad {'\n'} Telangana, Pincode 500029</a></p>
+                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a target="_blank" className="hover-highlight" style={{color: "white"}} href="https://goo.gl/maps/LuusffEaxx5aH1bF8">{landingPageData.address}</a></p>
             </div>
         </Grid>
     </Grid>
