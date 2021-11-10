@@ -18,6 +18,7 @@ import { DO_LOGIN } from '../../redux/types/auth'
 import Footer from './components/footer'
 import { BASE_URL } from '../../utility/serverSettings'
 import { handleLogin, updateUserRole } from '../../redux/actions/auth'
+import { getLandingPageData } from "../../redux/actions/landingPage/index"
 // import { getUserData } from '../../utility/Utils'
 // import CourseCard from './components/courseCard'
 import CourseDetailLoadingSkleton from '../../components/skleton/CourseDetailLoadingSkleton'
@@ -47,10 +48,16 @@ const Landing = (route) => {
     const course = useSelector(state => state.courses.course)
     const workshops = useSelector(state => state.courses.workshops)
     const courses = useSelector(state => state.courses.courses)
+    const landingPageData = useSelector(state => state.landingPage.landingPage)
+    const [razorPayKey, setRazorPayKey] = useState("")
 
 
     useEffect(() => {
         dispatch(fetchAllCourses())
+    }, [])
+
+    useEffect(() => {
+        dispatch(getLandingPageData())
     }, [])
 
     useEffect(() => {
@@ -62,6 +69,15 @@ const Landing = (route) => {
             setLoginModal(false)
         }
     }, [userData])
+
+    
+    useEffect(() => {
+        if (landingPageData?.razorPayMode === "LIVE") {
+            setRazorPayKey(landingPageData.razorPayLiveKey)
+        } else {
+            setRazorPayKey(landingPageData.razorPayTestKey)
+        }
+    }, [landingPageData])
 
     function loadScript(src) {
         return new Promise((resolve) => {
@@ -128,7 +144,7 @@ const Landing = (route) => {
             //5xnKX6BvwxiFGxNThYO7djZv
 
             const options = {
-                key: "rzp_test_tZ8WCE2tCPXW63", 
+                key: razorPayKey, 
                 amount: (parseFloat(price) + ((parseFloat(price) * 18) / 100)).toString(),
                 currency: "INR",
                 name: "Business Aacharaya",

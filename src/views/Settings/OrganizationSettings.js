@@ -81,7 +81,10 @@ const OrganizationSettings = () => {
         pfNo: organizationData[0]?.pF || "",
         prdNo: organizationData[0]?.prdNo || "",
         esiNo: organizationData[0]?.eSI || "",
-        logo: organizationData[0]?.logo || selectedImg
+        logo: organizationData[0]?.logo || selectedImg,
+        latitude: organizationData[0]?.latitude || "",
+        longitude:  organizationData[0]?.longitude || "",
+        footerText:  organizationData[0]?.footerText || ""
     }
 
     const validationSchema = Yup.object().shape({
@@ -104,7 +107,10 @@ const OrganizationSettings = () => {
         pfNo: Yup.string(),
         prdNo: Yup.string(),
         esiNo: Yup.string(),
-        logo:Yup.string()
+        logo:Yup.string(),
+        latitude:Yup.string(),
+        longitude:Yup.string(),
+        footerText:Yup.string()
     })
 
     const submitForm = (values) => {
@@ -127,7 +133,10 @@ const OrganizationSettings = () => {
             state: values.state,
             country: values.country,
             regNo: values.regNo,
-            name: values.orgName
+            name: values.orgName,
+            latitude: values.latitude,
+            longitude: values.longitude,
+            footerText: values.footerText
         }
 
         dispatch(postOrganizationSettings(id, rawData))
@@ -544,6 +553,66 @@ const OrganizationSettings = () => {
                                                 </InputGroup>
                                                 <ErrorMessage
                                                     name="pfNo"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="3">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label htmlFor="latitude">latitude</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="string"
+                                                    name="latitude"
+                                                    id="latitude"
+                                                    {...formik.getFieldProps("latitude")}
+                                                    invalid={!!(formik.touched.latitude && formik.errors.latitude)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="latitude"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="3">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label htmlFor="longitude">longitude</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="string"
+                                                    name="longitude"
+                                                    id="longitude"
+                                                    {...formik.getFieldProps("longitude")}
+                                                    invalid={!!(formik.touched.longitude && formik.errors.longitude)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="longitude"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label htmlFor="footerText">Footer Text</Label>
+                                                <InputGroup>
+                                                    <Input
+                                                    type="textarea"
+                                                    name="footerText"
+                                                    id="footerText"
+                                                    {...formik.getFieldProps("footerText")}
+                                                    invalid={!!(formik.touched.footerText && formik.errors.footerText)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="footerText"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />

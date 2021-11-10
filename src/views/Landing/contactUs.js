@@ -1,3 +1,4 @@
+import {useState, useEffect} from 'react'
 import { useSkin } from '@hooks/useSkin'
 import { useHistory } from 'react-router-dom'
 import { Mail, MapPin, Phone, User, Send } from 'react-feather'
@@ -8,11 +9,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 
-import {AddMessage} from "../../redux/actions/landingPage/index"
+import {AddMessage, getLandingPageData} from "../../redux/actions/landingPage/index"
 
 const ContactUs = () => {
 
     const dispatch = useDispatch()
+    const userData = useSelector(state => state.auth.userData)
+    const landingPageData = useSelector(state => state.landingPage.landingPage[0])
+
+    useEffect(() => {
+        getLandingPageData()
+    }, [])
+
+    console.log(landingPageData, "lpd")
 
     const initialValues = {
         uname:"",
@@ -41,8 +50,6 @@ const ContactUs = () => {
 
     const history = useHistory()
     const [skin, setSkin] = useSkin()
-
-    const userData = useSelector(state => state.auth.userData)
 
   return (
     <Grid container spacing={4}>
@@ -173,7 +180,8 @@ const ContactUs = () => {
         <Grid className="" item xs={12}>
             <Row className=''>
                 <Col className='d-lg-flex align-items-center' lg='12' sm='12'>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243480.07874631535!2d78.43127257375757!3d17.537265291617135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb84ad48255d29%3A0x410841a999b3433!2sSecunderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1634330966804!5m2!1sen!2sin" width="100%" height="450" allowfullscreen="" loading="lazy"></iframe>
+                    <div>Map Will Come Here</div>
+                {/* <iframe src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.104215945944!2d${landingPageData?.latitude ? landingPageData?.latitude : "17.5025379" }!3d${landingPageData?.longitude ? landingPageData?.longitude : "78.3950531" }!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb97abf6bcd773%3A0x7fe2002b8080c53f!2sAmoghnya%20Techsolution%20pvt.ltd!5e0!3m2!1sen!2sin!4v1636525927356!5m2!1sen!2sin`} width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> */}
                 </Col>
             </Row>
         </Grid>

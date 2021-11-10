@@ -22,6 +22,7 @@ export const fetchAllOrganizationSettings = () => dispatch => {
 
 export const postOrganizationSettings = (id, formdata) => (dispatch) => {
   ServerApi().patch(`/settings/${id}`, formdata).then(res => {
+    console.log("dd", formdata)
     if (res.status === "200") {
       toast.success("Successfully Updated Data", {
         position: toast.POSITION.BOTTOM_CENTER

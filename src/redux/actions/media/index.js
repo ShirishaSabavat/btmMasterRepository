@@ -20,7 +20,6 @@ export const fetchAllMedia = () => dispatch => {
   })
 }
 
-
 // export const fetchMediaById = (id) => dispatch => {
 //   ServerApi().get(`/media/${id}`)
 //   .then(res => {
@@ -36,7 +35,6 @@ export const fetchAllMedia = () => dispatch => {
 //     console.log(e)
 //   })
 // }
-
 
 export const postMedia = (formdata) => (dispatch) => {
   ServerApi().post("/media", formdata).then(res => {
