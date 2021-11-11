@@ -11,6 +11,7 @@ import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 import { BASE_URL } from '../../utility/serverSettings'
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const EditCourse = () => {
 
@@ -24,14 +25,12 @@ const EditCourse = () => {
     const facultyOptions = useSelector(state => state.faculty.facultyOptions) 
     const imagesData = useSelector(state => state.media.medias) 
     const allVideos = useSelector(state => state.videos.videos)
+    
     const videoLinks = CourseData?.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink)) 
     const videoOptions = videoLinks?.map(videoData => {
-        return { label: videoData[0].title, value: videoData[0]._id }
+        return { label: videoData[0]?.title, value: videoData[0]?._id }
     })
-
-    useEffect(() => {
-        dispatch(fetchCourseById(courseId))
-    }, [])
+    const networkLoading = useSelector(state => state.common.loading)
 
     useEffect(() => {
         dispatch(fetchAllFacultyOptions())
@@ -39,6 +38,10 @@ const EditCourse = () => {
 
     useEffect(() => {
         dispatch(fetchAllVideos())
+    }, [])
+
+    useEffect(() => {
+        dispatch(fetchCourseById(courseId))
     }, [])
 
     const [editModal, setModal] = useState({
@@ -90,7 +93,7 @@ const EditCourse = () => {
             schedule: "hh",
             shortDescription: "ok",
             validity: values.courseValidity,
-            videos: values.videoLink,
+            videos: values.videoLink.map(i => i.value),
             price: values.price,
             details: values.courseDetails,
             code: values.courseCode,
@@ -105,6 +108,10 @@ const EditCourse = () => {
     }
 
     const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
+
+    if (networkLoading) {
+        return (<TableDataLoadingSkleton />)
+    }
 
     return <Row>
         <Col sm="12" md="6">

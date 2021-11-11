@@ -78,6 +78,7 @@ const MyCources = () => {
                                             <>
                                                 {item.courseId.videos.map(vid => (
                                                     <ListItem
+                                                        onClick={() => { setVideoModal(true); setVideoUrl(vid.link) }}
                                                         secondaryAction={
                                                             <IconButton onClick={() => { setVideoModal(true); setVideoUrl(vid.link) }} edge="end" aria-label="delete">
                                                                 <PlayCircleFilledIcon />

@@ -2,13 +2,14 @@ import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText, CustomInput} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
-import {Link} from "react-feather"
+import { Link, Code} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 import { useHistory, useParams } from "react-router-dom"
 
 import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import { BASE_URL } from '../../utility/serverSettings'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const AddVideo = () => {
 
@@ -18,6 +19,7 @@ const AddVideo = () => {
     const history = useHistory()
     const oldData = useSelector(state => state.videos.video)
     const imagesData = useSelector(state => state.media.medias)
+    const networkLoading = useSelector(state => state.common.loading)
 
     useEffect(() => {
         dispatch(fetchVideoById(videoId))
@@ -48,6 +50,7 @@ const AddVideo = () => {
         duration: oldData.duration || "",
         description: oldData.description || "",
         bacOnly: oldData.bacOnly || false,
+        embededVideo: oldData.embededVideo || false,
         videoLinkType: oldData.videoLinkType || 'true'
     }
 
@@ -63,26 +66,22 @@ const AddVideo = () => {
     const submitForm = (values) => {
         console.log("values", values)
         
-        let fileData
+        // if (values.videoLinkType === 'false') {
+        const formData = new FormData()
 
-        if (values.videoLinkType === 'false') {
-            fileData = new FormData()
-            formData.append('inputFile', values.inputFile)
-        } else {
-            fileData = values.videoLink
-        }
+        formData.append('duration', values.duration)
+        formData.append('description', values.description)
+        formData.append('link', values.videoLink)
+        formData.append('image', values.image)
+        formData.append('title', values.title)
+        formData.append('bacOnly', values.bacOnly)
+        formData.append('videoLinkType', values.videoLinkType)
 
-        const rawData = {
-            duration: values.duration,
-            description: values.description,
-            link: fileData,
-            image: values.image,
-            title: values.title,
-            bacOnly: values.bacOnly,
-            videoLinkType: values.videoLinkType
-        }
+        dispatch(EditVideoAPI(id, formData))
+    }
 
-        dispatch(EditVideoAPI(id, rawData))
+    if (networkLoading) {
+        return (<TableDataLoadingSkleton />)
     }
 
 
@@ -96,7 +95,6 @@ const AddVideo = () => {
                 <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
-                            console.log("new", formik.values)
                             return (
                                 <Form>
                                     <Row className="d-flex justify-content-center">
@@ -152,11 +150,16 @@ const AddVideo = () => {
                                                     <InputGroup>
                                                         <InputGroupAddon addonType='prepend'>
                                                             <InputGroupText className={!!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
-                                                                <Link size={15} />
+                                                                {formik.values.embededVideo && (
+                                                                    <Code size={15} />
+                                                                )}
+                                                                {!formik.values.embededVideo && (
+                                                                    <Link size={15} />
+                                                                )}
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
-                                                            type="text"
+                                                            type={formik.values.embededVideo ? "textarea" : "text"}
                                                             name="videoLink"
                                                             id="videoLink"
                                                             {...formik.getFieldProps("videoLink")}
@@ -179,6 +182,7 @@ const AddVideo = () => {
                                                             name='embededVideo'
                                                             label='Use Embded Video'
                                                             inline
+                                                            value={formik.values.embededVideo}
                                                             onChange={(e) => formik.setFieldValue('embededVideo', e.target.checked)} />
                                                     </FormGroup>
                                                 </Col>
