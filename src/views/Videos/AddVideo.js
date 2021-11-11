@@ -34,32 +34,39 @@ const AddVideo = () => {
         description: "",
         bacOnly: false,
         embededVideo: false,
-        videoLinkType: "true",
-        inputFile: ""
+        videoLinkType: "true"
     }
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
         image: Yup.string().required("Required"),
-        videoLink: Yup.string().required("Required"),
         duration: Yup.string(),
         description: Yup.string(),
-        videoLinkType: Yup.string()
+        videoLink: Yup.mixed().required()
     })
 
     const submitForm = (values, {resetForm}) => {
         console.log("values", values)
 
+        let fileData
+
+        if (values.videoLinkType === 'false') {
+            fileData = new FormData()
+            fileData.append('inputFile', values.inputFile)
+        } else {
+            fileData = values.videoLink
+        }
+
+            
         const rawData = {
             duration: values.duration,
             description: values.description,
-            link: values.videoLink,
+            link: fileData,
             image: selectedImg.replace(`${BASE_URL}uploads/`, ''),
             title: values.title,
             bacOnly: values.bacOnly,
             embededVideo: values.embededVideo,
-            videoLinkType: values.videoLinkType,
-            inputFile: values.inputFile
+            videoLinkType: values.videoLinkType
         }
 
         dispatch(AddVideoAPI(rawData, resetForm))
@@ -75,6 +82,7 @@ const AddVideo = () => {
                 <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
+                            console.log("err", formik.errors)
                             return (
                                 <Form>
                                     <Row className="d-flex justify-content-center">
@@ -154,8 +162,10 @@ const AddVideo = () => {
                                                     </FormGroup>
                                                 </Col>
                                             </Row></> : <Row className="mb-1 pr-2 pl-2"><Col><FormGroup>
-                                                <Label for='inputFile'>File Upload</Label>
-                                                <CustomInput type='file' id='inputFile' name='inputFile' accept="video/mp4,video/x-m4v,video/*" />
+                                                <Label for='videoLink'>File Upload</Label>
+                                                <CustomInput type='file' id='videoLink' name='videoLink' onChange={(event) => {
+                                                                    formik.setFieldValue("videoLink", event.currentTarget.files[0])
+                                                }} accept="video/mp4,video/x-m4v,video/*" />
                                               </FormGroup></Col></Row>
                                               }  
                                     <Row className="mb-1 pr-2 pl-2">
@@ -208,7 +218,6 @@ const AddVideo = () => {
                                                 <h6>More Options</h6>
                                                 <FormGroup className="has-icon-left position-relative">
                                                     {/* <Label htmlFor="bacOnly">Bac Only</Label> */}
-
                                                     <CustomInput
                                                         type='switch'
                                                         id='bacOnly'

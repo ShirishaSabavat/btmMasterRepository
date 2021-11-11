@@ -47,28 +47,39 @@ const AddVideo = () => {
         videoLink: oldData?.link || "",
         duration: oldData.duration || "",
         description: oldData.description || "",
-        bacOnly: oldData.bacOnly || false
+        bacOnly: oldData.bacOnly || false,
+        videoLinkType: oldData.videoLinkType || 'true'
     }
 
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
         image: Yup.string().required("Required"),
-        videoLink: Yup.string().required("Required"),
+        videoLink: Yup.mixed().required("Required"),
         duration: Yup.string(),
         description: Yup.string()
     })
 
     const submitForm = (values) => {
         console.log("values", values)
+        
+        let fileData
+
+        if (values.videoLinkType === 'false') {
+            fileData = new FormData()
+            formData.append('inputFile', values.inputFile)
+        } else {
+            fileData = values.videoLink
+        }
 
         const rawData = {
             duration: values.duration,
             description: values.description,
-            link: values.videoLink,
+            link: fileData,
             image: values.image,
             title: values.title,
-            bacOnly: values.bacOnly
+            bacOnly: values.bacOnly,
+            videoLinkType: values.videoLinkType
         }
 
         dispatch(EditVideoAPI(id, rawData))
@@ -127,32 +138,58 @@ const AddVideo = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Row className="mb-1 pr-2 pl-2">
+                                    <Row className="mb-1 pr-2 pl-2" >
                                         <Col sm="12" md="12">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="videoLink">Video Link <span className="text-danger">*</span></Label>
-                                                <InputGroup>
-                                                    <InputGroupAddon addonType='prepend'>
-                                                    <InputGroupText className={ !!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
-                                                        <Link size={15} />
-                                                    </InputGroupText>
-                                                    </InputGroupAddon>
-                                                    <Input
-                                                    type="text"
-                                                    name="videoLink"
-                                                    id="videoLink"
-                                                    {...formik.getFieldProps("videoLink")}
-                                                    invalid={!!(formik.touched.videoLink && formik.errors.videoLink)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="videoLink"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
+                                            <div>Video Type:</div>
+                                            <CustomInput type='radio' id='videoLinkType1' name='videoLinkType' inline label='YouTube' {...formik.getFieldProps('videoLinkType')} value={true}  defaultChecked />
+                                            <CustomInput type='radio' id='videoLinkType2' name='videoLinkType' inline label='Upload Video' {...formik.getFieldProps('videoLinkType')}  value={false}   />
                                         </Col>
+                                    </Row>
+                                    {formik.values.videoLinkType === "true" ? <><Row  className="mb-1 pr-2 pl-2">
+                                            <Col sm="12" md="12" className='mt-1'>
+                                                <FormGroup className="has-icon-left position-relative">
+                                                    <Label htmlFor="videoLink">{formik.values.embededVideo ? "Embded code" : "Video Link"} <span className="text-danger">*</span> <small>(<a href="https://youtube.com" target="_blank" rel="noopener">Pick from youtube</a> )</small> </Label>
+                                                    <InputGroup>
+                                                        <InputGroupAddon addonType='prepend'>
+                                                            <InputGroupText className={!!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
+                                                                <Link size={15} />
+                                                            </InputGroupText>
+                                                        </InputGroupAddon>
+                                                        <Input
+                                                            type="text"
+                                                            name="videoLink"
+                                                            id="videoLink"
+                                                            {...formik.getFieldProps("videoLink")}
+                                                            invalid={!!(formik.touched.videoLink && formik.errors.videoLink)}
+                                                        >
+                                                        </Input>
+                                                    </InputGroup>
+                                                    <ErrorMessage
+                                                        name="videoLink"
+                                                        component="div"
+                                                        className="field-error text-danger" />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row><Row className="mb-1 pr-2 pl-2">
+                                                <Col sm="12" md="12">
+                                                    <FormGroup className="has-icon-left position-relative">
+                                                        <CustomInput
+                                                            type='switch'
+                                                            id='embededVideo'
+                                                            name='embededVideo'
+                                                            label='Use Embded Video'
+                                                            inline
+                                                            onChange={(e) => formik.setFieldValue('embededVideo', e.target.checked)} />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row></> : <Row className="mb-1 pr-2 pl-2"><Col><FormGroup>
+                                                <Label for='videoLink'>File Upload</Label>
+                                                <CustomInput type='file' id='videoLink' name='videoLink' onChange={(event) => {
+                                                                    formik.setFieldValue("videoLink", event.currentTarget.files[0])
+                                                }} accept="video/mp4,video/x-m4v,video/*" />
+                                              </FormGroup></Col></Row>
+                                              }  
+                                    <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="duration">Duration (Hours)</Label>
