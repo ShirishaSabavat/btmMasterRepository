@@ -23,6 +23,8 @@ import { getLandingPageData } from "../../redux/actions/landingPage/index"
 // import CourseCard from './components/courseCard'
 import CourseDetailLoadingSkleton from '../../components/skleton/CourseDetailLoadingSkleton'
 
+import logo from '../../assets/images/logo/logo-fav.png'
+
 const Landing = (route) => {
     const history = useHistory()
     const dispatch = useDispatch()
@@ -149,7 +151,7 @@ const Landing = (route) => {
                 currency: "INR",
                 name: "Business Aacharaya",
                 description: `Purchase Course.`,
-                image: 'https://amoghnya.com/assets/img/favicon.png',
+                image: {logo},
                 order_id: orderId,
                 async handler (response) {
                     const data = {

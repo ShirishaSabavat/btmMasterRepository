@@ -47,8 +47,8 @@ const CourseSchedule = () => {
           height:"200px",
           cell: (row) => (
             <div className="d-flex flex-wrap">
-              <p className="text-bold-500 text-wrap mb-0">From: {new Date(row.startDate).toLocaleDateString()}</p>
-              <p className="text-bold-500 mb-0">To: {new Date(row.endDate).toLocaleDateString()}</p>
+              <p className="text-bold-500 text-wrap mb-0">From: {new Date(row.startDate).toLocaleString('en-GB', { timeZone: 'UTC', hour12: true })}</p>
+              <p className="text-bold-500 mb-0">To: {new Date(row.endDate).toLocaleString('en-GB', { timeZone: 'UTC', hour12: true })}</p>
             </div>
           )
         },

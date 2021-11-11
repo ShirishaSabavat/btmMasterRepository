@@ -46,28 +46,23 @@ const BootstrapDialogTitle = (props) => {
   )
 }
 
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired
-}
-
   return (
       <BootstrapDialog
         onClose={() => props.setShowModal(prevState => !prevState)}
         aria-labelledby="customized-dialog-title"
         open={props.setShowModal}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={() => props.setShowModal(prevState => !prevState)}>
-          {props.formTitle}
-        </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            {props.data}
+            Are you sure you want to release payout ?
           </Typography>
         </DialogContent>
-        <DialogActions>
+        <DialogActions >
+          <Button color="error" autoFocus onClick={() => props.setShowModal(prevState => !prevState)}>
+            Cancel
+          </Button>
           <Button autoFocus onClick={() => props.setShowModal(prevState => !prevState)}>
-            Ok
+            Yes
           </Button>
         </DialogActions>
       </BootstrapDialog>

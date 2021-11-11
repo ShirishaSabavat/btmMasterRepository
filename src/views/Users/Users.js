@@ -133,7 +133,7 @@ const UserTable = () => {
           width:"124px",
           cell: (row) => (
             <div className="d-flex flex-wrap">
-              <p style={{fontSize: 11}} className="text-bold-500 text-wrap mb-0">{(new Date(row.createdAt)).toLocaleString()}</p>
+              <p style={{fontSize: 11}} className="text-bold-500 text-wrap mb-0">{(new Date(row.createdAt)).toLocaleString('en-GB', { timeZone: 'UTC', hour12: true })}</p>
             </div>
           )
         },

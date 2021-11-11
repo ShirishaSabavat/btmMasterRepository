@@ -5,17 +5,19 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {Edit, Trash, Trash2, Clock, ArrowUpCircle, User, Users, CheckCircle} from "react-feather"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
-import { fetchAllBAcUsers } from '../../redux/actions/user'
+import { fetchAllBACUsersData } from '../../redux/actions/user'
 import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
+import Modal from "./Modals/Modal"
 
 const Payout = () => {
 
   const dispatch = useDispatch()
-  const users = useSelector(state => state.user.users)
+  const users = useSelector(state => state.user.bacUsers)
   const loading = useSelector(state => state.common.loading)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    dispatch(fetchAllBAcUsers())
+    dispatch(fetchAllBACUsersData())
   }, [])
 
   const tableColumns = [
@@ -66,7 +68,7 @@ const Payout = () => {
       selector: "action",
       sortable: true,
       cell: (row) => (
-        <Button className="btn btn-sm btn-danger">Payout</Button>
+        <Button className="btn btn-sm btn-danger" onClick={() => setShowModal(prevState => !prevState)} >Payout</Button>
       )
     }
   ]
@@ -129,6 +131,7 @@ const Payout = () => {
 
             </Card>
         </Col>
+        {showModal ? <Modal showModal={showModal} setShowModal={setShowModal} /> : null}
     </Row>
 }
 

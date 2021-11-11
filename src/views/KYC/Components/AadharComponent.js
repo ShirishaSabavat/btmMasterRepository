@@ -53,7 +53,7 @@ const AadharComponent  = ({stepper, type, setKycFormData}) => {
                             type="file"
                             name="aadharAttachment"
                             id="aadharAttachment"
-                            {...formik.getFieldProps("aadharAttachment")}
+                            onChange={file => formik.setFieldValue("aadharAttachment", file.currentTarget.files[0])}
                             invalid={!!(formik.touched.aadharAttachment && formik.errors.aadharAttachment)}
                             >
                             </CustomInput>
