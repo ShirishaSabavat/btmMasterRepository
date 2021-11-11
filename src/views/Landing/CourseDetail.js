@@ -475,8 +475,9 @@ const Landing = (route) => {
                     loadingPosition="start"
                     variant="contained" 
                     style={{borderRadius: 2}}
+                    disabled={userData.access_token}
                     onClick={() => doRegister()}
-                >{!userData.access_token ? "Register & Join" : "Buy Now" }</LoadingButton>
+                >{!userData.access_token ? "Register & Join" : "Please Wait..." }</LoadingButton>
             </div>
 
             <div className="text-center" style={{marginTop: 12}}>
