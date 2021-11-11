@@ -80,7 +80,7 @@ const Sales = () => {
           selector: "purchaseDate",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">{new Date(row.purchaseDate).toDateString()}</p>
+            <p className="text-bold-500 mb-0">{new Date(row.purchaseDate).toLocaleString('en-GB', { timeZone: 'UTC', hour12: true })}</p>
           )
         },
         {

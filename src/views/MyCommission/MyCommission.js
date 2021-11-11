@@ -25,7 +25,7 @@ const MyCommission = () => {
       selector: "date",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 mb-0">{new Date(row.createdAt).toLocaleString()}</p>
+        <p className="text-bold-500 mb-0">{new Date(row.createdAt).toLocaleString('en-GB', { timeZone: 'UTC', hour12: true })}</p>
       )
     },
     {
