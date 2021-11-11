@@ -150,7 +150,7 @@ const BankAccountComponent  = ({stepper, type, setKycFormData}) => {
                             type="file"
                             name="bankStatment"
                             id="bankStatment"
-                            {...formik.getFieldProps("bankStatment")}
+                            onChange={file => formik.setFieldValue("bankStatement", file.currentTarget.files[0])}
                             invalid={!!(formik.touched.bankStatment && formik.errors.bankStatment)}
                             >
                             </CustomInput>

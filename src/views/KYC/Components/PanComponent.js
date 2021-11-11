@@ -25,8 +25,8 @@ const PanComponent  = ({stepper, type, setKycFormData}) => {
 
     const submitForm = (values) => {
         setKycFormData(values)
+
         stepper.next()
-        console.log("values", values)
     }
 
     return <Row>
@@ -90,7 +90,7 @@ const PanComponent  = ({stepper, type, setKycFormData}) => {
                             type="file"
                             name="panAttachment"
                             id="panAttachment"
-                            {...formik.getFieldProps("panAttachment")}
+                            onChange={file => formik.setFieldValue("panAttachment", file.currentTarget.files[0])}
                             invalid={!!(formik.touched.panAttachment && formik.errors.panAttachment)}
                             >
                             </CustomInput>

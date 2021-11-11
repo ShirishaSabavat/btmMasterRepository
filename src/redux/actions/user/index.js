@@ -25,12 +25,13 @@ export const fetchAllUsersData = () => dispatch => {
   })
 }
 
-export const fetchAllBAcUsers = () => dispatch => {
+export const fetchAllBACUsersData = () => dispatch => {
   dispatch(toggleNetworkLoading(true))
-  ServerApi().get('/users/bac-users')
+  ServerApi().get('/users')
   .then(res => {
     console.log("res", res)
-    const data = res.data.reverse()
+    let data = res.data.reverse().map((values, index) => ({...values, sno: index + 1}))
+    data = data.filter(item => item.role === "BAC_USER")
     dispatch({
       type: FETCH_ALL_BAC_USER_DATA,
       payload: data
@@ -45,6 +46,27 @@ export const fetchAllBAcUsers = () => dispatch => {
     console.log(e)
   })
 }
+
+// export const fetchAllBAcUsers = () => dispatch => {
+//   dispatch(toggleNetworkLoading(true))
+//   ServerApi().get('/users/bac-users')
+//   .then(res => {
+//     console.log("res", res)
+//     const data = res.data.reverse()
+//     dispatch({
+//       type: FETCH_ALL_BAC_USER_DATA,
+//       payload: data
+//     })
+//     dispatch(toggleNetworkLoading(false))
+//   })
+//   .catch(e => {
+//     dispatch(toggleNetworkLoading(false))
+//     toast.error("Error in Fetching Data", {
+//       position: toast.POSITION.BOTTOM_CENTER
+//     })
+//     console.log(e)
+//   })
+// }
 
 export const fetchUserById = (id) => dispatch => {
   dispatch(toggleNetworkLoading(true))

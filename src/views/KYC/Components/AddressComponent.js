@@ -112,7 +112,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             type="file"
                             name="addressAttachment"
                             id="addressAttachment"
-                            {...formik.getFieldProps("addressAttachment")}
+                            onChange={file => formik.setFieldValue("addressAttachment", file.currentTarget.files[0])}
                             invalid={!!(formik.touched.addressAttachment && formik.errors.addressAttachment)}
                             >
                             </CustomInput>

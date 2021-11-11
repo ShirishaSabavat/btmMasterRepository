@@ -52,7 +52,7 @@ const AddVideo = () => {
 
         if (values.videoLinkType === 'false') {
             fileData = new FormData()
-            formData.append('inputFile', values.inputFile)
+            fileData.append('inputFile', values.inputFile)
         } else {
             fileData = values.videoLink
         }
