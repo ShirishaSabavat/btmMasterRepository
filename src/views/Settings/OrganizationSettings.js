@@ -557,68 +557,77 @@ const OrganizationSettings = () => {
                                                     className="field-error text-danger"
                                                 />
                                             </FormGroup>
-                                        </Col>
-                                        <Col sm="12" md="3">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="latitude">latitude</Label>
-                                                <InputGroup>
-                                                    <Input
-                                                    type="string"
-                                                    name="latitude"
-                                                    id="latitude"
-                                                    {...formik.getFieldProps("latitude")}
-                                                    invalid={!!(formik.touched.latitude && formik.errors.latitude)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="latitude"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col sm="12" md="3">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="longitude">longitude</Label>
-                                                <InputGroup>
-                                                    <Input
-                                                    type="string"
-                                                    name="longitude"
-                                                    id="longitude"
-                                                    {...formik.getFieldProps("longitude")}
-                                                    invalid={!!(formik.touched.longitude && formik.errors.longitude)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="longitude"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
-                                        <Col sm="12" md="12">
-                                            <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="footerText">Footer Text</Label>
-                                                <InputGroup>
-                                                    <Input
-                                                    type="textarea"
-                                                    name="footerText"
-                                                    id="footerText"
-                                                    {...formik.getFieldProps("footerText")}
-                                                    invalid={!!(formik.touched.footerText && formik.errors.footerText)}
-                                                    >
-                                                    </Input>
-                                                </InputGroup>
-                                                <ErrorMessage
-                                                    name="footerText"
-                                                    component="div"
-                                                    className="field-error text-danger"
-                                                />
-                                            </FormGroup>
-                                        </Col>
+                                        </Col>                                        
                                     </Row>
+                                    <h3 className="mt-3">Map location</h3>
+                                    <hr />
+                                        <Row>
+                                            <Col sm="12" md="3">
+                                                <FormGroup className="has-icon-left position-relative">
+                                                    <Label htmlFor="latitude">latitude</Label>
+                                                    <InputGroup>
+                                                        <Input
+                                                        type="string"
+                                                        name="latitude"
+                                                        id="latitude"
+                                                        {...formik.getFieldProps("latitude")}
+                                                        invalid={!!(formik.touched.latitude && formik.errors.latitude)}
+                                                        >
+                                                        </Input>
+                                                    </InputGroup>
+                                                    <ErrorMessage
+                                                        name="latitude"
+                                                        component="div"
+                                                        className="field-error text-danger"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col sm="12" md="3">
+                                                <FormGroup className="has-icon-left position-relative">
+                                                    <Label htmlFor="longitude">longitude</Label>
+                                                    <InputGroup>
+                                                        <Input
+                                                        type="string"
+                                                        name="longitude"
+                                                        id="longitude"
+                                                        {...formik.getFieldProps("longitude")}
+                                                        invalid={!!(formik.touched.longitude && formik.errors.longitude)}
+                                                        >
+                                                        </Input>
+                                                    </InputGroup>
+                                                    <ErrorMessage
+                                                        name="longitude"
+                                                        component="div"
+                                                        className="field-error text-danger"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    <h3 className="mt-3">CMS</h3>
+                                    <hr />
+
+                                        <Row>
+                                            <Col sm="12" md="12">
+                                                <FormGroup className="has-icon-left position-relative">
+                                                    <Label htmlFor="footerText">Footer Text</Label>
+                                                    <InputGroup>
+                                                        <Input
+                                                        type="textarea"
+                                                        name="footerText"
+                                                        id="footerText"
+                                                        {...formik.getFieldProps("footerText")}
+                                                        invalid={!!(formik.touched.footerText && formik.errors.footerText)}
+                                                        >
+                                                        </Input>
+                                                    </InputGroup>
+                                                    <ErrorMessage
+                                                        name="footerText"
+                                                        component="div"
+                                                        className="field-error text-danger"
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
                                     {/* <Row className="d-flex">
                                         <Col sm="12" md="5" className="mb-1">
                                             <Row className="d-flex justify-content-around align-items-center">
