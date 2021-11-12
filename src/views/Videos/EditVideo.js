@@ -4,7 +4,7 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import { Link, Code} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
@@ -16,7 +16,6 @@ const EditVideo = () => {
     const { videoId } = useParams()
 
     const dispatch = useDispatch()
-    const history = useHistory()
     const oldData = useSelector(state => state.videos.video)
     const imagesData = useSelector(state => state.media.medias)
     const networkLoading = useSelector(state => state.common.loading)
@@ -68,7 +67,7 @@ console.log("oldData", oldData)
         formData.append('bacOnly', values.bacOnly)
         formData.append('videoLinkType', values.videoLinkType)
 
-        dispatch(EditVideoAPI(id, formData))
+        dispatch(EditVideoAPI(videoId, formData))
     }
 
     if (networkLoading) {
