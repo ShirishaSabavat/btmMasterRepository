@@ -18,6 +18,7 @@ import { updateUserKyc } from "../../../redux/actions/auth"
 import EditForm from "./EditForm"
 
 const UserKyc  = ({userData}) => {
+  console.log(userData)
 
     const dispatch = useDispatch()
 
@@ -194,9 +195,9 @@ const UserKyc  = ({userData}) => {
                   <Button className="mr-1" onClick={() => updateUserKyc()}  color='primary' id='reportToggler2'>
                     Save
                   </Button>
-                  {/* <Button onClick={() => setShowEdit(true)}  color='success' id='reportToggler3'>
+                  <Button onClick={() => setShowEdit(true)}  color='success' id='reportToggler3'>
                     Edit
-                  </Button> */}
+                  </Button>
                 </div>
               </>
             )
@@ -246,10 +247,9 @@ const UserKyc  = ({userData}) => {
                     </div>
                 )}
 
-                {showEdit ? <EditForm setShowEdit={setShowEdit} />  : <Timeline data={iconsData} />}
             </CardBody>
         </Card> 
-
+        {showEdit ? <EditForm setShowEdit={setShowEdit} />  : <Timeline data={iconsData} uid={userData} />}
     </div>
 
 }
