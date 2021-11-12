@@ -3,7 +3,7 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import {  useParams } from "react-router-dom"
 
 import { fetchAllVideos } from "../../redux/actions/videos"
 import {EditCourseAPI, fetchCourseById} from "../../redux/actions/courses/index"
@@ -16,11 +16,8 @@ import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSk
 const EditCourse = () => {
 
     const { courseId } = useParams()
-
-    const [fileModalState, setFileModalState] = useState(false)
     
     const dispatch = useDispatch()
-    const history = useHistory()
     const CourseData = useSelector(state => state.courses.course)
     const facultyOptions = useSelector(state => state.faculty.facultyOptions) 
     const imagesData = useSelector(state => state.media.medias) 
@@ -28,6 +25,7 @@ const EditCourse = () => {
     
     const videoLinks = CourseData?.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink)) 
     const videoOptions = videoLinks?.map(videoData => {
+        console.log(videoData, "videoData")
         return { label: videoData[0]?.title, value: videoData[0]?._id }
     })
     const networkLoading = useSelector(state => state.common.loading)
@@ -54,10 +52,6 @@ const EditCourse = () => {
         })
     }
 
-    const toggleFileModal = () => {
-        setFileModalState((prevState) => !prevState)
-    }    
-
     const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${CourseData?.image}`)
 
     const initialValues = {
@@ -73,6 +67,8 @@ const EditCourse = () => {
         featured: CourseData?.featured || ""
     }
 
+    console.log("CourseData", CourseData)
+
     const validationSchema = Yup.object().shape({
         image: Yup.string().required("Required"),
         courseName: Yup.string().required("Required"),
@@ -81,11 +77,12 @@ const EditCourse = () => {
         courseDetails: Yup.string().required("Required"),
         courseValidity: Yup.number().positive().integer().required("Required"),
         price: Yup.number().positive().integer().required("Required"),
-        faculty: Yup.string().required("Required")
-        // videoLink: Yup.string().required("Required")
+        faculty: Yup.string().required("Required"),
+        videoLink: Yup.mixed().required("Required")
     })
 
     const submitForm = (values) => {
+        console.log("arr", values.videoLink)
         const rawData = {
             gst: 18,
             tags: values.tags,
@@ -93,7 +90,7 @@ const EditCourse = () => {
             schedule: "hh",
             shortDescription: "ok",
             validity: values.courseValidity,
-            videos: values.videoLink.map(i => i.value),
+            videos: values.videoLink,
             price: values.price,
             details: values.courseDetails,
             code: values.courseCode,
@@ -123,7 +120,6 @@ const EditCourse = () => {
                 <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
-                            console.log("fvalue", formik.values.videoLink)
                             return (
                                 <Form>
                                      <Label htmlFor="courseName">Preview Image</Label>
@@ -332,11 +328,10 @@ const EditCourse = () => {
                             )
                         }}
                     </Formik>
-                    {!fileModalState && editModal.modal ? (
+                    {editModal.modal ? (
                     <ImagePickerComponent
                         modalState={editModal.modal}
                         onClose={toggleModel}
-                        toggleFileModal={toggleFileModal}
                         imagesData={imagesData}
                         selectedImg={selectedImg}
                         setSelectedImg={setSelectedImg}

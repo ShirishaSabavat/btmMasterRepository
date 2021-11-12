@@ -65,6 +65,7 @@ console.log("oldData", oldData)
         formData.append('image', values.image)
         formData.append('title', values.title)
         formData.append('bacOnly', values.bacOnly)
+        formData.append('embededVideo', values.embededVideo)
         formData.append('videoLinkType', values.videoLinkType)
 
         dispatch(EditVideoAPI(videoId, formData))
