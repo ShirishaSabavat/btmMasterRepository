@@ -11,7 +11,7 @@ import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import { BASE_URL } from '../../utility/serverSettings'
 import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
-const AddVideo = () => {
+const EditVideo = () => {
 
     const { videoId } = useParams()
 
@@ -24,21 +24,12 @@ const AddVideo = () => {
     useEffect(() => {
         dispatch(fetchVideoById(videoId))
     }, [])
+console.log("oldData", oldData)
 
-    const [fileModalState, setFileModalState] = useState(false)
-
-    const [editModal, setModal] = useState({
-        modal: false
-      })
+    const [editModal, setModal] = useState(false)
 
     const toggleModel = () => {
-    setModal((prevState) => {
-        return { modal: !prevState.modal }
-    })
-    }
-
-    const toggleFileModal = () => {
-        setFileModalState((prevState) => !prevState)
+        setModal((prevState) => !prevState)
     }
 
     const [selectedImg, setSelectedImg] = useState('')
@@ -84,7 +75,6 @@ const AddVideo = () => {
         return (<TableDataLoadingSkleton />)
     }
 
-
     return <Row>
         <Col sm="12" md="5">
             <Card >
@@ -95,6 +85,7 @@ const AddVideo = () => {
                 <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
+                            console.log("formik", formik.errors)
                             return (
                                 <Form>
                                     <Row className="d-flex justify-content-center">
@@ -183,6 +174,7 @@ const AddVideo = () => {
                                                             label='Use Embded Video'
                                                             inline
                                                             value={formik.values.embededVideo}
+                                                            defaultChecked={formik.values.embededVideo}
                                                             onChange={(e) => formik.setFieldValue('embededVideo', e.target.checked)} />
                                                     </FormGroup>
                                                 </Col>
@@ -264,11 +256,10 @@ const AddVideo = () => {
                         }}
                     </Formik>
                 </CardBody>
-                {!fileModalState && editModal.modal ? (
+                {editModal ? (
                 <ImagePickerComponent
-                    modalState={editModal.modal}
+                    modalState={editModal}
                     onClose={toggleModel}
-                    toggleFileModal={toggleFileModal}
                     imagesData={imagesData}
                     selectedImg={selectedImg}
                     setSelectedImg={setSelectedImg}
@@ -279,4 +270,4 @@ const AddVideo = () => {
     </Row>
 }
 
-export default AddVideo
+export default EditVideo
