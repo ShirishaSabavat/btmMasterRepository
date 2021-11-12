@@ -59,13 +59,22 @@ const Videos = () => {
       )
     },
     {
-      name: "Video Link",
+      name: "Video",
       selector: "link",
       sortable: true,
       cell: (row) => (
-        <Badge color='primary'>
-          <a className="text-white" target="_blank" href={row.link}>Link</a>
-        </Badge>
+        <>
+          {row.link === 'n/a' && (
+            <Badge color='info'>
+              <a className="text-white" target="_blank" href={`${BASE_URL}videoUploads/${row.videoFile}`}>File</a>
+            </Badge>
+          )}
+          {row.link !== 'n/a' && (
+            <Badge color='primary'>
+              <a className="text-white" target="_blank" href={row.link}>Link</a>
+            </Badge>
+          )}
+        </>
       )
     },
     {

@@ -50,10 +50,12 @@ const AddVideo = () => {
             is: 'FILE',
             then: Yup.mixed().required(),
             otherwise: Yup.mixed()
-          })
+        })
     })
 
     const submitForm = (values, {resetForm}) => {
+
+        console.log(values)
 
         const formData = new FormData()
 
@@ -71,7 +73,7 @@ const AddVideo = () => {
             formData.append('videoFile', values.videoFile)
         }
 
-        dispatch(AddVideoAPI(rawData, resetForm))
+        dispatch(AddVideoAPI(formData, resetForm))
     }
 
     return <Row>
@@ -152,69 +154,77 @@ const AddVideo = () => {
 
                                     </Row>
 
-                                    {formik.values.videoLinkType === "YOUTUBE" && (
-                                        <>
-                                            <Row className="mb-1 pr-2 pl-2">
-                                                <Col sm="12" md="12" className='mt-1'>
-                                                    <FormGroup className="has-icon-left position-relative">
-                                                        <Label htmlFor="videoLink">{formik.values.embededVideo ? "Embded code" : "Video Link"} <span className="text-danger">*</span> <small>(<a href="https://youtube.com" target="_blank" rel="noopener">Pick from youtube</a> )</small> </Label>
-                                                        <InputGroup>
-                                                            <InputGroupAddon addonType='prepend'>
-                                                                <InputGroupText className={!!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
-                                                                    {formik.values.embededVideo && (
-                                                                        <Code size={15} />
-                                                                    )}
-                                                                    {!formik.values.embededVideo && (
-                                                                        <Link size={15} />
-                                                                    )}
-                                                                </InputGroupText>
-                                                            </InputGroupAddon>
-                                                            <Input
-                                                                type={formik.values.embededVideo ? "textarea" : "text"}
-                                                                name="videoLink"
-                                                                id="videoLink"
-                                                                {...formik.getFieldProps("videoLink")}
-                                                                invalid={!!(formik.touched.videoLink && formik.errors.videoLink)}
-                                                            >
-                                                            </Input>
-                                                        </InputGroup>
-                                                        <ErrorMessage
-                                                            name="videoLink"
-                                                            component="div"
-                                                            className="field-error text-danger" />
-                                                    </FormGroup>
-                                                </Col>
-                                            </Row>
-                                        </>
-                                    )}
+                                    <Row className={`mb-1 pr-2 pl-2 ${(formik.values.videoLinkType === "FILE") ? 'd-none' : ''}`}>
+                                        <Col sm="12" md="12" className='mt-1'>
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label htmlFor="videoLink">{formik.values.embededVideo ? "Embded code" : "Video Link"} <span className="text-danger">*</span> <small>(<a href="https://youtube.com" target="_blank" rel="noopener">Pick from youtube</a> )</small> </Label>
+                                                <InputGroup>
+                                                    <InputGroupAddon addonType='prepend'>
+                                                        <InputGroupText className={!!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
+                                                            {formik.values.embededVideo && (
+                                                                <Code size={15} />
+                                                            )}
+                                                            {!formik.values.embededVideo && (
+                                                                <Link size={15} />
+                                                            )}
+                                                        </InputGroupText>
+                                                    </InputGroupAddon>
+                                                    <Input
+                                                        type={formik.values.embededVideo ? "textarea" : "text"}
+                                                        name="videoLink"
+                                                        id="videoLink"
+                                                        {...formik.getFieldProps("videoLink")}
+                                                        invalid={!!(formik.touched.videoLink && formik.errors.videoLink)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="videoLink"
+                                                    component="div"
+                                                    className="field-error text-danger" />
+                                            </FormGroup>
+                                        </Col>
 
-                                    {formik.values.videoLinkType === "FILE" && (
-                                        <Row className="mb-1 pr-2 pl-2">
-                                            <Col>
-                                                <FormGroup>
-                                                    <div>
-                                                        <Label for='videoFile'>File Upload <span className="text-danger">*</span></Label>
-                                                    </div>
-                                                    <InputGroup>
-                                                    <CustomInput 
-                                                        type='file' 
-                                                        id='videoFile' 
-                                                        name='videoFile' 
-                                                        onChange={(event) => {
-                                                            formik.setFieldValue("videoFile", event.currentTarget.files[0])
-                                                        }} 
-                                                        accept="video/mp4,video/x-m4v,video/*" />
-                                                    </InputGroup>
-                                                    <ErrorMessage
-                                                        name="videoFile"
-                                                        component="div"
-                                                        className="field-error text-danger"
-                                                    />
+                                        <Col sm="12" md="12">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <CustomInput
+                                                    type='switch'
+                                                    id='embededVideo'
+                                                    name='embededVideo'
+                                                    label='Use Embded Video'
+                                                    inline
+                                                    value={formik.values.embededVideo}
+                                                    defaultChecked={formik.values.embededVideo}
+                                                    onChange={(e) => formik.setFieldValue('embededVideo', e.target.checked)} />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
 
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                    )}
+                                    <Row className={`mb-1 pr-2 pl-2 ${(formik.values.videoLinkType === "YOUTUBE") ? 'd-none' : ''}`}>
+                                        <Col>
+                                            <FormGroup>
+                                                <div>
+                                                    <Label for='videoFile'>File Upload <span className="text-danger">*</span></Label>
+                                                </div>
+                                                <InputGroup>
+                                                <CustomInput 
+                                                    type='file' 
+                                                    id='videoFile' 
+                                                    name='videoFile' 
+                                                    onChange={(event) => {
+                                                        formik.setFieldValue("videoFile", event.currentTarget.files[0])
+                                                    }} 
+                                                    accept="video/mp4,video/x-m4v,video/*" />
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="videoFile"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
 
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">

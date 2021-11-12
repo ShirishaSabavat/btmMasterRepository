@@ -62,6 +62,14 @@ import { loadMyClients } from '../../redux/actions/user'
       )
     },
     {
+      name: "Referral",
+      selector: "referral",
+      sortable: true,
+      cell: (row) => (
+          <p>{row.referral}</p>
+      )
+    },
+    {
       name: "KYC Status",
       selector: "kycstatus",
       sortable: true,
@@ -105,12 +113,25 @@ import { loadMyClients } from '../../redux/actions/user'
         <Col sm="12" md="12">
             <Card>
                 <CardHeader className="d-flex justify-content-between">
-                    <CardTitle>My Customer</CardTitle>
+                    <CardTitle>My Direct Customer</CardTitle>
                     {/* <Button type="button" color="primary" onClick={toggleModel}>Create Customer</Button> */}
                 </CardHeader>
                 <hr className="m-0" />
                 
-                <CustomDataTable slCheckBox={false} data={users} columns={tableColumns} />
+                <CustomDataTable slCheckBox={false} data={users.filter(i => i.myRootParent === undefined)} columns={tableColumns} />
+
+            </Card>
+        </Col>
+
+        <Col sm="12" md="12">
+            <Card>
+                <CardHeader className="d-flex justify-content-between">
+                    <CardTitle>My Indirect Customer</CardTitle>
+                    {/* <Button type="button" color="primary" onClick={toggleModel}>Create Customer</Button> */}
+                </CardHeader>
+                <hr className="m-0" />
+                
+                <CustomDataTable slCheckBox={false} data={users.filter(i => i.myRootParent !== undefined)} columns={tableColumns} />
 
             </Card>
         </Col>

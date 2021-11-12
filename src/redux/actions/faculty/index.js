@@ -6,7 +6,6 @@ import { toggleNetworkLoading } from '../common'
 export const AddFaculty = (rawData, resetForm) => dispatch => {
   ServerApi().post('/faculty', rawData)
   .then(res => {
-    console.log("ress", res)
     if (res.status === 201) {
       resetForm({})
       toast.success("Created Faculty", {
@@ -29,7 +28,6 @@ export const AddFaculty = (rawData, resetForm) => dispatch => {
 export const EditFaculty = (id, rawData) => dispatch => {
   ServerApi().patch(`/faculty${id}`, rawData)
   .then(res => {
-    console.log("ress", res)
     if (res.status === 200) {
       resetForm({})
       toast.success("Updated Faculty Settings!", {

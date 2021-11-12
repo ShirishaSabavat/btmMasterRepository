@@ -69,7 +69,7 @@ const EditCourseSchedule = () => {
             location: values.location
         }
 
-        dispatch(EditCourseScheduleAPI(courseScheduleID, rawData))
+        dispatch(EditCourseScheduleAPI(workshopId, rawData))
 
     }
 
@@ -84,8 +84,6 @@ const EditCourseSchedule = () => {
                     <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
                         {(formik) => {
-                            console.log("co", courseOptions)
-                            console.log("formik", formik.values)
                             return (
                                 <Form>
                                     <Row className="mb-1">

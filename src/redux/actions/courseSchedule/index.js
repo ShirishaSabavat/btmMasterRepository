@@ -7,7 +7,6 @@ export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().post('/workshops', rawData)
   .then(res => {
-    console.log("ress", res)
     if (res.statusText === "Created") {
       toast.success("Workshop created")
       resetForm({})
@@ -29,7 +28,6 @@ export const EditCourseScheduleAPI = (id, rawData) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/workshops/${id}`, rawData)
   .then(res => {
-    console.log("ress", res)
     if (res.status === 200) {
       toast.success("Workshop Updated.")
     } else {

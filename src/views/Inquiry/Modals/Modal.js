@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography'
 
 
 const ScheduleModal = (props) => {
-  console.log("pp", props)
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
       padding: theme.spacing(2)

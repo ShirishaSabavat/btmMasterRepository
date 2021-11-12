@@ -123,7 +123,6 @@ const EditCourse = () => {
                 <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
-                            console.log("fvalue", formik.values.videoLink)
                             return (
                                 <Form>
                                      <Label htmlFor="courseName">Preview Image</Label>
