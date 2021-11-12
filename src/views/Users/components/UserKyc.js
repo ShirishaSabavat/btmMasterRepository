@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Media, UncontrolledCollapse, ListGroup, ListGroupItem, Card, Alert, CardText, Badge, CardBody, Button} from "reactstrap"
 import Timeline from '@components/timeline'
 import { Share2, Hexagon, MessageSquare, Settings, PenTool, User, FileText, MapPin, AlertCircle, CheckCircle } from 'react-feather'
@@ -6,18 +6,14 @@ import Select from "react-select"
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyUserKyc } from '../../../redux/actions/user'
 import { updateUserKyc } from "../../../redux/actions/auth"
-import { fetchKycUserData } from "../../../redux/actions/kyc"
 
 import EditForm from "./EditForm"
 
 const UserKyc  = ({userData}) => {
-    const userID = userData?.kycId?._id
-
     const dispatch = useDispatch()
 
     const [kycStatus, setKycStatus] = useState('')
     const [showEdit, setShowEdit] = useState(false)
-    const userKYCData = useSelector(state => state.kyc.kycData)
 
     const updateUserKyc = () => {
         dispatch(verifyUserKyc({
@@ -26,12 +22,6 @@ const UserKyc  = ({userData}) => {
             status: kycStatus
         }))
     }
-
-    useEffect(() => {
-        dispatch(fetchKycUserData(userID))
-    }, [userID])
-
-    console.log("userKYCData", userKYCData)
 
     const iconsData = [
         {
@@ -205,6 +195,7 @@ const UserKyc  = ({userData}) => {
       ]
 
     return <div className="">
+      {showEdit ? <EditForm setShowEdit={setShowEdit} userKYCData={userData} />  : <>
               {userData.kycStatus === 'PENDING' && (
                   <div className='p-1'>
                   <Alert color='danger' isOpen={true}>
@@ -244,7 +235,7 @@ const UserKyc  = ({userData}) => {
                   </div>
               )}
 
-        {showEdit ? <EditForm setShowEdit={setShowEdit} userKYCData={userKYCData} />  : <Timeline data={iconsData}  />}
+         <Timeline data={iconsData}  /> </>}
     </div>
 }
 

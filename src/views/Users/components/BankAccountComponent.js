@@ -5,16 +5,16 @@ import * as Yup from "yup"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const BankAccountComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
+const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC}) => {
 
 
     const initialValues = {
-        selectBank:userKYCData.kycId.selectBank,
-        banchName:userKYCData.kycId.b,
-        ifscCode:userKYCData.kycId.selectBank,
-        accNo:userKYCData.kycId.selectBank,
-        accHolderName:userKYCData.kycId.selectBank,
-        bankStatment:userKYCData.kycId.selectBank
+        selectBank:userKYC?.selectBank,
+        banchName:userKYC?.banchName,
+        ifscCode:userKYC?.ifscCode,
+        accNo:userKYC?.accNo,
+        accHolderName:userKYC?.accHolderName,
+        bankStatment:userKYC?.bankStatment
     }
 
     const validationSchema = Yup.object().shape({
@@ -150,7 +150,7 @@ const BankAccountComponent  = ({stepper, type, setKycFormData, userKYCData}) => 
                             type="file"
                             name="bankStatment"
                             id="bankStatment"
-                            onChange={file => formik.setFieldValue("bankStatement", file.currentTarget.files[0])}
+                            onChange={file => formik.setFieldValue("bankStatment", file.currentTarget.files[0])}
                             invalid={!!(formik.touched.bankStatment && formik.errors.bankStatment)}
                             >
                             </CustomInput>

@@ -21,6 +21,7 @@ import roles from "./roles"
 import landingPage from "./landingPage"
 import inquiry from "./inquery/index"
 import banner from "./banner"
+import kyc from "./kyc"
 
 const rootReducer = combineReducers({
   auth,
@@ -41,7 +42,8 @@ const rootReducer = combineReducers({
   roles,
   landingPage,
   inquiry,
-  banner
+  banner,
+  kyc
 })
 
 export default rootReducer

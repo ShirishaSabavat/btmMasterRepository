@@ -6,44 +6,44 @@ import { State }  from 'country-state-city'
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const GSTComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
+const GSTComponent  = ({stepper, type, setKycFormData, userKYC}) => {
 
     const [stateOptions] = useState(State.getStatesOfCountry("IN").map(values => { return {label : values.name, value : values.countryCode } }))
 
-    const [currentState, setCurrentState] = useState(stateOptions.map(items => {
-        if (items.label === userKYCData.kycId.state) {
-            return items 
-        }
-    }))
+    // const [currentState, setCurrentState] = useState(stateOptions.map(items => {
+    //     if (items.label === userKYC.state) {
+    //         return items 
+    //     }
+    // }))
 
     const gstTypeOptions = [{label: "Consumer", value: "consumer"}]
 
     
     const [currentGST, setCurrentGST] = useState(gstTypeOptions.map(items => {
-        if (items.label === userKYCData.kycId.gstType) {
+        if (items.label === userKYC.gstType) {
             return items 
         }
     }))
 
     useEffect(() => {
-        setCurrentState(stateOptions.map(items => {
-            if (items.label === userKYCData.kycId.state) {
-                return items 
-            }
-        }))
+        // setCurrentState(stateOptions.map(items => {
+        //     if (items.label === userKYC.state) {
+        //         return items 
+        //     }
+        // }))
         setCurrentGST(gstTypeOptions.map(items => {
-            if (items.label === userKYCData.kycId.gstType) {
+            if (items.label === userKYC.gstType) {
                 return items 
             }
         }))
     }, [])
 
     const initialValues = {
-        gstType:userKYCData.kycId.gstType,
-        legalname:userKYCData.kycId.legalname,
-        tradename:userKYCData.kycId.tradename,
-        address:userKYCData.kycId.address,
-        state: userKYCData.kycId.state
+        gstType:userKYC.gstType,
+        legalname:userKYC.legalname,
+        tradename:userKYC.tradename,
+        address:userKYC.address,
+        state: userKYC.state
     }
 
     const validationSchema = Yup.object().shape({
@@ -59,7 +59,6 @@ const GSTComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
         stepper.next()
         console.log("values", values)
     }
-
 
     return <Row>
         <Col sm="12" md="12">
@@ -104,11 +103,10 @@ const GSTComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
                                 className="field-error text-danger"
                             />
                         </FormGroup>
-                        <FormGroup className="col-md-6">
+                        {/* <FormGroup className="col-md-6">
                             <Label For="state">State</Label>
                             <CustomSelectField
                                 value={formik.values.state}
-                                defaultValue={currentState}
                                 options={stateOptions}
                                 onChange={value => formik.setFieldValue("state", value.value)}
                             />
@@ -117,7 +115,7 @@ const GSTComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
                             component="div"
                             className="field-error text-danger"
                             />
-                        </FormGroup>
+                        </FormGroup> */}
                         <FormGroup className="col-md-6 has-icon-left position-relative">
                             <Label htmlFor="address">Address</Label>
                             <InputGroup>

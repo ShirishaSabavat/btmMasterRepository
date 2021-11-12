@@ -6,7 +6,7 @@ import { Country, State, City }  from 'country-state-city'
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const AddressComponent  = ({stepper, type, setKycFormData}) => {
+const AddressComponent  = ({stepper, type, setKycFormData, userKYC}) => {
    
   const allCountries = Country.getAllCountries().map(values => { return {label : values.name, value : values.isoCode } })
 
@@ -14,8 +14,8 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
   const [stateOptions, setStates] = useState([])
   const [cityOptions, setCityOptions] = useState()
 
-  const [selectedCountry, setSelectedCountry] = useState("")
-  const [selectedState, setSelectedState] = useState("")
+  const [selectedCountry, setSelectedCountry] = useState()
+  const [selectedState, setSelectedState] = useState()
 
   useEffect(() => {
     setStates(State.getStatesOfCountry(selectedCountry).map(values => { return {label : values.name, value : values.isoCode, countryCode: values.countryCode } }))
@@ -28,12 +28,12 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
   }, [selectedState])
 
     const initialValues = {
-        address:"",
-        country:"",
-        state:"",
-        city:"",
-        zipCode:"",
-        addressAttachment:""
+        address:userKYC?.address,
+        country:userKYC?.country,
+        state:userKYC?.state,
+        city:userKYC?.city,
+        zipCode:userKYC?.zipCode,
+        addressAttachment:userKYC?.addressAttachment
     }
 
     const validationSchema = Yup.object().shape({
@@ -47,7 +47,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
     })
 
     const submitForm = (values) => {
-        // console.log("values", values)
+        console.log("values", values)
         setKycFormData(values)
         stepper.next()
     }
@@ -58,10 +58,51 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
       }
     
       const StateChangeHadler = (value, formik) => {
-        console.log("val", value)
         formik.setFieldValue("state", value.label)
         setSelectedState(value)
       }
+
+    const [currentCountry, setCurrentCountry] = useState(countryOptions?.map(items => {
+        if (items.label === userKYC.country) {
+            return items 
+        }
+    }))
+
+    const [currentState, setCurrentState] = useState([])
+  
+    const [currentCity, setCurrentCity] = useState([])
+
+    useEffect(() => {
+        countryOptions?.map(items => {
+            if (items.label === userKYC.country) {
+                setSelectedCountry(items.value)
+                setCurrentCountry(items)
+            }
+        })
+    }, [])
+
+    // useEffect(() => {
+    //     State.getAllStates().map(items => {
+    //         console.log("items.name === userKYC.state", items.name === userKYC.state)
+    //         if (items.name === userKYC.state) {
+    //             console.log("st", items)
+    //             setCurrentState({label: items.name, value:items.isoCode})
+    //         }
+    //     })
+    // }, [])
+
+    // useEffect(() => {
+    //     City.getAllCities().map(items => {
+    //         console.log("items.name === userKYC.state", items.name === userKYC.city)
+    //         if (items.name === userKYC.city) {
+    //             console.log("st", items)
+    //             setCurrentCity({label: items.name, value:items.isoCode})
+    //         }
+    //     })
+    // }, [])
+
+    // console.log("currentCountry", currentCountry)
+    // console.log("currentState", currentState)
 
     return <Row>
         <Col sm="12" md="12">
@@ -123,11 +164,12 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             />
                         </FormGroup>
 
-                        <FormGroup className="col-md-4">
+                        {/* <FormGroup className="col-md-4">
                             <Label For="country">Country <span className="text-danger">*</span></Label>
                             <CustomSelectField
                               value={formik.values.country}
                               options={countryOptions}
+                              defaultValue={currentCountry}
                               onChange={(value) => countryChangeHadler(value, formik)}
                             />
                             <ErrorMessage
@@ -140,6 +182,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             <Label For="state">State <span className="text-danger">*</span></Label>
                             <CustomSelectField
                               value={formik.values.state}
+                              defaultValue={currentState}
                               options={stateOptions}
                               onChange={(value) => StateChangeHadler(value, formik) }
                             />
@@ -153,6 +196,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             <Label For="city">City <span className="text-danger">*</span></Label>
                             <CustomSelectField
                               value={formik.values.city}
+                              defaultValue={currentCity}
                               options={cityOptions}
                               onChange={(value) => formik.setFieldValue("city", value.label)}
                             />
@@ -161,7 +205,7 @@ const AddressComponent  = ({stepper, type, setKycFormData}) => {
                             component="div"
                             className="field-error text-danger"
                             />
-                        </FormGroup> 
+                        </FormGroup>  */}
                         
                         <div className='col-md-12 mt-3 d-flex justify-content-between'>
                             <Button.Ripple onClick={() => stepper.previous()} color='secondary' className='btn-prev' outline>

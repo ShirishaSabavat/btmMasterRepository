@@ -7,25 +7,27 @@ import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 
-const PanComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
+const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
+
+    console.log("userKYC", userKYC)
 
     const initialValues = {
-        panNo:userKYCData.kycId.panNo,
-        panname:userKYCData.kycId.panname,
-        dob:userKYCData.kycId.dob,
-        panAttachment:userKYCData.kycId.panAttachment
+        panNo:userKYC.panNo,
+        panname:userKYC.panname,
+        dob:userKYC.dob,
+        panAttachment:userKYC.panAttachment
     }
 
     const validationSchema = Yup.object().shape({
         panNo: Yup.string().required("Required"),
         panname: Yup.string().required("Required"),
-        dob: Yup.string(),
+        dob: Yup.date().required("Required"),
         panAttachment: Yup.string()
     })
 
     const submitForm = (values) => {
         setKycFormData(values)
-
+        console.log("values", values)
         stepper.next()
     }
 

@@ -4,11 +4,11 @@ import {Formik, Form, ErrorMessage} from "formik"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import * as Yup from "yup"
 
-const AadharComponent  = ({stepper, type, setKycFormData}) => {
+const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
 
     const initialValues = {
-        aadharNo:"",
-        aadharAttachment:""
+        aadharNo:userKYC?.aadharNo,
+        aadharAttachment:userKYC?.aadharAttachment
     }
 
     const validationSchema = Yup.object().shape({

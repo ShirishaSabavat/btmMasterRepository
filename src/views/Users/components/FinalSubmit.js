@@ -4,6 +4,10 @@ import {ArrowLeft, CheckSquare, AlertCircle} from 'react-feather'
 
 const FinalSubmit  = ({stepper, type, setKycFormData, onFinalSubmit}) => {
 
+    const finalSubmitHandler = (e) => {
+        onFinalSubmit()
+    }
+
     return <Row>
         <Col sm="12" md="12">
             <Card>
@@ -24,7 +28,7 @@ const FinalSubmit  = ({stepper, type, setKycFormData, onFinalSubmit}) => {
                             <ArrowLeft size={14} className='align-middle mr-sm-25 mr-0'></ArrowLeft>
                             <span className='align-middle d-sm-inline-block d-none'>Previous</span>
                         </Button.Ripple>
-                        <Button.Ripple onClick={() => onFinalSubmit()} color='primary' className='btn-next'>
+                        <Button.Ripple onClick={finalSubmitHandler} color='primary' className='btn-next'>
                             <span className='align-middle d-sm-inline-block d-none'>Submit</span>
                             <CheckSquare size={14} className='align-middle ml-sm-25 ml-0'></CheckSquare>
                         </Button.Ripple>
