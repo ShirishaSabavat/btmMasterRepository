@@ -67,8 +67,16 @@ const LandingRoute = [
       }
     },
     {
-      path: '/terms-of-use',
-      component: lazy(() => import('../../views/Landing/TermsOfUse')),
+      path: '/terms-and-conditions',
+      component: lazy(() => import('../../views/Landing/TermsAndCondition')),
+      layout: 'BlankLayout',
+      meta: {
+        publicRoute: true
+      }
+    },
+    {
+      path: '/refund-policy',
+      component: lazy(() => import('../../views/Landing/RefundPolicy')),
       layout: 'BlankLayout',
       meta: {
         publicRoute: true

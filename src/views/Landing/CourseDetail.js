@@ -309,7 +309,7 @@ const Landing = (route) => {
         <Grid className="bg-white py-5" item xs={12} md={4}>
 
             <div className="p-2">
-                <Card style={{borderRadius: 12}} elevation={6} >
+                <Card style={{borderRadius: 12, boxShadow: 'none', border: '2px solid #dadada'}} elevation={6} >
                     <Typography mx={2} className="text-center mt-2" variant="h5" component="div">
                         {!userData.access_token ? 'Join Online Course' : 'Purchase This Course'}
                     </Typography>
@@ -330,7 +330,7 @@ const Landing = (route) => {
 
             {workshops.length > 0 && (
                 <div className="p-2">
-                    <Card style={{borderRadius: 12}} elevation={6} className="card-developer-meetup" >
+                    <Card style={{borderRadius: 12, boxShadow: 'none', border: '2px solid #dadada'}} elevation={6} className="card-developer-meetup" >
                         <Typography mx={2} mb={2} className="text-center mt-2" variant="h5" component="div">
                             Workshops
                         </Typography>
@@ -477,8 +477,9 @@ const Landing = (route) => {
                     loadingPosition="start"
                     variant="contained" 
                     style={{borderRadius: 2}}
+                    disabled={userData.access_token}
                     onClick={() => doRegister()}
-                >{!userData.access_token ? "Register & Join" : "Buy Now" }</LoadingButton>
+                >{!userData.access_token ? "Register & Join" : "Please Wait..." }</LoadingButton>
             </div>
 
             <div className="text-center" style={{marginTop: 12}}>

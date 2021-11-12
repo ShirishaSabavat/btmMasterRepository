@@ -84,7 +84,7 @@ export const fetchAllCourseScheduleOptions = () => dispatch => {
 }
 
 export const fetchCourseScheduleById = (id) => dispatch => {
-  dispatch(toggleNetworkLoading(trrue))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/workshops/${id}`)
   .then(res => {
     dispatch({

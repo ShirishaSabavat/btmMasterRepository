@@ -22,7 +22,7 @@ const UserDropdown = () => {
       <DropdownToggle href='/' tag='a' className='nav-link dropdown-user-link' onClick={e => e.preventDefault()}>
         <div className='user-nav d-sm-flex d-none'>
           <span className='user-name font-weight-bold'>{userData.user.name}</span>
-          <Chip size="small" label={userData.user.role.replace('_USER', '')} color="primary" />
+          <Chip size="small" label={userData.user.role === 'BAC_USER' ? userData.user.rank : userData.user.role } color="primary" />
         </div>
         <Avatar img={userAvatar} imgHeight='40' imgWidth='40' status='online' />
       </DropdownToggle>

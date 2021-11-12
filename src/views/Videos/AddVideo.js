@@ -3,7 +3,7 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
-import {Link} from "react-feather"
+import {Link, Code} from "react-feather"
 import {useDispatch} from "react-redux"
 import {BASE_URL} from '../../utility/serverSettings'
 
@@ -82,7 +82,6 @@ const AddVideo = () => {
                 <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
-                            console.log("err", formik.errors)
                             return (
                                 <Form>
                                     <Row className="d-flex justify-content-center">
@@ -131,11 +130,16 @@ const AddVideo = () => {
                                                     <InputGroup>
                                                         <InputGroupAddon addonType='prepend'>
                                                             <InputGroupText className={!!(formik.touched.duration && formik.errors.duration) ? "border border-danger" : null}>
-                                                                <Link size={15} />
+                                                                {formik.values.embededVideo && (
+                                                                    <Code size={15} />
+                                                                )}
+                                                                {!formik.values.embededVideo && (
+                                                                    <Link size={15} />
+                                                                )}
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
-                                                            type="text"
+                                                            type={formik.values.embededVideo ? "textarea" : "text"}
                                                             name="videoLink"
                                                             id="videoLink"
                                                             {...formik.getFieldProps("videoLink")}
