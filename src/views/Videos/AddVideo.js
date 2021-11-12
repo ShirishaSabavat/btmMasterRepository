@@ -16,14 +16,12 @@ const AddVideo = () => {
     const dispatch = useDispatch()
 
     const [selectedImg, setSelectedImg] = useState('/assets/images/default-image.jpg')
-    const [editModal, setModal] = useState({
-        modal: false
-      })
+    const [editModal, setModal] = useState({modal: false})
 
     const toggleModel = () => {
-    setModal((prevState) => {
-        return { modal: !prevState.modal }
-    })
+        setModal((prevState) => {
+            return { modal: !prevState.modal }
+        })
     }
 
     const initialValues = {
@@ -127,7 +125,9 @@ const AddVideo = () => {
                                         </Col>
 
                                         <Col sm="12" md="12">
-                                            <Label>Video Type:</Label>
+                                            <div>   
+                                                <Label>Video Type:</Label>
+                                            </div>
 
                                             <CustomInput 
                                                 type='radio' 
@@ -136,8 +136,7 @@ const AddVideo = () => {
                                                 inline 
                                                 label='YouTube' 
                                                 onChange={(e) => formik.setFieldValue('videoLinkType', e.target.value)}
-                                                value={'YOUTUBE'}
-                                            defaultChecked />
+                                                value={'YOUTUBE'} defaultChecked />
 
                                             <CustomInput 
                                                 type='radio' 
@@ -196,15 +195,16 @@ const AddVideo = () => {
                                                     <div>
                                                         <Label for='videoFile'>File Upload <span className="text-danger">*</span></Label>
                                                     </div>
+                                                    <InputGroup>
                                                     <CustomInput 
                                                         type='file' 
                                                         id='videoFile' 
                                                         name='videoFile' 
-                                                        invalid={!!(formik.errors.videoFile)}
                                                         onChange={(event) => {
                                                             formik.setFieldValue("videoFile", event.currentTarget.files[0])
                                                         }} 
                                                         accept="video/mp4,video/x-m4v,video/*" />
+                                                    </InputGroup>
                                                     <ErrorMessage
                                                         name="videoFile"
                                                         component="div"

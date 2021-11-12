@@ -39,6 +39,7 @@ const Landing = (route) => {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [otp, setOtp] = useState('')
     const [chooseWorkshop, setChooseWorkshop] = useState('')
     const [purchaseType, setPurchaseType] = useState('')
@@ -98,7 +99,7 @@ const Landing = (route) => {
     const displayRazorpay = async (price, type) => {
         if (!userData.access_token) {
 
-            if (name === '' || email === '' || phone === '') {
+            if (name === '' || email === '' || phone === '' || password === '') {
                 toast.error("Please enter all fields.", {
                     position: toast.POSITION.BOTTOM_CENTER
                 })
@@ -199,8 +200,15 @@ const Landing = (route) => {
     }
 
     const doRegister = () => {
-        if (name === '' || email === '' || phone === '' || password === '') {
+        if (name === '' || email === '' || phone === '' || password === '' || confirmPassword === '') {
             toast.error("Please enter all fields.", {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
+            return
+        }
+
+        if (password !== confirmPassword) {
+            toast.error("Password and confirm password must match.", {
                 position: toast.POSITION.BOTTOM_CENTER
             })
             return
@@ -453,6 +461,16 @@ const Landing = (route) => {
                         variant="standard"
                         type="password"
                         onChange={e => setPassword(e.target.value)}
+                    />
+                </FormControl>
+                <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
+                    <TextField
+                        id="confirlPassword"
+                        label="Confirm Password"
+                        defaultValue=""
+                        variant="standard"
+                        type="password"
+                        onChange={e => setConfirmPassword(e.target.value)}
                     />
                 </FormControl>
 

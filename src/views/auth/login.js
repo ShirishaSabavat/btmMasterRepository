@@ -24,26 +24,16 @@ const Login = () => {
     const [forgotPassword, setForgotPassword] = useState(false)
     const [forgotPhone, setForgotPhone] = useState('')
 
-    const doLogin = () => {
-
-    if (email === '' || password === '') {
-      toast.error("Invalid Email/Password", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-      return
-    }
+    const doLogin = (e) => {
+      e.preventDefault()
+      if (email === '' || password === '') {
+        toast.error("Invalid Email/Password", {
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+        return
+      }
 
     dispatch(handleLogin({email, password}))
-  }
-
-  const doForgotPassword = () => {
-    if (forgotPhone === '' || forgotPhone.length !== 10) {
-      toast.error("Invalid Phone no.", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-      // return
-    }
-
   }
 
   //go to dashboard on successful login
@@ -73,11 +63,8 @@ const Login = () => {
               {forgotPassword ? "Forgot Password" : "Login" }
             </CardTitle>
             <CardText className='mb-2'></CardText>
-            <Form className='auth-login-form mt-2' onSubmit={() => (forgotPassword ? doForgotPassword() : doLogin())}>
-              {!forgotPassword && (
-
-                <>
-                  <FormGroup>
+            <Form onSubmit={(e) => doLogin(e)} className='auth-login-form mt-2'>
+                <FormGroup>
                     <Label className='form-label' htmlFor='login-email'>
                       Email
                     </Label>
@@ -103,25 +90,12 @@ const Login = () => {
                     </Row>
                   </FormGroup>
 
-                </>
-
-              )}
-
-              {forgotPassword && (
-                  <FormGroup className="mb-3">
-                    <Label className='form-label' htmlFor='login-email'>
-                      Phone No.
-                    </Label>
-                    <Input onChange={(e) => setForgotPhone(e.target.value)} type='number' placeholder='Enter your account phone no.' autoFocus />
-                  </FormGroup>
-              )}
-
-              <Button.Ripple onClick={() => (forgotPassword ? doForgotPassword() : doLogin())} color='primary' block>
-                {forgotPassword ? "Send OTP" : "Log in" }
+              <Button.Ripple type="submit" color='primary' block>
+                Log in
               </Button.Ripple>
 
               <div className="mt-1 text-center">
-                <span onClick={() => (forgotPassword ? setForgotPassword(false) : setForgotPassword(true))} style={{fontSize: 11}} className="text-info cursor pointer">{forgotPassword ? 'Back to Login' : 'Forgot Password ?'}</span>
+                <span onClick={() => history.push('/forgot-password')} style={{fontSize: 11}} className="text-info cursor pointer">Forgot Password ?</span>
               </div>
 
 
