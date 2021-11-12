@@ -22,8 +22,6 @@ const Inquiry = () => {
   const [showModal, setShowModal] = useState(false)
   const [data, setData] = useState("")
 
-  console.log("mm", showModal)
-
   const showMessageModalHandler = (message) => {
     setShowModal(prevState => !prevState)
     setData(message)

@@ -17,6 +17,11 @@ const ImagePickerComponent = (props) => {
         dispatch(fetchAllMedia())
     }, [])
 
+    const imageHandler = (values) => {
+        props.setSelectedImg(`${BASE_URL}uploads/${values.file}`)
+        props.onClose()
+    }
+
     return (
     <Modal scrollable isOpen={props.modalState} toggle={props.onClose} className="modal-lg">
         <ModalHeader>Media Picker</ModalHeader>
@@ -32,7 +37,7 @@ const ImagePickerComponent = (props) => {
                         id="imgName1" 
                         style={{height: 200, width: 224, margin: 5, borderWidth: `${selectedImg === "imgName1" ? "7px" : "" }`, borderColor: `${selectedImg === "imgName1" ? "green" : ""}` }} 
                         className="img-thumbnail img-fluid cursor pointer"  
-                        onClick={() => { props.setSelectedImg(`${BASE_URL}uploads/${values.file}`); props.toggleFileModal() }} /></div>)}
+                        onClick={() => imageHandler(values)} /></div>)}
             </div>
         </ModalBody>
         {/* <ModalFooter>

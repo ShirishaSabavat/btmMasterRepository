@@ -21,8 +21,6 @@ const ContactUs = () => {
         getLandingPageData()
     }, [])
 
-    console.log(landingPageData, "lpd")
-
     const initialValues = {
         uname:"",
         email:"",

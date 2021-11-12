@@ -74,7 +74,7 @@ const Navigation = [
   // },
   {
     id: 'videos',
-    title: 'Video Links',
+    title: 'Video',
     icon: <Youtube size={20} />,
     navLink: '/videos',
     permissions: ["ADMIN"]

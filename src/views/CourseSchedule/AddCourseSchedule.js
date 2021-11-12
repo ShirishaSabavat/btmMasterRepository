@@ -90,8 +90,6 @@ const AddCourseSchedule = () => {
                     <CardBody>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
                         {(formik) => {
-                            console.log("co", courseOptions)
-                            console.log("formik", formik.values)
                             return (
                                 <Form>
                                     <Row className="mb-1">
