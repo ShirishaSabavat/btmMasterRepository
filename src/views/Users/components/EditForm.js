@@ -14,8 +14,8 @@ import Wizard from '@components/wizard'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveKyc } from '../../../redux/actions/user'
 
-const EditForm = ({setShowEdit, uid}) => {
-    console.log("uid", uid)
+const EditForm = ({setShowEdit, userKYCData}) => {
+    console.log("uid", userKYCData)
 
   const dispatch = useDispatch()
 
@@ -40,43 +40,43 @@ const EditForm = ({setShowEdit, uid}) => {
       id: 'personal-details',
       title: 'Personal Information',
       subtitle: 'Enter Your Personal Informations.',
-      content: <PersonalInfoComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' />
+      content: <PersonalInfoComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYCData={userKYCData} />
     },
     {
       id: 'pan-info',
       title: 'PAN Info',
       subtitle: 'Add Your PAN Info',
-      content: <PanComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' />
+      content: <PanComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYCData={userKYCData} />
     },
     {
       id: 'gst-address',
       title: 'GST Details',
       subtitle: 'Add GST details',
-      content: <GSTComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' />
+      content: <GSTComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYCData={userKYCData} />
     },
     {
       id: 'bank-account',
       title: 'Bank Details',
       subtitle: 'Enter Your Banking Info',
-      content: <BankAccountComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' />
+      content: <BankAccountComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYCData={userKYCData} />
     },
     {
       id: 'aadhar',
       title: 'Aadhar Details',
       subtitle: 'Add Your Aadhar Details',
-      content: <AadharComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' />
+      content: <AadharComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYCData={userKYCData} />
     },
     {
       id: 'address',
       title: 'Address Details',
       subtitle: 'Add Your Address Details',
-      content: <AddressComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' />
+      content: <AddressComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYCData={userKYCData} />
     },
     {
       id: 'final',
       title: 'Final',
       subtitle: 'Confirm submit Kyc',
-      content: <FinalSubmit onFinalSubmit={onFinalSubmit} stepper={stepper} type='wizard-horizontal' />
+      content: <FinalSubmit onFinalSubmit={onFinalSubmit} stepper={stepper} type='wizard-horizontal' userKYCData={userKYCData} />
     }
   ]
 
@@ -109,12 +109,12 @@ const EditForm = ({setShowEdit, uid}) => {
       )}
 
       {userData.user.kycStatus === 'PENDING' && (
-      <div className='horizontal-wizard'>
+        <div className='horizontal-wizard'>
         <Wizard 
           type='vertical'
           instance={el => setStepper(el)} 
           ref={ref} 
-          steps={steps} />
+          steps={steps} userKYCData={userKYCData} />
       </div>
       )}
     </>

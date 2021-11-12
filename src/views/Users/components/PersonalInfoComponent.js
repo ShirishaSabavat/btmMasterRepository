@@ -7,14 +7,14 @@ import { useSelector } from "react-redux"
 import Cleave from 'cleave.js/react'
 import 'cleave.js/dist/addons/cleave-phone.us'
 
-const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
+const PersonalInfoComponent  = ({ stepper, type, setKycFormData, userKYCData }) => {
 
-    const userData = useSelector(state => state.auth.userData)
+    console.log("udata", userKYCData.kycId.phone.trim().substring(3).replace(/ /g, ''))
 
     const initialValues = {
-        name: userData.user.name,
-        email: userData.user.email,
-        phone: userData.user.phone
+        name: userKYCData.kycId.name,
+        email: userKYCData.kycId.email,
+        phone: userKYCData.kycId.phone.trim().substring(3).replace(/ /g, '')
     }
 
     const validationSchema = Yup.object().shape({

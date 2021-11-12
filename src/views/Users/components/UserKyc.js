@@ -1,29 +1,23 @@
 import React, {useState} from "react"
 import {Media, UncontrolledCollapse, ListGroup, ListGroupItem, Card, Alert, CardText, Badge, CardBody, Button} from "reactstrap"
-import Avatar from '@components/avatar'
-import AvatarGroup from '@components/avatar-group'
-import pdf from '@src/assets/images/icons/file-icons/pdf.png'
-import ceo from '@src/assets/images/portrait/small/avatar-s-9.jpg'
-import interview from '@src/assets/images/portrait/small/avatar-s-20.jpg'
-import user1 from '@src/assets/images/portrait/small/avatar-s-25.jpg'
-import user2 from '@src/assets/images/portrait/small/avatar-s-7.jpg'
-import user3 from '@src/assets/images/portrait/small/avatar-s-10.jpg'
 import Timeline from '@components/timeline'
 import { Share2, Hexagon, MessageSquare, Settings, PenTool, User, FileText, MapPin, AlertCircle, CheckCircle } from 'react-feather'
 import Select from "react-select"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { verifyUserKyc } from '../../../redux/actions/user'
 import { updateUserKyc } from "../../../redux/actions/auth"
+import { fetchKycUserData } from "../../../redux/actions/kyc"
 
 import EditForm from "./EditForm"
 
 const UserKyc  = ({userData}) => {
-  console.log(userData)
+    const userID = userData?.kycId?._id
 
     const dispatch = useDispatch()
 
     const [kycStatus, setKycStatus] = useState('')
     const [showEdit, setShowEdit] = useState(false)
+    const userKYCData = useSelector(state => state.kyc.kycData)
 
     const updateUserKyc = () => {
         dispatch(verifyUserKyc({
@@ -32,6 +26,12 @@ const UserKyc  = ({userData}) => {
             status: kycStatus
         }))
     }
+
+    useEffect(() => {
+        dispatch(fetchKycUserData(userID))
+    }, [userID])
+
+    console.log("userKYCData", userKYCData)
 
     const iconsData = [
         {
@@ -203,55 +203,49 @@ const UserKyc  = ({userData}) => {
             )
         }
       ]
-      
 
     return <div className="">
-        <Card className='card-app-design'>
-            <CardBody>
-                {userData.kycStatus === 'PENDING' && (
-                    <div className='p-1'>
-                    <Alert color='danger' isOpen={true}>
-                        <div className='alert-body'>
-                        <AlertCircle size={15} />{' '}
-                        <span className='ml-1'>
-                            KYC is <strong>NOT Submitted</strong> by the user.
-                        </span>
-                        </div>
-                    </Alert>
-                    </div>
-                )}
+              {userData.kycStatus === 'PENDING' && (
+                  <div className='p-1'>
+                  <Alert color='danger' isOpen={true}>
+                      <div className='alert-body'>
+                      <AlertCircle size={15} />{' '}
+                      <span className='ml-1'>
+                          KYC is <strong>NOT Submitted</strong> by the user.
+                      </span>
+                      </div>
+                  </Alert>
+                  </div>
+              )}
 
-                {userData.kycStatus === 'PROCESSING' && (
-                    <div className='p-1'>
-                    <Alert color='warning' isOpen={true}>
-                        <div className='alert-body'>
-                        <AlertCircle size={15} />{' '}
-                        <span className='ml-1'>
-                            KYC has been <strong>submitted</strong> by the user.
-                        </span>
-                        </div>
-                    </Alert>
-                    </div>
-                )}
+              {userData.kycStatus === 'PROCESSING' && (
+                  <div className='p-1'>
+                  <Alert color='warning' isOpen={true}>
+                      <div className='alert-body'>
+                      <AlertCircle size={15} />{' '}
+                      <span className='ml-1'>
+                          KYC has been <strong>submitted</strong> by the user.
+                      </span>
+                      </div>
+                  </Alert>
+                  </div>
+              )}
 
-                {userData.kycStatus === 'VERIFIED' && (
-                    <div className='p-1'>
-                    <Alert color='success' isOpen={true}>
-                        <div className='alert-body'>
-                        <CheckCircle size={15} />{' '}
-                        <span className='ml-1'>
-                            KYC has been <strong>Verified</strong>
-                        </span>
-                        </div>
-                    </Alert>
-                    </div>
-                )}
+              {userData.kycStatus === 'VERIFIED' && (
+                  <div className='p-1'>
+                  <Alert color='success' isOpen={true}>
+                      <div className='alert-body'>
+                      <CheckCircle size={15} />{' '}
+                      <span className='ml-1'>
+                          KYC has been <strong>Verified</strong>
+                      </span>
+                      </div>
+                  </Alert>
+                  </div>
+              )}
 
-            </CardBody>
-        </Card> 
-        {showEdit ? <EditForm setShowEdit={setShowEdit} />  : <Timeline data={iconsData} uid={userData} />}
+        {showEdit ? <EditForm setShowEdit={setShowEdit} userKYCData={userKYCData} />  : <Timeline data={iconsData}  />}
     </div>
-
 }
 
 export default UserKyc

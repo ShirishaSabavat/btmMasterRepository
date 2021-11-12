@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Button, FormGroup, Label, Input, InputGroup, Card, CardBody} from 'reactstrap'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
@@ -6,16 +6,44 @@ import { State }  from 'country-state-city'
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const GSTComponent  = ({stepper, type, setKycFormData}) => {
+const GSTComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
 
     const [stateOptions] = useState(State.getStatesOfCountry("IN").map(values => { return {label : values.name, value : values.countryCode } }))
 
+    const [currentState, setCurrentState] = useState(stateOptions.map(items => {
+        if (items.label === userKYCData.kycId.state) {
+            return items 
+        }
+    }))
+
+    const gstTypeOptions = [{label: "Consumer", value: "consumer"}]
+
+    
+    const [currentGST, setCurrentGST] = useState(gstTypeOptions.map(items => {
+        if (items.label === userKYCData.kycId.gstType) {
+            return items 
+        }
+    }))
+
+    useEffect(() => {
+        setCurrentState(stateOptions.map(items => {
+            if (items.label === userKYCData.kycId.state) {
+                return items 
+            }
+        }))
+        setCurrentGST(gstTypeOptions.map(items => {
+            if (items.label === userKYCData.kycId.gstType) {
+                return items 
+            }
+        }))
+    }, [])
+
     const initialValues = {
-        gstType:"",
-        legalname:"",
-        tradename:"",
-        address:"",
-        state:""
+        gstType:userKYCData.kycId.gstType,
+        legalname:userKYCData.kycId.legalname,
+        tradename:userKYCData.kycId.tradename,
+        address:userKYCData.kycId.address,
+        state: userKYCData.kycId.state
     }
 
     const validationSchema = Yup.object().shape({
@@ -32,7 +60,6 @@ const GSTComponent  = ({stepper, type, setKycFormData}) => {
         console.log("values", values)
     }
 
-    const gstTypeOptions = [{label: "Consumer", value: "consumer"}]
 
     return <Row>
         <Col sm="12" md="12">
@@ -81,6 +108,7 @@ const GSTComponent  = ({stepper, type, setKycFormData}) => {
                             <Label For="state">State</Label>
                             <CustomSelectField
                                 value={formik.values.state}
+                                defaultValue={currentState}
                                 options={stateOptions}
                                 onChange={value => formik.setFieldValue("state", value.value)}
                             />
@@ -112,6 +140,7 @@ const GSTComponent  = ({stepper, type, setKycFormData}) => {
                             <Label For="gstType">GST Type</Label>
                             <CustomSelectField
                                 value={formik.values.gstType}
+                                defaultValue={currentGST}
                                 options={gstTypeOptions}
                                 onChange={value => formik.setFieldValue("gstType", value.value)}
                             />

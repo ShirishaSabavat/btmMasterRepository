@@ -5,16 +5,16 @@ import * as Yup from "yup"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 
-const BankAccountComponent  = ({stepper, type, setKycFormData}) => {
+const BankAccountComponent  = ({stepper, type, setKycFormData, userKYCData}) => {
 
 
     const initialValues = {
-        selectBank:"",
-        banchName:"",
-        ifscCode:"",
-        accNo:"",
-        accHolderName:"",
-        bankStatment:""
+        selectBank:userKYCData.kycId.selectBank,
+        banchName:userKYCData.kycId.b,
+        ifscCode:userKYCData.kycId.selectBank,
+        accNo:userKYCData.kycId.selectBank,
+        accHolderName:userKYCData.kycId.selectBank,
+        bankStatment:userKYCData.kycId.selectBank
     }
 
     const validationSchema = Yup.object().shape({
