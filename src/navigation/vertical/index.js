@@ -1,4 +1,4 @@
-import { HelpCircle, Image, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, TrendingUp, GitBranch, FileText, MessageSquare, Briefcase, CheckCircle, Share2, User, Calendar, BarChart2 } from 'react-feather'
+import { HelpCircle, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, TrendingUp, GitBranch, Briefcase, CheckCircle, Calendar, BarChart2, ArrowUpCircle} from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 const Navigation = [
@@ -243,6 +243,13 @@ const Navigation = [
         navLink: "/payment"
       }
     ]
+  },
+  {
+    id: 'followup',
+    title: 'Follow Up',
+    icon: <ArrowUpCircle size={20} />,
+    navLink: '/follow-up',
+    permissions: ["ADMIN"]
   },
   {
     id: 'inquiry',
