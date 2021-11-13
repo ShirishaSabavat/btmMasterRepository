@@ -75,10 +75,10 @@ const Landing = (route) => {
 
     
     useEffect(() => {
-        if (landingPageData?.razorPayMode === "LIVE") {
-            setRazorPayKey(landingPageData.razorPayLiveKey)
+        if (landingPageData[0]?.razorPayMode === "LIVE") {
+            setRazorPayKey(landingPageData[0].razorPayLiveKey)
         } else {
-            setRazorPayKey(landingPageData.razorPayTestKey)
+            setRazorPayKey(landingPageData[0].razorPayTestKey)
         }
     }, [landingPageData])
 
@@ -147,7 +147,7 @@ const Landing = (route) => {
             //5xnKX6BvwxiFGxNThYO7djZv
 
             const options = {
-                key: razorPayKey, 
+                key: razorPayKey,
                 amount: (parseFloat(price) + ((parseFloat(price) * 18) / 100)).toString(),
                 currency: "INR",
                 name: "Business Aacharaya",

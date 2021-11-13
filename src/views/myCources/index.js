@@ -78,6 +78,7 @@ const MyCources = () => {
                                             <>
                                                 {item.courseId?.videos.map(vid => (
                                                     <ListItem
+                                                        className="cursor pointer"
                                                         onClick={() => { setVideoModal(true); setSelectedVideo(vid) }}
                                                         secondaryAction={
                                                             <IconButton onClick={() => { setVideoModal(true); setSelectedVideo(vid) }} edge="end" aria-label="delete">
@@ -155,7 +156,7 @@ const MyCources = () => {
                                 } 
                             } 
                         }}
-                        url={selectedVideo.videoLinkType === 'FILE' ? `http://localhost:3030/videoUploads/${selectedVideo.videoFile}` : selectedVideo.link}
+                        url={selectedVideo.videoLinkType === 'FILE' ? `${BASE_URL}/videoUploads/${selectedVideo.videoFile}` : selectedVideo.link}
 
                     />
                 </DialogContent>

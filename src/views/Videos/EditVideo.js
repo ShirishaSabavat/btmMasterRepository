@@ -30,23 +30,23 @@ const EditVideo = () => {
         setModal((prevState) => !prevState)
     }
 
-    const [selectedImg, setSelectedImg] = useState('')
+    const imgUrl = oldData.image ? `${BASE_URL}uploads/${oldData?.image}` : ""
+
+    const [selectedImg, setSelectedImg] = useState(imgUrl)
 
     const initialValues = {
         title: oldData?.title || "",
-        image:  oldData?.image || selectedImg.replace(`${BASE_URL}uploads/`, '') || "",
         videoLink: oldData?.link || "",
+        image: oldData?.image || "",
         duration: oldData.duration || "",
         description: oldData.description || "",
         bacOnly: oldData.bacOnly || false,
         embededVideo: oldData.embededVideo || false,
-        bacOnly: oldData.bacOnly || false,
         videoLinkType: oldData?.videoLinkType || 'YOUTUBE'
     }
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
-        image: Yup.string().required("Required"),
         duration: Yup.string(),
         description: Yup.string(),
         videoLinkType: Yup.string(),
@@ -57,7 +57,7 @@ const EditVideo = () => {
           }),
         videoFile: Yup.mixed().when("videoLinkType", {
             is: 'FILE',
-            then: Yup.mixed().required(),
+            then: Yup.mixed(),
             otherwise: Yup.mixed()
         })
     })
@@ -70,7 +70,7 @@ const EditVideo = () => {
 
         formData.append('duration', values.duration)
         formData.append('description', values.description)
-        formData.append('image', values.image)
+        formData.append('image', values.image || selectedImg.replace(`${BASE_URL}uploads/`, ''))
         formData.append('title', values.title)
         formData.append('bacOnly', values.bacOnly)
         formData.append('embededVideo', values.embededVideo)
@@ -79,13 +79,15 @@ const EditVideo = () => {
         if (values.videoLinkType === 'YOUTUBE') {
             formData.append('link', values.videoLink)
         } else {
-            formData.append('videoFile', values.videoFile)
+            if (values.videoFile) {
+                formData.append('videoFile', values.videoFile)
+            }
         }
 
         dispatch(EditVideoAPI(videoId, formData))
     }
 
-    if (networkLoading) {
+    if (networkLoading || !oldData.title) {
         return (<TableDataLoadingSkleton />)
     }
 
@@ -97,27 +99,32 @@ const EditVideo = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
+                    <div>
+                        <div>Preview Image</div>
+                        <Row className="d-flex justify-content-center">
+                            <Col sm="12" md="8" className="mb-1">
+                                <Row className="d-flex justify-content-around align-items-center">
+                                    <Col sm="12" md="8">
+
+                                        {!selectedImg && (
+                                            <img src='/assets/images/default-image.jpg' alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+                                        {selectedImg !== '' && (
+                                            <img src={selectedImg} alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+
+                                    </Col>
+                                    <Col sm="12" md="4">
+                                        <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </div>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form>
-                                    <Row className="d-flex justify-content-center">
-                                        <Col sm="12" md="8" className="mb-1">
-                                            <Row className="d-flex justify-content-around align-items-center">
-                                                <Col sm="12" md="8">
-                                                    {selectedImg === '' && (
-                                                        <img src={(oldData?.image === '/assets/images/default-image.jpg') ? oldData.image : `${BASE_URL}uploads/${oldData?.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
-                                                    )}
-                                                    {selectedImg !== '' && (
-                                                        <img src={`${BASE_URL}uploads/${formik.values.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
-                                                    )}
-                                                </Col>
-                                                <Col sm="12" md="4">
-                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
@@ -198,7 +205,7 @@ const EditVideo = () => {
                                     <Row className={`mb-1 pr-2 pl-2 ${(formik.values.videoLinkType === "YOUTUBE") ? 'd-none' : ''}`}>
                                         <Col>
                                             <FormGroup>
-                                            <Label for='videoFile'>File Upload</Label>
+                                            <Label for='videoFile'>Change Video File</Label>
                                             <InputGroup>
                                             <CustomInput 
                                                 type='file' 
@@ -284,7 +291,7 @@ const EditVideo = () => {
 
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
-                                            <Button color="primary" type="submit">Update</Button>
+                                            <Button color="primary" type="submit" disabled = {networkLoading}>{networkLoading ? "Please Wait..." : "Update"}</Button>
                                         </Col>
                                     </Row>
                                 </Form>
