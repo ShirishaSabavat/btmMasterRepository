@@ -33,7 +33,7 @@ const Inquiry = () => {
           selector: "sno",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.sno}</p>
+            <p className="text-bold-500 mb-0">{row.sno}</p>
           )
         },
         {
@@ -42,7 +42,7 @@ const Inquiry = () => {
           sortable: true,
           cell: (row) => (
                 <p
-                  className="d-block text-bold-500 text-truncate mb-0"
+                  className="d-block text-bold-500 mb-0"
                 >
                   {row.name}
                 </p>
@@ -53,7 +53,7 @@ const Inquiry = () => {
           selector: "email",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.email}</p>
+            <p className="text-bold-500 mb-0">{row.email}</p>
           )
         },
         {

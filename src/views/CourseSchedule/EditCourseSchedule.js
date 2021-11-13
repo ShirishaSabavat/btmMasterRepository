@@ -7,7 +7,7 @@ import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
 import {useDispatch, useSelector} from "react-redux"
 import { useHistory, useParams } from "react-router-dom"
-
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 import {EditCourseScheduleAPI, fetchCourseScheduleById} from "../../redux/actions/courseSchedule/index"
 import {fetchAllCoursesOptions} from "../../redux/actions/courses/index"
@@ -23,6 +23,7 @@ const EditCourseSchedule = () => {
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)   
     const courseOptions = useSelector(state => state.courses.courseOptions)   
     const courseScheduleData = useSelector(state => state.courseSchedule.courseSchedule)
+    const networkLoading = useSelector(state => state.common.loading)
 
     const courseOptionsHandler = (value, formik) => {
         formik.setFieldValue("courseId", value.value)
@@ -71,6 +72,10 @@ const EditCourseSchedule = () => {
 
         dispatch(EditCourseScheduleAPI(workshopId, rawData))
 
+    }
+
+    if (networkLoading || !courseScheduleData.courseId) {
+        return (<TableDataLoadingSkleton />)
     }
 
     return (<>

@@ -51,7 +51,7 @@ export const fetchAllCourseSchedules = () => dispatch => {
     const data = res.data.map(values => values)
     dispatch({
       type: FETCH_ALL_SCHEDULES,
-      payload: data
+      payload: data.reverse()
     })
     dispatch(toggleNetworkLoading(false))
   })
