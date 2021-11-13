@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react"
+import React, {useRef, useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
 import {  useParams } from "react-router-dom"
-
+import JoditEditor from "jodit-react"
 import { fetchAllVideos } from "../../redux/actions/videos"
 import {EditCourseAPI, fetchCourseByIdToEdit} from "../../redux/actions/courses/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
@@ -26,6 +26,11 @@ const EditCourse = () => {
     // const videoLinks = CourseData?.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink)) 
     // const videoOptions = videoLinks?.map(videoData => ({ label: videoData[0]?.title, value: videoData[0]?._id }))
     const networkLoading = useSelector(state => state.common.loading)
+
+    const editor = useRef(null)
+    const config = {
+        readonly: false
+    }
 
     useEffect(() => {
         dispatch(fetchCourseByIdToEdit(courseId))
@@ -114,7 +119,7 @@ const EditCourse = () => {
     }
 
     return <Row>
-        <Col sm="12" md="6">
+        <Col sm="12" md="7">
             <Card >
                 <CardHeader>
                     <CardTitle>Edit Course</CardTitle>
@@ -290,7 +295,7 @@ const EditCourse = () => {
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="courseDetails">Course Details <span className="text-danger">*</span></Label>
-                                                <InputGroup>
+                                                {/* <InputGroup>
                                                     <Input
                                                     type="textarea"
                                                     name="courseDetails"
@@ -299,7 +304,14 @@ const EditCourse = () => {
                                                     invalid={!!(formik.touched.courseDetails && formik.errors.courseDetails)}
                                                     >
                                                     </Input>
-                                                </InputGroup>
+                                                </InputGroup> */}
+                                                <JoditEditor
+                                                    ref={editor}
+                                                    value={formik.values.courseDetails}
+                                                    config={config}
+                                                    tabIndex={1} 
+                                                    onBlur={newContent => formik.setFieldValue('courseDetails', newContent)} 
+                                                />
                                                 <ErrorMessage
                                                     name="courseDetails"
                                                     component="div"

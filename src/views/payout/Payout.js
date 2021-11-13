@@ -15,6 +15,7 @@ const Payout = () => {
   const users = useSelector(state => state.user.bacUsers)
   const loading = useSelector(state => state.common.loading)
   const [showModal, setShowModal] = useState(false)
+  const [selectedUser, setSelectedUser] = useState({})
 
   useEffect(() => {
     dispatch(fetchAllBACUsersData())
@@ -68,7 +69,7 @@ const Payout = () => {
       selector: "action",
       sortable: true,
       cell: (row) => (
-        <Button className="btn btn-sm btn-danger" onClick={() => setShowModal(prevState => !prevState)} >Payout</Button>
+        <Button disabled={row.wallet === 0} className="btn btn-sm btn-danger" onClick={() => { setSelectedUser(row); setShowModal(prevState => !prevState) }} >Payout</Button>
       )
     }
   ]
@@ -131,7 +132,7 @@ const Payout = () => {
 
             </Card>
         </Col>
-        {showModal ? <Modal showModal={showModal} setShowModal={setShowModal} /> : null}
+        {showModal ? <Modal showModal={showModal} selectedUser={selectedUser} setShowModal={setShowModal} /> : null}
     </Row>
 }
 

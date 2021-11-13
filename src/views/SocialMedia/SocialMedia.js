@@ -5,12 +5,14 @@ import * as Yup from "yup"
 import {Facebook, Twitter, Youtube, Instagram, MessageCircle} from "react-feather"
 import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 import { useDispatch, useSelector } from 'react-redux'
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const SocialMedia = () => {
 
     const dispatch = useDispatch()
 
     const data = useSelector(state => state.cms.socialLinks[0]?.content)
+    const serverLoading = useSelector(state => state.common.loading)
     const parsedData = data ? JSON.parse(data) : ''
     const [content, setContent] = useState()
 
@@ -51,6 +53,10 @@ const SocialMedia = () => {
             return
         }
         dispatch(AddCMS('social-links', rawData))
+    }
+
+    if (serverLoading) {
+        return (<TableDataLoadingSkleton />)
     }
 
     return <Row>

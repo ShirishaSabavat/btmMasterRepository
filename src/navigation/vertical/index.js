@@ -1,4 +1,4 @@
-import { HelpCircle, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, TrendingUp, GitBranch, Briefcase, CheckCircle, Calendar, BarChart2, ArrowUpCircle} from 'react-feather'
+import { HelpCircle, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, TrendingUp, GitBranch, Briefcase, CheckCircle, Calendar, BarChart2, PhoneCall} from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 const Navigation = [
@@ -247,7 +247,7 @@ const Navigation = [
   {
     id: 'followup',
     title: 'Follow Up',
-    icon: <ArrowUpCircle size={20} />,
+    icon: <PhoneCall size={20} />,
     navLink: '/follow-up',
     permissions: ["ADMIN"]
   },

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from "react"
 import {Card, CardHeader, CardBody, CardTitle, Button} from "reactstrap"
 import { useDispatch, useSelector } from "react-redux"
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 import JoditEditor from "jodit-react"
@@ -11,6 +12,7 @@ const StaticPages = () => {
     const data1 = useSelector(state => (state.cms?.privacyPolicy ? state.cms?.privacyPolicy[0]?.content : ''))
     const data2 = useSelector(state => (state.cms?.termsAndConditions ? state.cms?.termsAndConditions[0]?.content : ''))
     const data3 = useSelector(state => (state.cms?.refundPolicy ? state.cms?.refundPolicy[0]?.content : ''))
+    const serverLoading = useSelector(state => state.common.loading)
 
     const editor1 = useRef(null)
     const editor2 = useRef(null)
@@ -73,6 +75,11 @@ const StaticPages = () => {
         }
         dispatch(AddCMS('REFUND_POLICY', rawData))
     }
+
+    if (serverLoading) {
+        return (<TableDataLoadingSkleton />)
+    }
+    
     return <>
         <Card>
             <CardHeader>
