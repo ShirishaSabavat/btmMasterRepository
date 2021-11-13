@@ -29,6 +29,42 @@ export const AddCourseAPI = (rawData, resetForm) => dispatch => {
   })
 }
 
+export const fetchCourseById = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  ServerApi().get(`/courses/${id}`)
+  .then(res => {
+    dispatch({
+      type: GET_COURSE_BY_ID,
+      payload: res.data
+    })
+    dispatch(toggleNetworkLoading(false))
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+
+  // dispatch(toggleNetworkLoading(true))
+  ServerApi().get(`/workshops/courceWorkshops/${id}`)
+  .then(res => {
+    dispatch({
+      type: FETCH_WORKSHOP,
+      payload: res.data.reverse()
+    })
+    dispatch(toggleNetworkLoading(false))
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
 export const EditCourseAPI = (id, rawData) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/courses/${id}`, rawData)
@@ -37,6 +73,7 @@ export const EditCourseAPI = (id, rawData) => dispatch => {
       toast.success("Updated course", {
         position: toast.POSITION.BOTTOM_CENTER
       })
+      dispatch(fetchCourseById(id))
     } else {
       toast.error("Error in Updating Course", {
         position: toast.POSITION.BOTTOM_CENTER
@@ -81,42 +118,6 @@ export const fetchAllCoursesOptions = () => dispatch => {
     dispatch({
       type: GET_ALL_COURSES_OPTIONS,
       payload: data
-    })
-    dispatch(toggleNetworkLoading(false))
-  })
-  .catch(e => {
-    dispatch(toggleNetworkLoading(false))
-    toast.error("Error in Fetching Data", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-    console.log(e)
-  })
-}
-
-export const fetchCourseById = (id) => dispatch => {
-  dispatch(toggleNetworkLoading(true))
-  ServerApi().get(`/courses/${id}`)
-  .then(res => {
-    dispatch({
-      type: GET_COURSE_BY_ID,
-      payload: res.data
-    })
-    dispatch(toggleNetworkLoading(false))
-  })
-  .catch(e => {
-    dispatch(toggleNetworkLoading(false))
-    toast.error("Error in Fetching Data", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-    console.log(e)
-  })
-
-  // dispatch(toggleNetworkLoading(true))
-  ServerApi().get(`/workshops/courceWorkshops/${id}`)
-  .then(res => {
-    dispatch({
-      type: FETCH_WORKSHOP,
-      payload: res.data.reverse()
     })
     dispatch(toggleNetworkLoading(false))
   })

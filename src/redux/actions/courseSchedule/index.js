@@ -24,6 +24,25 @@ export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
   })
 }
 
+export const fetchCourseScheduleById = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  ServerApi().get(`/workshops/${id}`)
+  .then(res => {
+    dispatch({
+      type: FETCH_SCHEDULES_BY_ID,
+      payload: res.data
+    })
+    dispatch(toggleNetworkLoading(false))
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
 export const EditCourseScheduleAPI = (id, rawData) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/workshops/${id}`, rawData)
@@ -81,34 +100,18 @@ export const fetchAllCourseScheduleOptions = () => dispatch => {
   })
 }
 
-export const fetchCourseScheduleById = (id) => dispatch => {
-  dispatch(toggleNetworkLoading(true))
-  ServerApi().get(`/workshops/${id}`)
-  .then(res => {
-    dispatch({
-      type: FETCH_SCHEDULES_BY_ID,
-      payload: res.data
-    })
-    dispatch(toggleNetworkLoading(false))
-  })
-  .catch(e => {
-    dispatch(toggleNetworkLoading(false))
-    toast.error("Error in Fetching Data", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-    console.log(e)
-  })
-}
-
 export const deleteCourseSchedule = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().delete(`/workshops/${id}`)
   .then(res => {
     toast.success("Succesfuly Deleted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    dispatch(toggleNetworkLoading(false))
     dispatch(fetchAllCourseSchedules())
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Deleting Course", {
       position: toast.POSITION.BOTTOM_CENTER
     })

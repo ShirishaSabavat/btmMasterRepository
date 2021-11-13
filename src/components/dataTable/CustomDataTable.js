@@ -207,6 +207,7 @@ const CustomDataTable = (props) => {
             data={props.data}
             paginationRowsPerPageOptions= {[10, 25, 50, 100, 500]}
             selectableRowsComponent={BootstrapCheckbox}
+            customStyles={props?.customStyles ? props.customStyles : ""}
           />
         </DataTableExtensions>
 

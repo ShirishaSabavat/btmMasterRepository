@@ -19,6 +19,7 @@ const AddCourseSchedule = () => {
     const courseOptions = useSelector(state => state.courses.courseOptions)   
     const course = useSelector(state => state.courses.course)   
     const [courseID, setCourseID] = useState("")
+    const networkLoading = useSelector(state => state.common.loading)
 
     const courseOptionsHandler = (value, formik) => {
         formik.setFieldValue("courseId", value.value)
@@ -281,7 +282,7 @@ const AddCourseSchedule = () => {
                                     
                                     <Row className="mt-1">
                                         <Col sm="12" md="12">
-                                            <Button color="primary" type="submit">Save</Button>
+                                            <Button color="primary" type="submit" disabled = {networkLoading}>{networkLoading ? "Please Wait..." : "Save"}</Button>
                                         </Col>
                                     </Row>
 

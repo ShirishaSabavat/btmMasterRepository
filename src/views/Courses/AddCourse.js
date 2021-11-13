@@ -3,6 +3,7 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
+import { toast } from 'react-toastify'
 
 // import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
@@ -20,8 +21,9 @@ const AddCourse = () => {
     const imagesData = useSelector(state => state.media.medias)
     const allVideos = useSelector(state => state.videos.videos)
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)    
+    const networkLoading = useSelector(state => state.common.loading)
 
-    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image.jpg')
+    const [selectedImg, setSelectedImg] = useState("")
     const [editModal, setModal] = useState({
         modal: false
       })
@@ -36,12 +38,7 @@ const AddCourse = () => {
     })
     }
 
-    const toggleFileModal = () => {
-        setFileModalState((prevState) => !prevState)
-    }
-
     const initialValues = {
-        image: selectedImg,
         courseName:"",
         courseType:"",
         courseCode:"",
@@ -67,8 +64,19 @@ const AddCourse = () => {
     })
 
     const submitForm = (values, {resetForm}) => {
+        if (selectedImg === "") {
+            console.log("errrr")
+            throw toast.error("Image Required", {
+                position: toast.POSITION.BOTTOM_CENTER
+              })
+        }
         console.log("course values", values)
-
+        const videoLinks = values.videoLink.map(item => {
+            if (item?.value) {
+                return item.value
+            }
+            return item
+        })
         const rawData =  {
             image: selectedImg.replace(`${BASE_URL}uploads/`, ''),
             gst: 18,
@@ -77,7 +85,7 @@ const AddCourse = () => {
             schedule: "hh",
             shortDescription: "ok",
             validity: values.courseValidity,
-            videos: values.videoLink.map(i => i.value),
+            videos: videoLinks,
             price: values.price,
             details: values.courseDetails,
             code: values.courseCode,
@@ -105,23 +113,32 @@ const AddCourse = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
+                <div>
+                    <div>Preview Image</div>
+                        <Row className="d-flex justify-content-center">
+                            <Col sm="12" md="8" className="mb-1">
+                                <Row className="d-flex justify-content-around align-items-center">
+                                    <Col sm="12" md="8">
+
+                                        {!selectedImg && (
+                                            <img src='/assets/images/default-image.jpg' alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+                                        {selectedImg !== '' && (
+                                            <img src={selectedImg} alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+
+                                    </Col>
+                                    <Col sm="12" md="4">
+                                        <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </div>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form >
-                                    <Label htmlFor="courseName">Preview Image </Label>
-                                      <Row className="d-flex justify-content-center">
-                                        <Col sm="12" md="8" className="mb-1">
-                                            <Row className="d-flex justify-content-around align-items-center">
-                                                <Col sm="12" md="8">
-                                                    <img src={formik.values.image} alt="choosen image" className="p-1 img-fluid" />
-                                                </Col>
-                                                <Col sm="12" md="4">
-                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
@@ -344,7 +361,7 @@ const AddCourse = () => {
 
                                     <Row className="mt-1">
                                         <Col sm="12" md="12">
-                                            <Button color="primary" type="submit">Save</Button>
+                                            <Button color="primary" type="submit"disabled = {networkLoading}>{networkLoading ? "Please Wait..." : "Save"}</Button>
                                         </Col>
                                     </Row>
 

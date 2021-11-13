@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, CardText, CardBody, FormGroup, Label, Input, Button, Badge,  InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, Badge,  InputGroup, InputGroupAddon, InputGroupText} from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {Link} from "react-feather"
@@ -19,33 +19,55 @@ const EditCourseSchedule = () => {
     const { workshopId } = useParams()
  
     const dispatch = useDispatch()
-    const history = useHistory() 
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)   
     const courseOptions = useSelector(state => state.courses.courseOptions)   
     const courseScheduleData = useSelector(state => state.courseSchedule.courseSchedule)
     const networkLoading = useSelector(state => state.common.loading)
-
     const courseOptionsHandler = (value, formik) => {
         formik.setFieldValue("courseId", value.value)
     }
-
+        
+    useEffect(() => {
+        dispatch(fetchCourseScheduleById(workshopId))
+    }, [workshopId])
     useEffect(() => {
         dispatch(fetchAllFacultyOptions())
         dispatch(fetchAllCoursesOptions())
-        dispatch(fetchCourseScheduleById(workshopId))
-      }, [])
+    }, [])
 
-      console.log("courseScheduleData", courseScheduleData)
+    const [courseData, setCourseData] = useState({
+        courseId: "",
+        startdate:  "",
+        enddate: "",
+        starttime:  "",
+        endtime: "",
+        location: "",
+        faculty: "",
+        address: ""
+    })
+
+    useEffect(() => {
+        setCourseData({
+            courseId: courseScheduleData?.courseId || "",
+            startdate: courseScheduleData?.startDate || "",
+            enddate: courseScheduleData?.endDate || "",
+            starttime: courseScheduleData?.startTime || "",
+            endtime: courseScheduleData?.endTime || "",
+            location: courseScheduleData?.location || "",
+            faculty: courseScheduleData?.faculty || "",
+            address: courseScheduleData?.address || ""
+        })
+    }, [courseScheduleData])
 
     const initialValues = {
-        courseId: courseScheduleData?.courseId || "",
-        startdate: courseScheduleData?.startDate || "",
-        enddate: courseScheduleData?.endDate || "",
-        starttime: courseScheduleData?.startTime || "",
-        endtime: courseScheduleData?.endTime || "",
-        location: courseScheduleData?.location || "",
-        faculty: courseScheduleData?.faculty || "",
-        address: courseScheduleData?.address || ""
+        courseId: courseData?.courseId || "",
+        startdate: courseData?.startdate || "",
+        enddate: courseData?.enddate || "",
+        starttime: courseData?.starttime || "",
+        endtime: courseData?.endtime || "",
+        location: courseData?.location || "",
+        faculty: courseData?.faculty || "",
+        address: courseData?.address || ""
     }
 
     const validationSchema = Yup.object().shape({
@@ -57,12 +79,11 @@ const EditCourseSchedule = () => {
 
     const submitForm = (values) => {
         console.log("values", values)
-
         const rawData = {
             courseId: values.courseId,
             startDate: new Date(values.startdate).toDateString(),
             endDate: new Date(values.enddate).toDateString(),
-            startTime: new Date(values.starttime.toString()).toTimeString(),
+            startTime: values.starttime.toString(),
             endTime: values.endtime.toString(),
             startDate: values.startdate,
             faculty: values.faculty,
@@ -87,7 +108,7 @@ const EditCourseSchedule = () => {
                     </CardHeader>
                     <hr className="m-0" />
                     <CardBody>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form>
@@ -97,7 +118,7 @@ const EditCourseSchedule = () => {
                                                 <Label For="courseId">Course Name</Label>
                                                 <CustomSelectField
                                                     value={formik.values.courseId}
-                                                    options={courseOptions.map(values => values)}
+                                                    options={courseOptions}
                                                     onChange={(value) => courseOptionsHandler(value, formik)}
                                                 />
                                                 <ErrorMessage
@@ -249,7 +270,7 @@ const EditCourseSchedule = () => {
                                     
                                     <Row className="mt-1">
                                         <Col sm="12" md="12">
-                                            <Button color="primary" type="submit">Update</Button>
+                                            <Button color="primary" type="submit" disabled = {networkLoading}>{networkLoading ? "Please Wait..." : "Update"}</Button>
                                         </Col>
                                     </Row>
 
