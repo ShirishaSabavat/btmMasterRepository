@@ -3,7 +3,7 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import {  useParams } from "react-router-dom"
 
 import { fetchAllVideos } from "../../redux/actions/videos"
 import {EditCourseAPI, fetchCourseByIdToEdit} from "../../redux/actions/courses/index"
@@ -16,11 +16,8 @@ import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSk
 const EditCourse = () => {
 
     const { courseId } = useParams()
-
-    const [fileModalState, setFileModalState] = useState(false)
     
     const dispatch = useDispatch()
-    const history = useHistory()
     const CourseData = useSelector(state => state.courses.course)
     const facultyOptions = useSelector(state => state.faculty.facultyOptions) 
     const imagesData = useSelector(state => state.media.medias) 
@@ -44,10 +41,6 @@ const EditCourse = () => {
             return { modal: !prevState.modal }
         })
     }
-
-    const toggleFileModal = () => {
-        setFileModalState((prevState) => !prevState)
-    }    
 
     const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${CourseData?.image}`)
 
@@ -74,6 +67,8 @@ const EditCourse = () => {
         featured: CourseData?.featured || ""
     }
 
+    console.log("CourseData", CourseData)
+
     const validationSchema = Yup.object().shape({
         image: Yup.string().required("Required"),
         courseName: Yup.string().required("Required"),
@@ -87,6 +82,7 @@ const EditCourse = () => {
     })
 
     const submitForm = (values) => {
+        console.log("arr", values.videoLink)
         const rawData = {
             gst: 18,
             tags: values.tags,
@@ -332,11 +328,10 @@ const EditCourse = () => {
                             )
                         }}
                     </Formik>
-                    {!fileModalState && editModal.modal ? (
+                    {editModal.modal ? (
                     <ImagePickerComponent
                         modalState={editModal.modal}
                         onClose={toggleModel}
-                        toggleFileModal={toggleFileModal}
                         imagesData={imagesData}
                         selectedImg={selectedImg}
                         setSelectedImg={setSelectedImg}
