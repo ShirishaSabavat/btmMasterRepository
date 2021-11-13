@@ -13,6 +13,8 @@ const Payment = () => {
     const organizationData = useSelector(state => state.organization.organization)
     const [validationType, setValidationType] = useState(false)
 
+    console.log(organizationData[0])
+
     useEffect(() => {
         dispatch(fetchAllOrganizationSettings())
     }, [])
@@ -49,7 +51,8 @@ const Payment = () => {
         dispatch(UpdateOrganizationSettings(organizationData[0]?._id, rawData))
     }
 
-    const changeHandler = () => {
+    const changeHandler = (formik) => {
+        formik.setFieldValue('liveSwitch', !formik.values?.liveSwitch)
         setValidationType(prevState => !prevState)
     }
 
@@ -64,7 +67,7 @@ const Payment = () => {
                                     <CardTitle>Razorpay Settings</CardTitle>
                                     <div className="d-flex align-items-center">
                                         <div className='mr-1'>Live</div>
-                                        <CustomInput type='switch' id='switch-primary' name='liveSwitch'  value="LIVE" onChange={formik.handleChange, changeHandler} inline defaultChecked={formik.values.liveSwitch === "LIVE"} />
+                                        <CustomInput type='switch' id='switch-primary' name='liveSwitch'  value="LIVE" onChange={() => changeHandler(formik)} inline defaultChecked={formik.values.liveSwitch === "LIVE"} />
                                     </div>
                                 </CardHeader>
                                 <hr className="m-0" />
@@ -79,6 +82,7 @@ const Payment = () => {
                                                     type="text"
                                                     name="liveApiKey"
                                                     id="liveApiKey"
+                                                    disabled={!formik.values?.liveSwitch}
                                                     {...formik.getFieldProps("liveApiKey")}
                                                     invalid={!!(formik.touched.liveApiKey && formik.errors.liveApiKey)}
                                                     >
@@ -100,6 +104,7 @@ const Payment = () => {
                                                     type="text"
                                                     name="liveApiSecret"
                                                     id="liveApiSecret"
+                                                    disabled={!formik.values?.liveSwitch}
                                                     {...formik.getFieldProps("liveApiSecret")}
                                                     invalid={!!(formik.touched.liveApiSecret && formik.errors.liveApiSecret)}
                                                     >
@@ -123,6 +128,7 @@ const Payment = () => {
                                                     type="text"
                                                     name="testApiKey"
                                                     id="testApiKey"
+                                                    disabled={formik.values?.liveSwitch}
                                                     {...formik.getFieldProps("testApiKey")}
                                                     invalid={!!(formik.touched.testApiKey && formik.errors.testApiKey)}
                                                     >
@@ -144,6 +150,7 @@ const Payment = () => {
                                                     type="text"
                                                     name="testApiSecret"
                                                     id="testApiSecret"
+                                                    disabled={formik.values?.liveSwitch}
                                                     {...formik.getFieldProps("testApiSecret")}
                                                     invalid={!!(formik.touched.testApiSecret && formik.errors.testApiSecret)}
                                                     >

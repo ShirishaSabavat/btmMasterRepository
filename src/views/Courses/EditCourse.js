@@ -22,10 +22,9 @@ const EditCourse = () => {
     const facultyOptions = useSelector(state => state.faculty.facultyOptions) 
     const imagesData = useSelector(state => state.media.medias) 
     const allVideos = useSelector(state => state.videos.videos)
-    
+
     const videoLinks = CourseData?.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink)) 
     const videoOptions = videoLinks?.map(videoData => {
-        console.log(videoData, "videoData")
         return { label: videoData[0]?.title, value: videoData[0]?._id }
     })
     const networkLoading = useSelector(state => state.common.loading)
@@ -51,26 +50,49 @@ const EditCourse = () => {
             return { modal: !prevState.modal }
         })
     }
+    const imgUrl = CourseData.image ? `${BASE_URL}uploads/${CourseData?.image}` : ""
 
-    const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${CourseData?.image}`)
+    const [selectedImg, setSelectedImg] = useState(imgUrl)
+
+    const [courseValues, setCourseValues] = useState({
+        courseName: "",
+        courseType: "",
+        courseCode: "",
+        courseDetails: "",
+        courseValidity: "",
+        price:  "",
+        videoLink: videoOptions || "",
+        faculty: "",
+        featured: ""
+    })
+
+    useEffect(() => {
+        setCourseValues({
+            courseName: CourseData?.name || "",
+            courseType: CourseData?.type || "",
+            courseCode: CourseData?.code || "",
+            courseDetails: CourseData?.details || "",
+            courseValidity: CourseData?.validity || "",
+            price: CourseData?.price || "",
+            videoLink: videoOptions || "",
+            faculty: CourseData?.faculty || "",
+            featured: CourseData?.featured || ""
+        })
+    }, [CourseData])
 
     const initialValues = {
-        image: selectedImg,
-        courseName: CourseData?.name || "",
-        courseType: CourseData?.type || "",
-        courseCode: CourseData?.code || "",
-        courseDetails: CourseData?.details || "",
-        courseValidity: CourseData?.validity || "",
-        price: CourseData?.price || "",
-        videoLink: videoOptions || "",
-        faculty: CourseData?.faculty || "",
-        featured: CourseData?.featured || ""
+        courseName: courseValues?.courseName || "",
+        courseType: courseValues?.courseType || "",
+        courseCode: courseValues?.courseCode || "",
+        courseDetails: courseValues?.courseDetails || "",
+        courseValidity: courseValues?.courseValidity || "",
+        price: courseValues?.price || "",
+        videoLink: courseValues.videoLink || "",
+        faculty: courseValues?.faculty || "",
+        featured: courseValues?.featured || ""
     }
 
-    console.log("CourseData", CourseData)
-
     const validationSchema = Yup.object().shape({
-        image: Yup.string().required("Required"),
         courseName: Yup.string().required("Required"),
         courseType: Yup.string().required("Required"),
         courseCode: Yup.string().required("Required"),
@@ -82,7 +104,12 @@ const EditCourse = () => {
     })
 
     const submitForm = (values) => {
-        console.log("arr", values.videoLink)
+        const videoLinks = values.videoLink.map(item => {
+            if (item?.value) {
+                return item.value
+            }
+            return item
+        })
         const rawData = {
             gst: 18,
             tags: values.tags,
@@ -90,13 +117,13 @@ const EditCourse = () => {
             schedule: "hh",
             shortDescription: "ok",
             validity: values.courseValidity,
-            videos: values.videoLink,
+            videos: videoLinks,
             price: values.price,
             details: values.courseDetails,
             code: values.courseCode,
             type: values.courseType,
             name: values.courseName,
-            image: values.image.replace(`${BASE_URL}uploads/`, ''),
+            image: selectedImg.replace(`${BASE_URL}uploads/`, ''),
             faculty: values.faculty,
             featured: values.featured
         }
@@ -118,31 +145,33 @@ const EditCourse = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
+                    <div>
+                        <div>Preview Image</div>
+                        <Row className="d-flex justify-content-center">
+                            <Col sm="12" md="8" className="mb-1">
+                                <Row className="d-flex justify-content-around align-items-center">
+                                    <Col sm="12" md="8">
+
+                                        {!selectedImg && (
+                                            <img src='/assets/images/default-image.jpg' alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+                                        {selectedImg !== '' && (
+                                            <img src={selectedImg} alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+
+                                    </Col>
+                                    <Col sm="12" md="4">
+                                        <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </div>
+
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form>
-                                     <Label htmlFor="courseName">Preview Image</Label>
-                                     <Row className="d-flex justify-content-center">
-                                        <Col sm="12" md="8" className="mb-1">
-                                            <Row className="d-flex justify-content-around align-items-center">
-                                                <Col sm="12" md="8">
-                                                    {/* <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" /> */}
-
-                                                    {selectedImg === '' && (
-                                                        <img src={(oldData?.image === '/assets/images/default-image.jpg') ? oldData.image : `${BASE_URL}uploads/${oldData?.image}`} alt="choosen image" className="img-thumbnail img-fluid" />
-                                                    )}
-                                                    {selectedImg !== '' && (
-                                                        <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
-                                                    )}
-
-                                                </Col>
-                                                <Col sm="12" md="4">
-                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
                                     <Row>
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
@@ -270,7 +299,7 @@ const EditCourse = () => {
                                                     defaultValue={videoOptions}
                                                     options={allVideos.map((i) => ({label: i.title, value: i._id}))}
                                                     name="videoLink"
-                                                    onChange={(value) => { formik.setFieldValue("videoLink", value.map(val => val.value)) }} 
+                                                    onChange={(value) => formik.setFieldValue("videoLink", value.map(val => val.value))} 
                                                     isMulti={true}
                                                 />
                                                 <ErrorMessage
@@ -320,7 +349,7 @@ const EditCourse = () => {
 
                                     <Row className="mt-1">
                                         <Col sm="12" md="12">
-                                            <Button color="primary" type="submit">Update</Button>
+                                            <Button color="primary" type="submit" disabled = {networkLoading}>{networkLoading ? "Please Wait..." : "Update"}</Button>
                                         </Col>
                                     </Row>
 
@@ -343,4 +372,4 @@ const EditCourse = () => {
     </Row>
 }
 
-export default EditCourse
+export default React.memo(EditCourse)

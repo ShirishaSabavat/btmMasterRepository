@@ -4,9 +4,9 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import {Link, Code} from "react-feather"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {BASE_URL} from '../../utility/serverSettings'
-
+import { toast } from 'react-toastify'
 import {AddVideoAPI} from "../../redux/actions/videos/index"
 // import sampleImg from "/assets/images/default-image.jpg"
 
@@ -15,7 +15,8 @@ const AddVideo = () => {
 
     const dispatch = useDispatch()
 
-    const [selectedImg, setSelectedImg] = useState('/assets/images/default-image.jpg')
+    const [selectedImg, setSelectedImg] = useState("")
+    const networkLoading = useSelector(state => state.common.loading)
     const [editModal, setModal] = useState({modal: false})
 
     const toggleModel = () => {
@@ -26,7 +27,6 @@ const AddVideo = () => {
 
     const initialValues = {
         title: "",
-        image: selectedImg,
         videoLink: "",
         duration: "",
         description: "",
@@ -37,7 +37,6 @@ const AddVideo = () => {
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
-        image: Yup.string().required("Required"),
         duration: Yup.string(),
         description: Yup.string(),
         videoLinkType: Yup.string(),
@@ -54,7 +53,12 @@ const AddVideo = () => {
     })
 
     const submitForm = (values, {resetForm}) => {
-
+        if (selectedImg === "") {
+            console.log("errrr")
+            throw toast.error("Image Required", {
+                position: toast.POSITION.BOTTOM_CENTER
+              })
+        }
         console.log(values)
 
         const formData = new FormData()
@@ -86,24 +90,32 @@ const AddVideo = () => {
                 <hr className="m-0" />
                 
                 <CardBody>
+                <div>
+                    <div>Preview Image</div>
+                        <Row className="d-flex justify-content-center">
+                            <Col sm="12" md="8" className="mb-1">
+                                <Row className="d-flex justify-content-around align-items-center">
+                                    <Col sm="12" md="8">
+
+                                        {!selectedImg && (
+                                            <img src='/assets/images/default-image.jpg' alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+                                        {selectedImg !== '' && (
+                                            <img src={selectedImg} alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+
+                                    </Col>
+                                    <Col sm="12" md="4">
+                                        <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </div>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form>
-
-                                    <Row className="d-flex justify-content-center">
-                                        <Col sm="12" md="8" className="mb-1">
-                                            <Row className="d-flex justify-content-around align-items-center">
-                                                <Col sm="12" md="8">
-                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
-                                                </Col>
-                                                <Col sm="12" md="4">
-                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
-
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
@@ -271,7 +283,7 @@ const AddVideo = () => {
                                     <Row className="mb-1 pr-2 pl-2">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Button color="primary" type="submit">Save</Button>
+                                                <Button color="primary" type="submit" disabled = {networkLoading}>{networkLoading ? "Please Wait..." : "Save"}</Button>
                                             </FormGroup>
                                         </Col>
                                     </Row>
