@@ -330,6 +330,7 @@ const Landing = (route) => {
                                 variant="contained" 
                                 style={{borderRadius: 2}}
                                 onClick={() => initPurchase('ONLINE')}
+                                disabled={userData?.user?.role === 'ADMIN'}
                             >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                         </div>
                     </CardContent>
@@ -372,6 +373,7 @@ const Landing = (route) => {
                                     variant="contained" 
                                     style={{borderRadius: 2}}
                                     onClick={() => initPurchase('WORKSHOP')}
+                                    disabled={userData?.user?.role === 'ADMIN'}
                                 >{!userData.access_token ? "Join Now" : "Buy Now" }</LoadingButton>
                             </div>
                         </CardContent>

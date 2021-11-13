@@ -73,6 +73,7 @@ export const fetchAllVideos = () => dispatch => {
 }
 
 export const fetchVideoById = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/videos/${id}`)
   .then(res => {
     const data = res.data
@@ -80,8 +81,10 @@ export const fetchVideoById = (id) => dispatch => {
       type: GET_VIDEO_BY_ID,
       payload: data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", e, {
       position: toast.POSITION.BOTTOM_CENTER
     })

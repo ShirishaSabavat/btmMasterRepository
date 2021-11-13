@@ -61,6 +61,9 @@ const ContactUs = () => {
                             <h2>Business Aacharaya</h2>
                             <p>What is Spirituality? - Over the years many definitions have been given to it. One such definition is connecting one's soul with everything positive around us. It is the attempt to be at peace with oneself. It is the art of letting go. The yearning for this spiritual experience has led to demand for spirituality courses.
         View more- Explore Online Courses and Certifications</p>
+                            <div className="text-center">
+                                <img className="img-fluid m-2" width="520" src="/assets/svg/contact_us.svg" />
+                            </div>
                         </div>
                         </Col>
                     </Row>

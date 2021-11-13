@@ -8,7 +8,7 @@ const initialState = {
 const videoReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_VIDEOS:
-      return {...state, videos: action.payload}
+      return {...state, video: {}, videos: action.payload}
     
     case GET_VIDEO_BY_ID:
       return {...state, video: action.payload}

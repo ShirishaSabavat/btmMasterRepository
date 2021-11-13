@@ -4,7 +4,7 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import { Link, Code} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
@@ -16,7 +16,6 @@ const EditVideo = () => {
     const { videoId } = useParams()
 
     const dispatch = useDispatch()
-    const history = useHistory()
     const oldData = useSelector(state => state.videos.video)
     const imagesData = useSelector(state => state.media.medias)
     const networkLoading = useSelector(state => state.common.loading)
@@ -42,9 +41,8 @@ const EditVideo = () => {
         bacOnly: oldData.bacOnly || false,
         embededVideo: oldData.embededVideo || false,
         bacOnly: oldData.bacOnly || false,
-        videoLinkType: oldData.videoLinkType || 'YOUTUBE'
+        videoLinkType: oldData?.videoLinkType || 'YOUTUBE'
     }
-
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
@@ -79,7 +77,7 @@ const EditVideo = () => {
         formData.append('videoLinkType', values.videoLinkType)
 
         if (values.videoLinkType === 'YOUTUBE') {
-            formData.append('link', values.link)
+            formData.append('link', values.videoLink)
         } else {
             formData.append('videoFile', values.videoFile)
         }

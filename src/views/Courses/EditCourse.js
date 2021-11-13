@@ -3,10 +3,10 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
-import { useHistory, useParams } from "react-router-dom"
+import {  useParams } from "react-router-dom"
 
 import { fetchAllVideos } from "../../redux/actions/videos"
-import {EditCourseAPI, fetchCourseById} from "../../redux/actions/courses/index"
+import {EditCourseAPI, fetchCourseByIdToEdit} from "../../redux/actions/courses/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 import { BASE_URL } from '../../utility/serverSettings'
@@ -16,33 +16,21 @@ import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSk
 const EditCourse = () => {
 
     const { courseId } = useParams()
-
-    const [fileModalState, setFileModalState] = useState(false)
     
     const dispatch = useDispatch()
-    const history = useHistory()
     const CourseData = useSelector(state => state.courses.course)
     const facultyOptions = useSelector(state => state.faculty.facultyOptions) 
     const imagesData = useSelector(state => state.media.medias) 
     const allVideos = useSelector(state => state.videos.videos)
     
-    const videoLinks = CourseData?.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink)) 
-    const videoOptions = videoLinks?.map(videoData => {
-        return { label: videoData[0]?.title, value: videoData[0]?._id }
-    })
+    // const videoLinks = CourseData?.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink)) 
+    // const videoOptions = videoLinks?.map(videoData => ({ label: videoData[0]?.title, value: videoData[0]?._id }))
     const networkLoading = useSelector(state => state.common.loading)
 
     useEffect(() => {
+        dispatch(fetchCourseByIdToEdit(courseId))
         dispatch(fetchAllFacultyOptions())
       }, [])
-
-    useEffect(() => {
-        dispatch(fetchAllVideos())
-    }, [])
-
-    useEffect(() => {
-        dispatch(fetchCourseById(courseId))
-    }, [])
 
     const [editModal, setModal] = useState({
         modal: false
@@ -54,11 +42,17 @@ const EditCourse = () => {
         })
     }
 
-    const toggleFileModal = () => {
-        setFileModalState((prevState) => !prevState)
-    }    
-
     const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads/${CourseData?.image}`)
+
+    const prepareSelectedVideo = () => {
+        return 0
+        if (!CourseData.videos) return
+
+        const videoDetails = CourseData.videos?.map(videoLink =>  allVideos?.filter(videoID =>  videoID._id === videoLink))
+        const selectOptions = videoDetails?.map(videoData => ({ label: videoData[0]?.title, value: videoData[0]?._id }))
+        
+        return selectOptions
+    }
 
     const initialValues = {
         image: selectedImg,
@@ -68,10 +62,12 @@ const EditCourse = () => {
         courseDetails: CourseData?.details || "",
         courseValidity: CourseData?.validity || "",
         price: CourseData?.price || "",
-        videoLink: videoOptions || "",
+        videoLink:  CourseData?.videos?.map(i => ({label: i.title, value: i._id})),
         faculty: CourseData?.faculty || "",
         featured: CourseData?.featured || ""
     }
+
+    console.log("CourseData", CourseData)
 
     const validationSchema = Yup.object().shape({
         image: Yup.string().required("Required"),
@@ -81,11 +77,12 @@ const EditCourse = () => {
         courseDetails: Yup.string().required("Required"),
         courseValidity: Yup.number().positive().integer().required("Required"),
         price: Yup.number().positive().integer().required("Required"),
-        faculty: Yup.string().required("Required")
-        // videoLink: Yup.string().required("Required")
+        faculty: Yup.string().required("Required"),
+        videoLink: Yup.array().required("Required")
     })
 
     const submitForm = (values) => {
+        console.log("arr", values.videoLink)
         const rawData = {
             gst: 18,
             tags: values.tags,
@@ -109,7 +106,7 @@ const EditCourse = () => {
 
     const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
 
-    if (networkLoading) {
+    if (networkLoading || !CourseData.name) {
         return (<TableDataLoadingSkleton />)
     }
 
@@ -267,13 +264,13 @@ const EditCourse = () => {
                                     <Row className="mb-1">
                                          <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="videoLink">Youtube Video Link <span className="text-danger">*</span></Label>
+                                                <Label htmlFor="videoLink">Video Links <span className="text-danger">*</span></Label>
                                                 <CustomSelectField
                                                     value={formik.values.videoLink}
-                                                    defaultValue={videoOptions}
+                                                    defaultValue={CourseData?.videos?.map(i => ({label: i.title, value: i._id}))}
                                                     options={allVideos.map((i) => ({label: i.title, value: i._id}))}
                                                     name="videoLink"
-                                                    onChange={(value) => { formik.setFieldValue("videoLink", value.map(val => val.value)) }} 
+                                                    onChange={(value) => { formik.setFieldValue("videoLink", value) }} 
                                                     isMulti={true}
                                                 />
                                                 <ErrorMessage
@@ -331,11 +328,10 @@ const EditCourse = () => {
                             )
                         }}
                     </Formik>
-                    {!fileModalState && editModal.modal ? (
+                    {editModal.modal ? (
                     <ImagePickerComponent
                         modalState={editModal.modal}
                         onClose={toggleModel}
-                        toggleFileModal={toggleFileModal}
                         imagesData={imagesData}
                         selectedImg={selectedImg}
                         setSelectedImg={setSelectedImg}

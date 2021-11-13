@@ -68,7 +68,7 @@ const AddVideo = () => {
         formData.append('videoLinkType', values.videoLinkType)
 
         if (values.videoLinkType === 'YOUTUBE') {
-            formData.append('link', values.link)
+            formData.append('link', values.videoLink)
         } else {
             formData.append('videoFile', values.videoFile)
         }
