@@ -109,7 +109,7 @@ const EditCourse = () => {
 
     const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
 
-    if (networkLoading || !CourseData.name) {
+    if (!CourseData.name) {
         return (<TableDataLoadingSkleton />)
     }
 

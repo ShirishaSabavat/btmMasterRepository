@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
 
 export const fetchAllOrganizationSettings = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get('/settings')
   .then(res => {
     const data = res.data.map(values => values) 
@@ -11,8 +12,10 @@ export const fetchAllOrganizationSettings = () => dispatch => {
       type: FETCH_ALL_ORGANIZATION_SETTINGS,
       payload: data
     })
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -21,14 +24,15 @@ export const fetchAllOrganizationSettings = () => dispatch => {
 }
 
 export const postOrganizationSettings = (id, formdata) => (dispatch) => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/settings/${id}`, formdata).then(res => {
-    if (res.status === "200") {
-      toast.success("Successfully Updated Data", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-      setReFetch(prevState => !prevState)
-    }
+    toast.success("Successfully Updated Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    dispatch(toggleNetworkLoading(false))
+    // setReFetch(prevState => !prevState)
   }).catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Updating Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -36,14 +40,15 @@ export const postOrganizationSettings = (id, formdata) => (dispatch) => {
   })
 }
 export const UpdateOrganizationSettings = (id, formdata) => (dispatch) => {
+  dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/settings/${id}`, formdata).then(res => {
-    if (res.status === "200") {
-      toast.success("Successfully Updated Data", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-      setReFetch(prevState => !prevState)
-    }
+    toast.success("Successfully Updated Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    dispatch(fetchAllOrganizationSettings())
+    dispatch(toggleNetworkLoading(false))
   }).catch(e => {
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error in Updating Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
