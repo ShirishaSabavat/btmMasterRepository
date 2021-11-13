@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react"
+import React, {useRef, useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input, Button, InputGroup } from "reactstrap"
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
 import { toast } from 'react-toastify'
-
+import JoditEditor from "jodit-react"
 // import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
@@ -22,6 +22,11 @@ const AddCourse = () => {
     const allVideos = useSelector(state => state.videos.videos)
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)    
     const networkLoading = useSelector(state => state.common.loading)
+
+    const editor = useRef(null)
+    const config = {
+        readonly: false
+    }
 
     const [selectedImg, setSelectedImg] = useState("")
     const [editModal, setModal] = useState({
@@ -106,7 +111,7 @@ const AddCourse = () => {
     const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
 
     return <Row>
-        <Col sm="12" md="6">
+        <Col sm="12" md="7">
             <Card >
                 <CardHeader>
                     <CardTitle>Add Course</CardTitle>
@@ -280,7 +285,7 @@ const AddCourse = () => {
                                         <Col sm="12">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="courseDetails">Course Details <span className="text-danger">*</span></Label>
-                                                <InputGroup>
+                                                {/* <InputGroup>
                                                     <Input
                                                     type="textarea"
                                                     name="courseDetails"
@@ -289,7 +294,15 @@ const AddCourse = () => {
                                                     invalid={!!(formik.touched.courseDetails && formik.errors.courseDetails)}
                                                     >
                                                     </Input>
-                                                </InputGroup>
+                                                </InputGroup> */}
+                                                
+                                                <JoditEditor
+                                                    ref={editor}
+                                                    value={formik.values.courseDetails}
+                                                    config={config}
+                                                    tabIndex={1} 
+                                                    onBlur={newContent => formik.setFieldValue('courseDetails', newContent)} 
+                                                />
                                                 <ErrorMessage
                                                     name="courseDetails"
                                                     component="div"

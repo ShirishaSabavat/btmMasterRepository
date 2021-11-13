@@ -307,7 +307,7 @@ const Landing = (route) => {
                 
                 <h2 style={{fontSize: 32, fontWeight: 'bold'}} className="mt-2">₹ {course.price} /- <small>+ (18%) gst</small> </h2>
                 
-                <p className="mt-1 text-justify">{course.details}</p>
+                <div style={{padding: 4,  justifyContent: 'center'}} dangerouslySetInnerHTML={{__html: course.details}} />
             </div>
         
         </Grid>

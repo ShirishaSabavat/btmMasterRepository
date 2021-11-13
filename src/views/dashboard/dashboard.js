@@ -109,16 +109,25 @@ const Dashboard = () => {
 
     {userData.user.role === 'BAC_USER' && (
     <Row>
-        <Card className='card-congratulations'>
+        <Card className='card-congratulations' style={{background: 'linear-gradient(118deg, #4e9b9f, rgb(119 103 240 / 70%))'}}>
             <CardBody className='text-center'>
                 {/* <img className='congratulations-img-left' src={decorationLeft} alt='decor-left' /> */}
                 {/* <img className='congratulations-img-right' src={decorationRight} alt='decor-right' /> */}
                 <Avatar icon={<Share2 size={28} />} className='shadow' color='success' size='xl' />
                 <div className='text-center'>
                 <h1 className='mb-1 text-white'>Share & Earn</h1>
+                
+                {userData?.user.kycStatus === 'VERIFIED' && (
                 <CardText className='m-auto w-75'>
-                    Now you can share your referral code and earn <strong>10%</strong> comissions on each purchase.
+                    Now you can share your referral code and earn <strong>30%</strong> comissions on each online course purchase and <strong>10%</strong> on workshop purchase with your referral code.
                 </CardText>
+                )}
+
+                {userData?.user.kycStatus !== 'VERIFIED' && (
+                <CardText className='m-auto w-75'>
+                    Complete your KYC to be eligible to earn <strong>30%</strong> comissions on each online course purchase and  <strong>10%</strong> on workshop purchase with your referral code.
+                </CardText>
+                )}
 
                 {userData?.user.kycStatus !== 'VERIFIED' && (
                 <Button.Ripple disabled className="mt-2" size="small" color='secondary'>

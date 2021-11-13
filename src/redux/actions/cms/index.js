@@ -3,55 +3,6 @@ import { toast } from 'react-toastify'
 import { GET_MISSION, GET_ABOUT, GET_VISSION, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS, GET_PRIVACY_POLICY, GET_TERMS_AND_CONDITIONS, GET_REFUND_POLICY } from "../../types/cms/index"
 import { toggleNetworkLoading } from '../common'
 
-export const AddCMS = (type, rawData) => dispatch => {
-  dispatch(toggleNetworkLoading(true))
-  ServerApi().post(`/cms`, rawData)
-  .then(res => {
-    if (res.status === 201) {
-      toast.success("Success", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-    } else {
-      toast.error("Error", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-    }
-    dispatch(toggleNetworkLoading(false))
-  })
-  .catch(e => {
-    dispatch(toggleNetworkLoading(false))
-    toast.error("Error", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-    console.log(e)
-  })
-}
-
-export const EditCMS = (type, content) => dispatch => {
-  dispatch(toggleNetworkLoading(true))
-  // ServerApi().patch(`/cms/${type.toLowerCase()}`, content)
-  ServerApi().patch(`/cms/${type}`, content)
-  .then(res => {
-    if (res.status === 200) {
-      toast.success("Updated Content", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-    } else {
-      toast.error("Error in Updating Content", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-    }
-    dispatch(toggleNetworkLoading(false))
-  })
-  .catch(e => {
-    dispatch(toggleNetworkLoading(false))
-    toast.error("Error Updating Course", {
-      position: toast.POSITION.BOTTOM_CENTER
-    })
-    console.log(e)
-  })
-}
-
 export const fetchCMS = (type) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/cms/${type}`)
@@ -99,6 +50,57 @@ export const fetchCMS = (type) => dispatch => {
   .catch(e => {
     dispatch(toggleNetworkLoading(false))
     toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
+export const AddCMS = (type, rawData) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  ServerApi().post(`/cms`, rawData)
+  .then(res => {
+    if (res.status === 201) {
+      toast.success("Success", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      dispatch(fetchCMS(type))
+    } else {
+      toast.error("Error", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      dispatch(toggleNetworkLoading(false))
+    }
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("Error", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
+export const EditCMS = (type, content) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  // ServerApi().patch(`/cms/${type.toLowerCase()}`, content)
+  ServerApi().patch(`/cms/${type}`, content)
+  .then(res => {
+    if (res.status === 200) {
+      toast.success("Updated Content", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      dispatch(fetchCMS(type))
+    } else {
+      toast.error("Error in Updating Content", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      dispatch(toggleNetworkLoading(false))
+    }
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("Error Updating Course", {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
