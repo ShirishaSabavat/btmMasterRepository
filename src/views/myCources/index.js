@@ -156,7 +156,7 @@ const MyCources = () => {
                                 } 
                             } 
                         }}
-                        url={selectedVideo.videoLinkType === 'FILE' ? `${BASE_URL}/videoUploads/${selectedVideo.videoFile}` : selectedVideo.link}
+                        url={selectedVideo.videoLinkType === 'FILE' ? `${BASE_URL}videoUploads/${selectedVideo.videoFile}` : selectedVideo.link}
 
                     />
                 </DialogContent>
