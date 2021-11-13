@@ -44,7 +44,7 @@ const MyCources = () => {
                     <div className="col-md-4 col-sm-12">
                         <Card className='card-developer-meetup'>
                             <div className='meetup-img-wrapper rounded-top text-center'>
-                                <img src={`${BASE_URL}uploads/${item.courseId.image}`} className="img-fluid" style={{maxHeight: 300}} />
+                                <img src={`${BASE_URL}uploads/${item.courseId?.image}`} className="img-fluid" style={{maxHeight: 300}} />
                             </div>
                             <CardBody>
                                 <div className='align-items-center'>
@@ -54,9 +54,9 @@ const MyCources = () => {
                                     </div> */}
                                     <div className='my-auto'>
                                         <CardTitle tag='h4' className='mb-25'>
-                                            {item.courseId.name}
+                                            {item.courseId?.name}
                                         </CardTitle>
-                                        <CardText className='mb-0'>{item.courseId.shortDescription}</CardText>
+                                        <CardText className='mb-0'>{item.courseId?.shortDescription}</CardText>
                                         {/* <CardText className='mb-0'>{new Date(item.purchaseDate).toLocaleTimeString()}</CardText> */}
                                     </div>
                                 </div>
@@ -74,9 +74,9 @@ const MyCources = () => {
                                 <AccordionDetails className="p-0">
                                     <List dense={true}>
 
-                                        {item.courseId.videos && (
+                                        {item.courseId?.videos && (
                                             <>
-                                                {item.courseId.videos.map(vid => (
+                                                {item.courseId?.videos.map(vid => (
                                                     <ListItem
                                                         onClick={() => { setVideoModal(true); setVideoUrl(vid.link) }}
                                                         secondaryAction={
@@ -110,7 +110,7 @@ const MyCources = () => {
                                 <Typography>Details</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails className="">
-                                    {item.courseId.type === "Bac" && (
+                                    {item.courseId?.type === "Bac" && (
                                         <div className='my-auto pb-2'>
                                             <Chip size="small" label="BAC Course" color="primary" />
                                         </div>

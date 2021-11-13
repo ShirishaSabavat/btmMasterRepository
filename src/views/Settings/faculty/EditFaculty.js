@@ -24,8 +24,6 @@ const AddFacultyComponent = () => {
         dispatch(fetchAllFacultyById(id))
     }, [id])
 
-    console.log("facultyData", facultyData)
-
     const toggleModel = () => {
     setModal((prevState) => {
         return { modal: !prevState.modal }

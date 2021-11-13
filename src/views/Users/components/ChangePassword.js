@@ -1,23 +1,29 @@
 import { Button, Label, Row, Col, Input, FormGroup } from 'reactstrap'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
+import { useSelector, useDispatch } from 'react-redux'
+import { changePassword } from '../../../redux/actions/auth'
 
 const ChangePassword = () => {
 
+  const userData = useSelector(state => state.user.userData)
+  const dispatch = useDispatch()
+
   const initialValues = {
     newPassword:"",
-    reNewPassword:""
+    confirmPassword:""
   }
 
   const validationSchema = Yup.object().shape({
     newPassword: Yup.string().required("Required"),
-    reNewPassword: Yup.string()
+    confirmPassword: Yup.string()
     .oneOf([Yup.ref('newPassword'), null], 'Passwords must match').required("Required")
   })
 
 
-  const submitForm = values => {
+  const submitForm = (values, {resetForm}) => {
     console.log("val", values)
+    dispatch(changePassword(values, resetForm))
   }
 
 
@@ -48,17 +54,17 @@ const ChangePassword = () => {
                 </Col>
                 <Col sm='6'>
                   <FormGroup>
-                    <Label htmlFor='reNewPassword'>Confirm Password</Label>
+                    <Label htmlFor='confirmPassword'>Confirm Password</Label>
                         <Input
                         type="password"
-                        name="reNewPassword"
-                        id="reNewPassword"
-                        {...formik.getFieldProps("reNewPassword")}
-                        invalid={!!(formik.touched.reNewPassword && formik.errors.reNewPassword)}
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        {...formik.getFieldProps("confirmPassword")}
+                        invalid={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
                         >
                         </Input>
                     <ErrorMessage
-                        name="reNewPassword"
+                        name="confirmPassword"
                         component="div"
                         className="field-error text-danger"
                     />

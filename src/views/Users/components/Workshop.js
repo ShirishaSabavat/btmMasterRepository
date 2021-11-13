@@ -19,15 +19,15 @@ const Workshop  = ({purchasedWorkshops}) => {
                 <Card className='col-md-6 col--sm-12 card-app-design bg-light m-1'>
                     <CardBody>
                         <div className="d-flex justify-content-between">
-                            <Badge color='light-primary'>Batch No: {item.workshopId.batchNo}</Badge>
-                            <Badge color='light-primary'>Type: {item.courseId.type}</Badge>
+                            <Badge color='light-primary'>Batch No: {item.workshopId?.batchNo}</Badge>
+                            <Badge color='light-primary'>Type: {item.courseId?.type}</Badge>
                             <Badge color='success'>Purchased</Badge>
                         </div>
-                        <CardTitle className='mt-1 mb-75'><strong>Course Name: {item.courseId.name}</strong> </CardTitle>
+                        <CardTitle className='mt-1 mb-75'><strong>Course Name: {item.courseId?.name}</strong> </CardTitle>
                         {/* <CardTitle className='mt-1 mb-75'><strong>Faculty:</strong> </CardTitle> */}
                         
                         <CardText className='font-small-2 mb-2'>
-                            Price: <strong>{item.courseId.price}</strong>  <br />
+                            Price: <strong>{item.courseId?.price}</strong>  <br />
                             Date: <strong>{new Date(item.createdAt).toLocaleString()}</strong>  <br />
                             Order Id: <strong>{item.orderId}</strong> <br />
                             Payment Id: <strong>{item.paymentId}</strong> <br />

@@ -3,10 +3,8 @@ import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 
 export const fetchKycUserData = (id) => dispatch => {
-  console.log("ID", id)
   ServerApi().get(`/kycs/${id}`)
   .then(res => {
-    console.log("res", res)
     dispatch({
       type: GET_USER_KYC_DATA,
       payload: res.data

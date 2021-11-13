@@ -7,7 +7,6 @@ export const AddCourseAPI = (rawData, resetForm) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().post('/courses', rawData)
   .then(res => {
-    console.log("ress", res)
     if (res.statusText === "Created") {
       toast.success("Created course", {
         position: toast.POSITION.BOTTOM_CENTER
@@ -33,7 +32,6 @@ export const EditCourseAPI = (id, rawData) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/courses/${id}`, rawData)
   .then(res => {
-    console.log("ress", res)
     if (res.status === 200) {
       toast.success("Updated course", {
         position: toast.POSITION.BOTTOM_CENTER

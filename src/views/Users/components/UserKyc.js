@@ -185,9 +185,12 @@ const UserKyc  = ({userData}) => {
                   <Button className="mr-1" onClick={() => updateUserKyc()}  color='primary' id='reportToggler2'>
                     Save
                   </Button>
-                  <Button onClick={() => setShowEdit(true)}  color='success' id='reportToggler3'>
-                    Edit
-                  </Button>
+
+                  {userData.kycStatus === 'VERIFIED' && (
+                    <Button onClick={() => setShowEdit(true)}  color='success' id='reportToggler3'>
+                      Edit
+                    </Button>
+                  )}
                 </div>
               </>
             )
@@ -234,8 +237,11 @@ const UserKyc  = ({userData}) => {
                   </Alert>
                   </div>
               )}
-
-         <Timeline data={iconsData}  /> </>}
+          {userData.kycStatus === 'VERIFIED' && (
+            <Timeline data={iconsData}  /> 
+          )}
+          
+        </>}
     </div>
 }
 

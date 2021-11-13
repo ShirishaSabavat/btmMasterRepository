@@ -29,7 +29,6 @@ export const fetchAllBACUsersData = () => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().get('/users')
   .then(res => {
-    console.log("res", res)
     let data = res.data.reverse().map((values, index) => ({...values, sno: index + 1}))
     data = data.filter(item => item.role === "BAC_USER")
     dispatch({

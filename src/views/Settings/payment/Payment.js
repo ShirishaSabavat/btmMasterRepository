@@ -17,8 +17,6 @@ const Payment = () => {
         dispatch(fetchAllOrganizationSettings())
     }, [])
 
-    console.log('organizationData', organizationData)
-
     const initialValues = {
         liveApiKey: organizationData[0]?.razorPayLiveKey || "",
         liveApiSecret: organizationData[0]?.razorPayLiveSecret || "",
@@ -60,7 +58,6 @@ const Payment = () => {
             <Card>
                 <Formik initialValues={initialValues} validationSchema={validationType ? validationSchema1 : validationSchema2}  onSubmit={submitForm} enableReinitialize>
                     {(formik) => {
-                        console.log("formik", formik.values)
                         return (
                             <Form>
                                 <CardHeader >

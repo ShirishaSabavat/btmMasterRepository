@@ -7,7 +7,6 @@ export const AddCMS = (type, rawData) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().post(`/cms`, rawData)
   .then(res => {
-    console.log("ress", res)
     if (res.status === 201) {
       toast.success("Success", {
         position: toast.POSITION.BOTTOM_CENTER
@@ -33,7 +32,6 @@ export const EditCMS = (type, content) => dispatch => {
   // ServerApi().patch(`/cms/${type.toLowerCase()}`, content)
   ServerApi().patch(`/cms/${type}`, content)
   .then(res => {
-    console.log("ress", res, content)
     if (res.status === 200) {
       toast.success("Updated Content", {
         position: toast.POSITION.BOTTOM_CENTER
@@ -84,7 +82,6 @@ export const fetchCMS = (type) => dispatch => {
         payload: res.data
       })
     } else if (type === "TERMS_AND_CONDITIONS") {
-      console.log(res.data, 'TERMS_AND_CONDITIONS')
       dispatch({
         type: GET_TERMS_AND_CONDITIONS,
         payload: res.data
