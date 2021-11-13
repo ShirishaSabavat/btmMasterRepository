@@ -297,7 +297,7 @@ const Landing = () => {
         <Grid className="bg-white pb-5" item xs={12}>
             <Row className=''>
                 <Col className='' lg='4' xs='12'>
-                    <img className='img-fluid' src="/assets/images/c2.jpg" alt='Login V2' />
+                    <img className='img-fluid ml-2' src="/assets/svg/quitting_time.svg" alt='Login V2' />
                 </Col>
                 
                 <Col className='' lg='8' xs='12'>
@@ -310,7 +310,7 @@ const Landing = () => {
             </Row>
         </Grid>
 
-        <Grid className="text-center pt-4" style={{background: 'floralwhite'}} item xs={12}>
+        <Grid className="text-center pt-4" style={{background: '#f0fffc'}} item xs={12}>
             <div className='w-100 px-5 text-center'>
                 <h1 style={{fontSize: 45, marginBottom: 10, fontFamily: 'cursive', fontWeight: 'bold'}}>ACCOMPLISH MORE <br /> IN 2021</h1>
                 <p className="mb-2">MASTER YOUR TIME TO GET MORE DONE <br /> AND ACHIEVE MORE MEANINGFUL RESULTS</p>

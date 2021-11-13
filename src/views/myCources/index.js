@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Calendar, MapPin } from 'react-feather'
 import AvatarGroup from '@components/avatar-group'
 import { Card, CardTitle, CardBody, CardText, Media } from 'reactstrap'
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Chip, List, ListItem, IconButton, ListItemAvatar, Avatar, ListItemText, Dialog } from '@mui/material'
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Chip, List, ListItem, IconButton, ListItemAvatar, Avatar, ListItemText, Dialog, DialogContent } from '@mui/material'
 import { fetchMyCourses } from '../../redux/actions/courses'
 import { useDispatch, useSelector } from "react-redux"
 import { BASE_URL } from "../../utility/serverSettings"
@@ -19,7 +19,7 @@ const MyCources = () => {
     const myCourses = useSelector(state => state.courses.myCourses)
 
     const [videoModal, setVideoModal] = useState(false)
-    const [videoUrl, setVideoUrl] = useState('')
+    const [selectedVideo, setSelectedVideo] = useState('')
 
     useEffect(() => {
         dispatch(fetchMyCourses())
@@ -78,9 +78,9 @@ const MyCources = () => {
                                             <>
                                                 {item.courseId?.videos.map(vid => (
                                                     <ListItem
-                                                        onClick={() => { setVideoModal(true); setVideoUrl(vid.link) }}
+                                                        onClick={() => { setVideoModal(true); setSelectedVideo(vid) }}
                                                         secondaryAction={
-                                                            <IconButton onClick={() => { setVideoModal(true); setVideoUrl(vid.link) }} edge="end" aria-label="delete">
+                                                            <IconButton onClick={() => { setVideoModal(true); setSelectedVideo(vid) }} edge="end" aria-label="delete">
                                                                 <PlayCircleFilledIcon />
                                                             </IconButton>
                                                         }
@@ -133,12 +133,32 @@ const MyCources = () => {
                 fullWidth={true}
                 open={videoModal}
                 maxWidth="md"
+                PaperProps={{
+                    style: {
+                        backgroundColor: 'transparent',
+                        boxShadow: 'none'
+                    }
+                }}
                 style={{minHeight: 300, justifyContent: 'center', alignItems: 'center'}}
                 onClose={() => setVideoModal(false)}
             >
-                <ReactPlayer
-                    url={videoUrl}
+                <DialogContent style={{backgroundColor: 'transparent', boxShadow: 'none', justifyContent: 'center', display: 'flex'}}>
+                    <ReactPlayer
+                        controls={true}
+                        loop={true}
+                        height="480px"
+                        width="720px"
+                        config={{ 
+                            file: { 
+                                attributes: {
+                                    controlsList: 'nodownload'
+                                } 
+                            } 
+                        }}
+                        url={selectedVideo.videoLinkType === 'FILE' ? `http://localhost:3030/videoUploads/${selectedVideo.videoFile}` : selectedVideo.link}
+
                     />
+                </DialogContent>
             </Dialog>
         </div>
     )

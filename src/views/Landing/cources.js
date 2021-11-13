@@ -59,7 +59,7 @@ const Landing = () => {
         <Grid className="bg-white pb-5" item xs={12}>
             <Row className=''>
                 <Col className='' lg='4' xs='12'>
-                    <img className='img-fluid' src="/assets/images/c2.jpg" alt='Login V2' />
+                    <img className='img-fluid ml-2' src="/assets/svg/quitting_time.svg" alt='Login V2' />
                 </Col>
                 <Col className='' lg='8' xs='12'>
                 <div className='w-100 px-4 mt-4'>

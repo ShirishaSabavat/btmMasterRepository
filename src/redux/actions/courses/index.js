@@ -1,4 +1,5 @@
 import { GET_ALL_COURSES, GET_COURSE_BY_ID, GET_ALL_COURSES_OPTIONS, FETCH_WORKSHOP, FETCH_MY_COURSES, FETCH_MY_WORKSHOPS } from '../../types/courses'
+import { GET_ALL_VIDEOS, GET_VIDEO_BY_ID } from '../../types/videos'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
@@ -116,6 +117,29 @@ export const fetchCourseById = (id) => dispatch => {
     dispatch({
       type: FETCH_WORKSHOP,
       payload: res.data.reverse()
+    })
+    dispatch(toggleNetworkLoading(false))
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
+export const fetchCourseByIdToEdit = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  ServerApi().get(`/courses/edit-data/${id}`)
+  .then(res => {
+    dispatch({
+      type: GET_COURSE_BY_ID,
+      payload: res.data.data
+    })
+    dispatch({
+      type: GET_ALL_VIDEOS,
+      payload: res.data.videos
     })
     dispatch(toggleNetworkLoading(false))
   })

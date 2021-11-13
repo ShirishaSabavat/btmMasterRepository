@@ -42,9 +42,8 @@ const EditVideo = () => {
         bacOnly: oldData.bacOnly || false,
         embededVideo: oldData.embededVideo || false,
         bacOnly: oldData.bacOnly || false,
-        videoLinkType: oldData.videoLinkType || 'YOUTUBE'
+        videoLinkType: oldData?.videoLinkType || 'YOUTUBE'
     }
-
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Required"),
@@ -79,7 +78,7 @@ const EditVideo = () => {
         formData.append('videoLinkType', values.videoLinkType)
 
         if (values.videoLinkType === 'YOUTUBE') {
-            formData.append('link', values.link)
+            formData.append('link', values.videoLink)
         } else {
             formData.append('videoFile', values.videoFile)
         }
