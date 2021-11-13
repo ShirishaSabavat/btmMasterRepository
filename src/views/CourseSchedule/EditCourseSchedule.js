@@ -95,7 +95,7 @@ const EditCourseSchedule = () => {
 
     }
 
-    if (networkLoading || !courseScheduleData.courseId) {
+    if (!courseScheduleData.courseId) {
         return (<TableDataLoadingSkleton />)
     }
 

@@ -87,7 +87,7 @@ const EditVideo = () => {
         dispatch(EditVideoAPI(videoId, formData))
     }
 
-    if (networkLoading || !oldData.title) {
+    if (!oldData.title) {
         return (<TableDataLoadingSkleton />)
     }
 

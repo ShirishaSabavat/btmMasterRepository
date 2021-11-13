@@ -11,9 +11,8 @@ const Payment = () => {
 
     const dispatch = useDispatch()
     const organizationData = useSelector(state => state.organization.organization)
+    const serverLoading = useSelector(state => state.common.loading)
     const [validationType, setValidationType] = useState(false)
-
-    console.log(organizationData[0])
 
     useEffect(() => {
         dispatch(fetchAllOrganizationSettings())
@@ -24,7 +23,7 @@ const Payment = () => {
         liveApiSecret: organizationData[0]?.razorPayLiveSecret || "",
         testApiKey: organizationData[0]?.razorPayTestKey || "",
         testApiSecret: organizationData[0]?.razorPayTestSecret || "",
-        liveSwitch: organizationData[0]?.razorPayMode || ""
+        liveSwitch: organizationData[0]?.razorPayMode === "LIVE"
     }
 
     const validationSchema1 = Yup.object().shape({
@@ -45,7 +44,7 @@ const Payment = () => {
             razorPayLiveSecret: values.liveApiSecret || "",
             razorPayTestKey: values.testApiKey || "",
             razorPayTestSecret: values.testApiSecret || "",
-            razorPayMode: values.liveSwitch || ""
+            razorPayMode: values.liveSwitch ? "LIVE" : "TEST"
         }
 
         dispatch(UpdateOrganizationSettings(organizationData[0]?._id, rawData))
@@ -54,6 +53,10 @@ const Payment = () => {
     const changeHandler = (formik) => {
         formik.setFieldValue('liveSwitch', !formik.values?.liveSwitch)
         setValidationType(prevState => !prevState)
+    }
+
+    if (!organizationData[0]) {
+        return (<></>)
     }
 
     return <Row className="w-100 h-100 ">
@@ -67,7 +70,14 @@ const Payment = () => {
                                     <CardTitle>Razorpay Settings</CardTitle>
                                     <div className="d-flex align-items-center">
                                         <div className='mr-1'>Live</div>
-                                        <CustomInput type='switch' id='switch-primary' name='liveSwitch'  value="LIVE" onChange={() => changeHandler(formik)} inline defaultChecked={formik.values.liveSwitch === "LIVE"} />
+                                        <CustomInput 
+                                            type='switch' 
+                                            id='switch-primary' 
+                                            name='liveSwitch'  
+                                            onChange={(e) => formik.setFieldValue('liveSwitch', e.target.checked)} 
+                                            defaultChecked={formik.values.liveSwitch} 
+                                            inline 
+                                        />
                                     </div>
                                 </CardHeader>
                                 <hr className="m-0" />
@@ -167,7 +177,7 @@ const Payment = () => {
 
                                     <Row className="mt-1">
                                         <Col sm="12" md="12">
-                                            <Button color="primary" type="submit">Save</Button>
+                                            <Button disabled={serverLoading} color="primary" type="submit">{serverLoading ? "Please Wait..." : "Save"}</Button>
                                         </Col>
                                     </Row>
                             </CardBody>

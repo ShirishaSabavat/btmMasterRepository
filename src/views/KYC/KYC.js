@@ -28,7 +28,8 @@ const KYC = () => {
   const ref = useRef(null)
 
   const onFinalSubmit = () => {
-    dispatch(saveKyc(kycFinalData))
+    console.log(kycFinalData)
+    // dispatch(saveKyc(kycFinalData))
   }
 
   const setKycFormData = (values) => {
