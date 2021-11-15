@@ -66,7 +66,7 @@ import { loadMyClients } from '../../redux/actions/user'
       selector: "referral",
       sortable: true,
       cell: (row) => (
-          <p>{row.referral}</p>
+          <p>{row.referralCode}</p>
       )
     },
     {

@@ -29,10 +29,15 @@ const KYC = () => {
 
   const onFinalSubmit = () => {
     console.log(kycFinalData)
-    // dispatch(saveKyc(kycFinalData))
+    const formData = new FormData()
+    Object.keys(kycFinalData).map(i => {
+      formData.append(i, kycFinalData[i])
+    })
+    dispatch(saveKyc(formData))
   }
 
   const setKycFormData = (values) => {
+    console.log({values})
     setKycFinalData((currentState) => ({...currentState, ...values}))
   }
 
