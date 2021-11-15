@@ -5,8 +5,10 @@ import {Edit, Trash, Phone} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
 import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
-import { fontWeight } from "@mui/system"
-
+import AddModal from './Modals/AddModal'
+import EditModal from './Modals/EditModal'
+import FollowUpModal from './Modals/FollowUpModal'
+ 
 const AdmissionEnquiry = () => {
     // api call redux function
     const deleteAdmissionEnquiryById = () => {
@@ -17,6 +19,9 @@ const AdmissionEnquiry = () => {
   const loading = useSelector(state => state.common.loading)
 
   const [showDelete, setShowDelete] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [editModal, setEditModal] = useState({show: false, id: ""})
+  const [followUpModal, setFollowUpModal] = useState({show: false, id: ""})
 
   const tableColumns = [
     {
@@ -88,20 +93,18 @@ const AdmissionEnquiry = () => {
                     <Button
                     className="btn-icon rounded-circle"
                     color="flat-warning"
+                    onClick={() => setFollowUpModal(prevState => { return {show: !prevState.show, id: row._id} })}
                     >
-                    <Link to={`/edit-video/${row._id}`}>
-                        <Phone size={15} />
-                    </Link>
+                      <Phone size={15} />
                     </Button>
                 </li>
                 <li className="list-inline-item">
                     <Button
                     className="btn-icon rounded-circle"
                     color="flat-warning"
+                    onClick={() => setEditModal(prevState => { return {show: !prevState.show, id: row._id} })}
                     >
-                    <Link to={`/edit-video/${row._id}`}>
-                        <Edit size={15} />
-                    </Link>
+                      <Edit size={15} />
                     </Button>
                 </li>
                 <li className="list-inline-item">
@@ -152,7 +155,7 @@ const AdmissionEnquiry = () => {
         <Col sm="12" md="12">
             <CardHeader>
                 <CardTitle>Admission Enquiry</CardTitle>
-                <Link to="/add-admission-enquiry" className="text-white"><Button color="primary" type="button">Add</Button></Link>
+                <Button color="primary" onClick={() => { setShowModal(prevState => !prevState) }} >Add</Button>
             </CardHeader>
 
             <hr className="m-0" />
@@ -166,6 +169,9 @@ const AdmissionEnquiry = () => {
                 customStyles={customStyles}
             />
         </Col>
+        {showModal ? <AddModal showModal={showModal} setShowModal={setShowModal} /> : null}
+        {editModal.show ? <EditModal editModal={editModal} setEditModal={setEditModal} /> : null}
+        {followUpModal.show ? <FollowUpModal followUpModal={followUpModal} setFollowUpModal={setFollowUpModal} /> : null}
     </Row>
 }
 

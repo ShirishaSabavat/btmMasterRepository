@@ -5,7 +5,7 @@ import AdmissionEnquiry from './AdmissionEnquiry'
 
 const FollowUp = () => {
     return <Card>
-        <SelectCriteria />
+        {/* <SelectCriteria /> */}
         <hr className="m-0" />
         <AdmissionEnquiry />
     </Card>
