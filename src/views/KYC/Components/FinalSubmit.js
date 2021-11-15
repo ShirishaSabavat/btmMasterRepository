@@ -17,6 +17,14 @@ const FinalSubmit  = ({stepper, type, setKycFormData, onFinalSubmit}) => {
                             </span>
                             </div>
                         </Alert>
+                        <Alert color='info' isOpen={true}>
+                            <div className='alert-body'>
+                            <AlertCircle size={15} />{' '}
+                            <span className='ml-1'>
+                                By submitting your KYC you agree to out <a href="/terms-and-conditions" target="_blank"> Terms & Conditions</a>.
+                            </span>
+                            </div>
+                        </Alert>
                     </div>
 
                     <div className='col-md-12 mt-3 d-flex justify-content-between'>

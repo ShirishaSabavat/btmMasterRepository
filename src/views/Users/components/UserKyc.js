@@ -6,6 +6,7 @@ import Select from "react-select"
 import { useDispatch, useSelector } from 'react-redux'
 import { verifyUserKyc } from '../../../redux/actions/user'
 import { updateUserKyc } from "../../../redux/actions/auth"
+import { BASE_URL } from '../../../utility/serverSettings'
 
 import EditForm from "./EditForm"
 
@@ -64,6 +65,13 @@ const UserKyc  = ({userData}) => {
                         <p>PAN No : <span className='font-weight-bold'>{userData.kycId?.panNo}</span></p>
                         <p>Name as per PAN : <span className='font-weight-bold'>{userData.kycId?.panname}</span></p>
                         <p>DOB as per PAN : <span className='font-weight-bold'>{userData.kycId?.dob}</span></p>
+                        {userData.kycId?.panAttachment && (
+                          <p>PAN Attachment : <span className='font-weight-bold'>
+                            <a title="View" href={`${BASE_URL}uploads/${userData.kycId.panAttachment}`} target="_blank">
+                              <img width="400" src={`${BASE_URL}uploads/${userData.kycId.panAttachment}`} className="img-fluid" />
+                            </a>
+                          </span></p>
+                        )}
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -89,6 +97,13 @@ const UserKyc  = ({userData}) => {
                         <p>Acc No : <span className='font-weight-bold'>{userData.kycId?.accNo}</span></p>
                         <p>Acc Holder Name : <span className='font-weight-bold'>{userData.kycId?.accHolderName}</span></p>
                         <p>IFSC : <span className='font-weight-bold'>{userData.kycId?.ifscCode}</span></p>
+                        {userData.kycId?.bankStatement && (
+                          <p>Bank Statement : <span className='font-weight-bold'>
+                            <a title="View" href={`${BASE_URL}uploads/${userData.kycId.bankStatement}`} target="_blank">
+                              <img width="400" src={`${BASE_URL}uploads/${userData.kycId.bankStatement}`} className="img-fluid" />
+                            </a>
+                          </span></p>
+                        )}
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -133,6 +148,13 @@ const UserKyc  = ({userData}) => {
                   <ListGroup className='mt-1' flush>
                     <ListGroupItem className='list-group-item justify-content-between flex-wrap'>
                         <p>Aadhar No : <span className='font-weight-bold'>{userData.kycId?.aadharNo}</span></p>
+                        {userData.kycId?.aadharAttachment && (
+                          <p>Address Attachment : <span className='font-weight-bold'>
+                            <a title="View" href={`${BASE_URL}uploads/${userData.kycId.aadharAttachment}`} target="_blank">
+                              <img width="400" src={`${BASE_URL}uploads/${userData.kycId.aadharAttachment}`} className="img-fluid" />
+                            </a>
+                          </span></p>
+                        )}
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -158,6 +180,13 @@ const UserKyc  = ({userData}) => {
                         <p>State : <span className='font-weight-bold'>{userData.kycId?.state}</span></p>
                         <p>City : <span className='font-weight-bold'>{userData.kycId?.city}</span></p>
                         <p>Pin Code : <span className='font-weight-bold'>{userData.kycId?.zipCode}</span></p>
+                        {userData.kycId?.addressAttachment && (
+                          <p>Address Attachment : <span className='font-weight-bold'>
+                            <a title="View" href={`${BASE_URL}uploads/${userData.kycId.addressAttachment}`} target="_blank">
+                              <img width="400" src={`${BASE_URL}uploads/${userData.kycId.addressAttachment}`} className="img-fluid" />
+                            </a>
+                          </span></p>
+                        )}
                     </ListGroupItem>
                   </ListGroup>
                 </UncontrolledCollapse>
@@ -186,7 +215,7 @@ const UserKyc  = ({userData}) => {
                     Save
                   </Button>
 
-                  {userData.kycStatus === 'VERIFIED' && (
+                  {(userData.kycStatus === 'VERIFIED' || userData.kycStatus === 'PROCESSING') && (
                     <Button onClick={() => setShowEdit(true)}  color='success' id='reportToggler3'>
                       Edit
                     </Button>
@@ -237,7 +266,7 @@ const UserKyc  = ({userData}) => {
                   </Alert>
                   </div>
               )}
-          {userData.kycStatus === 'VERIFIED' && (
+          {(userData.kycStatus === 'VERIFIED' || userData.kycStatus === 'PROCESSING') && (
             <Timeline data={iconsData}  /> 
           )}
           

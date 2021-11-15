@@ -4,7 +4,7 @@ import * as Yup from "yup"
 import { useSelector, useDispatch } from 'react-redux'
 import { changePassword } from '../../../redux/actions/auth'
 
-const ChangePassword = () => {
+const ChangePassword = (props) => {
 
   const userData = useSelector(state => state.user.userData)
   const dispatch = useDispatch()
@@ -22,6 +22,9 @@ const ChangePassword = () => {
 
 
   const submitForm = (values, {resetForm}) => {
+    if (props.clientId) {
+      values.clientId = props.clientId
+    }
     console.log("val", values)
     dispatch(changePassword(values, resetForm))
   }
