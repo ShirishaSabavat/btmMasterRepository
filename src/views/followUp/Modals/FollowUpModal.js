@@ -1,5 +1,5 @@
 import React from "react"
-import {Row, Col, FormGroup, Label, Input, InputGroup } from "reactstrap"
+import {Row, Col, FormGroup, Label, Input, InputGroup,  Card, CardBody, CardHeader, CardTitle } from "reactstrap"
 import { Calendar } from 'react-feather'
 import {Button as MuiButton} from '@mui/material'
 import { styled } from '@mui/material/styles'
@@ -12,6 +12,8 @@ import * as Yup from "yup"
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
+import Timeline from '@components/timeline'
+import { iconsData } from './data'
 
 const FollowUpModal = (props) => {
 
@@ -82,7 +84,7 @@ const statusOptions = [
                 return (
                     <Form>
                         <Row >
-                          <Col sm="12" md="8">
+                          <Col sm="12" md="8" >
                               <Row>
                                 <Col sm="12" md="6">
                                     <FormGroup>
@@ -169,10 +171,14 @@ const statusOptions = [
                                 </DialogActions>
                             </Row>
                               <Row>
-                                <div style={{fontSize: '1.5rem'}}>Follow Up (Apolline)</div>
+                                <Col className='mb-sm-1'>
+                                  <div style={{fontSize: '1.5rem'}}>Follow Up (Apolline)</div>
+                                  <hr />
+                                  <Timeline data={iconsData} />
+                                </Col>
                               </Row>
                           </Col>
-                          <Col sm="12" md="4" style={{backgroundColor: "#F4F4F4", margin: -13}}>
+                          <Col sm="12" md="4" style={{backgroundColor: "#F4F4F4"}}>
                             <Row>
                               <Col sm="12" md="6">
                                 <div style={{fontSize: '1.5rem'}}>Summary</div>
