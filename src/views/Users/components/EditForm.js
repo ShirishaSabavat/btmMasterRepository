@@ -67,7 +67,7 @@ const EditForm = ({setShowEdit, userKYCData}) => {
       id: 'personal-details',
       title: 'Personal Information',
       subtitle: 'Enter Your Personal Informations.',
-      content: <PersonalInfoComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <PersonalInfoComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     },
     {
       id: 'pan-info',

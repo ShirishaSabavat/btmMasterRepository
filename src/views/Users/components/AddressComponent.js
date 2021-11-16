@@ -5,6 +5,7 @@ import * as Yup from "yup"
 import { Country, State, City }  from 'country-state-city'
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
+import { BASE_URL } from '../../../utility/serverSettings'
 
 const AddressComponent  = ({stepper, type, setKycFormData, userKYC}) => {
    
@@ -33,8 +34,10 @@ const AddressComponent  = ({stepper, type, setKycFormData, userKYC}) => {
         state:userKYC?.state,
         city:userKYC?.city,
         zipCode:userKYC?.zipCode,
-        addressAttachment:userKYC?.addressAttachment
+        addressAttachment: userKYC?.addressAttachment
     }
+
+    console.log(userKYC, "userKYC")
 
     const validationSchema = Yup.object().shape({
         address: Yup.string().required("Required"),
@@ -110,6 +113,7 @@ const AddressComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                 <CardBody>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm}>
                 {(formik) => {
+                    console.log("ff", formik.values)
                     return (<Form className="row">
                         <FormGroup className="col-md-12 has-icon-left position-relative">
                             <Label htmlFor="address">Address <span className="text-danger">*</span></Label>
@@ -148,6 +152,10 @@ const AddressComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <div>
+                                <p>Preview:</p>
+                                {formik.values.addressAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.addressAttachment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.addressAttachment}`} className="img-fluid"  alt='No Image' />  }
+                            </div>
                             <Label htmlFor="addressAttachment">Address Documnet</Label>
                             <CustomInput
                             type="file"

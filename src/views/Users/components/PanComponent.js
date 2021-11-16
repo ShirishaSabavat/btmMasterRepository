@@ -6,6 +6,7 @@ import * as Yup from "yup"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
 import {ArrowLeft, ArrowRight} from 'react-feather'
+import { BASE_URL } from '../../../utility/serverSettings'
 
 const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
 
@@ -21,7 +22,7 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
     const validationSchema = Yup.object().shape({
         panNo: Yup.string().required("Required"),
         panname: Yup.string().required("Required"),
-        dob: Yup.date().required("Required"),
+        dob: Yup.string().required("Required"),
         panAttachment: Yup.string()
     })
 
@@ -87,6 +88,10 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <div>
+                                <p>Preview:</p>
+                                {formik.values.panAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.panAttachment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.panAttachment}`} className="img-fluid"  alt='No Image' />  }
+                            </div>
                             <Label htmlFor="panAttachment">PAN Attachment No</Label>
                             <CustomInput
                             type="file"

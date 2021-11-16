@@ -4,6 +4,7 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
+import { BASE_URL } from '../../../utility/serverSettings'
 
 const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC}) => {
 
@@ -145,6 +146,11 @@ const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <div>
+                                <p>Preview:</p>
+                                {formik.values.bankStatment?.name ? <img width="400" src={URL.createObjectURL(formik.values.bankStatment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.bankStatment}`} className="img-fluid"  alt='No Image' />  }
+                            </div>
+                            {console.log("bb", formik.values.bankStatment)}
                             <Label htmlFor="bankStatment">Bank Statement</Label>
                             <CustomInput
                             type="file"

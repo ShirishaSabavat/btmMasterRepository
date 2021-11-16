@@ -3,6 +3,7 @@ import {Row, Col, Button, FormGroup, Label, Input, InputGroup, Card, CardBody, C
 import {Formik, Form, ErrorMessage} from "formik"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import * as Yup from "yup"
+import { BASE_URL } from '../../../utility/serverSettings'
 
 const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
 
@@ -48,8 +49,11 @@ const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
+                            <div>
+                                <p>Preview:</p>
+                                {formik.values.aadharAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.aadharAttachment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.aadharAttachment}`} className="img-fluid"  alt='No Image' />  }
+                            </div>
                             <Label htmlFor="aadharAttachment">Aadhar Attachment</Label>
-                            <div>{formik.values.aadharAttachment}</div>
                             <CustomInput
                             type="file"
                             name="aadharAttachment"
