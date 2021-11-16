@@ -2,7 +2,7 @@ import React from "react"
 import {Row, Col, Button, Alert, Card, CardBody} from 'reactstrap'
 import {ArrowLeft, CheckSquare, AlertCircle} from 'react-feather'
 
-const FinalSubmit  = ({stepper, type, setKycFormData, onFinalSubmit}) => {
+const FinalSubmit  = ({stepper, type, setKycFormData, onFinalSubmit, setShowEdit}) => {
 
     const finalSubmitHandler = (e) => {
         onFinalSubmit()
@@ -28,6 +28,11 @@ const FinalSubmit  = ({stepper, type, setKycFormData, onFinalSubmit}) => {
                             <ArrowLeft size={14} className='align-middle mr-sm-25 mr-0'></ArrowLeft>
                             <span className='align-middle d-sm-inline-block d-none'>Previous</span>
                         </Button.Ripple>
+                        <div className="ml-auto mr-2">
+                            <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='danger' className='btn-prev' outline>
+                                <span className='align-middle d-sm-inline-block d-none'>Cancel</span>
+                            </Button.Ripple>
+                        </div>
                         <Button.Ripple onClick={finalSubmitHandler} color='primary' className='btn-next'>
                             <span className='align-middle d-sm-inline-block d-none'>Submit</span>
                             <CheckSquare size={14} className='align-middle ml-sm-25 ml-0'></CheckSquare>

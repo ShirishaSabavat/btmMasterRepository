@@ -67,43 +67,43 @@ const EditForm = ({setShowEdit, userKYCData}) => {
       id: 'personal-details',
       title: 'Personal Information',
       subtitle: 'Enter Your Personal Informations.',
-      content: <PersonalInfoComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <PersonalInfoComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     },
     {
       id: 'pan-info',
       title: 'PAN Info',
       subtitle: 'Add Your PAN Info',
-      content: <PanComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <PanComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     },
     {
       id: 'gst-address',
       title: 'GST Details',
       subtitle: 'Add GST details',
-      content: <GSTComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <GSTComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     },
     {
       id: 'bank-account',
       title: 'Bank Details',
       subtitle: 'Enter Your Banking Info',
-      content: <BankAccountComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <BankAccountComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     },
     {
       id: 'aadhar',
       title: 'Aadhar Details',
       subtitle: 'Add Your Aadhar Details',
-      content: <AadharComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <AadharComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     },
     {
       id: 'address',
       title: 'Address Details',
       subtitle: 'Add Your Address Details',
-      content: <AddressComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <AddressComponent setKycFormData={setKycFormData} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     },
     {
       id: 'final',
       title: 'Final',
       subtitle: 'Confirm submit Kyc',
-      content: <FinalSubmit onFinalSubmit={onFinalSubmit} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} />
+      content: <FinalSubmit onFinalSubmit={onFinalSubmit} stepper={stepper} type='wizard-horizontal' userKYC={userKYC} setShowEdit={setShowEdit} />
     }
   ]
 

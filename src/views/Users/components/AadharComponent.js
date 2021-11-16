@@ -3,8 +3,9 @@ import {Row, Col, Button, FormGroup, Label, Input, InputGroup, Card, CardBody, C
 import {Formik, Form, ErrorMessage} from "formik"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import * as Yup from "yup"
+import { BASE_URL } from '../../../utility/serverSettings'
 
-const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
+const AadharComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit}) => {
 
     const initialValues = {
         aadharNo:userKYC?.aadharNo,
@@ -48,6 +49,10 @@ const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
+                            {formik.values.aadharAttachment?.name || formik.values.aadharAttachment ? <div>
+                                <p>Preview:</p>
+                                {formik.values.aadharAttachment?.name ?  <img width="400" src={URL.createObjectURL(formik.values.aadharAttachment)} className="img-fluid" alt='No Image' /> : <a title="View" href={`${BASE_URL}uploads/${formik.values.aadharAttachment}`} target="_blank"><img width="400" src={`${BASE_URL}uploads/${formik.values.aadharAttachment}`} className="img-fluid"  alt='No Image' /></a>  }
+                            </div> : null }
                             <Label htmlFor="aadharAttachment">Aadhar Attachment</Label>
                             <CustomInput
                             type="file"
@@ -81,6 +86,11 @@ const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
             </CardBody>
             </Card>
         </Col>
+        <div className="ml-auto mr-2">
+          <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='danger' className='btn-prev' outline>
+              <span className='align-middle d-sm-inline-block d-none'>Cancel</span>
+          </Button.Ripple>
+        </div>
     </Row>
 }
 

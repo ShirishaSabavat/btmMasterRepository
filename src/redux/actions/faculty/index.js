@@ -12,10 +12,6 @@ export const AddFaculty = (rawData, resetForm) => dispatch => {
       toast.success("Created Faculty", {
         position: toast.POSITION.BOTTOM_CENTER
       })
-    } else {
-      toast.error("Error in Creating Faculty", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
     }
     dispatch(toggleNetworkLoading(false))
   })
@@ -30,22 +26,17 @@ export const AddFaculty = (rawData, resetForm) => dispatch => {
 
 export const EditFaculty = (id, rawData) => dispatch => {
   dispatch(toggleNetworkLoading(true))
-  ServerApi().patch(`/faculty${id}`, rawData)
+  ServerApi().patch(`/faculty/${id}`, rawData)
   .then(res => {
     if (res.status === 200) {
-      resetForm({})
       toast.success("Updated Faculty Settings!", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-    } else {
-      toast.error("Error in Updateing Faculty Seiings!", {
         position: toast.POSITION.BOTTOM_CENTER
       })
     }
     dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
-    toast.error("Error in Updateing Faculty Seiings!", {
+    toast.error("Error in Updateing Faculty Settings!", {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
@@ -109,5 +100,26 @@ export const fetchAllFacultyOptions = () => dispatch => {
     })
     dispatch(toggleNetworkLoading(false))
     console.log(e)
+  })
+}
+
+export const DeleteFaculty = (id) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  ServerApi().delete(`/faculty/${id}`)
+  .then(res => {
+    if (res.status === 200) {
+      toast.success("Deleted Faculty!", {
+        position: toast.POSITION.BOTTOM_CENTER
+      })
+      dispatch(fetchAllFaculty())
+    }
+    dispatch(toggleNetworkLoading(false))
+  })
+  .catch(e => {
+    toast.error("Error in Deleting Faculty!", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+    dispatch(toggleNetworkLoading(false))
   })
 }

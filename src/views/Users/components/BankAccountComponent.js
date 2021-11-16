@@ -4,8 +4,9 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {ArrowLeft, ArrowRight} from 'react-feather'
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
+import { BASE_URL } from '../../../utility/serverSettings'
 
-const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC}) => {
+const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit}) => {
 
 
     const initialValues = {
@@ -145,6 +146,11 @@ const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
+                        {formik.values.bankStatment?.name || formik.values.bankStatment ? <div>
+                                <p>Preview:</p>
+                                {formik.values.bankStatment?.name ? <img width="400" src={URL.createObjectURL(formik.values.bankStatment)} className="img-fluid" alt='No Image' /> : <a title="View" href={`${BASE_URL}uploads/${formik.values.bankStatment}`} target="_blank"><img width="400" src={`${BASE_URL}uploads/${formik.values.bankStatment}`} className="img-fluid"  alt='No Image' /></a>  }
+                            </div> : null }
+                            {console.log("bb", formik.values.bankStatment)}
                             <Label htmlFor="bankStatment">Bank Statement</Label>
                             <CustomInput
                             type="file"
@@ -178,6 +184,11 @@ const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC}) => {
             </CardBody>
             </Card>
         </Col>
+        <div className="ml-auto mr-2">
+          <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='danger' className='btn-prev' outline>
+              <span className='align-middle d-sm-inline-block d-none'>Cancel</span>
+          </Button.Ripple>
+        </div>
     </Row>
 }
 

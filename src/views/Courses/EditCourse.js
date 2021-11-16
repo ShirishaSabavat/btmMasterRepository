@@ -46,9 +46,12 @@ const EditCourse = () => {
             return { modal: !prevState.modal }
         })
     }
-    const imgUrl = CourseData.image ? `${BASE_URL}uploads/${CourseData?.image}` : ""
 
-    const [selectedImg, setSelectedImg] = useState(imgUrl)
+    const [selectedImg, setSelectedImg] = useState("")
+
+    useEffect(() => {
+        setSelectedImg(`${BASE_URL}uploads/${CourseData?.image}`)
+    }, [CourseData])
 
     const prepareSelectedVideo = () => {
         return 0
@@ -326,7 +329,7 @@ const EditCourse = () => {
                                             <div className="p-2">
                                                 <h6>More Options</h6>
                                                 <FormGroup check inline>
-                                                    <Input type='checkbox' defaultChecked={formik.values.featured} name='featured' id='featured' {...formik.getFieldProps("featured")} />
+                                                    <Input type='checkbox' name='featured' id='featured' defaultChecked={formik.values.featured} {...formik.getFieldProps("featured")} />
                                                     <Label for='featured' check>
                                                         Featured
                                                     </Label>
@@ -360,4 +363,4 @@ const EditCourse = () => {
     </Row>
 }
 
-export default React.memo(EditCourse)
+export default EditCourse

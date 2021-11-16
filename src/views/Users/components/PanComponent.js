@@ -6,8 +6,9 @@ import * as Yup from "yup"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
 import {ArrowLeft, ArrowRight} from 'react-feather'
+import { BASE_URL } from '../../../utility/serverSettings'
 
-const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
+const PanComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit}) => {
 
     console.log("userKYC", userKYC)
 
@@ -21,7 +22,7 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
     const validationSchema = Yup.object().shape({
         panNo: Yup.string().required("Required"),
         panname: Yup.string().required("Required"),
-        dob: Yup.date().required("Required"),
+        dob: Yup.string().required("Required"),
         panAttachment: Yup.string()
     })
 
@@ -72,14 +73,17 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="dob">DOB as per PAN <span className="text-danger">*</span></Label>
-                            <Flatpickr
-                                className="form-control"
+                            <Label htmlFor="dob">Date of Birth <span className="text-danger">*</span></Label>
+                            <InputGroup>
+                                <Input
+                                type="text"
                                 name="dob"
-                                value={formik.values.dob}
-                                onChange={(date) => {
-                                    formik.values.dob = date
-                                }} />
+                                id="dob"
+                                {...formik.getFieldProps("dob")}
+                                invalid={!!(formik.touched.dob && formik.errors.dob)}
+                                >
+                                </Input>
+                            </InputGroup>
                             <ErrorMessage
                                 name="dob"
                                 component="div"
@@ -87,6 +91,10 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
+                            {formik.values.panAttachment?.name || formik.values.panAttachment ? <div>
+                                <p>Preview:</p>
+                                {formik.values.panAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.panAttachment)} className="img-fluid" alt='No Image' /> : <a title="View" href={`${BASE_URL}uploads/${formik.values.panAttachment}`} target="_blank"><img width="400" src={`${BASE_URL}uploads/${formik.values.panAttachment}`} className="img-fluid"  alt='No Image' /></a>  }
+                            </div> : null }
                             <Label htmlFor="panAttachment">PAN Attachment No</Label>
                             <CustomInput
                             type="file"
@@ -120,6 +128,11 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
             </CardBody>
             </Card>
         </Col>
+        <div className="ml-auto mr-2">
+          <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='danger' className='btn-prev' outline>
+              <span className='align-middle d-sm-inline-block d-none'>Cancel</span>
+          </Button.Ripple>
+        </div>
     </Row>
 }
 

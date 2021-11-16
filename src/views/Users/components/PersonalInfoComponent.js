@@ -1,13 +1,13 @@
 import React from "react"
-import {Row, Col, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Card, CardBody} from 'reactstrap'
+import {Row, Col, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Card, CardBody, CardFooter} from 'reactstrap'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
-import {User, Mail, Phone, ArrowLeft, ArrowRight} from "react-feather"
+import {User, Mail, Phone, ArrowLeft, ArrowRight, ChevronLeft} from "react-feather"
 import { useSelector } from "react-redux"
 import Cleave from 'cleave.js/react'
 import 'cleave.js/dist/addons/cleave-phone.us'
 
-const PersonalInfoComponent  = ({ stepper, type, setKycFormData, userKYC }) => {
+const PersonalInfoComponent  = ({ stepper, type, setKycFormData, userKYC, setShowEdit }) => {
 
     // console.log("udata", userKYC.phone.trim().substring(3).replace(/ /g, ''))
 
@@ -117,9 +117,9 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData, userKYC }) => {
                         </FormGroup>
 
                         <div className='col-md-12 mt-3 d-flex justify-content-between'>
-                            <Button.Ripple color='secondary' className='btn-prev' outline disabled>
-                                <ArrowLeft size={14} className='align-middle mr-sm-25 mr-0'></ArrowLeft>
-                                <span className='align-middle d-sm-inline-block d-none'>Previous</span>
+                            <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='secondary' className='btn-prev' outline>
+                                <ChevronLeft size={14} className='align-middle mr-sm-25 mr-0'></ChevronLeft>
+                                <span className='align-middle d-sm-inline-block d-none'>Back</span>
                             </Button.Ripple>
                             <Button.Ripple type='submit' color='primary' className='btn-next'>
                                 <span className='align-middle d-sm-inline-block d-none'>Next</span>
@@ -132,6 +132,11 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData, userKYC }) => {
             </CardBody>
             </Card>
         </Col>
+        <div className="ml-auto mr-2">
+          <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='danger' className='btn-prev' outline>
+              <span className='align-middle d-sm-inline-block d-none'>Cancel</span>
+          </Button.Ripple>
+        </div>
     </Row>
 }
 

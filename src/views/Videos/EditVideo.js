@@ -30,9 +30,12 @@ const EditVideo = () => {
         setModal((prevState) => !prevState)
     }
 
-    const imgUrl = oldData.image ? `${BASE_URL}uploads/${oldData?.image}` : ""
+    const [selectedImg, setSelectedImg] = useState("")
 
-    const [selectedImg, setSelectedImg] = useState(imgUrl)
+    useEffect(() => {
+        setSelectedImg(`${BASE_URL}uploads/${oldData?.image}`)
+    }, [oldData])
+
 
     const initialValues = {
         title: oldData?.title || "",
@@ -70,7 +73,7 @@ const EditVideo = () => {
 
         formData.append('duration', values.duration)
         formData.append('description', values.description)
-        formData.append('image', values.image || selectedImg.replace(`${BASE_URL}uploads/`, ''))
+        formData.append('image', selectedImg.replace(`${BASE_URL}uploads/`, ''))
         formData.append('title', values.title)
         formData.append('bacOnly', values.bacOnly)
         formData.append('embededVideo', values.embededVideo)
