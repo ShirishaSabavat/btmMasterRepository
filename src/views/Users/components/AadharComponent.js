@@ -5,7 +5,7 @@ import {ArrowLeft, ArrowRight} from 'react-feather'
 import * as Yup from "yup"
 import { BASE_URL } from '../../../utility/serverSettings'
 
-const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
+const AadharComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit}) => {
 
     const initialValues = {
         aadharNo:userKYC?.aadharNo,
@@ -86,6 +86,11 @@ const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
             </CardBody>
             </Card>
         </Col>
+        <div className="ml-auto mr-2">
+          <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='danger' className='btn-prev' outline>
+              <span className='align-middle d-sm-inline-block d-none'>Cancel</span>
+          </Button.Ripple>
+        </div>
     </Row>
 }
 

@@ -1,5 +1,5 @@
 import React from "react"
-import {Row, Col, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Card, CardBody, CardHeader} from 'reactstrap'
+import {Row, Col, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, Card, CardBody, CardFooter} from 'reactstrap'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {User, Mail, Phone, ArrowLeft, ArrowRight, ChevronLeft} from "react-feather"
@@ -132,6 +132,11 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData, userKYC, setSho
             </CardBody>
             </Card>
         </Col>
+        <div className="ml-auto mr-2">
+          <Button.Ripple onClick={() => setShowEdit(prevState => !prevState)} color='danger' className='btn-prev' outline>
+              <span className='align-middle d-sm-inline-block d-none'>Cancel</span>
+          </Button.Ripple>
+        </div>
     </Row>
 }
 
