@@ -76,11 +76,13 @@ const Landing = (route) => {
     
     useEffect(() => {
         if (landingPageData[0]?.razorPayMode === "LIVE") {
-            setRazorPayKey(landingPageData[0].razorPayLiveKey)
+            setRazorPayKey(landingPageData[0]?.razorPayLiveKey)
         } else {
-            setRazorPayKey(landingPageData[0].razorPayTestKey)
+            setRazorPayKey(landingPageData[0]?.razorPayTestKey)
         }
     }, [landingPageData])
+
+    console.log("landingPageData", landingPageData)
 
     function loadScript(src) {
         return new Promise((resolve) => {

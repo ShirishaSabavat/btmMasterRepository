@@ -128,7 +128,7 @@ const Payout = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 
-                <CustomDataTable slCheckBox={false} data={users} columns={tableColumns} />
+                <CustomDataTable data={users} columns={tableColumns} />
 
             </Card>
         </Col>

@@ -49,8 +49,8 @@ const EditCourseSchedule = () => {
     useEffect(() => {
         setCourseData({
             courseId: courseScheduleData?.courseId || "",
-            startdate: courseScheduleData?.startDate || "",
-            enddate: courseScheduleData?.endDate || "",
+            startdate: new Date(courseScheduleData?.startDate) || "",
+            enddate: new Date(courseScheduleData?.endDate) || "",
             starttime: courseScheduleData?.startTime || "",
             endtime: courseScheduleData?.endTime || "",
             location: courseScheduleData?.location || "",
@@ -85,7 +85,6 @@ const EditCourseSchedule = () => {
             endDate: new Date(values.enddate).toDateString(),
             startTime: values.starttime.toString(),
             endTime: values.endtime.toString(),
-            startDate: values.startdate,
             faculty: values.faculty,
             address: values.address,
             location: values.location
@@ -152,7 +151,7 @@ const EditCourseSchedule = () => {
                                                 name="startdate"
                                                 value={formik.values.startdate}
                                                 onChange={(date) => {
-                                                    formik.values.startdate = date
+                                                    formik.setFieldValue('startdate', date)
                                                 }} />
                                                 <ErrorMessage name="startdate" component="div" className="field-error text-danger" />
                                             </FormGroup>
@@ -166,7 +165,7 @@ const EditCourseSchedule = () => {
                                                 name="enddate"
                                                 value={formik.values.enddate}
                                                 onChange={(date) => {
-                                                    formik.values.enddate = date
+                                                    formik.setFieldValue('enddate', date)
                                                 }} />
                                                 <ErrorMessage name="enddate" component="div" className="field-error text-danger" />
                                             </FormGroup>
@@ -180,7 +179,7 @@ const EditCourseSchedule = () => {
                                                 data-enable-time
                                                 enable-time
                                                 name="starttime"
-                                                value={formik.values.starttime}
+                                                value={new Date(formik.values.starttime).getTime()}
                                                 id='timepicker'
                                                 options={{
                                                   enableTime: true,
@@ -209,7 +208,7 @@ const EditCourseSchedule = () => {
                                                   dateFormat: 'H:i',
                                                   time_24hr: false
                                                 }}
-                                                value={formik.values.endtime}
+                                                value={new Date(formik.values.endtime).getTime()}
                                                 onChange={(date) => {
                                                     formik.values.endtime = date
                                                 }} />
