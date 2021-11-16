@@ -51,7 +51,7 @@ const AadharComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit})
                         <FormGroup className="col-md-6 has-icon-left position-relative">
                             {formik.values.aadharAttachment?.name || formik.values.aadharAttachment ? <div>
                                 <p>Preview:</p>
-                                {formik.values.aadharAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.aadharAttachment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.aadharAttachment}`} className="img-fluid"  alt='No Image' />  }
+                                {formik.values.aadharAttachment?.name ?  <img width="400" src={URL.createObjectURL(formik.values.aadharAttachment)} className="img-fluid" alt='No Image' /> : <a title="View" href={`${BASE_URL}uploads/${formik.values.aadharAttachment}`} target="_blank"><img width="400" src={`${BASE_URL}uploads/${formik.values.aadharAttachment}`} className="img-fluid"  alt='No Image' /></a>  }
                             </div> : null }
                             <Label htmlFor="aadharAttachment">Aadhar Attachment</Label>
                             <CustomInput

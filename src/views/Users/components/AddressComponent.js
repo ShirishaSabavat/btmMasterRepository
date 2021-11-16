@@ -152,9 +152,9 @@ const AddressComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit}
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            {formik.values.aadharAttachment?.name || formik.values.aadharAttachment ? <div>
+                            {formik.values.addressAttachment?.name || formik.values.addressAttachment ? <div>
                                 <p>Preview:</p>
-                                {formik.values.addressAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.addressAttachment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.addressAttachment}`} className="img-fluid"  alt='No Image' />  }
+                                {formik.values.addressAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.addressAttachment)} className="img-fluid" alt='No Image' /> : <a title="View" href={`${BASE_URL}uploads/${formik.values.addressAttachment}`} target="_blank"><img width="400" src={`${BASE_URL}uploads/${formik.values.addressAttachment}`} className="img-fluid"  alt='No Image' /></a> }
                             </div> : null }
                             <Label htmlFor="addressAttachment">Address Documnet</Label>
                             <CustomInput

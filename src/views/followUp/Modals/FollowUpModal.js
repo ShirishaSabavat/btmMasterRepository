@@ -1,11 +1,9 @@
 import React from "react"
-import {Row, Col, FormGroup, Label, Input, InputGroup,  Card, CardBody, CardHeader, CardTitle } from "reactstrap"
+import {Row, Col, FormGroup, Label, Input, InputGroup, Button } from "reactstrap"
 import { Calendar } from 'react-feather'
-import {Button as MuiButton} from '@mui/material'
 import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
 import Typography from '@mui/material/Typography'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
@@ -76,7 +74,7 @@ const statusOptions = [
       >
         <DialogContent style={{padding: 34}} dividers>
           <Typography gutterBottom>
-            Follow Up Admission Enquiry 
+            Follow Up
           </Typography>
           <hr />
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
@@ -163,12 +161,10 @@ const statusOptions = [
                                   </FormGroup>
                                 </Col>
                               </Row>
-                              <Row className='d-flex justify-content-end'>
-                                <DialogActions >
-                                <MuiButton type="submit">
-                                    Save
-                                </MuiButton>
-                                </DialogActions>
+                              <Row className='d-flex justify-content-end mr-1'>
+                                  <Button type="submit" color='primary' size='sm'>
+                                      Save
+                                  </Button>
                             </Row>
                               <Row>
                                 <Col className='mb-sm-1'>
@@ -180,11 +176,7 @@ const statusOptions = [
                           </Col>
                           <Col sm="12" md="4" style={{backgroundColor: "#F4F4F4"}}>
                             <Row>
-                              <Col sm="12" md="6">
-                                <div style={{fontSize: '1.5rem'}}>Summary</div>
-                                <div>Created By: </div>
-                              </Col>
-                              <Col sm="12" md="6">
+                              <Col sm="12" md="12">
                                   <FormGroup>
                                       <Label htmlFor="status">Status</Label>
                                       <CustomSelectField
@@ -210,16 +202,12 @@ const statusOptions = [
                             </Row>
                             <Row>
                               <Col sm="12" md="12">
+                                <div style={{margin: '5px'}}>Name: </div>
                                 <div style={{margin: '5px'}}>Phone: </div>
-                                <div style={{margin: '5px'}}>Address: </div>
-                                <div style={{margin: '5px'}}>Reference: </div>
-                                <div style={{margin: '5px'}}>Description: </div>
-                                <div style={{margin: '5px'}}>Note: </div>
                                 <div style={{margin: '5px'}}>Source: </div>
-                                <div style={{margin: '5px'}}>Assigned: </div>
-                                <div style={{margin: '5px'}}>Email: </div>
-                                <div style={{margin: '5px'}}>Class: </div>
-                                <div style={{margin: '5px'}}>Number: </div>
+                                <div style={{margin: '5px'}}>Enquiry Date: </div>
+                                <div style={{margin: '5px'}}>Description: </div>
+                                <div style={{margin: '5px'}}>Status: </div>
                               </Col>
                             </Row>
                           </Col>

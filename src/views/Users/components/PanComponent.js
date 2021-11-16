@@ -73,14 +73,17 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit}) =>
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <Label htmlFor="dob">DOB as per PAN <span className="text-danger">*</span></Label>
-                            <Flatpickr
-                                className="form-control"
+                            <Label htmlFor="dob">Date of Birth <span className="text-danger">*</span></Label>
+                            <InputGroup>
+                                <Input
+                                type="text"
                                 name="dob"
-                                value={formik.values.dob}
-                                onChange={(date) => {
-                                    formik.values.dob = date
-                                }} />
+                                id="dob"
+                                {...formik.getFieldProps("dob")}
+                                invalid={!!(formik.touched.dob && formik.errors.dob)}
+                                >
+                                </Input>
+                            </InputGroup>
                             <ErrorMessage
                                 name="dob"
                                 component="div"
@@ -88,9 +91,9 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC, setShowEdit}) =>
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                        {formik.values.aadharAttachment?.name || formik.values.aadharAttachment ? <div>
+                            {formik.values.panAttachment?.name || formik.values.panAttachment ? <div>
                                 <p>Preview:</p>
-                                {formik.values.panAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.panAttachment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.panAttachment}`} className="img-fluid"  alt='No Image' />  }
+                                {formik.values.panAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.panAttachment)} className="img-fluid" alt='No Image' /> : <a title="View" href={`${BASE_URL}uploads/${formik.values.panAttachment}`} target="_blank"><img width="400" src={`${BASE_URL}uploads/${formik.values.panAttachment}`} className="img-fluid"  alt='No Image' /></a>  }
                             </div> : null }
                             <Label htmlFor="panAttachment">PAN Attachment No</Label>
                             <CustomInput

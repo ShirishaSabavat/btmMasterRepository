@@ -1,37 +1,20 @@
 import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
-import DataTable from "react-data-table-component"
+import CustomDataTable from '../../../components/dataTable/CustomDataTable'
 import {Link} from "react-router-dom"
 import {Edit, Trash} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 
-
 import { BASE_URL } from "../../../utility/serverSettings"
-import DeleteModal from "./Modals/DeleteModal"
-import {fetchAllFaculty} from "../../../redux/actions/faculty/index"
+import {fetchAllFaculty, DeleteFaculty} from "../../../redux/actions/faculty/index"
 
 const Videos = () => {
 
   const dispatch = useDispatch()
   const facultyData = useSelector(state => state.faculty.faculty)
 
-  const [defaultAlert, setDefaultAlert] = useState({
-    alert: false,
-    did: ""
-  })
-  const [confirmAlert, setConfirmAlert] = useState(false)
-  const [cancelAlert, setCancelAlert] = useState(false)
-
-  const defaultAlertHandler = (value) => {
-    setDefaultAlert({ alert: value.alert, did: value.did })
-  }
-  const confirmAlertHandler = (value) => {
-    setConfirmAlert(value)
-  }
-  const cancelAlertHandler = (value) => {
-    setCancelAlert(value)
-  }
-
+  const [showDelete, setShowDelete] = useState(false)
+ 
     const tableColumns = [
         {
           name: "Faculty Name",
@@ -89,14 +72,14 @@ const Videos = () => {
                         </Button>
                     </li>
                     <li className="list-inline-item">
-                        <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-danger"
-                        onClick={() => defaultAlertHandler({ alert: true, did: id })}
-                        >
-                            <Trash size={15} />
-                        </Button>
-                    </li>            
+                      <Button
+                      className="btn-icon rounded-circle"
+                      color="flat-danger"
+                      onClick={() => setShowDelete(id)}
+                      >
+                          <Trash size={15} />
+                      </Button>
+                    </li>      
                 </ul>
               </div>
             )
@@ -134,24 +117,14 @@ const Videos = () => {
                     <Link to="/add-faculty" className="text-white"><Button color="primary" type="button">Add</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
-                <DataTable
-                    className="dataTable-custom"
-                    data={facultyData}
-                    columns={tableColumns}
-                    noHeader
-                    pagination
+                <CustomDataTable 
+                    setShowDelete={setShowDelete}
+                    showDelete={showDelete}
+                    confirmDelete={() => dispatch(DeleteFaculty(showDelete))}
+                    data={facultyData} 
+                    columns={tableColumns} 
                     customStyles={customStyles}
                 />
-                 {defaultAlert.alert ? (
-                  <DeleteModal
-                    defaultAlertHandler={defaultAlertHandler}
-                    confirmAlertHandler={confirmAlertHandler}
-                    cancelAlertHandler={cancelAlertHandler}
-                    defaultAlert={defaultAlert.alert}
-                    confirmAlert={confirmAlert}
-                    cancelAlert={cancelAlert}
-                  />
-                ) : null}
             </Card>
         </Col>
     </Row>

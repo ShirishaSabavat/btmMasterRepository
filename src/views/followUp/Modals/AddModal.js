@@ -70,7 +70,7 @@ const sourceOptions = [
       >
         <DialogContent style={{padding: 34}} dividers>
           <Typography gutterBottom>
-            Admission Enquiry 
+            Add Follow Up 
           </Typography>
           <hr />
           <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
@@ -120,7 +120,7 @@ const sourceOptions = [
                           </Col>
                           <Col  sm="12" md="4">
                             <FormGroup className="has-icon-left position-relative">
-                                  <Label htmlFor="email">Email</Label>
+                                  <Label htmlFor="email">Email <span className="text-danger">*</span></Label>
                                   <InputGroup>
                                       <Input
                                       type="text"
@@ -142,7 +142,7 @@ const sourceOptions = [
                         <Row>
                             <Col sm="12" md="4">
                                 <FormGroup>
-                                    <Label htmlFor="date">Date</Label>
+                                    <Label htmlFor="date">Date <span className="text-danger">*</span></Label>
                                     <Flatpickr
                                     className="form-control"
                                     name="date"
