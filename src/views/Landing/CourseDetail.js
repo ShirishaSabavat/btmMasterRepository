@@ -82,8 +82,6 @@ const Landing = (route) => {
         }
     }, [landingPageData])
 
-    console.log("landingPageData", landingPageData)
-
     function loadScript(src) {
         return new Promise((resolve) => {
             const script = document.createElement("script")

@@ -49,6 +49,7 @@ const AadharComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
                             <Label htmlFor="aadharAttachment">Aadhar Attachment</Label>
+                            <div>{formik.values.aadharAttachment}</div>
                             <CustomInput
                             type="file"
                             name="aadharAttachment"
