@@ -209,7 +209,7 @@ const UserData = () => {
                   )}
 
                   <TabPane tabId='2'>
-                    <ChangePassword />
+                    <ChangePassword clientId={userId}  />
                   </TabPane>
                   <TabPane tabId='3'>
                     <Courses purchasedCources={userData.purchasedCources} />

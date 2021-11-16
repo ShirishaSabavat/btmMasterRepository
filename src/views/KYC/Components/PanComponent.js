@@ -17,9 +17,9 @@ const PanComponent  = ({stepper, type, setKycFormData}) => {
     }
 
     const validationSchema = Yup.object().shape({
-        panNo: Yup.string().required("Required"),
+        panNo: Yup.mixed().required("Required"),
         panname: Yup.string().required("Required"),
-        dob: Yup.string(),
+        dob: Yup.string().length(10, 'Format: DD-MM-YYYY').required('Date of birth is required format: dd-mm-yyyy'),
         panAttachment: Yup.string()
     })
 
@@ -71,13 +71,17 @@ const PanComponent  = ({stepper, type, setKycFormData}) => {
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
                             <Label htmlFor="dob">DOB as per PAN <span className="text-danger">*</span></Label>
-                            <Flatpickr
-                                className="form-control"
+                            <InputGroup>
+                                <Input
+                                type="text"
                                 name="dob"
-                                value={formik.values.dob}
-                                onChange={(date) => {
-                                    formik.values.dob = date
-                                }} />
+                                id="dob"
+                                placeholder="DD-MM-YYYY"
+                                {...formik.getFieldProps("dob")}
+                                invalid={!!(formik.touched.dob && formik.errors.dob)}
+                                >
+                                </Input>
+                            </InputGroup>
                             <ErrorMessage
                                 name="dob"
                                 component="div"

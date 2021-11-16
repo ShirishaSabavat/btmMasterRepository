@@ -20,7 +20,7 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Required"),
         email: Yup.string().email().required("Required"),
-        phone: Yup.string().min(13, 'Enter valid phone no.').required("Required")
+        phone: Yup.number().min(13, 'Enter valid phone no.').required("Required")
     })
 
     const submitForm = (values) => {
@@ -85,16 +85,17 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
                         <FormGroup className="col-md-6 has-icon-left position-relative">
                             <Label htmlFor="phone">Mobile No <span className="text-danger">*</span></Label>
 
-                            <Cleave placeholder="Enter phone number"
+                            {/* <Cleave placeholder="Enter phone number"
                                 options={{blocks: [3, 3, 3, 4], prefix: '+91'}}
                                 name="phone"
                                 className="form-control"
                                 id="phone"
                                 {...formik.getFieldProps("phone")}
+                                value={formik.values.phone}
                                 invalid={!!(formik.touched.phone && formik.errors.phone)}
-                                />
+                                /> */}
 
-                            {/* <InputGroup>
+                            <InputGroup>
                             <InputGroupAddon addonType='prepend'>
                             <InputGroupText className={ !!(formik.touched.phone && formik.errors.phone) ? "border border-danger" : null}>
                                 <Phone size={15} />
@@ -108,7 +109,7 @@ const PersonalInfoComponent  = ({ stepper, type, setKycFormData }) => {
                                     invalid={!!(formik.touched.phone && formik.errors.phone)}
                                 >
                                 </Input>
-                            </InputGroup> */}
+                            </InputGroup>
                             <ErrorMessage
                                 name="phone"
                                 component="div"
