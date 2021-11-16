@@ -15,14 +15,20 @@ const AddFacultyComponent = () => {
 
     const dispatch = useDispatch()
     const facultyData = useSelector(state => state.faculty.facultyData)
-    const [selectedImg, setSelectedImg] = useState(`${BASE_URL}uploads${facultyData?.image}`)
     const [editModal, setModal] = useState({
         modal: false
-      })
+    })
+    const [selectedImg, setSelectedImg] = useState("")
+
+    useEffect(() => {
+        setSelectedImg(`${BASE_URL}uploads/${facultyData?.image}`)
+    }, [facultyData])
 
     useEffect(() => {
         dispatch(fetchAllFacultyById(id))
     }, [id])
+
+    console.log("facultyData", facultyData)
 
     const toggleModel = () => {
     setModal((prevState) => {
@@ -30,13 +36,9 @@ const AddFacultyComponent = () => {
     })
     }
 
-    const toggleFileModal = () => {
-        setFileModalState((prevState) => !prevState)
-    }
-
     const initialValues = {
         facultyName: facultyData.name || "",
-        facultyDetails: facultyData.details || "",
+        facultyDetails: facultyData.about || "",
         image: selectedImg
     }
     const validationSchema = Yup.object().shape({
@@ -47,8 +49,8 @@ const AddFacultyComponent = () => {
     const submitForm = (values) => {
         const rawData = {
             name: values.facultyName,
-            details: values.facultyDetails,
-            image: values.image
+            about: values.facultyDetails,
+            image: values.image.replace(`${BASE_URL}uploads/`, '')
         }
         dispatch(EditFaculty(id, rawData))
     }
@@ -60,22 +62,32 @@ const AddFacultyComponent = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 <CardBody>
+                    <div>
+                        <div>Preview Image</div>
+                        <Row className="d-flex justify-content-center">
+                            <Col sm="12" md="8" className="mb-1">
+                                <Row className="d-flex justify-content-around align-items-center">
+                                    <Col sm="12" md="8">
+
+                                        {!selectedImg && (
+                                            <img src='/assets/images/default-image.jpg' alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+                                        {selectedImg !== '' && (
+                                            <img src={selectedImg} alt="choosen image" className="img-thumbnail img-fluid" />
+                                        )}
+
+                                    </Col>
+                                    <Col sm="12" md="4">
+                                        <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </div>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitForm} enableReinitialize>
                         {(formik) => {
                             return (
                                 <Form>
-                                    <Row className="d-flex justify-content-center">
-                                        <Col sm="12" md="8" className="mb-1">
-                                            <Row className="d-flex justify-content-around align-items-center">
-                                                <Col sm="12" md="8">
-                                                    <img src={formik.values.image} alt="choosen image" className="img-thumbnail img-fluid" />
-                                                </Col>
-                                                <Col sm="12" md="4">
-                                                    <Button color="primary" type="button" onClick={toggleModel} >Choose Image</Button>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
                                     <Row className="pl-1 pr-1">
                                         <Col sm="12" md="12">
                                             <FormGroup className="has-icon-left position-relative">

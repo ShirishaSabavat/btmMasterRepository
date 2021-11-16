@@ -12,10 +12,6 @@ export const AddFaculty = (rawData, resetForm) => dispatch => {
       toast.success("Created Faculty", {
         position: toast.POSITION.BOTTOM_CENTER
       })
-    } else {
-      toast.error("Error in Creating Faculty", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
     }
     dispatch(toggleNetworkLoading(false))
   })
@@ -33,12 +29,7 @@ export const EditFaculty = (id, rawData) => dispatch => {
   ServerApi().patch(`/faculty/${id}`, rawData)
   .then(res => {
     if (res.status === 200) {
-      resetForm({})
       toast.success("Updated Faculty Settings!", {
-        position: toast.POSITION.BOTTOM_CENTER
-      })
-    } else {
-      toast.error("Error in Updateing Faculty Settings!", {
         position: toast.POSITION.BOTTOM_CENTER
       })
     }
