@@ -88,10 +88,10 @@ const PanComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <div>
+                        {formik.values.aadharAttachment?.name || formik.values.aadharAttachment ? <div>
                                 <p>Preview:</p>
                                 {formik.values.panAttachment?.name ? <img width="400" src={URL.createObjectURL(formik.values.panAttachment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.panAttachment}`} className="img-fluid"  alt='No Image' />  }
-                            </div>
+                            </div> : null }
                             <Label htmlFor="panAttachment">PAN Attachment No</Label>
                             <CustomInput
                             type="file"

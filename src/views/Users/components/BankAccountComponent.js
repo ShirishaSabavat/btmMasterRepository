@@ -146,10 +146,10 @@ const BankAccountComponent  = ({stepper, type, setKycFormData, userKYC}) => {
                             />
                         </FormGroup>
                         <FormGroup className="col-md-6 has-icon-left position-relative">
-                            <div>
+                        {formik.values.aadharAttachment?.name || formik.values.aadharAttachment ? <div>
                                 <p>Preview:</p>
                                 {formik.values.bankStatment?.name ? <img width="400" src={URL.createObjectURL(formik.values.bankStatment)} className="img-fluid" alt='No Image' /> : <img width="400" src={`${BASE_URL}uploads/${formik.values.bankStatment}`} className="img-fluid"  alt='No Image' />  }
-                            </div>
+                            </div> : null }
                             {console.log("bb", formik.values.bankStatment)}
                             <Label htmlFor="bankStatment">Bank Statement</Label>
                             <CustomInput
