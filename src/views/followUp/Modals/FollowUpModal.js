@@ -26,7 +26,7 @@ const FollowUpModal = (props) => {
   }, [followUpId])
 
   const initialValues = {
-    followUpDate: "",
+    followUpDate: Date.now(),
     nextFollowUpDate: "",
     response: "",
     note: "",

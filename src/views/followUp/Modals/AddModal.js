@@ -24,7 +24,7 @@ const AddModal = (props) => {
     email: "",
     address: "",
     note: "",
-    enquiryDate: "",
+    enquiryDate: Date.now(),
     nextFollowUpDate: "",
     lastFollowUpDate: "",
     source: ""
