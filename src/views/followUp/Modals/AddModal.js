@@ -11,8 +11,12 @@ import * as Yup from "yup"
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
+import { useDispatch } from 'react-redux'
+import { AddFollowUp } from '../../../redux/actions/followup/index'
 
 const AddModal = (props) => {
+
+  const dispatch = useDispatch()
 
   const initialValues = {
     name: "",
@@ -20,8 +24,9 @@ const AddModal = (props) => {
     email: "",
     address: "",
     note: "",
-    date: "",
+    enquiryDate: new Date(),
     nextFollowUpDate: "",
+    lastFollowUpDate: "",
     source: ""
 }
 
@@ -31,17 +36,15 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("Required"),
   address: Yup.string(),
   note: Yup.string(),
-  date: Yup.date().required("Required"),
+  enquiryDate: Yup.date().required("Required"),
   nestFollowUpDate: Yup.date(),
+  lastFollowUpDate: Yup.date(),
   source: Yup.string()
 })
 
 const submitForm = (values) => {
-  const rawData = {
-    date: new Date(values.date).toDateString(),
-    nestFollowUpDate: new Date(values.nextFollowUpDate).toDateString()
-  }
-  console.log("Values", values, "rawData", rawData)
+  console.log("Values", values)
+  dispatch(AddFollowUp(values))
   props.setShowModal(prevState => !prevState)
 }
 
@@ -66,7 +69,7 @@ const sourceOptions = [
       <BootstrapDialog
         onClose={() => props.setShowModal(prevState => !prevState)}
         aria-labelledby="customized-dialog-title"
-        open={props.setShowModal}
+        open={props.showModal}
       >
         <DialogContent style={{padding: 34}} dividers>
           <Typography gutterBottom>
@@ -142,19 +145,19 @@ const sourceOptions = [
                         <Row>
                             <Col sm="12" md="4">
                                 <FormGroup>
-                                    <Label htmlFor="date">Date <span className="text-danger">*</span></Label>
+                                    <Label htmlFor="enquiryDate">Date <span className="text-danger">*</span></Label>
                                     <Flatpickr
                                     className="form-control"
-                                    name="date"
-                                    id="date"
-                                    value={formik.values.date}
+                                    name="enquiryDate"
+                                    id="enquiryDate"
+                                    value={formik.values.enquiryDate}
                                     options={{
                                         dateFormat: "Y-m-d"
                                         }}
                                     onChange={(date) => {
-                                        formik.setFieldValue("date", date[0])
+                                        formik.setFieldValue("enquiryDate", date[0])
                                     }} />
-                                    <ErrorMessage name="date" component="div" className="field-error text-danger" />
+                                    <ErrorMessage name="enquiryDate" component="div" className="field-error text-danger" />
                                 </FormGroup>
                             </Col>
                             <Col sm="12" md="4">
@@ -176,21 +179,38 @@ const sourceOptions = [
                             </Col>
                             <Col sm="12" md="4">
                                 <FormGroup>
-                                    <Label htmlFor="source">Source</Label>
-                                    <CustomSelectField
-                                        value= {formik.values.source}
-                                        options={sourceOptions}
-                                        onChange={(value) => formik.setFieldValue("source", value.value)}
-                                    />
-                                    <ErrorMessage
-                                        name="source"
-                                        component="div"
-                                        className="field-error text-danger"
-                                    />
+                                    <Label htmlFor="lastFollowUpDate">Last Follow Up Date</Label>
+                                    <Flatpickr
+                                    className="form-control"
+                                    name="lastFollowUpDate"
+                                    id="lastFollowUpDate"
+                                    value={formik.values.lastFollowUpDate}
+                                    options={{
+                                        dateFormat: "Y-m-d"
+                                        }}
+                                    onChange={(date) => {
+                                        formik.setFieldValue("lastFollowUpDate", date[0])
+                                    }} />
+                                    <ErrorMessage name="lastFollowUpDate" component="div" className="field-error text-danger" />
                                 </FormGroup>
                             </Col>
                       </Row>
                       <Row>
+                        <Col sm="12" md="4">
+                            <FormGroup>
+                                <Label htmlFor="source">Source</Label>
+                                <CustomSelectField
+                                    value= {formik.values.source}
+                                    options={sourceOptions}
+                                    onChange={(value) => formik.setFieldValue("source", value.value)}
+                                />
+                                <ErrorMessage
+                                    name="source"
+                                    component="div"
+                                    className="field-error text-danger"
+                                />
+                            </FormGroup>
+                        </Col>
                         <Col sm="12" md="4">
                           <FormGroup className="has-icon-left position-relative">
                               <Label htmlFor="note">Note</Label>

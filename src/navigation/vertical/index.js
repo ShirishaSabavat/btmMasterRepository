@@ -1,4 +1,4 @@
-import { HelpCircle, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, TrendingUp, GitBranch, Briefcase, CheckCircle, Calendar, BarChart2, PhoneCall} from 'react-feather'
+import { HelpCircle, Home, Settings, ChevronRight, Video, Sliders, Youtube, Users, List, TrendingUp, GitBranch, Briefcase, CheckCircle, Calendar, BarChart2, PhoneCall} from 'react-feather'
 import { getUserData } from '../../utility/Utils'
 
 const Navigation = [
@@ -106,6 +106,13 @@ const Navigation = [
     icon: <CheckCircle size={20} />,
     navLink: '/kyc',
     permissions: ["BAC_USER"]
+  },
+  {
+    id: 'transactions',
+    title: 'Transactions',
+    icon: <List size={20} />,
+    navLink: '/wallet',
+    permissions: ["ADMIN", "BAC_USER"]
   },
   {
     id: "cms",

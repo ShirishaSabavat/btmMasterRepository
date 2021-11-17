@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 // import Avatar from '@components/avatar'
 import { Calendar, MapPin } from 'react-feather'
 import AvatarGroup from '@components/avatar-group'
-import { Card, CardTitle, CardBody, CardText, Media } from 'reactstrap'
+import { Card, CardTitle, CardBody, CardText, Media, UncontrolledTooltip } from 'reactstrap'
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Chip, List, ListItem, IconButton, ListItemAvatar, Avatar, ListItemText, Dialog, DialogContent } from '@mui/material'
 import { fetchMyCourses } from '../../redux/actions/courses'
 import { useDispatch, useSelector } from "react-redux"
@@ -11,15 +11,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { PlayCircleFilled as PlayCircleFilledIcon, Folder as FolderIcon} from '@mui/icons-material'
 import Empty from '../../components/loading/Empty'
 import ReactPlayer from 'react-player'
+import { useHistory } from "react-router"
 
 const MyCources = () => {
 
     const dispatch = useDispatch()
 
-    const myCourses = useSelector(state => state.courses.myCourses)
+    const history = useHistory()
 
-    const [videoModal, setVideoModal] = useState(false)
-    const [selectedVideo, setSelectedVideo] = useState('')
+    const myCourses = useSelector(state => state.courses.myCourses)
 
     useEffect(() => {
         dispatch(fetchMyCourses())
@@ -45,6 +45,12 @@ const MyCources = () => {
                         <Card className='card-developer-meetup'>
                             <div className='meetup-img-wrapper rounded-top text-center'>
                                 <img src={`${BASE_URL}uploads/${item.courseId?.image}`} className="img-fluid" style={{maxHeight: 300}} />
+                                <IconButton id="course-watch" title="play" color="error" style={{position: 'absolute', right: '11px', bottom: '112px'}} size="lg" onClick={() => history.push(`/my-courses/watch-videos/${item.courseId._id}`)} edge="end" aria-label="delete">
+                                    <PlayCircleFilledIcon style={{width: 54, height: 54}} />
+                                </IconButton>
+                                <UncontrolledTooltip placement='top' target="course-watch">
+                                    Start watching
+                                </UncontrolledTooltip>
                             </div>
                             <CardBody>
                                 <div className='align-items-center'>
@@ -69,45 +75,6 @@ const MyCources = () => {
                                     aria-controls="panel1a-content"
                                     id="panel1a-header"
                                 >
-                                <Typography>Videos</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails className="p-0">
-                                    <List dense={true}>
-
-                                        {item.courseId?.videos && (
-                                            <>
-                                                {item.courseId?.videos.map(vid => (
-                                                    <ListItem
-                                                        className="cursor pointer"
-                                                        onClick={() => { setVideoModal(true); setSelectedVideo(vid) }}
-                                                        secondaryAction={
-                                                            <IconButton onClick={() => { setVideoModal(true); setSelectedVideo(vid) }} edge="end" aria-label="delete">
-                                                                <PlayCircleFilledIcon />
-                                                            </IconButton>
-                                                        }
-                                                        >
-                                                        <ListItemAvatar>
-                                                            <Avatar src={`${BASE_URL}uploads/${vid.image}`} />
-                                                        </ListItemAvatar>
-                                                        <ListItemText
-                                                            primary={vid.title}
-                                                            secondary={`Duration: ${vid.duration}`}
-                                                        />
-                                                    </ListItem>
-                                                ))}
-                                            </>
-                                        )}
-                                        
-                                    </List>
-                                </AccordionDetails>
-                            </Accordion>
-
-                            <Accordion>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                >
                                 <Typography>Details</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails className="">
@@ -120,7 +87,7 @@ const MyCources = () => {
                                         Order Id: {item.orderId}
                                     </Typography>
                                     <Typography variant="subtitle1" component="h2">
-                                        Purchased Date: {new Date(item.purchaseDate).toLocaleTimeString()}
+                                        Purchased Date: {new Date(item.purchaseDate).toLocaleString()}
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
@@ -129,38 +96,6 @@ const MyCources = () => {
                     ))}
                 </>
             )}
-
-            <Dialog
-                fullWidth={true}
-                open={videoModal}
-                maxWidth="md"
-                PaperProps={{
-                    style: {
-                        backgroundColor: 'transparent',
-                        boxShadow: 'none'
-                    }
-                }}
-                style={{minHeight: 300, justifyContent: 'center', alignItems: 'center'}}
-                onClose={() => setVideoModal(false)}
-            >
-                <DialogContent style={{backgroundColor: 'transparent', boxShadow: 'none', justifyContent: 'center', display: 'flex'}}>
-                    <ReactPlayer
-                        controls={true}
-                        loop={true}
-                        height="480px"
-                        width="720px"
-                        config={{ 
-                            file: { 
-                                attributes: {
-                                    controlsList: 'nodownload'
-                                } 
-                            } 
-                        }}
-                        url={selectedVideo.videoLinkType === 'FILE' ? `${BASE_URL}videoUploads/${selectedVideo.videoFile}` : selectedVideo.link}
-
-                    />
-                </DialogContent>
-            </Dialog>
         </div>
     )
 }

@@ -36,11 +36,13 @@ const UserTable = () => {
           selector: "name",
           sortable: true,
           cell: (row) => (
-                <p
-                  className="d-block text-bold-500 mb-0"
-                >
-                  {row.name}
-                </p>
+                <Link to={`/view-user-data/${row._id}`}>
+                  <p
+                    className="d-block text-dark text-bold-500 mb-0"
+                  >
+                    {row.name}
+                  </p>
+                </Link>
           )
         },
         {

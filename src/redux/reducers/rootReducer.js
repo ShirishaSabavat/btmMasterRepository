@@ -22,6 +22,7 @@ import landingPage from "./landingPage"
 import inquiry from "./inquery/index"
 import banner from "./banner"
 import kyc from "./kyc"
+import followup from './followup'
 
 const rootReducer = combineReducers({
   auth,
@@ -43,7 +44,8 @@ const rootReducer = combineReducers({
   landingPage,
   inquiry,
   banner,
-  kyc
+  kyc,
+  followup
 })
 
 export default rootReducer

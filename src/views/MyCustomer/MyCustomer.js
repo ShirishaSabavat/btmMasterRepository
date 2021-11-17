@@ -48,7 +48,9 @@ import { loadMyClients } from '../../redux/actions/user'
       selector: "phno",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 mb-0">{row.phone}</p>
+        <small className="text-dark mb-0">
+          <a href={`tel:${row.phone}`}>{row.phone}</a>
+        </small>
       )
     },
     {
