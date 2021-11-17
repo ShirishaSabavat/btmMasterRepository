@@ -12,6 +12,7 @@ const Wallet = () => {
 
   const dispatch = useDispatch()
   const transactions = useSelector(state => state.user.transactions)
+  const payouts = useSelector(state => state.user.transactions.filter(i => i.type === 'DEBIT'))
   const userData = useSelector(state => state.auth.userData)
   const loading = useSelector(state => state.common.loading)
   
@@ -159,7 +160,7 @@ const Wallet = () => {
                 </CardHeader>
                 <hr className="m-0" />
                 
-                <CustomDataTable slCheckBox={false} data={[]} columns={tableColumns} />
+                <CustomDataTable slCheckBox={false} data={payouts} columns={tableColumns} />
 
             </Card>
         </Col>

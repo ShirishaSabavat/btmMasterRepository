@@ -3,6 +3,7 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {Home } from "react-feather"
+import {Alert} from '@mui/material'
 
 import {useDispatch, useSelector} from "react-redux"
 import {fetchAllOrganizationSettings, UpdateOrganizationSettings} from "../../../redux/actions/settings/organization"
@@ -59,9 +60,13 @@ const Payment = () => {
         return (<></>)
     }
 
-    return <Row className="w-100 h-100 ">
+    return <Row>
         <Col sm="12" md="5">
             <Card>
+                {organizationData[0]?.razorPayMode === "TEST" && (
+                    <Alert severity="warning">Razorpay is in test mode!</Alert>
+                )}
+
                 <Formik initialValues={initialValues} validationSchema={validationType ? validationSchema1 : validationSchema2}  onSubmit={submitForm} enableReinitialize>
                     {(formik) => {
                         return (

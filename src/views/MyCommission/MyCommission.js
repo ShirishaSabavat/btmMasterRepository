@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {Card, CardHeader, CardTitle, CardBody, Button, Row, Col, Badge} from "reactstrap"
+import {Card, CardHeader, CardTitle, CardBody, Button, Row, Col, Badge, UncontrolledTooltip} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
@@ -33,7 +33,16 @@ const MyCommission = () => {
         selector: "userName",
         sortable: true,
         cell: (row) => (
-          <h4 className="text-bold-500 mb-0">{row.parentId?.name}</h4>
+          <>
+            <h4 className="text-bold-500 mb-0">
+              <Link id="commision-user" className="text-dark" to={`/view-user-data/${row.parentId?._id}`}>
+                {row.parentId?.name}
+              </Link>
+            </h4>
+            <UncontrolledTooltip placement='top' target="commision-user">
+              View user account
+            </UncontrolledTooltip>
+          </>
         )
     },
     {
@@ -41,7 +50,17 @@ const MyCommission = () => {
         selector: "referral",
         sortable: true,
         cell: (row) => (
-          <h6 style={{fontSize: 11}} className="mb-0">{row.referral}</h6>
+          <>
+            <small className="mb-0">
+              <Link id="commision-user" className="text-dark" to={`/view-user-data/${row.userId?._id}`}>
+                {row.referral}
+              </Link>
+            </small>
+            <UncontrolledTooltip placement='top' target="commision-user">
+              View user account
+            </UncontrolledTooltip>
+          </>
+          
         )
     },
     {
@@ -65,9 +84,14 @@ const MyCommission = () => {
       selector: "level",
       sortable: true,
       cell: (row) => (
-        <Badge color={row.commisionLevel === 1 ? "light-primary" : row.commisionLevel === 1 ? "light-info" : "light-danger"} pill>
-          <span className="px-1">{row.commisionLevel === 1 ? "D" : (row.commisionLevel - 1) }</span>
-        </Badge>
+        <>
+          <Badge color={row.commisionLevel === 1 ? "light-primary" : row.commisionLevel === 2 ? "light-info" : "light-danger"} pill>
+            <span id={`commision-level-${row._id}`} className="px-1 pointer">{row.commisionLevel === 1 ? "D" : (row.commisionLevel - 1) }</span>
+          </Badge>
+          <UncontrolledTooltip placement='top' target={`commision-level-${row._id}`}>
+            {row.commisionLevel === 1 ? "Direct Commision" : row.commisionLevel === 2 ? "1st Level Commision" : "2nd Level Commision"}
+          </UncontrolledTooltip>
+        </>
       )
     },
     {

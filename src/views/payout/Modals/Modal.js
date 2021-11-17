@@ -12,11 +12,15 @@ import CloseIcon from '@mui/icons-material/Close'
 import Typography from '@mui/material/Typography'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
+import {useDispatch} from 'react-redux'
+import {releasePayout} from '../../../redux/actions/payout'
 
 const ScheduleModal = (props) => {
 
+  const dispatch = useDispatch()
+
   const initialValues = {
-    amount: props.selectedUser?.wallet,
+    amount: props.selectedUser?.wallet.toFixed(2),
     referanceId: "",
     remarks: ""
   }
@@ -36,9 +40,15 @@ const ScheduleModal = (props) => {
     }
   }))
 
-  const releasePayout = (values, {resetForm}) => {
-    console.log(values)
-    console.log(props.selectedUser)
+  const submitReleasePayout = (values, {resetForm}) => {
+    const rawData = {
+      amount: values.amount,
+      userId: props.selectedUser._id,
+      refrenceId: values.referanceId,
+      remarks: values.remarks
+    }
+
+    dispatch(releasePayout(rawData, () => props.setShowModal(false)))
 
   }
 
@@ -49,11 +59,11 @@ const ScheduleModal = (props) => {
         open={props.setShowModal}
       >
         <DialogContent style={{padding: 34}} dividers>
-          <Typography gutterBottom>
-            Payout 
-          </Typography>
+          <h4><b>Payout</b></h4>
 
-          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={releasePayout} enableReinitialize>
+          <br />
+
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={submitReleasePayout} enableReinitialize>
             {(formik) => {
                 return (
                     <Form >

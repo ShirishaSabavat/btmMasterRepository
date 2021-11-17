@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 import { Card, CardBody, CardText, Badge, Button, Row, Col, UncontrolledTooltip, TabPane, Nav, NavItem, TabContent, NavLink } from 'reactstrap'
-import { DollarSign, TrendingUp, User, Check, Star, Lock, Phone, Award, Anchor } from 'react-feather'
+import { DollarSign, TrendingUp, User, Check, Star, Lock, Phone, Award, Share2, Anchor } from 'react-feather'
 import { useSelector } from 'react-redux'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {toast} from 'react-toastify'
@@ -36,6 +36,18 @@ const Profile = () => {
           }}
         />
       )
+  }
+
+  const shareMyReferralCode = () => {
+    if (navigator.share) {
+      navigator.share({
+          url: `https://businessaacharya.com/home?referral=${userData.user.referralCode}`,
+          title: 'Business Aacharya',
+          text: 'Hi, join the Business Aacharya platform with my referral.'
+      })
+    } else {
+        alert('Share not supported.')
+    }
   }
 
   return (
@@ -76,24 +88,32 @@ const Profile = () => {
 
             {userData.user.role === 'BAC_USER' && (
                 <div className='d-flex align-items-center user-total-numbers'>
-                <div className='d-flex align-items-center mr-2'>
-                    <div className='color-box p-1 bg-light-primary'>
-                    ₹
-                    </div>
-                    <div className='ml-1'>
-                    <h5 className='mb-0'>{userData.user.wallet.toLocaleString('en-IN')}</h5>
-                    <small>Wallet</small>
-                    </div>
-                </div>
-                <div className='d-flex align-items-center'>
-                    <div className='color-box p-1 bg-light-success'>
-                    <Award className='text-success' />
-                    </div>
-                    <div className='ml-1'>
-                    <h5 className='mb-0'>{userData.user.rank}</h5>
-                    <small>Rank</small>
-                    </div>
-                </div>
+                  <div className='d-flex align-items-center mr-2'>
+                      <div className='color-box p-1 bg-light-primary'>
+                      ₹
+                      </div>
+                      <div className='ml-1'>
+                      <h5 className='mb-0'>{userData.user.wallet.toLocaleString('en-IN')}</h5>
+                      <small>Wallet</small>
+                      </div>
+                  </div>
+                  <div className='d-flex align-items-center'>
+                      <div className='color-box p-1 bg-light-success'>
+                      <Award className='text-success' />
+                      </div>
+                      <div className='ml-1'>
+                      <h5 className='mb-0'>{userData.user.rank}</h5>
+                      <small>Rank</small>
+                      </div>
+                  </div>
+                  <div className='d-flex align-items-center ml-2'>
+                      <div className='color-box p-1 bg-light-success'>
+                        <Share2 onClick={() => shareMyReferralCode()} className='text-success' />
+                      </div>
+                      <div className='ml-1'>
+                        <small></small>
+                      </div>
+                  </div>
                 </div>
             )}
 
@@ -131,7 +151,7 @@ const Profile = () => {
                   </CardText>
                 </div>
                 <CardText className='text-capitalize mb-0 ml-1'>
-                  {userData.user.role}
+                  {userData.user.role.replace('_USER', '')}
                 </CardText>
               </div>
               {/* <div className='d-flex flex-wrap align-items-center my-50'>
@@ -157,11 +177,11 @@ const Profile = () => {
               <div className='d-flex flex-wrap align-items-center'>
                 <div className='user-info-title'>
                   <Anchor className='mr-1' size={14} />
-                  <CardText tag='span' className='user-info-title font-weight-bold mb-0'>
+                  <CardText tag='span' className={`user-info-title font-weight-bold mb-0`}>
                     KYC: 
                   </CardText>
                 </div>
-                <CardText className='mb-0 ml-1'> {userData.user.kycStatus}</CardText>
+                <CardText className={`mb-0 ml-1 text-${userData.user.kycStatus === 'VERIFIED' ? 'success' : 'danger'}`}> {userData.user.kycStatus}</CardText>
               </div>
               )}
               

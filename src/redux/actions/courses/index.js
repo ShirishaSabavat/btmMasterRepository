@@ -191,6 +191,25 @@ export const fetchMyCourses = () => dispatch => {
   })
 }
 
+export const fetchMyCourseDetails = (courseId) => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  ServerApi().get(`purchases?purchaseType=cource&courseId=${courseId}`)
+  .then(res => {
+    dispatch({
+      type: GET_COURSE_BY_ID,
+      payload: res.data?.courseId
+    })
+    dispatch(toggleNetworkLoading(false))
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("unable to fetch purchased courses.", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
+}
+
 export const fetchMyWorkshops = () => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().get(`purchases?purchaseType=workshops`)
