@@ -15,6 +15,7 @@ import { saveReferral } from '../../redux/actions/common'
 import { useEffect } from 'react'
 import CoursesLoadingSkleton from '../../components/skleton/CoursesLoadingSkleton' 
 import AwesomeSlider from 'react-awesome-slider'
+import ShowMoreButtonUtility from '../UtilityComponents/ShowMoreUtility'
 
 import CardCom from "./components/CardCom"
 import withAutoplay from 'react-awesome-slider/dist/autoplay'
@@ -293,6 +294,8 @@ const Landing = () => {
         {loading && (
             <CoursesLoadingSkleton nos={6} />
         )}
+
+        {<div className='w-100 m-2 d-flex justify-content-center'><ShowMoreButtonUtility /></div>}
 
         <Grid className="bg-white pb-5" item xs={12}>
             <Row className=''>
