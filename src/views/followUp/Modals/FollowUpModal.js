@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {Row, Col, FormGroup, Label, Input, InputGroup, Button } from "reactstrap"
 import { Calendar } from 'react-feather'
 import { styled } from '@mui/material/styles'
@@ -10,40 +10,41 @@ import * as Yup from "yup"
 import CustomSelectField from "../../UtilityComponents/CustomSelectField"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
-import Timeline from '@components/timeline'
-import { iconsData } from './data'
+import { TimeLineData } from './TimeLineData'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAllFollowUpById, AddFollowUps, DeleteFollowUpsById } from '../../../redux/actions/followup/index'
 
 const FollowUpModal = (props) => {
+  
+  const dispatch = useDispatch()
+  const followUpData = useSelector(state => state.followup.followupData)
+
+  const followUpId = props?.followUpModal?.id
+
+  useEffect(() => {
+    dispatch(fetchAllFollowUpById(followUpId))
+  }, [followUpId])
 
   const initialValues = {
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-    note: "",
-    date: "",
+    followUpDate: "",
     nextFollowUpDate: "",
-    source: ""
+    response: "",
+    note: "",
+    status: ""
 }
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
-  phone: Yup.number().positive().required("Required"),
-  email: Yup.string().email().required("Required"),
-  address: Yup.string(),
+  followUpDate: Yup.date().required("Required"),
+  nextFollowUpDate: Yup.date().required("Required"),
+  response: Yup.string().required("Required"),
   note: Yup.string(),
-  date: Yup.date().required("Required"),
-  nestFollowUpDate: Yup.date(),
-  source: Yup.string()
+  status: Yup.string()
 })
 
 const submitForm = (values) => {
-  const rawData = {
-    date: new Date(values.date).toDateString(),
-    nestFollowUpDate: new Date(values.nextFollowUpDate).toDateString()
-  }
-  console.log("Values", values, "rawData", rawData)
-  props.setFollowUpModal(prevState => { return {show: !prevState.show, id: ""} })
+  console.log("Values", values)
+  dispatch(AddFollowUps(followUpId, values))
+  dispatch(fetchAllFollowUpById(followUpId))
 }
 
 const statusOptions = [
@@ -70,7 +71,7 @@ const statusOptions = [
         fullWidth
         onClose={() => props.setFollowUpModal(prevState => { return {show: !prevState.show, id: ""} })}
         aria-labelledby="customized-dialog-title"
-        open={props.followUpModal}
+        open={props.followUpModal.show}
       >
         <DialogContent style={{padding: 34}} dividers>
           <Typography gutterBottom>
@@ -170,7 +171,7 @@ const statusOptions = [
                                 <Col className='mb-sm-1'>
                                   <div style={{fontSize: '1.5rem'}}>Follow Up (Apolline)</div>
                                   <hr />
-                                  <Timeline data={iconsData} />
+                                  <TimeLineData followUpId={followUpId} followUpData={followUpData} />
                                 </Col>
                               </Row>
                           </Col>
@@ -195,19 +196,19 @@ const statusOptions = [
                             <hr />
                             <Row>
                               <Col sm="12" md="12">
-                                  <div style={{margin: '5px'}}><Calendar size={15} /> Enquiry Date: 09/11/2021</div>
-                                  <div style={{margin: '5px'}}><Calendar size={15} /> Last Follow Up Date: 09/11/2021</div>
-                                  <div style={{margin: '5px'}}><Calendar size={15} /> Next Follow Up Date: 20/11/2021</div>
+                                  <div style={{margin: '5px'}}><Calendar size={15} /> Enquiry Date: {new Date(followUpData?.enquiryDate).toDateString()}</div>
+                                  <div style={{margin: '5px'}}><Calendar size={15} /> Last Follow Up Date: {new Date(followUpData?.lastFollowUpDate).toDateString()}</div>
+                                  <div style={{margin: '5px'}}><Calendar size={15} /> Next Follow Up Date: {new Date(followUpData?.nextFollowUpDate).toDateString()}</div>
                               </Col>
                             </Row>
                             <Row>
                               <Col sm="12" md="12">
-                                <div style={{margin: '5px'}}>Name: </div>
-                                <div style={{margin: '5px'}}>Phone: </div>
-                                <div style={{margin: '5px'}}>Source: </div>
-                                <div style={{margin: '5px'}}>Enquiry Date: </div>
-                                <div style={{margin: '5px'}}>Description: </div>
-                                <div style={{margin: '5px'}}>Status: </div>
+                                <div style={{margin: '5px'}}>Name: {followUpData?.name}</div>
+                                <div style={{margin: '5px'}}>Phone: {followUpData?.phone} </div>
+                                <div style={{margin: '5px'}}>Source: {followUpData?.source}</div>
+                                <div style={{margin: '5px'}}>Enquiry Date: {new Date(followUpData?.enquiryDate).toDateString()}</div>
+                                <div style={{margin: '5px'}}>Note: {followUpData?.note}</div>
+                                <div style={{margin: '5px'}}>Status: {followUpData?.status}</div>
                               </Col>
                             </Row>
                           </Col>
