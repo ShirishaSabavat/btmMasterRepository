@@ -48,8 +48,18 @@ const UserTable = () => {
           selector: "role",
           sortable: true,
           cell: (row) => (
-            <Badge color={row.role === "USER" ? "light-primary" : "light-warning"} pill>
-              <span>{row.role.replace('_USER', '')}</span>
+            <Badge className="pointer" color={row.role === "USER" ? "light-primary" : "light-warning"} pill>
+              <span id="user-type">{row.role.replace('_USER', '')}</span>
+              {row.role !== "USER" && (
+                <UncontrolledTooltip placement='top' target='user-type'>
+                  This user is a Consultant
+                </UncontrolledTooltip>
+              )}
+              {row.role === "USER" && (
+                <UncontrolledTooltip placement='top' target='user-type'>
+                  This is a basic user
+                </UncontrolledTooltip>
+              )}
             </Badge>
           )
         },
@@ -92,7 +102,8 @@ const UserTable = () => {
           sortable: true,
           width:"184px",
           cell: (row) => (
-            <p className="text-bold-500 mb-0" title="View Parent">
+            <>
+            <p className="text-bold-500 mb-0" id="user-parent">
               {row.referral !== 'DIRECT' && (
                 <Link to={`/view-user-data/${row.myParent}`}>
                   {row.referral}
@@ -102,6 +113,10 @@ const UserTable = () => {
                 <>{row.referral}</>
               )}
             </p>
+            <UncontrolledTooltip placement='top' target="user-parent">
+              View Parent
+            </UncontrolledTooltip>
+            </>
           )
         },
         // {

@@ -8,7 +8,7 @@ import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 const VisionSettings = () => {
 
     const dispatch = useDispatch()
-    const data = useSelector(state => state.cms.vission[0]?.content)
+    const data = useSelector(state => state.cms.vission[state.cms.vission?.length - 1]?.content)
 
     const editor = useRef(null)
     const [content, setContent] = useState()
@@ -17,7 +17,7 @@ const VisionSettings = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchCMS("vission"))
+        dispatch(fetchCMS("VISSION"))
     }, [])
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const VisionSettings = () => {
 
     const submitForm = () => {
         const rawData = {
-            type: "vission",
+            type: "VISSION",
             content
         }
         if (data) {

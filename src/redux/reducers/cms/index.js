@@ -1,9 +1,10 @@
-import { GET_ABOUT, GET_MISSION, GET_VISSION, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS, GET_PRIVACY_POLICY, GET_TERMS_AND_CONDITIONS, GET_REFUND_POLICY } from '../../types/cms'
+import { GET_ABOUT, GET_MISSION, GET_VISSION, GET_CONTACT, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS, GET_PRIVACY_POLICY, GET_TERMS_AND_CONDITIONS, GET_REFUND_POLICY } from '../../types/cms'
 
 const initialState = {
   about: "",
   mission: "",
   vission: "",
+  contact: "",
   socialLinks: "",
   landingCms: [],
   privacyPolicy: "",
@@ -30,6 +31,9 @@ const cmsReducer = (state = initialState, action) => {
 
     case GET_VISSION:
       return {...state, vission: action.payload}
+    
+    case GET_CONTACT:
+      return {...state, contact: action.payload}
     
     case GET_SOCIAL_LINKS:
       return {...state, socialLinks: action.payload}

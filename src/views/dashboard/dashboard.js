@@ -23,6 +23,7 @@ import {
     Video
   } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 
 const Dashboard = () => {
 
@@ -38,34 +39,39 @@ const Dashboard = () => {
             count: (dashboardData?.bacUsersCount + dashboardData?.normalUsersCount),
             role: ['ADMIN'],
             color: 'bg-light-danger',
-            icon: <Users size={24} />
+            icon: <Users size={24} />,
+            navigateTo: 'users'
         },
         {
             title: 'Videos',
             count: dashboardData?.videosCount,
             color: 'bg-light-info',
             role: ['ADMIN'],
-            icon: <Video size={24} />
+            icon: <Video size={24} />,
+            navigateTo: 'videos'
         },
         {
             title: 'Courses',
             count: dashboardData?.onlinePurchaseCount ? dashboardData?.onlinePurchaseCount : (dashboardData?.bacCourcesCount + dashboardData?.regularCourcesCount),
             color: 'bg-light-success',
             role: ['ADMIN', 'USER', 'BAC_USER'],
-            icon: <Award size={24} />
+            icon: <Award size={24} />,
+            navigateTo: userData.user.role === 'ADMIN' ? '/courses' : '/my-courses'
         },
         {
             title: 'Workshops',
             count: dashboardData?.workshopPurchaseCount ? dashboardData?.workshopPurchaseCount :  dashboardData?.workshopsCount,
             role: ['ADMIN', 'USER', 'BAC_USER'],
-            icon: <Activity size={24} />
+            icon: <Activity size={24} />,
+            navigateTo: userData.user.role === 'ADMIN' ? '/course-schedule' : 'my-workshops' 
         },
         {
             title: 'My Clients',
             count: (dashboardData?.bacUsersCount + dashboardData?.normalUsersCount),
             role: ['BAC_USER'],
             color: 'bg-light-danger',
-            icon: <Users size={24} />
+            icon: <Users size={24} />,
+            navigateTo: '/my-customers'
         },
         // {
         //     title: 'Total Sales',
@@ -95,6 +101,18 @@ const Dashboard = () => {
         })
     }
 
+    const shareMyReferralLink = () => {
+        if (navigator.share) {
+            navigator.share({
+                url: `https://businessaacharya.com/home?referral=${userData.user.referralCode}`,
+                title: 'Business Aacharya',
+                text: 'Hi, join the Business Aacharya platform with my referral.'
+            })
+        } else {
+            alert('Share not supported.')
+        }
+    }
+
     if (loading) {
         return (
           <DashboardDataLoadingSkleton />
@@ -113,7 +131,7 @@ const Dashboard = () => {
             <CardBody className='text-center'>
                 {/* <img className='congratulations-img-left' src={decorationLeft} alt='decor-left' /> */}
                 {/* <img className='congratulations-img-right' src={decorationRight} alt='decor-right' /> */}
-                <Avatar icon={<Share2 size={28} />} className='shadow' color='success' size='xl' />
+                <Avatar onClick={() => shareMyReferralLink()} icon={<Share2 size={28} />} className='shadow' color='success' size='xl' />
                 <div className='text-center'>
                 <h1 className='mb-1 text-white'>Share & Earn</h1>
                 
@@ -198,6 +216,7 @@ const Dashboard = () => {
 }
 
 const StatsCard = (props) => {
+    const history = useHistory()
     const userRole = getUserData().user.role
     const newData = props.data.filter(i => i.role.includes(getUserData().user.role))
     // console.log({newData})
@@ -207,7 +226,7 @@ const StatsCard = (props) => {
             <Col md="3" sm="12">
                 <Card>
                 <CardBody>
-                    <div className='d-flex justify-content-between align-items-center'>
+                    <div onClick={() => (val.navigateTo ? history.push(val.navigateTo) : null)} className='d-flex justify-content-between align-items-center pointer'>
                         <div>
                             <h2 className='font-weight-bolder mb-0'>{val.title}</h2>
                             <p className='card-text'>{val.count}</p>

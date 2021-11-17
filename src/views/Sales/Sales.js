@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, CardBody, Button, Badge} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, CardBody, Button, Badge, UncontrolledTooltip} from "reactstrap"
 import DataTable from "react-data-table-component"
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import {Eye, ArrowUpCircle, Award, BarChart2, BarChart} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
@@ -10,7 +10,7 @@ import { fetchAllSales } from "../../redux/actions/sales/index"
 import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const Sales = () => {
-
+  const history = useHistory()
   const dispatch = useDispatch()
   const salesData = useSelector(state => state.sales.sales)
   const loading = useSelector(state => state.common.loading)
@@ -34,9 +34,16 @@ const Sales = () => {
           minWidth: "200px",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">
-                {row.userId?.name}
-            </p>
+            <>
+              <p id="sale-user" className="text-bold-500 mb-0">
+                <Link className="text-dark" to={`/view-user-data/${row.userId?._id}`}>
+                  {row.userId?.name}
+                </Link>
+              </p>
+              <UncontrolledTooltip placement='top' target="sale-user">
+                View user account
+              </UncontrolledTooltip>
+            </>
           )
         },
         {
@@ -44,7 +51,16 @@ const Sales = () => {
           selector: "courseName",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">{row.courseId?.name}</p>
+            <>
+              <p id="sale-course" className="text-dark text-bold-500 mb-0">
+                <Link className="text-dark" to={`/edit-course/${row.courseId?._id}`}>
+                  {row.courseId?.name}
+                </Link>
+              </p>
+              <UncontrolledTooltip placement='top' target="sale-course">
+                View Course
+              </UncontrolledTooltip>
+            </>
           )
         },
         {
@@ -54,8 +70,8 @@ const Sales = () => {
           minWidth: "200px",
           cell: (row) => (
             <Badge color={row.purchaseType === "WORKSHOP" ? "info" : "primary"} pill>
-            <span>{row.purchaseType}</span>
-          </Badge>
+              <span>{row.purchaseType}</span>
+            </Badge>
           )
         },
         {
@@ -72,7 +88,16 @@ const Sales = () => {
           minWidth: "200px",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">{row.referral}</p>
+            <>
+              <p id="sale-referral" className="text-dark text-bold-500 mb-0">
+                <Link className="text-dark" to={`/view-user-data/${row.userId?.myParent}`}>
+                  {row.referral}
+                </Link>
+              </p>
+              <UncontrolledTooltip placement='top' target="sale-referral">
+                View refferal user account
+              </UncontrolledTooltip>
+            </>
           )
         },
         {
@@ -127,12 +152,11 @@ const Sales = () => {
                 <ul className="list-inline mb-0">
                     <li className="list-inline-item">
                         <Button
-                        className="btn-icon rounded-circle"
-                        color="flat-warning"
+                          onClick={() => history.push(`/view-sales/${row._id}`)}
+                          className="btn-icon rounded-circle"
+                          color="flat-warning"
                         >
-                        <Link to={`/view-sales/${row._id}`}>
-                            <Eye size={15} />
-                        </Link>
+                          <Eye size={15} />
                         </Button>
                     </li>         
                 </ul>

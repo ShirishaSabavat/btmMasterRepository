@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, Button, UncontrolledTooltip} from "reactstrap"
 import {Trash, Eye} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
@@ -53,7 +53,12 @@ const Inquiry = () => {
           selector: "email",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">{row.email}</p>
+            <p className="text-bold-500 mb-0">
+              <a id="inquiry-email" className="text-dark" href={`mailto:${row.email}`}>{row.email}</a>
+              <UncontrolledTooltip placement='top' target='inquiry-email'>
+                Click to email
+              </UncontrolledTooltip>
+            </p>
           )
         },
         {
@@ -61,7 +66,12 @@ const Inquiry = () => {
           selector: "phone",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
+            <p className="text-bold-500 text-truncate mb-0">
+              <a id="inquiry-call" className="text-dark" href={`tel:${row.phone}`}>{row.phone}</a>
+              <UncontrolledTooltip placement='top' target='inquiry-call'>
+                Click to call
+              </UncontrolledTooltip>
+            </p>
           )
         },
         {
