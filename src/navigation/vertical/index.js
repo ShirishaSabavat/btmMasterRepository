@@ -41,7 +41,7 @@ const Navigation = [
     id: 'mycustomers',
     title: 'Customers',
     icon: <Users size={20} />,
-    navLink: '/admin/my-customers',
+    navLink: '/my-customers',
     permissions: ["BAC_USER"]
   },
   {

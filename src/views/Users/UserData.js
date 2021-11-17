@@ -3,7 +3,7 @@ import { Row, Col, TabContent, TabPane, Card, CardBody, CardText, Badge, Uncontr
 import Avatar from '@components/avatar'
 import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux"
-import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Award, Anchor } from 'react-feather'
+import { DollarSign, TrendingUp, User, Check, Star, Flag, Phone, Award, Anchor, Share2 } from 'react-feather'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {toast} from 'react-toastify'
 import {PRODUCTION_URL} from '../../utility/serverSettings'
@@ -97,24 +97,41 @@ const UserData = () => {
 
                   {userData.userData?.role === 'BAC_USER' && (
                       <div className='d-flex align-items-center user-total-numbers'>
-                      <div className='d-flex align-items-center mr-2'>
-                          <div className='color-box p-1 bg-light-primary'>
-                            ₹
-                          </div>
-                          <div className='ml-1'>
-                            <h5 className='mb-0'>{userData.userData?.wallet?.toLocaleString('en-IN')}</h5>
-                            <small>Wallet</small>
-                          </div>
-                      </div>
-                      <div className='d-flex align-items-center'>
+                        <div className='d-flex align-items-center mr-2'>
+                            <div className='color-box p-1 bg-light-primary'>
+                              ₹
+                            </div>
+                            <div className='ml-1'>
+                              <h5 className='mb-0'>{userData.userData?.wallet?.toLocaleString('en-IN')}</h5>
+                              <small>Wallet</small>
+                            </div>
+                        </div>
+                        <div className='d-flex align-items-center'>
+                            <div className='color-box p-1 bg-light-info'>
+                            <Award className='text-info' />
+                            </div>
+                            <div className='ml-1'>
+                            <h5 className='mb-0'>{userData.userData?.rank}</h5>
+                            <small>Rank</small>
+                            </div>
+                        </div>
+                        <div className='d-flex align-items-center ml-2'>
                           <div className='color-box p-1 bg-light-success'>
-                          <Award className='text-success' />
+                          <Share2 className='text-success' />
                           </div>
                           <div className='ml-1'>
-                          <h5 className='mb-0'>{userData.userData?.rank}</h5>
-                          <small>Rank</small>
+
+                            <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${userData.userData?.referralCode}`}
+                              onCopy={() => toast.success("Referral link copied!")}>
+                              <h5 id="user-referral-link-share" className='mb-0 pointer'>{userData.userData?.referralCode}</h5>
+                            </CopyToClipboard>
+                            <UncontrolledTooltip placement='top' target='user-referral-link-share'>
+                              Click to copy referral link
+                            </UncontrolledTooltip>
+
+                            <small>Referral Link</small>
                           </div>
-                      </div>
+                        </div>
                       </div>
                   )}
 

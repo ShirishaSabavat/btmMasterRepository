@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, Button, Badge, UncontrolledTooltip} from "reactstrap"
 import DataTable from "react-data-table-component"
 import {Link} from "react-router-dom"
 import { Edit } from "react-feather"
@@ -41,7 +41,12 @@ const Staff = () => {
           selector: "phone",
           sortable: true,
           cell: (row) => (
-            <p className="text-bold-500 mb-0">{row.phone}</p>
+            <p className="text-bold-500 mb-0">
+              <a id="staff-call" className="text-dark" href={`tel:${row.phone}`}>{row.phone}</a>
+              <UncontrolledTooltip placement='top' target='staff-call'>
+                Click to call
+              </UncontrolledTooltip>
+            </p>
           )
         },
         {

@@ -8,7 +8,7 @@ import { fetchCMS, AddCMS, EditCMS } from "../../redux/actions/cms"
 const MissionSettings = () => {
 
     const dispatch = useDispatch()
-    const data = useSelector(state => state.cms.mission[0])?.content
+    const data = useSelector(state => state.cms.mission[state.cms.mission?.length - 1])?.content
 
     const editor = useRef(null)
     const [content, setContent] = useState()
@@ -17,7 +17,7 @@ const MissionSettings = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchCMS("mission"))
+        dispatch(fetchCMS("MISSION"))
     }, [])
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const MissionSettings = () => {
 
     const submitForm = () => {
         const rawData = {
-            type: "mission",
+            type: "MISSION",
             content
         }
 

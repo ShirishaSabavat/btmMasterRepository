@@ -1,25 +1,30 @@
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
-import { GET_MISSION, GET_ABOUT, GET_VISSION, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS, GET_PRIVACY_POLICY, GET_TERMS_AND_CONDITIONS, GET_REFUND_POLICY } from "../../types/cms/index"
+import { GET_MISSION, GET_ABOUT, GET_VISSION, GET_CONTACT, GET_SOCIAL_LINKS, GET_ALL_LANDING_CMS, GET_PRIVACY_POLICY, GET_TERMS_AND_CONDITIONS, GET_REFUND_POLICY } from "../../types/cms/index"
 import { toggleNetworkLoading } from '../common'
 
 export const fetchCMS = (type) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/cms/${type}`)
   .then(res => {
-    if (type === "about") {
+    if (type === "ABOUT") {
       dispatch({
         type: GET_ABOUT,
         payload: res.data
       })
-    } else if (type === "mission") {
+    } else if (type === "MISSION") {
       dispatch({
         type: GET_MISSION,
         payload: res.data
       })
-    } else if (type === "vission") {
+    } else if (type === "VISSION") {
       dispatch({
         type: GET_VISSION,
+        payload: res.data
+      })
+    } else if (type === "CONTACT") {
+      dispatch({
+        type: GET_CONTACT,
         payload: res.data
       })
     } else if (type === "social-links") {
