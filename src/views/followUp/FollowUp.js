@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
 import {Edit, Trash, Phone} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
@@ -7,12 +7,9 @@ import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSk
 import AddModal from './Modals/AddModal'
 import EditModal from './Modals/EditModal'
 import FollowUpModal from './Modals/FollowUpModal'
+import { fetchAllFollowUp, DeleteFollowUp } from '../../redux/actions/followup/index'
  
 const FollowUp = () => {
-    // api call redux function
-    const deleteAdmissionEnquiryById = () => {
-
-    }
 
   const dispatch = useDispatch()
   const loading = useSelector(state => state.common.loading)
@@ -21,6 +18,11 @@ const FollowUp = () => {
   const [showModal, setShowModal] = useState(false)
   const [editModal, setEditModal] = useState({show: false, id: ""})
   const [followUpModal, setFollowUpModal] = useState({show: false, id: ""})
+  const data = useSelector(state => state.followup.followup)
+
+  useEffect(() => {
+    dispatch(fetchAllFollowUp())
+  }, [])
 
   const tableColumns = [
     {
@@ -52,7 +54,7 @@ const FollowUp = () => {
         selector: "enquiryDate",
         sortable: true,
         cell: (row) => (
-          <p className="text-bold-500 text-truncate mb-0">{row.enquiryDate}</p>
+          <p className="text-bold-500 text-truncate mb-0">{new Date(row.enquiryDate).toDateString()}</p>
         )
     },
     {
@@ -60,7 +62,7 @@ const FollowUp = () => {
       selector: "lastFollowUpDate",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 text-truncate mb-0">{row.lastFollowUpDate}</p>
+        <p className="text-bold-500 text-truncate mb-0">{new Date(row.lastFollowUpDate).toDateString()}</p>
       )
     },
     {
@@ -68,7 +70,7 @@ const FollowUp = () => {
       selector: "nextFollowUpDate",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 text-truncate mb-0">{row.nextFollowUpDate}</p>
+        <p className="text-bold-500 text-truncate mb-0">{new Date(row.nextFollowUpDate).toDateString()}</p>
       )
     },
     {
@@ -122,19 +124,6 @@ const FollowUp = () => {
     }
   ]
 
-  const admissionEnquiryData = [ 
-        {
-            _id: "1234",
-            name: 'sample name',
-            phone: '82828349292',
-            source: 'sample source',
-            enquiryDate: "12-12-2021",
-            lastFollowUpDate: '14-12-2021',
-            nextFollowUpDate: "15-12-2021", 
-            status: 'ACTIVE'
-        }
-    ]
-
   if (loading) {
     return (
       <TableDataLoadingSkleton />
@@ -163,8 +152,8 @@ const FollowUp = () => {
             <CustomDataTable 
                 setShowDelete={setShowDelete}
                 showDelete={showDelete}
-                confirmDelete={() => dispatch(deleteAdmissionEnquiryById(showDelete))}
-                data={admissionEnquiryData} 
+                confirmDelete={() => dispatch(DeleteFollowUp(showDelete))}
+                data={data} 
                 columns={tableColumns} 
                 customStyles={customStyles}
             />
