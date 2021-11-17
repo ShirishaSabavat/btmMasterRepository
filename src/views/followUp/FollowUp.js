@@ -124,12 +124,6 @@ const FollowUp = () => {
     }
   ]
 
-  if (loading) {
-    return (
-      <TableDataLoadingSkleton />
-    )
-  }
-
   const customStyles = {
     headCells: {
         style: {
@@ -159,9 +153,9 @@ const FollowUp = () => {
             />
           </Card>
         </Col>
-        {showModal ? <AddModal showModal={showModal} setShowModal={setShowModal} /> : null}
-        {editModal.show ? <EditModal editModal={editModal} setEditModal={setEditModal} /> : null}
-        {followUpModal.show ? <FollowUpModal followUpModal={followUpModal} setFollowUpModal={setFollowUpModal} /> : null}
+        <AddModal showModal={showModal} setShowModal={setShowModal} />
+        <EditModal editModal={editModal} setEditModal={setEditModal} />
+        <FollowUpModal followUpModal={followUpModal} setFollowUpModal={setFollowUpModal} />
     </Row>
 }
 

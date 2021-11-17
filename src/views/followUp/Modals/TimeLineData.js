@@ -3,12 +3,17 @@ import { Trash, Clock } from 'react-feather'
 import { Media, Button } from 'reactstrap'
 import Timeline from '@components/timeline'
 
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { DeleteFollowUpsById } from '../../../redux/actions/followup/index'
 
 export const TimeLineData = ({followUpId, followUpData}) => {
   const dispatch = useDispatch()
-  const iconsData = followUpData?.followups?.map(values => ({
+  
+  const loading = useSelector(state => state.common.loading)
+
+  console.log(followUpData)
+
+  const iconsData = loading ? [] : followUpData?.followups?.map(values => ({
       title: values.response,
       customContent: (
         <Media>
@@ -27,6 +32,10 @@ export const TimeLineData = ({followUpId, followUpData}) => {
             <Trash size={15} />
         </Button>)
   }))
+
+  if (loading) {
+    return (<></>)
+  }
   
-  return <Timeline data={iconsData} />
+  return <Timeline data={iconsData.reverse()} />
 }

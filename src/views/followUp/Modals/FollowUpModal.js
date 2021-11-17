@@ -17,7 +17,8 @@ import { fetchAllFollowUpById, AddFollowUps, DeleteFollowUpsById } from '../../.
 const FollowUpModal = (props) => {
   
   const dispatch = useDispatch()
-  const followUpData = useSelector(state => state.followup.followupData)
+  const followUpData = useSelector(state => state.followup.followupData ?? [])
+  const loading = useSelector(state => state.common.loading)
 
   const followUpId = props?.followUpModal?.id
 
@@ -26,7 +27,7 @@ const FollowUpModal = (props) => {
   }, [followUpId])
 
   const initialValues = {
-    followUpDate: Date.now(),
+    followUpDate: new Date(),
     nextFollowUpDate: "",
     response: "",
     note: "",
@@ -44,6 +45,7 @@ const validationSchema = Yup.object().shape({
 const submitForm = (values) => {
   console.log("Values", values)
   dispatch(AddFollowUps(followUpId, values))
+  props.setFollowUpModal(prevState => { return {show: !prevState.show, id: ""} })
   dispatch(fetchAllFollowUpById(followUpId))
 }
 
@@ -64,6 +66,10 @@ const statusOptions = [
       padding: theme.spacing(1)
     }
   }))
+  
+  if (loading) {
+    return (<></>)
+  }
 
   return (
       <BootstrapDialog
@@ -71,7 +77,7 @@ const statusOptions = [
         fullWidth
         onClose={() => props.setFollowUpModal(prevState => { return {show: !prevState.show, id: ""} })}
         aria-labelledby="customized-dialog-title"
-        open={props.followUpModal.show}
+        open={props.followUpModal?.show && !loading}
       >
         <DialogContent style={{padding: 34}} dividers>
           <Typography gutterBottom>
@@ -169,7 +175,7 @@ const statusOptions = [
                             </Row>
                               <Row>
                                 <Col className='mb-sm-1'>
-                                  <div style={{fontSize: '1.5rem'}}>Follow Up (Apolline)</div>
+                                  <div style={{fontSize: '1.5rem'}}>Follow Up</div>
                                   <hr />
                                   <TimeLineData followUpId={followUpId} followUpData={followUpData} />
                                 </Col>

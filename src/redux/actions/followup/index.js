@@ -4,47 +4,45 @@ import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
 
 export const fetchAllFollowUp = () => dispatch => {
-  // dispatch(toggleNetworkLoading(true))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/followup`)
   .then(res => {
-    const data = res.data
     dispatch({
       type: GET_ALL_FOLLOWUP,
-      payload: data
+      payload: res.data?.reverse()
     })
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
     toast.error("Error in Fetching Data", e, {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
 }
 
 export const fetchAllFollowUpById = (id) => dispatch => {
-  // dispatch(toggleNetworkLoading(true))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().get(`/followup/${id}`)
   .then(res => {
-    const data = res.data
     dispatch({
       type: GET_ALL_FOLLOWUP_BY_ID,
-      payload: data
+      payload: res.data
     })
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
     toast.error("Error in Fetching Data", e, {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
 }
 
 export const AddFollowUp = (rawData) => dispatch => {
-  // dispatch(toggleNetworkLoading(true))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().post('/followup', rawData)
   .then(res => {
     if (res.status === 201) {
@@ -53,10 +51,10 @@ export const AddFollowUp = (rawData) => dispatch => {
       })
       dispatch(fetchAllFollowUp())
     }
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Creating FollowUp", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -65,7 +63,7 @@ export const AddFollowUp = (rawData) => dispatch => {
 }
 
 export const EditFollowUp = (id, rawData) => dispatch => {
-  // dispatch(toggleNetworkLoading(true))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/followup/${id}`, rawData)
   .then(res => {
     if (res.status === 200) {
@@ -74,19 +72,19 @@ export const EditFollowUp = (id, rawData) => dispatch => {
       })
       dispatch(fetchAllFollowUp())
     }
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
     toast.error("Error in Updateing FollowUp!", {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
-    dispatch(toggleNetworkLoading(false))
+    // dispatch(toggleNetworkLoading(false))
   })
 }
 
 export const DeleteFollowUp = (id) => dispatch => {
-  // dispatch(toggleNetworkLoading(true))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().delete(`/followup/${id}`)
   .then(res => {
     if (res.status === 200) {
@@ -95,31 +93,31 @@ export const DeleteFollowUp = (id) => dispatch => {
       })
       dispatch(fetchAllFollowUp())
     }
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
     toast.error("Error in Deleting FollowUp!", {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
 }
 
 export const AddFollowUps = (id, rawData) => dispatch => {
-  // dispatch(toggleNetworkLoading(true))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/followup/followups/${id}`, rawData)
   .then(res => {
-    if (res.status === 201) {
+    if (res.status === 200) {
       toast.success("Created FollowUp", {
         position: toast.POSITION.BOTTOM_CENTER
       })
       dispatch(fetchAllFollowUp())
     }
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
     toast.error("Error Creating FollowUp", {
       position: toast.POSITION.BOTTOM_CENTER
     })
@@ -128,7 +126,7 @@ export const AddFollowUps = (id, rawData) => dispatch => {
 }
 
 export const DeleteFollowUpsById = (id, did) => dispatch => {
-  // dispatch(toggleNetworkLoading(true))
+  dispatch(toggleNetworkLoading(true))
   ServerApi().delete(`/followup/followups/${id}/${did}`)
   .then(res => {
     if (res.status === 200) {
@@ -137,13 +135,13 @@ export const DeleteFollowUpsById = (id, did) => dispatch => {
       })
       dispatch(fetchAllFollowUpById(id))
     }
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
     toast.error("Error in Deleting FollowUp!", {
       position: toast.POSITION.BOTTOM_CENTER
     })
     console.log(e)
-    // dispatch(toggleNetworkLoading(false))
+    dispatch(toggleNetworkLoading(false))
   })
 }

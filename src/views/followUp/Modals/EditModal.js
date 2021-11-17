@@ -18,6 +18,7 @@ const EditModal = (props) => {
   
   const dispatch = useDispatch()
   const editData = useSelector(state => state.followup.followupData)
+  const loading = useSelector(state => state.common.loading)
   
   const editId = props?.editModal?.id
 

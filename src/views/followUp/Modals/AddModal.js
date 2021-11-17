@@ -24,7 +24,7 @@ const AddModal = (props) => {
     email: "",
     address: "",
     note: "",
-    enquiryDate: Date.now(),
+    enquiryDate: new Date(),
     nextFollowUpDate: "",
     lastFollowUpDate: "",
     source: ""
@@ -69,7 +69,7 @@ const sourceOptions = [
       <BootstrapDialog
         onClose={() => props.setShowModal(prevState => !prevState)}
         aria-labelledby="customized-dialog-title"
-        open={props.setShowModal}
+        open={props.showModal}
       >
         <DialogContent style={{padding: 34}} dividers>
           <Typography gutterBottom>
