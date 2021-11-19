@@ -9,7 +9,7 @@ import JoditEditor from "jodit-react"
 const ContactSettings = () => {
 
     const dispatch = useDispatch()
-    const data = useSelector(state => state.cms?.contact[state.cms?.contact?.length - 1])?.content
+    const data = useSelector(state => state.cms.contact)
     const serverLoading = useSelector(state => state.common.loading)
 
     const editor = useRef(null)
@@ -23,7 +23,9 @@ const ContactSettings = () => {
     }, [])
 
     useEffect(() => {
-        setContent(data)
+        if (data) {
+            setContent(data[0].content)
+        }
     }, [data])
 
     const submitForm = (values) => {
