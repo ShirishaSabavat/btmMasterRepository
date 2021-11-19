@@ -91,25 +91,6 @@ const DefaultBac = () => {
           )
         },
         {
-          name: "Parent",
-          selector: "parent",
-          sortable: true,
-          width:"184px",
-          cell: (row) => (
-            <p className="text-bold-500 mb-0" id="user-parent">
-              Default BAC
-            </p>
-          )
-        },
-        // {
-        // name: "Phone No",
-        // selector: "phone",
-        // sortable: true,
-        // cell: (row) => (
-        //     <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
-        // )
-        // },
-        {
         name: "KYC",
         selector: "kyc",
         sortable: true,
