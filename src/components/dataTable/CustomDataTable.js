@@ -29,7 +29,19 @@ import {
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 import DataLoading from '../../components/loading/DataLoading'
 import { useSelector } from 'react-redux'
- 
+
+const defaultStyle = {
+  headCells: {
+    style: {
+        fontWeight: 700,
+        backgroundColor: '#938af3',
+        color: '#fff',
+        borderRadius: 0,
+        fontSize: '16px'
+    }
+  }
+}
+
 const CustomDataTable = (props) => {
 
   const networkLoading = useSelector(state => state.common.networkLoading)
@@ -207,7 +219,7 @@ const CustomDataTable = (props) => {
             data={props.data}
             paginationRowsPerPageOptions= {[10, 25, 50, 100, 500]}
             selectableRowsComponent={BootstrapCheckbox}
-            customStyles={props?.customStyles ? props.customStyles : ""}
+            customStyles={props?.customStyles ? {...props.customStyles, defaultStyle} : defaultStyle}
           />
         </DataTableExtensions>
 

@@ -3,23 +3,23 @@ import {Row, Col, Card, CardHeader, CardTitle, Button, Badge, UncontrolledToolti
 import {Trash, Eye} from "react-feather"
 import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import CustomDataTable from '../../components/dataTable/CustomDataTable'
-import { fetchAllUsersData, deleteUser } from "../../redux/actions/user/index"
+import CustomDataTable from '../../../components/dataTable/CustomDataTable'
+import { fetchAllUsersData, deleteUser } from "../../../redux/actions/user/index"
 import {toast} from 'react-toastify'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
-import {PRODUCTION_URL} from '../../utility/serverSettings'
-import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
+import {PRODUCTION_URL} from '../../../utility/serverSettings'
+import TableDataLoadingSkleton from '../../../components/skleton/TableDataLoadingSkleton'
 
-const UserTable = () => {
+const DefaultBac = () => {
 
   const dispatch = useDispatch()
-  const usersData = useSelector(state => state.user.users.filter(i => !i.isDefaultBac))
+  const usersData = useSelector(state => state.user.users)
   const loading = useSelector(state => state.common.loading)
 
   const [showDelete, setShowDelete] = useState(false)
 
   useEffect(() => {
-    dispatch(fetchAllUsersData())
+    dispatch(fetchAllUsersData(true))
   }, [])
 
     const tableColumns = [
@@ -71,17 +71,9 @@ const UserTable = () => {
           width:"154px",
           sortable: true,
           cell: (row) => (
-            <>
-            <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${row.referralCode}`}
-              onCopy={() => toast.success("Referral link copied!")}>
-                <span className="pointer cursor" style={{fontSize: 11}} id={`${row.referralCode}-user-referral-link`}>
-                  {row.referralCode}
-                </span>
-            </CopyToClipboard>
-            <UncontrolledTooltip placement='top' target={`${row.referralCode}-user-referral-link`}>
-              Click to copy referral link
-            </UncontrolledTooltip>
-            </>
+            <span className="pointer cursor" style={{fontSize: 11}} id={`${row.referralCode}-user-referral-link`}>
+                {row.referralCode}
+            </span>
           )
         },
         {
@@ -104,21 +96,9 @@ const UserTable = () => {
           sortable: true,
           width:"184px",
           cell: (row) => (
-            <>
             <p className="text-bold-500 mb-0" id="user-parent">
-              {row.referral !== 'DIRECT' && (
-                <Link to={`/view-user-data/${row.myParent}`}>
-                  {row.referral}
-                </Link>
-              )}
-              {row.referral === 'DIRECT' && (
-                <>{row.referral}</>
-              )}
+              Default BAC
             </p>
-            <UncontrolledTooltip placement='top' target="user-parent">
-              View Parent
-            </UncontrolledTooltip>
-            </>
           )
         },
         // {
@@ -182,7 +162,7 @@ const UserTable = () => {
                         </Link>
                         </Button>
                     </li>
-                    <li className="list-inline-item">
+                    {/* <li className="list-inline-item">
                         <Button
                         className="btn-icon rounded-circle"
                         color="flat-danger"
@@ -190,7 +170,7 @@ const UserTable = () => {
                         >
                             <Trash size={15} />
                         </Button>
-                    </li>            
+                    </li>             */}
                 </ul>
               </div>
             )
@@ -224,4 +204,4 @@ const UserTable = () => {
     </Row>
 }
 
-export default UserTable
+export default DefaultBac

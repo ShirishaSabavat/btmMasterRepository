@@ -80,7 +80,7 @@ const statusOptions = [
         open={props.followUpModal?.show && !loading}
       >
         <DialogContent style={{padding: 34}} dividers>
-          <Typography gutterBottom>
+          <Typography variant="h5" gutterBottom>
             Follow Up
           </Typography>
           <hr />
@@ -175,7 +175,7 @@ const statusOptions = [
                             </Row>
                               <Row>
                                 <Col className='mb-sm-1'>
-                                  <div style={{fontSize: '1.5rem'}}>Follow Up</div>
+                                  <div style={{fontSize: '1.5rem'}}>Follow Ups</div>
                                   <hr />
                                   <TimeLineData followUpId={followUpId} followUpData={followUpData} />
                                 </Col>
@@ -202,19 +202,19 @@ const statusOptions = [
                             <hr />
                             <Row>
                               <Col sm="12" md="12">
-                                  <div style={{margin: '5px'}}><Calendar size={15} /> Enquiry Date: {new Date(followUpData?.enquiryDate).toDateString()}</div>
-                                  <div style={{margin: '5px'}}><Calendar size={15} /> Last Follow Up Date: {new Date(followUpData?.lastFollowUpDate).toDateString()}</div>
-                                  <div style={{margin: '5px'}}><Calendar size={15} /> Next Follow Up Date: {new Date(followUpData?.nextFollowUpDate).toDateString()}</div>
+                                  <div style={{margin: '5px'}}><Calendar size={15} /> <b>Enquiry:</b> {new Date(followUpData?.enquiryDate).toDateString()}</div>
+                                  <div style={{margin: '5px'}}><Calendar size={15} /> <b>Last Follow Up:</b> {new Date(followUpData?.lastFollowUpDate).toDateString()}</div>
+                                  <div style={{margin: '5px'}}><Calendar size={15} /> <b>Next Follow Up:</b> {new Date(followUpData?.nextFollowUpDate).toDateString()}</div>
                               </Col>
                             </Row>
                             <Row>
                               <Col sm="12" md="12">
-                                <div style={{margin: '5px'}}>Name: {followUpData?.name}</div>
-                                <div style={{margin: '5px'}}>Phone: {followUpData?.phone} </div>
-                                <div style={{margin: '5px'}}>Source: {followUpData?.source}</div>
-                                <div style={{margin: '5px'}}>Enquiry Date: {new Date(followUpData?.enquiryDate).toDateString()}</div>
-                                <div style={{margin: '5px'}}>Note: {followUpData?.note}</div>
-                                <div style={{margin: '5px'}}>Status: {followUpData?.status}</div>
+                                <div style={{margin: '5px'}}><b>Name:</b> {followUpData?.name}</div>
+                                <div style={{margin: '5px'}}><b>Phone:</b> {followUpData?.phone} </div>
+                                <div style={{margin: '5px'}}><b>Source:</b> {followUpData?.source}</div>
+                                <div style={{margin: '5px'}}><b>Enquiry:</b> {new Date(followUpData?.enquiryDate).toDateString()}</div>
+                                <div style={{margin: '5px'}}><b>Note:</b> {followUpData?.note}</div>
+                                <div style={{margin: '5px'}}><b>Status:</b> {followUpData?.status}</div>
                               </Col>
                             </Row>
                           </Col>

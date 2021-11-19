@@ -56,15 +56,9 @@ const Landing = (route) => {
 
 
     useEffect(() => {
-        dispatch(fetchAllCourses())
-    }, [])
-
-    useEffect(() => {
         dispatch(getLandingPageData())
-    }, [])
-
-    useEffect(() => {
         dispatch(fetchCourseById(id))
+        // dispatch(fetchAllCourses())
     }, [])
 
     useEffect(() => {

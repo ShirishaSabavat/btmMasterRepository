@@ -71,15 +71,25 @@ const UserData = () => {
                         <div className='user-info mb-1'>
                           <h4 className='mb-0'>{userData.userData?.name}</h4>
 
-                          <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${userData.userData?.referralCode}`}
-                            onCopy={() => toast.success("Referral link copied!")}>
+                          {!userData.userData.isDefaultBac && (
+                            <>
+                            <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${userData.userData?.referralCode}`}
+                              onCopy={() => toast.success("Referral link copied!")}>
+                              <Badge id="user-referral-link" pill className="mt-1 cursor pointer" color='primary'>
+                                {userData.userData?.referralCode}
+                              </Badge>
+                            </CopyToClipboard>
+                            <UncontrolledTooltip placement='top' target='user-referral-link'>
+                              Click to copy referral link
+                            </UncontrolledTooltip>
+                            </>
+                          )}
+
+                          {userData.userData.isDefaultBac && (
                             <Badge id="user-referral-link" pill className="mt-1 cursor pointer" color='primary'>
                               {userData.userData?.referralCode}
                             </Badge>
-                          </CopyToClipboard>
-                          <UncontrolledTooltip placement='top' target='user-referral-link'>
-                            Click to copy referral link
-                          </UncontrolledTooltip>
+                          )}
 
 
                         </div>
@@ -115,6 +125,7 @@ const UserData = () => {
                             <small>Rank</small>
                             </div>
                         </div>
+                        {!userData.userData.isDefaultBac && (
                         <div className='d-flex align-items-center ml-2'>
                           <div className='color-box p-1 bg-light-success'>
                           <Share2 className='text-success' />
@@ -132,6 +143,19 @@ const UserData = () => {
                             <small>Referral Link</small>
                           </div>
                         </div>
+                        )}
+
+                        {userData.userData.isDefaultBac && (
+                        <div className='d-flex align-items-center ml-2'>
+                          <div className='color-box p-1 bg-light-success'>
+                          <Share2 className='text-success' />
+                          </div>
+                          <div className='ml-1'>
+                            <h5 id="user-referral-link-share" className='mb-0 pointer'>{userData.userData?.referralCode}</h5>
+                            <small>Default BAC</small>
+                          </div>
+                        </div>
+                        )}
                       </div>
                   )}
 
@@ -208,7 +232,7 @@ const UserData = () => {
           </Card>
         </Col>
         <Col className='mb-2 mb-md-0' md='3'>
-          <Tabs userRole={userData.userData?.role} activeTab={activeTab} toggleTab={toggleTab} />
+          <Tabs isDefaultBac={userData.userData.isDefaultBac} userRole={userData.userData?.role} activeTab={activeTab} toggleTab={toggleTab} />
         </Col>
         
         <Col md='9'>
@@ -228,6 +252,7 @@ const UserData = () => {
                   <TabPane tabId='2'>
                     <ChangePassword clientId={userId}  />
                   </TabPane>
+
                   <TabPane tabId='3'>
                     <Courses purchasedCources={userData.purchasedCources} />
                   </TabPane>

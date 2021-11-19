@@ -4,9 +4,9 @@ import { toast } from 'react-toastify'
 import { updateUserKyc } from '../auth'
 import { toggleNetworkLoading } from '../common'
 
-export const fetchAllUsersData = () => dispatch => {
+export const fetchAllUsersData = (defaultBac = false) => dispatch => {
   dispatch(toggleNetworkLoading(true))
-  ServerApi().get('/users')
+  ServerApi().get(`/users?defaultBac=${defaultBac}`)
   .then(res => {
     console.log("res", res)
     const data = res.data.reverse().map((values, index) => ({...values, sno: index + 1}))
