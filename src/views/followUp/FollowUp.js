@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Row, Col, Card, CardHeader, CardTitle, Button} from "reactstrap"
+import {Row, Col, Card, CardHeader, CardTitle, Button, Badge} from "reactstrap"
 import {Edit, Trash, Phone} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
 import CustomDataTable from '../../components/dataTable/CustomDataTable'
@@ -30,7 +30,7 @@ const FollowUp = () => {
         selector: "name",
         sortable: true,
         cell: (row) => (
-          <p className="text-bold-500 text-truncate mb-0">{row.name}</p>
+          <p className="text-bold-500 mb-0">{row.name}</p>
         )
     },
     {
@@ -38,7 +38,7 @@ const FollowUp = () => {
       selector: "phone",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 text-truncate mb-0">{row.phone}</p>
+        <p className="text-bold-500 mb-0">{row.phone}</p>
       )
     },
     {
@@ -46,7 +46,7 @@ const FollowUp = () => {
       selector: "source",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 text-truncate mb-0">{row.source}</p>
+        <p className="text-bold-500 mb-0">{row.source}</p>
       )
     },
     {
@@ -54,7 +54,7 @@ const FollowUp = () => {
         selector: "enquiryDate",
         sortable: true,
         cell: (row) => (
-          <p className="text-bold-500 text-truncate mb-0">{new Date(row.enquiryDate).toDateString()}</p>
+          <p className="text-bold-500 mb-0">{new Date(row.enquiryDate).toDateString()}</p>
         )
     },
     {
@@ -62,7 +62,7 @@ const FollowUp = () => {
       selector: "lastFollowUpDate",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 text-truncate mb-0">{new Date(row.lastFollowUpDate).toDateString()}</p>
+        <p className="text-bold-500 mb-0">{new Date(row.lastFollowUpDate).toDateString()}</p>
       )
     },
     {
@@ -70,7 +70,7 @@ const FollowUp = () => {
       selector: "nextFollowUpDate",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 text-truncate mb-0">{new Date(row.nextFollowUpDate).toDateString()}</p>
+        <p className="text-bold-500 mb-0">{new Date(row.nextFollowUpDate).toDateString()}</p>
       )
     },
     {
@@ -78,7 +78,9 @@ const FollowUp = () => {
       selector: "status",
       sortable: true,
       cell: (row) => (
-        <p className="text-bold-500 text-truncate mb-0">{row.status}</p>
+        <Badge color={row.status === "ACTIVE" ? "warning" : row.status === "closed" ? "success" : "info"} pill>
+          <span>{row.status}</span>
+        </Badge>
       )
     },
     {

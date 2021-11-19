@@ -17,6 +17,10 @@ const SettingsRoute = [
   {
     path: '/edit-faculty/:id',
     component: lazy(() => import('../../views/Settings/faculty/EditFaculty'))
+  },
+  {
+    path: '/default-bac',
+    component: lazy(() => import('../../views/Settings/defaultBac/DefaultBac'))
   }
 ]
 

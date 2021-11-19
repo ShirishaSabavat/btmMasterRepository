@@ -81,7 +81,7 @@ const sourceOptions = [
                 return (
                     <Form >
                         <Row sm="12" md="4"> 
-                          <Col sm="12" md="4">
+                          <Col sm="12" md="6">
                             <FormGroup className="has-icon-left position-relative">
                                   <Label htmlFor="name">Name <span className="text-danger">*</span></Label>
                                   <InputGroup>
@@ -101,27 +101,7 @@ const sourceOptions = [
                                   />
                               </FormGroup>
                           </Col>
-                          <Col  sm="12" md="4">
-                            <FormGroup className="has-icon-left position-relative">
-                                  <Label htmlFor="phone">Phone <span className="text-danger">*</span></Label>
-                                  <InputGroup>
-                                      <Input
-                                      type="text"
-                                      name="phone"
-                                      id="phone"
-                                      {...formik.getFieldProps("phone")}
-                                      invalid={!!(formik.touched.phone && formik.errors.phone)}
-                                      >
-                                      </Input>
-                                  </InputGroup>
-                                  <ErrorMessage
-                                      name="phone"
-                                      component="div"
-                                      className="field-error text-danger"
-                                  />
-                              </FormGroup>
-                          </Col>
-                          <Col  sm="12" md="4">
+                          <Col  sm="12" md="6">
                             <FormGroup className="has-icon-left position-relative">
                                   <Label htmlFor="email">Email <span className="text-danger">*</span></Label>
                                   <InputGroup>
@@ -143,7 +123,27 @@ const sourceOptions = [
                           </Col>
                         </Row>
                         <Row>
-                            <Col sm="12" md="4">
+                          <Col  sm="12" md="6">
+                            <FormGroup className="has-icon-left position-relative">
+                                  <Label htmlFor="phone">Phone <span className="text-danger">*</span></Label>
+                                  <InputGroup>
+                                      <Input
+                                      type="text"
+                                      name="phone"
+                                      id="phone"
+                                      {...formik.getFieldProps("phone")}
+                                      invalid={!!(formik.touched.phone && formik.errors.phone)}
+                                      >
+                                      </Input>
+                                  </InputGroup>
+                                  <ErrorMessage
+                                      name="phone"
+                                      component="div"
+                                      className="field-error text-danger"
+                                  />
+                              </FormGroup>
+                          </Col>
+                            <Col sm="12" md="6">
                                 <FormGroup>
                                     <Label htmlFor="enquiryDate">Date <span className="text-danger">*</span></Label>
                                     <Flatpickr
@@ -160,7 +160,7 @@ const sourceOptions = [
                                     <ErrorMessage name="enquiryDate" component="div" className="field-error text-danger" />
                                 </FormGroup>
                             </Col>
-                            <Col sm="12" md="4">
+                            {/* <Col sm="12" md="4">
                                 <FormGroup>
                                     <Label htmlFor="nextFollowUpDate">Next Follow Up Date</Label>
                                     <Flatpickr
@@ -176,8 +176,8 @@ const sourceOptions = [
                                     }} />
                                     <ErrorMessage name="nextFollowUpDate" component="div" className="field-error text-danger" />
                                 </FormGroup>
-                            </Col>
-                            <Col sm="12" md="4">
+                            </Col> */}
+                            {/* <Col sm="12" md="4">
                                 <FormGroup>
                                     <Label htmlFor="lastFollowUpDate">Last Follow Up Date</Label>
                                     <Flatpickr
@@ -193,10 +193,10 @@ const sourceOptions = [
                                     }} />
                                     <ErrorMessage name="lastFollowUpDate" component="div" className="field-error text-danger" />
                                 </FormGroup>
-                            </Col>
+                            </Col> */}
                       </Row>
                       <Row>
-                        <Col sm="12" md="4">
+                        <Col sm="12" md="6">
                             <FormGroup>
                                 <Label htmlFor="source">Source</Label>
                                 <CustomSelectField
@@ -211,7 +211,7 @@ const sourceOptions = [
                                 />
                             </FormGroup>
                         </Col>
-                        <Col sm="12" md="4">
+                        <Col sm="12" md="6">
                           <FormGroup className="has-icon-left position-relative">
                               <Label htmlFor="note">Note</Label>
                               <InputGroup>

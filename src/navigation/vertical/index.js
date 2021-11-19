@@ -126,7 +126,7 @@ const Navigation = [
         title: "About",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/about-settings"
       },
       {
@@ -134,7 +134,7 @@ const Navigation = [
         title: "Mission",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/mission-settings"
       },
       {
@@ -142,7 +142,7 @@ const Navigation = [
         title: "Vission",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/vision-settings"
       },
       {
@@ -150,7 +150,7 @@ const Navigation = [
         title: "Contact",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/contact-settings"
       },
       {
@@ -172,7 +172,7 @@ const Navigation = [
         title: "Banner",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/banner"
       },
       {
@@ -180,7 +180,7 @@ const Navigation = [
         title: "Static Pages",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/static-pages"
       }
       // {
@@ -195,7 +195,7 @@ const Navigation = [
       //       title: "Gallery Images Settings",
       //       type: "item",
       //       icon: <ChevronRight size={15} />,
-      //       permissions: ["admin", "editor"],
+      //       permissions: ["admin"],
       //       navLink: "/gallery-page-images-settings"
       //     },
       //     {
@@ -203,7 +203,7 @@ const Navigation = [
       //       title: "Gallery Videos Settings",
       //       type: "item",
       //       icon: <ChevronRight size={15} />,
-      //       permissions: ["admin", "editor"],
+      //       permissions: ["admin"],
       //       navLink: "/gallery-videos-page-settings"
       //     }
       //   ]
@@ -222,7 +222,7 @@ const Navigation = [
         title: "Organization",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/general-settings"
       },
       {
@@ -230,7 +230,7 @@ const Navigation = [
         title: "Faculty",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/faculty"
       },
       {
@@ -238,7 +238,7 @@ const Navigation = [
         title: "Role",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/role"
       },
       {
@@ -246,8 +246,16 @@ const Navigation = [
         title: "Razorpay",
         type: "item",
         icon: <ChevronRight size={15} />,
-        permissions: ["admin", "editor"],
+        permissions: ["admin"],
         navLink: "/payment"
+      },
+      {
+        id: "default-bac",
+        title: "Default BAC",
+        type: "item",
+        icon: <ChevronRight size={15} />,
+        permissions: ["admin"],
+        navLink: "/default-bac"
       }
     ]
   },

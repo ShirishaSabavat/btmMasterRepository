@@ -19,6 +19,7 @@ export const TimeLineData = ({followUpId, followUpData}) => {
         <Media>
           <Media body>
             <span className='mr-1'><strong>Follow Up Date:</strong> {new Date(values.followUpDate).toDateString()}</span>
+            <br />
             <span><strong>Next Follow Up Date:</strong> {new Date(values.nextFollowUpDate).toDateString()}</span>
           </Media>
         </Media>),
