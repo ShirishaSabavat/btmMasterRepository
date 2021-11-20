@@ -8,6 +8,7 @@ import {Grid} from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
+import parse from 'html-react-parser'
 
 import {AddMessage, getLandingPageData} from "../../redux/actions/landingPage/index"
 
