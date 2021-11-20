@@ -16,6 +16,7 @@ const ContactUs = () => {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.auth.userData)
     const landingPageData = useSelector(state => state.landingPage.landingPage[0])
+    const landingCms = useSelector(state => state.cms.landingCms)
 
     useEffect(() => {
         getLandingPageData()
@@ -59,8 +60,9 @@ const ContactUs = () => {
                         <h3 className="px-5 my-2" style={{fontWeight: 'bold', fontSize: 38}}>Contact Us</h3>
                         <div className='w-100 px-5'>
                             <h2>Business Aacharaya</h2>
-                            <p>What is Spirituality? - Over the years many definitions have been given to it. One such definition is connecting one's soul with everything positive around us. It is the attempt to be at peace with oneself. It is the art of letting go. The yearning for this spiritual experience has led to demand for spirituality courses.
-        View more- Explore Online Courses and Certifications</p>
+                            {landingCms.filter(i => i.type === 'CONTACT').length > 0 && (
+                                <p className="text-justify">{parse(landingCms.filter(i => i.type === 'CONTACT')[0].content)}</p>
+                            )}
                             <div className="text-center">
                                 <img className="img-fluid m-2" width="520" src="/assets/svg/contact_us.svg" />
                             </div>
