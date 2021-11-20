@@ -39,7 +39,9 @@ const Login = () => {
   //go to dashboard on successful login
   useEffect(() => {
       if (userData.access_token) {
+        if (userData.access_token.length > 10) {
           history.push('/dashboard')
+        }
       }
   }, [userData])
 
