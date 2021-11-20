@@ -11,6 +11,7 @@ import { fetchUserById } from "../../redux/actions/user/index"
 import Tabs from './Tabs'
 import UserDetails from './components/UserDetails'
 import ChangePassword from './components/ChangePassword'
+import ProfileLoadingSkleton from '../../components/skleton/ProfileLoadingSkleton' 
 import Courses from "./components/Courses"
 import Workshop from "./components/Workshop"
 import UserKyc from "./components/UserKyc"
@@ -26,6 +27,7 @@ const UserData = () => {
 
   const dispatch = useDispatch()
   const userData = useSelector(state => state.user.user)
+  const loading = useSelector(state => state.common.loading)
 
   const {userId} = useParams()
 
@@ -55,6 +57,10 @@ const UserData = () => {
           }}
         />
       )
+  }
+
+  if (loading) {
+    return (<ProfileLoadingSkleton />)
   }
 
   return (
