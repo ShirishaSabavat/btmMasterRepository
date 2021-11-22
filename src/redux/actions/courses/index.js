@@ -65,7 +65,7 @@ export const fetchCourseById = (id) => dispatch => {
   })
 }
 
-export const EditCourseAPI = (id, rawData) => dispatch => {
+export const EditCourseAPI = (id, rawData, goBack) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/courses/${id}`, rawData)
   .then(res => {
@@ -73,7 +73,8 @@ export const EditCourseAPI = (id, rawData) => dispatch => {
       toast.success("Updated course", {
         position: toast.POSITION.BOTTOM_CENTER
       })
-      dispatch(fetchCourseById(id))
+      goBack()
+      // dispatch(fetchCourseById(id))
     } else {
       toast.error("Error in Updating Course", {
         position: toast.POSITION.BOTTOM_CENTER

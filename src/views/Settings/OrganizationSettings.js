@@ -10,22 +10,15 @@ import {fetchAllOrganizationSettings, postOrganizationSettings} from "../../redu
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import sampleImg from "../../assets/images/portrait/small/avatar-s-1.jpg"
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const OrganizationSettings = () => {
 
     const dispatch = useDispatch()
     const organizationData = useSelector(state => state.organization.organization)
+    const loading = useSelector(state => state.common.loading)
 
     const [selectedImg, setSelectedImg] = useState(sampleImg)
-    const [editModal, setModal] = useState({
-        modal: false
-      })
-
-    const toggleModel = () => {
-    setModal((prevState) => {
-        return { modal: !prevState.modal }
-    })
-    }
     
   const allCountries = Country.getAllCountries().map(values => { return {label : values.name, value : values.isoCode } })
 
@@ -68,7 +61,7 @@ const OrganizationSettings = () => {
         state: organizationData[0]?.state || "",
         city: organizationData[0]?.city || "",
         pincode: organizationData[0]?.pinCode || "",
-        email: organizationData[0]?.email || "",
+        email: organizationData[0]?.mailId || "",
         webaddress: organizationData[0]?.webaddress || "",
         phNo: organizationData[0]?.phoneNo || "",
         personName: organizationData[0]?.contactPerson || "",
@@ -78,12 +71,11 @@ const OrganizationSettings = () => {
         panNo: organizationData[0]?.pAN || "",
         gstNo: organizationData[0]?.gST || "",
         cinNo: organizationData[0]?.cIN || "",
-        pfNo: organizationData[0]?.pF || "",
-        prdNo: organizationData[0]?.prdNo || "",
+        pfNo: organizationData[0]?.pfNo || "",
         esiNo: organizationData[0]?.eSI || "",
         logo: organizationData[0]?.logo || selectedImg,
-        latitude: organizationData[0]?.latitude || "",
-        longitude:  organizationData[0]?.longitude || "",
+        latitude: organizationData[0]?.lat || "",
+        longitude:  organizationData[0]?.lng || "",
         footerText:  organizationData[0]?.footerText || ""
     }
 
@@ -105,7 +97,6 @@ const OrganizationSettings = () => {
         gstNo: Yup.string(),
         cinNo: Yup.string(),
         pfNo: Yup.string(),
-        prdNo: Yup.string(),
         esiNo: Yup.string(),
         logo:Yup.string(),
         latitude:Yup.string(),
@@ -121,7 +112,7 @@ const OrganizationSettings = () => {
         const rawData =  {
             logo: values.logo,
             eSI: values.esiNo,
-            pF: values.pfNo,
+            pfNo: values.pfNo,
             cIN: values.cinNo,
             gST: values.gstNo,
             pAN: values.panNo,
@@ -134,12 +125,17 @@ const OrganizationSettings = () => {
             country: values.country,
             regNo: values.regNo,
             name: values.orgName,
-            latitude: values.latitude,
-            longitude: values.longitude,
-            footerText: values.footerText
+            lat: values.latitude,
+            lng: values.longitude,
+            footerText: values.footerText,
+            mailId: values.email
         }
 
         dispatch(postOrganizationSettings(id, rawData))
+    }
+
+    if (loading) {
+        return (<TableDataLoadingSkleton />)
     }
 
 
@@ -478,19 +474,19 @@ const OrganizationSettings = () => {
                                         </Col>
                                         <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="prdNo">Provident Fund No</Label>
+                                                <Label htmlFor="pfNo">Provident Fund No</Label>
                                                 <InputGroup>
                                                     <Input
                                                     type="string"
-                                                    name="prdNo"
-                                                    id="prdNo"
-                                                    {...formik.getFieldProps("prdNo")}
-                                                    invalid={!!(formik.touched.prdNo && formik.errors.prdNo)}
+                                                    name="pfNo"
+                                                    id="pfNo"
+                                                    {...formik.getFieldProps("pfNo")}
+                                                    invalid={!!(formik.touched.pfNo && formik.errors.pfNo)}
                                                     >
                                                     </Input>
                                                 </InputGroup>
                                                 <ErrorMessage
-                                                    name="prdNo"
+                                                    name="pfNo"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />
@@ -538,7 +534,7 @@ const OrganizationSettings = () => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        <Col sm="12" md="3">
+                                        {/* <Col sm="12" md="3">
                                             <FormGroup className="has-icon-left position-relative">
                                                 <Label htmlFor="pfNo">PF No</Label>
                                                 <InputGroup>
@@ -557,7 +553,7 @@ const OrganizationSettings = () => {
                                                     className="field-error text-danger"
                                                 />
                                             </FormGroup>
-                                        </Col>                                        
+                                        </Col>                                         */}
                                     </Row>
                                     <h3 className="mt-3">Map location</h3>
                                     <hr />

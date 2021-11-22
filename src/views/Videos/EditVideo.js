@@ -4,7 +4,7 @@ import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import { Link, Code} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 
 import { EditVideoAPI, fetchVideoById } from "../../redux/actions/videos/index"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
@@ -14,6 +14,8 @@ import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSk
 const EditVideo = () => {
 
     const { videoId } = useParams()
+
+    const history = useHistory()
 
     const dispatch = useDispatch()
     const oldData = useSelector(state => state.videos.video)
@@ -35,6 +37,10 @@ const EditVideo = () => {
     useEffect(() => {
         setSelectedImg(`${BASE_URL}uploads/${oldData?.image}`)
     }, [oldData])
+
+    const goBack = () => {
+        history.push('/videos')
+    }
 
 
     const initialValues = {
@@ -87,7 +93,7 @@ const EditVideo = () => {
             }
         }
 
-        dispatch(EditVideoAPI(videoId, formData))
+        dispatch(EditVideoAPI(videoId, formData, goBack))
     }
 
     if (!oldData.title) {
