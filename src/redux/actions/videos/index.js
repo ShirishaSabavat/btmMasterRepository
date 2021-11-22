@@ -45,7 +45,7 @@ export const fetchVideoById = (id) => dispatch => {
   })
 }
 
-export const EditVideoAPI = (id, rawData) => dispatch => {
+export const EditVideoAPI = (id, rawData, goBack) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/videos/${id}`, rawData)
   .then(res => {
@@ -60,7 +60,8 @@ export const EditVideoAPI = (id, rawData) => dispatch => {
         position: toast.POSITION.BOTTOM_CENTER
       })
     }
-    dispatch(toggleNetworkLoading(false))
+    goBack()
+    // dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {
     dispatch(toggleNetworkLoading(false))

@@ -29,6 +29,7 @@ export const postOrganizationSettings = (id, formdata) => (dispatch) => {
     toast.success("Successfully Updated Data", {
       position: toast.POSITION.BOTTOM_CENTER
     })
+    dispatch(fetchAllOrganizationSettings())
     dispatch(toggleNetworkLoading(false))
     // setReFetch(prevState => !prevState)
   }).catch(e => {

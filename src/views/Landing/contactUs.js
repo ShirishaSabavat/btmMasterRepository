@@ -184,8 +184,8 @@ const ContactUs = () => {
         <Grid className="" item xs={12}>
             <Row className=''>
                 <Col className='d-lg-flex align-items-center' lg='12' sm='12'>
-                    <div>Map Will Come Here</div>
-                {/* <iframe src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.104215945944!2d${landingPageData?.latitude ? landingPageData?.latitude : "17.5025379" }!3d${landingPageData?.longitude ? landingPageData?.longitude : "78.3950531" }!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb97abf6bcd773%3A0x7fe2002b8080c53f!2sAmoghnya%20Techsolution%20pvt.ltd!5e0!3m2!1sen!2sin!4v1636525927356!5m2!1sen!2sin`} width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> */}
+                        {/* <iframe src={`https://maps.google.com/maps?q=\"${landingPageData?.lat ? landingPageData?.lat : '17.5025379' }\",\"${landingPageData?.lng ? landingPageData?.lng : '78.3950531'}\"&hl=es;z=14&amp;output=embed`} width="600" height="450" allowfullscreen="" loading="lazy"></iframe> */}
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d487295.02532044525!2d78.12785129924684!3d17.41215307568293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99daeaebd2c7%3A0xae93b78392bafbc2!2sHyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1637605168801!5m2!1sen!2sin" width="100%" height="450" allowfullscreen="" loading="lazy"></iframe>
                 </Col>
             </Row>
         </Grid>

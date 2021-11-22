@@ -11,12 +11,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { PlayCircleFilled as PlayCircleFilledIcon, Folder as FolderIcon} from '@mui/icons-material'
 import Empty from '../../components/loading/Empty'
 import ReactPlayer from 'react-player'
-import { useParams } from "react-router"
-import CourseDetailLoadingSkleton from "../../components/skleton/CourseDetailLoadingSkleton"
+import { useHistory, useParams } from "react-router"
+import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
 const WatchVideos = () => {
 
     const {courseId} = useParams()
+
+    const history = useHistory()
 
     const dispatch = useDispatch()
 
@@ -30,34 +32,36 @@ const WatchVideos = () => {
     }, [])
 
     useEffect(() => {
-        if (courseDetails.videos) {
+        if (courseDetails) {
             setCurrentlyPlaying(courseDetails.videos[0])
         }
     }, [courseDetails])
 
-    if (loading) {
-        return (<CourseDetailLoadingSkleton />)
+    if (loading || courseDetails === undefined) {
+        return (<TableDataLoadingSkleton />)
     }
 
     return (
         <div className="row">
             <div className="col-md-9 col-sm-12 text-center">
                 <div>
-                    <ReactPlayer
-                        controls={true}
-                        loop={true}
-                        height="480px"
-                        width="100%"
-                        config={{ 
-                            file: { 
-                                attributes: {
-                                    controlsList: 'nodownload',
-                                    onContextMenu: e => e.preventDefault()
+                    {currentlyPlaying && (
+                        <ReactPlayer
+                            controls={true}
+                            loop={true}
+                            height="480px"
+                            width="100%"
+                            config={{ 
+                                file: { 
+                                    attributes: {
+                                        controlsList: 'nodownload',
+                                        onContextMenu: e => e.preventDefault()
+                                    } 
                                 } 
-                            } 
-                        }}
-                        url={currentlyPlaying.videoLinkType === 'FILE' ? `${BASE_URL}videoUploads/${currentlyPlaying.videoFile}` : currentlyPlaying.link}
-                    />
+                            }}
+                            url={currentlyPlaying.videoLinkType === 'FILE' ? `${BASE_URL}videoUploads/${currentlyPlaying.videoFile}` : currentlyPlaying.link}
+                        />
+                    )}
                 </div>
             </div>
 
@@ -69,9 +73,16 @@ const WatchVideos = () => {
                                 Videos:
                             </CardTitle>
                             <List dense={true}>
-                                {courseDetails.videos && (
+                                {courseDetails.videos.length === 0 && (
+                                    <Empty 
+                                        title="Currently no videos are available" 
+                                        style="1" 
+                                    />
+                                )}
+
+                                {courseDetails.videos.length === 0 && (
                                     <>
-                                        {courseDetails.videos.map(vid => (
+                                    {courseDetails.videos.map(vid => (
                                             <>
                                                 {vid && (
                                                     <ListItemButton
@@ -93,6 +104,7 @@ const WatchVideos = () => {
                                         ))}
                                     </>
                                 )}
+
                             </List>
                         </CardBody>
                     </Card>

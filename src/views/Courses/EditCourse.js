@@ -3,7 +3,7 @@ import {Row, Col, Card, CardHeader, CardTitle, CardBody, FormGroup, Label, Input
 import {Formik, Form, ErrorMessage} from "formik"
 import * as Yup from "yup"
 import {useDispatch, useSelector} from "react-redux"
-import {  useParams } from "react-router-dom"
+import {  useParams, useHistory } from "react-router-dom"
 import JoditEditor from "jodit-react"
 import { fetchAllVideos } from "../../redux/actions/videos"
 import {EditCourseAPI, fetchCourseByIdToEdit} from "../../redux/actions/courses/index"
@@ -16,6 +16,7 @@ import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSk
 const EditCourse = () => {
 
     const { courseId } = useParams()
+    const history = useHistory()
     
     const dispatch = useDispatch()
     const CourseData = useSelector(state => state.courses.course)
@@ -52,6 +53,10 @@ const EditCourse = () => {
     useEffect(() => {
         setSelectedImg(`${BASE_URL}uploads/${CourseData?.image}`)
     }, [CourseData])
+
+    const goBack = () => {
+        history.push('/courses')
+    }
 
     const prepareSelectedVideo = () => {
         return 0
@@ -112,7 +117,7 @@ const EditCourse = () => {
             featured: values.featured
         }
 
-        dispatch(EditCourseAPI(courseId, rawData))
+        dispatch(EditCourseAPI(courseId, rawData, goBack))
     }
 
     const courseOptions = [{label:"BAC", value:"Bac"}, {label: "Regular", value: "Regular"}]
