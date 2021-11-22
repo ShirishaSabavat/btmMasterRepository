@@ -72,19 +72,24 @@ const WatchVideos = () => {
                                 {courseDetails.videos && (
                                     <>
                                         {courseDetails.videos.map(vid => (
-                                            <ListItemButton
-                                                className="cursor pointer"
-                                                selected={currentlyPlaying._id === vid._id}
-                                                onClick={() => setCurrentlyPlaying(vid)}
-                                                >
-                                                <ListItemAvatar>
-                                                    <Avatar src={`${BASE_URL}uploads/${vid.image}`} />
-                                                </ListItemAvatar>
-                                                <ListItemText
-                                                    primary={vid.title}
-                                                    secondary={`Duration: ${vid.duration}`}
-                                                />
-                                            </ListItemButton>
+                                            <>
+                                                {vid && (
+                                                    <ListItemButton
+                                                        className="cursor pointer"
+                                                        selected={currentlyPlaying._id === vid._id}
+                                                        onClick={() => setCurrentlyPlaying(vid)}
+                                                        >
+                                                        <ListItemAvatar>
+                                                            <Avatar src={`${BASE_URL}uploads/${vid.image}`} />
+                                                        </ListItemAvatar>
+                                                        <ListItemText
+                                                            primary={vid.title}
+                                                            secondary={`Duration: ${vid.duration}`}
+                                                        />
+                                                    </ListItemButton>
+                                                )}
+                                            </>
+                                            
                                         ))}
                                     </>
                                 )}
