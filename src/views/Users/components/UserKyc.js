@@ -209,7 +209,7 @@ const UserKyc  = ({userData}) => {
                         onChange={(value) => setKycStatus(value.value)}
                         options={[
                             {label: "Approve", value: "VERIFIED"},
-                            {label: "Reject", value: "PENDING"}
+                            {label: "Reject", value: "REJECTED"}
                         ]}
                     />
                 </div>

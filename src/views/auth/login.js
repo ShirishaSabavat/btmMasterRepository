@@ -24,6 +24,10 @@ const Login = () => {
     const [forgotPassword, setForgotPassword] = useState(false)
     const [forgotPhone, setForgotPhone] = useState('')
 
+    const goToDashboard = () => {
+      history.push('/dashboard')
+    }
+
     const doLogin = (e) => {
       e.preventDefault()
       if (email === '' || password === '') {
@@ -33,17 +37,17 @@ const Login = () => {
         return
       }
 
-    dispatch(handleLogin({email, password}))
+    dispatch(handleLogin({email, password}, goToDashboard))
   }
 
   //go to dashboard on successful login
-  useEffect(() => {
-      if (userData.access_token) {
-        if (userData.access_token.length > 10) {
-          history.push('/dashboard')
-        }
-      }
-  }, [userData])
+  // useEffect(() => {
+  //     if (userData.access_token) {
+  //       if (userData.access_token.length > 10) {
+  //         history.push('/dashboard')
+  //       }
+  //     }
+  // }, [userData])
 
   return (
     <>

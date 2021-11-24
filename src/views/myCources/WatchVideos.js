@@ -37,7 +37,7 @@ const WatchVideos = () => {
         }
     }, [courseDetails])
 
-    if (loading || courseDetails === undefined) {
+    if (loading || !courseDetails || !courseDetails.videos) {
         return (<TableDataLoadingSkleton />)
     }
 
@@ -80,7 +80,7 @@ const WatchVideos = () => {
                                     />
                                 )}
 
-                                {courseDetails.videos.length === 0 && (
+                                {courseDetails.videos.length !== 0 && (
                                     <>
                                     {courseDetails.videos.map(vid => (
                                             <>
