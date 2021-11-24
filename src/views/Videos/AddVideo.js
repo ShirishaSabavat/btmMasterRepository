@@ -5,6 +5,7 @@ import * as Yup from "yup"
 import ImagePickerComponent from "../UtilityComponents/ImagePickerComponent"
 import {Link, Code} from "react-feather"
 import {useDispatch, useSelector} from "react-redux"
+import { useHistory } from "react-router-dom"
 import {BASE_URL} from '../../utility/serverSettings'
 import { toast } from 'react-toastify'
 import {AddVideoAPI} from "../../redux/actions/videos/index"
@@ -14,6 +15,7 @@ import {AddVideoAPI} from "../../redux/actions/videos/index"
 const AddVideo = () => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const [selectedImg, setSelectedImg] = useState("")
     const networkLoading = useSelector(state => state.common.loading)
@@ -52,6 +54,10 @@ const AddVideo = () => {
         })
     })
 
+    const goBack = () => {
+        history.push('/videos')
+    }
+
     const submitForm = (values, {resetForm}) => {
         if (selectedImg === "") {
             console.log("errrr")
@@ -77,7 +83,7 @@ const AddVideo = () => {
             formData.append('videoFile', values.videoFile)
         }
 
-        dispatch(AddVideoAPI(formData, resetForm))
+        dispatch(AddVideoAPI(formData, goBack))
     }
 
     return <Row>

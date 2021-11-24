@@ -4,7 +4,7 @@ import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
 
-export const AddCourseAPI = (rawData, resetForm) => dispatch => {
+export const AddCourseAPI = (rawData, goBack) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().post('/courses', rawData)
   .then(res => {
@@ -12,7 +12,7 @@ export const AddCourseAPI = (rawData, resetForm) => dispatch => {
       toast.success("Created course", {
         position: toast.POSITION.BOTTOM_CENTER
       })
-      resetForm({})
+      goBack()
     } else {
       toast.error("Error in Creating Course", {
         position: toast.POSITION.BOTTOM_CENTER

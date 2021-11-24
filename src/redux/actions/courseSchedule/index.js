@@ -3,13 +3,13 @@ import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
 
-export const AddCourseScheduleAPI = (rawData, resetForm) => dispatch => {
+export const AddCourseScheduleAPI = (rawData, goBack) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().post('/workshops', rawData)
   .then(res => {
     if (res.statusText === "Created") {
       toast.success("Workshop created")
-      resetForm({})
+      goBack()
     } else {
       toast.error("Error in Creating Workshop")
     }
@@ -43,12 +43,13 @@ export const fetchCourseScheduleById = (id) => dispatch => {
   })
 }
 
-export const EditCourseScheduleAPI = (id, rawData) => dispatch => {
+export const EditCourseScheduleAPI = (id, rawData, goBack) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().patch(`/workshops/${id}`, rawData)
   .then(res => {
     if (res.status === 200) {
       toast.success("Workshop Updated.")
+      goBack()
     } else {
       toast.error("Error in Updating")
     }

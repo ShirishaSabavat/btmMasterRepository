@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { verifyUserKyc } from '../../../redux/actions/user'
 import { updateUserKyc } from "../../../redux/actions/auth"
 import { BASE_URL } from '../../../utility/serverSettings'
+import ProfileLoadingSkleton from '../../../components/skleton/ProfileLoadingSkleton'
 
 import EditForm from "./EditForm"
 
 const UserKyc  = ({userData}) => {
     const dispatch = useDispatch()
+
+    const loading = useSelector(state => state.common.loading)
 
     const [kycStatus, setKycStatus] = useState('')
     const [showEdit, setShowEdit] = useState(false)
@@ -225,6 +228,10 @@ const UserKyc  = ({userData}) => {
             )
         }
       ]
+    
+    if (loading) {
+      return <ProfileLoadingSkleton />
+    }
 
     return <div className="">
       {showEdit ? <EditForm setShowEdit={setShowEdit} userKYCData={userData} />  : <>
