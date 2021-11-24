@@ -77,7 +77,7 @@ const UserData = () => {
                         <div className='user-info mb-1'>
                           <h4 className='mb-0'>{userData.userData?.name}</h4>
 
-                          {!userData.userData.isDefaultBac && (
+                          {!userData.userData?.isDefaultBac && (
                             <>
                             <CopyToClipboard text={`${PRODUCTION_URL}home?referral=${userData.userData?.referralCode}`}
                               onCopy={() => toast.success("Referral link copied!")}>
@@ -91,7 +91,7 @@ const UserData = () => {
                             </>
                           )}
 
-                          {userData.userData.isDefaultBac && (
+                          {userData.userData?.isDefaultBac && (
                             <Badge id="user-referral-link" pill className="mt-1 cursor pointer" color='primary'>
                               {userData.userData?.referralCode}
                             </Badge>
@@ -131,7 +131,7 @@ const UserData = () => {
                             <small>Rank</small>
                             </div>
                         </div>
-                        {!userData.userData.isDefaultBac && (
+                        {!userData.userData?.isDefaultBac && (
                         <div className='d-flex align-items-center ml-2'>
                           <div className='color-box p-1 bg-light-success'>
                           <Share2 className='text-success' />
@@ -151,7 +151,7 @@ const UserData = () => {
                         </div>
                         )}
 
-                        {userData.userData.isDefaultBac && (
+                        {userData.userData?.isDefaultBac && (
                         <div className='d-flex align-items-center ml-2'>
                           <div className='color-box p-1 bg-light-success'>
                           <Share2 className='text-success' />
@@ -238,7 +238,7 @@ const UserData = () => {
           </Card>
         </Col>
         <Col className='mb-2 mb-md-0' md='3'>
-          <Tabs isDefaultBac={userData.userData.isDefaultBac} userRole={userData.userData?.role} activeTab={activeTab} toggleTab={toggleTab} />
+          <Tabs isDefaultBac={userData.userData?.isDefaultBac} userRole={userData.userData?.role} activeTab={activeTab} toggleTab={toggleTab} />
         </Col>
         
         <Col md='9'>
