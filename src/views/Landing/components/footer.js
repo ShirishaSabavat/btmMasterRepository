@@ -97,7 +97,7 @@ const Footer = (props) => {
                 <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a className="hover-highlight" style={{color: "white"}} href={`tel:${landingPageData?.phoneNo}`}>{landingPageData?.phoneNo}</a></p>
                 
                 <h4 style={{color: '#a5a5a5'}}><Mail size={20} style={{color: '#76a4eb', marginRight: 5}} /> Email</h4>
-                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a className="hover-highlight" style={{color: "white"}} href={`mailto:${landingPageData?.email}`}>{landingPageData?.email}</a></p>
+                <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a className="hover-highlight" style={{color: "white"}} href={`mailto:${landingPageData?.mailId}`}>{landingPageData?.mailId}</a></p>
                 
                 <h4 style={{color: '#a5a5a5'}} ><MapPin size={20} style={{color: '#76a4eb', marginRight: 5}} /> Address</h4>
                 <p style={{fontWeight: 'bold'}} className="ml-2 text-light"><a target="_blank" className="hover-highlight" style={{color: "white"}} href="https://goo.gl/maps/LuusffEaxx5aH1bF8">{landingPageData?.address}</a></p>
