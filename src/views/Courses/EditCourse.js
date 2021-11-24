@@ -330,7 +330,7 @@ const EditCourse = () => {
                                     </Row>
 
                                     <Row>
-                                        <Col sm="12">
+                                        {/* <Col sm="12">
                                             <div className="p-2">
                                                 <h6>More Options</h6>
                                                 <FormGroup check inline>
@@ -340,7 +340,7 @@ const EditCourse = () => {
                                                     </Label>
                                                 </FormGroup>
                                             </div>
-                                        </Col>
+                                        </Col> */}
                                     </Row>
 
                                     <Row className="mt-1">

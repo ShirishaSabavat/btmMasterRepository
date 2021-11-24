@@ -152,8 +152,8 @@ export const verifyUserKyc = (payload) => dispatch => {
     toast.success("Kyc submitted", {
       position: toast.POSITION.BOTTOM_CENTER
     })
-
     dispatch(updateUserKyc('PROCESSING'))
+    dispatch(fetchUserById(payload.userId))
     dispatch(toggleNetworkLoading(false))
   })
   .catch(e => {

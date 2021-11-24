@@ -17,6 +17,8 @@ import "react-datepicker/dist/react-datepicker.css"
 const EditCourseSchedule = () => {
 
     const { workshopId } = useParams()
+
+    const history = useHistory()
  
     const dispatch = useDispatch()
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)   
@@ -43,7 +45,8 @@ const EditCourseSchedule = () => {
         endtime: "",
         location: "",
         faculty: "",
-        address: ""
+        address: "",
+        seats: ""
     })
 
     useEffect(() => {
@@ -55,7 +58,8 @@ const EditCourseSchedule = () => {
             endtime: courseScheduleData?.endTime || "",
             location: courseScheduleData?.location || "",
             faculty: courseScheduleData?.faculty || "",
-            address: courseScheduleData?.address || ""
+            address: courseScheduleData?.address || "",
+            seats:  courseScheduleData?.seats || ""
         })
     }, [courseScheduleData])
 
@@ -67,15 +71,21 @@ const EditCourseSchedule = () => {
         endtime: courseData?.endtime || "",
         location: courseData?.location || "",
         faculty: courseData?.faculty || "",
-        address: courseData?.address || ""
+        address: courseData?.address || "",
+        seats:  courseData?.seats || ""
     }
 
     const validationSchema = Yup.object().shape({
         courseId: Yup.string().required("Required"),
         location: Yup.string().required("Required"),
         faculty: Yup.string().required("Required"),
-        address: Yup.string().required("Required")
+        address: Yup.string().required("Required"),
+        seats:  Yup.string().required("Required")
     })
+
+    const goBack = () => {
+        history.push('/course-schedule')
+    }
 
     const submitForm = (values) => {
         console.log("values", values)
@@ -87,10 +97,11 @@ const EditCourseSchedule = () => {
             endTime: values.endtime.toString(),
             faculty: values.faculty,
             address: values.address,
-            location: values.location
+            location: values.location,
+            seats: values.seats
         }
 
-        dispatch(EditCourseScheduleAPI(workshopId, rawData))
+        dispatch(EditCourseScheduleAPI(workshopId, rawData, goBack))
 
     }
 
@@ -260,6 +271,28 @@ const EditCourseSchedule = () => {
                                                 </InputGroup>
                                                 <ErrorMessage
                                                     name="location"
+                                                    component="div"
+                                                    className="field-error text-danger"
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col sm="12" md="6">
+                                            <FormGroup className="has-icon-left position-relative">
+                                                <Label htmlFor="seats">seats Capacity </Label>
+                                                <InputGroup>
+ 
+                                                    <Input
+                                                    type="text"
+                                                    name="seats"
+                                                    id="seats"
+
+                                                    {...formik.getFieldProps("seats")}
+                                                    invalid={!!(formik.touched.seats && formik.errors.seats)}
+                                                    >
+                                                    </Input>
+                                                </InputGroup>
+                                                <ErrorMessage
+                                                    name="seats"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />

@@ -13,6 +13,7 @@ import { fetchAllVideos } from "../../redux/actions/videos"
 import { AddCourseAPI } from "../../redux/actions/courses"
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 import { BASE_URL } from "../../utility/serverSettings"
+import { useHistory } from "react-router-dom"
 
 const AddCourse = () => {
 
@@ -22,6 +23,8 @@ const AddCourse = () => {
     const allVideos = useSelector(state => state.videos.videos)
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)    
     const networkLoading = useSelector(state => state.common.loading)
+
+    const history = useHistory()
 
     const editor = useRef(null)
     const config = {
@@ -68,6 +71,10 @@ const AddCourse = () => {
         // faculty: Yup.string().required("Required")
     })
 
+    const goBack = () => {
+        history.push('/courses')
+    }
+
     const submitForm = (values, {resetForm}) => {
         if (selectedImg === "") {
             console.log("errrr")
@@ -100,7 +107,7 @@ const AddCourse = () => {
             featured: values.featured
         }
 
-        dispatch(AddCourseAPI(rawData, resetForm))
+        dispatch(AddCourseAPI(rawData, goBack))
     }
     
     useEffect(() => {
@@ -358,7 +365,7 @@ const AddCourse = () => {
                                         </Col>
                                     </Row>
 
-                                    <Row>
+                                    {/* <Row>
                                         <Col sm="12">
                                             <div className="p-2">
                                                 <h6>More Options</h6>
@@ -370,7 +377,7 @@ const AddCourse = () => {
                                                 </FormGroup>
                                             </div>
                                         </Col>
-                                    </Row>
+                                    </Row> */}
 
                                     <Row className="mt-1">
                                         <Col sm="12" md="12">

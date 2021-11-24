@@ -6,13 +6,14 @@ import {Link} from "react-feather"
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import Flatpickr from "react-flatpickr"
 import {useDispatch, useSelector} from "react-redux"
-
+import { useHistory } from "react-router-dom"
 import {fetchAllFacultyOptions} from "../../redux/actions/faculty/index"
 import {fetchAllCoursesOptions, fetchCourseById} from "../../redux/actions/courses/index"
 import {AddCourseScheduleAPI} from "../../redux/actions/courseSchedule/index"
 import CustomSelectField from "../UtilityComponents/CustomSelectField"
 
 const AddCourseSchedule = () => {
+    const history = useHistory()
 
     const dispatch = useDispatch()
     const facultyOptions = useSelector(state => state.faculty.facultyOptions)   
@@ -46,7 +47,7 @@ const AddCourseSchedule = () => {
         location:"",
         faculty:"",
         address:"",
-        seat:""
+        seats:""
     }
 
     const validationSchema = Yup.object().shape({
@@ -58,8 +59,12 @@ const AddCourseSchedule = () => {
         location: Yup.string(),
         faculty: Yup.string(),
         address: Yup.string().required("Required"),
-        seat: Yup.string()
+        seats: Yup.string()
     })
+
+    const goBack = () => {
+        history.push('/course-schedule')
+    }
 
     const submitForm = (values, {resetForm}) => {
         console.log("values", values)
@@ -73,11 +78,11 @@ const AddCourseSchedule = () => {
             faculty: values.faculty,
             address: values.address,
             location: values.location,
-            seat: values.seat,
+            seats: values.seats,
             batchNo: course.code
         }
 
-        dispatch(AddCourseScheduleAPI(rawData, resetForm))
+        dispatch(AddCourseScheduleAPI(rawData, goBack))
     }
 
     return (<>
@@ -258,21 +263,21 @@ const AddCourseSchedule = () => {
                                         </Col>
                                         <Col sm="12" md="6">
                                             <FormGroup className="has-icon-left position-relative">
-                                                <Label htmlFor="seat">Seat Capacity </Label>
+                                                <Label htmlFor="seats">seats Capacity </Label>
                                                 <InputGroup>
  
                                                     <Input
                                                     type="text"
-                                                    name="seat"
-                                                    id="seat"
+                                                    name="seats"
+                                                    id="seats"
 
-                                                    {...formik.getFieldProps("seat")}
-                                                    invalid={!!(formik.touched.seat && formik.errors.seat)}
+                                                    {...formik.getFieldProps("seats")}
+                                                    invalid={!!(formik.touched.seats && formik.errors.seats)}
                                                     >
                                                     </Input>
                                                 </InputGroup>
                                                 <ErrorMessage
-                                                    name="seat"
+                                                    name="seats"
                                                     component="div"
                                                     className="field-error text-danger"
                                                 />

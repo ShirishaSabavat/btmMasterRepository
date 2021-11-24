@@ -3,7 +3,7 @@ import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
 
-export const AddVideoAPI = (rawData, resetForm) => dispatch => {
+export const AddVideoAPI = (rawData, goBack) => dispatch => {
   dispatch(toggleNetworkLoading(true))
   ServerApi().post('/videos', rawData)
   .then(res => {
@@ -11,7 +11,7 @@ export const AddVideoAPI = (rawData, resetForm) => dispatch => {
       toast.success("Data Added", {
         position: toast.POSITION.BOTTOM_CENTER
       })
-      resetForm({})
+      goBack()
     } else {
       toast.error("Error in Adding Data", {
         position: toast.POSITION.BOTTOM_CENTER
