@@ -1,4 +1,4 @@
-import { DO_LOGIN, UPDATE_ROLE, UPDATE_KYC, LOGOUT, VERIFY_OTP_TAB, CREATE_PASSWORD_TAB } from '../../types/auth'
+import { DO_LOGIN, UPDATE_PROFILE, UPDATE_ROLE, UPDATE_KYC, LOGOUT, VERIFY_OTP_TAB, CREATE_PASSWORD_TAB } from '../../types/auth'
 
 const initialState = {
   token: '',
@@ -22,6 +22,9 @@ const authReducer = (state = initialState, action) => {
       
     case UPDATE_KYC:
       return {...state, userData: {...state.userData, user: {...state.userData.user, kycStatus: action.payload}}}
+      
+    case UPDATE_PROFILE:
+      return {...state, userData: {...state.userData, user: action.payload}}
 
     case LOGOUT:
       return {...state, userData: {}}

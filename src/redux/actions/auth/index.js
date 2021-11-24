@@ -1,4 +1,4 @@
-import { DO_LOGIN, UPDATE_ROLE, LOGOUT, UPDATE_KYC, VERIFY_OTP_TAB, CREATE_PASSWORD_TAB } from '../../types/auth'
+import { DO_LOGIN, UPDATE_PROFILE, UPDATE_ROLE, LOGOUT, UPDATE_KYC, VERIFY_OTP_TAB, CREATE_PASSWORD_TAB } from '../../types/auth'
 import ServerApi from '../../../utility/ServerApi'
 import { toast } from 'react-toastify'
 import { toggleNetworkLoading } from '../common'
@@ -146,4 +146,28 @@ export const switchToOtpVerify = () => dispatch => {
 
 export const switchToCreatePassword = () => dispatch => {
   dispatch({ type: CREATE_PASSWORD_TAB })
+}
+
+export const updateProfile = () => dispatch => {
+  dispatch(toggleNetworkLoading(true))
+  const currentUser = JSON.parse(localStorage.getItem('userData'))
+  if (currentUser.user.role === 'ADMIN') {
+    return
+  }
+  
+  ServerApi().get(`/users/${currentUser.user._id}`)
+  .then(res => {
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    })
+    dispatch(toggleNetworkLoading(false))
+  })
+  .catch(e => {
+    dispatch(toggleNetworkLoading(false))
+    toast.error("Error in Fetching Data", {
+      position: toast.POSITION.BOTTOM_CENTER
+    })
+    console.log(e)
+  })
 }

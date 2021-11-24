@@ -24,6 +24,9 @@ import HorizontalLayout from '@src/layouts/HorizontalLayout'
 
 import Spinner from '../@core/components/spinner/Fallback-spinner'
 
+import { useDispatch } from 'react-redux'
+import { updateProfile } from '../redux/actions/auth'
+
 const Router = () => {
   // ** Hooks
   const [layout, setLayout] = useLayout()
@@ -202,10 +205,26 @@ const Router = () => {
     return null
   }
 
+  function SyncProfile() {
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+      if (isUserLoggedIn()) {
+        dispatch(updateProfile())
+      }
+    }, [])
+
+    return null
+  }
+
 
   return (
     <AppRouter basename={process.env.REACT_APP_BASENAME}>
+      
       <ScrollToTop />
+      
+      <SyncProfile />
+
       <Switch>
         {/* If user is logged in Redirect user to DefaultRoute else to login */}
         {/* <Route
