@@ -18,8 +18,8 @@ export const fetchKycUserData = (id) => dispatch => {
   })
 }
 
-export const saveKycData = (payload) => dispatch => {
-  ServerApi().patch('/kycs', payload)
+export const saveKycData = (id, payload) => dispatch => {
+  ServerApi().patch(`/kycs/${id}`, payload)
   .then(res => {
     toast.success("Kyc submitted", {
       position: toast.POSITION.BOTTOM_CENTER

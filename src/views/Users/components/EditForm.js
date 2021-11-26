@@ -55,7 +55,7 @@ const EditForm = ({setShowEdit, userKYCData}) => {
     fileData.append("state", kycFinalData.state)
     fileData.append("tradename", kycFinalData.tradename)
     fileData.append("zipCode", kycFinalData.zipCode)
-    dispatch(saveKycData(fileData))
+    dispatch(saveKycData(userID, fileData))
   }
 
   const setKycFormData = (values) => {

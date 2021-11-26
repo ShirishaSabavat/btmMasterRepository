@@ -10,6 +10,8 @@ import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {PRODUCTION_URL} from '../../utility/serverSettings'
 import TableDataLoadingSkleton from '../../components/skleton/TableDataLoadingSkleton'
 
+import MlmTree from './tree'
+
 const UserTable = () => {
 
   const dispatch = useDispatch()
@@ -209,6 +211,7 @@ const UserTable = () => {
             <Card >
                 <CardHeader>
                     <CardTitle>Customers</CardTitle>
+                    <Link to="/users-tree" className="text-white"><Button color="primary" type="button">Tree View</Button></Link>
                 </CardHeader>
                 <hr className="m-0" />
 
@@ -221,6 +224,7 @@ const UserTable = () => {
 
             </Card>
         </Col>
+
     </Row>
 }
 
