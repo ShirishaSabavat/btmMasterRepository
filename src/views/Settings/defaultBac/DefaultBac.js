@@ -24,14 +24,6 @@ const DefaultBac = () => {
 
     const tableColumns = [
         {
-          name: "SNo",
-          selector: "sno",
-          sortable: true,
-          cell: (row) => (
-            <p className="text-bold-500 text-truncate mb-0">{row.sno}</p>
-          )
-        },
-        {
           name: "Name",
           selector: "name",
           sortable: true,
@@ -177,7 +169,7 @@ const DefaultBac = () => {
                   setShowDelete={setShowDelete}
                   showDelete={showDelete}
                   confirmDelete={() => dispatch(deleteUser(showDelete))}
-                  data={usersData} 
+                  data={usersData.reverse()} 
                   columns={tableColumns} />
 
             </Card>

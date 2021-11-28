@@ -8,15 +8,17 @@ import { fetchAllUsersData, deleteUser } from "../../../redux/actions/user/index
 import TableDataLoadingSkleton from '../../../components/skleton/TableDataLoadingSkleton'
 import OrganizationChart from "@dabeng/react-orgchart"
 
-const traverseTree = []
-// let traverseTreeFull = []
+const visited = []
+const tree = []
 
 const MlmTree = () => {
 
     const dispatch = useDispatch()
     
     // const usersData = useSelector(state => state.user.users.map(i => ({_id: i._id, name: i.name, rank: i.rank, referral: i.referral, referralCode: i.referralCode})))
-    const usersData = useSelector(state => state.user.users.sort((a, b) => parseInt(a.referralCode?.split('-')[2]) - parseInt(b.referralCode?.split('-')[2])))
+    // const usersData = useSelector(state => state.user.users.filter(i => i.kycStatus === "VERIFIED").sort((a, b) => parseInt(a.referralCode?.split('-')[2]) - parseInt(b.referralCode?.split('-')[2])).reverse())
+    const usersData = useSelector(state => state.user.users.filter(i => (i.referral !== "DIRECT" && i.kycStatus === "VERIFIED")).sort((a, b) => a.nodePosition - b.nodePosition).reverse())
+    
     const loading = useSelector(state => state.common.loading)
     
     const [showDelete, setShowDelete] = useState(false)
@@ -26,62 +28,67 @@ const MlmTree = () => {
         dispatch(fetchAllUsersData())
     }, [])
 
-    useEffect(() => {
-        // buildTree()
-        usersData.reverse().map(i => {
-            // if (traverseTree.find(k => k.id === i._id)) {
-                // return
-            // }
-            // const hasChilds = usersData.filter(j => j.referral === i.referralCode)[0]
-            // if (hasChilds) {
-                // traverseTree.push({id: i._id, name: i.name, title: i.rank, children: buildTree()})
-                // return
-            // }
-            if (traverseTree && i.referral === 'DIRECT') {
-                // traverseTree.push({id: i._id, name: i.name, title: i.rank, children: []})
-                return
+    const breathFirst = (nodes) => {
+        // const data = childerens ? childerens : usersData
+        const tree = nodes.map(i => {
+            if (visited.includes(i._id)) return
+
+            visited.push(i._id)
+
+            const myChilderens = usersData.reverse().filter(j => j.referral === i.referralCode)
+
+            console.log(i.name)
+            console.log({myChilderens})
+
+            if (!myChilderens[0]) {
+                return {
+                    id: i._id,
+                    name: i.name,
+                    title: i.rank,
+                    children: []
+                }
             }
-            if (traverseTree[i.referralCode]) {
-                console.log(i.name)
-                console.log(traverseTree[i.referralCode])
-                traverseTree[i.referral] = [{id: i._id, name: i.name, title: i.rank, children: [...traverseTree[i.referralCode]]}]
-                delete traverseTree[i.referralCode]
-                return
+
+            return {
+                id: i._id,
+                name: i.name,
+                title: i.rank,
+                children: breathFirst(myChilderens)
             }
-            if (traverseTree[i.referral]) {
-                traverseTree[i.referral] = [...traverseTree[i.referral], {id: i._id, name: i.name, title: i.rank, children: []}]
-                return
-            }
-            traverseTree[i.referral] = [{id: i._id, name: i.name, title: i.rank, children: []}]
+
         })
 
-        // traverseTree = traverseTree.DIRECT
+        return tree
+    }
 
-        // console.log(traverseTree)
-        // console.log(usersData)
-    }, [usersData])
+    const constructTree = () => {
+        let tree = breathFirst(usersData.reverse())
+        tree = tree.filter(i => i !== undefined)
+        console.log(tree)
+        return tree
+    }
 
-    if (loading || !usersData || !traverseTree) {
+    if (loading || !usersData) {
         return (<TableDataLoadingSkleton />)
     }
 
     return (
         <div>
-            <Alert color='info' isOpen={true}>
+            {/* <Alert color='info' isOpen={true}>
                 <div className='alert-body'>
                 <AlertCircle size={15} />{' '}
                 <span className='ml-1'>
                     Scroll horizontall and vertically to view the full tree view
                 </span>
                 </div>
-            </Alert>
+            </Alert> */}
 
             <div style={{padding: 10}}>
-                <OrganizationChart datasource={{
+                <OrganizationChart  datasource={{
                     id: "businessaacharya",
                     name: "Business Aacharya",
                     title: "",
-                    children: traverseTree['BAC-A02-0001']
+                    children: constructTree()
                 }} />
             </div>
         </div>

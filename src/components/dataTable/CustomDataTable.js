@@ -112,7 +112,7 @@ const CustomDataTable = (props) => {
       nextLabel=''
       forcePage={currentPage}
       onPageChange={page => handlePagination(page)}
-      pageCount={searchValue.length ? filteredData.length / 7 : props.data.length / 7 || 1}
+      pageCount={searchValue.length ? filteredData.length / 10 : props.data.length / 10 || 1}
       breakLabel='...'
       pageRangeDisplayed={2}
       marginPagesDisplayed={2}
@@ -212,7 +212,7 @@ const CustomDataTable = (props) => {
             selectableRows
             columns={props.columns}
             highlightOnHover={true}
-            paginationPerPage={7}
+            paginationPerPage={10}
             className='dataTable-custom'
             sortIcon={<ChevronDown size={10} />}
             paginationDefaultPage={currentPage + 1}

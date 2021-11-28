@@ -13,11 +13,11 @@ import ServerApi from '../../utility/ServerApi'
 import NavBar from './components/navbar'
 import { toast } from 'react-toastify'
 import { fetchCourseById, fetchAllCourses } from '../../redux/actions/courses'
-import { toggleNetworkLoading } from '../../redux/actions/common'
+import { toggleNetworkLoading, saveReferral } from '../../redux/actions/common'
 import { DO_LOGIN } from '../../redux/types/auth'
 import Footer from './components/footer'
 import { BASE_URL } from '../../utility/serverSettings'
-import { handleLogin, updateUserRole } from '../../redux/actions/auth'
+import { handleLogin, updateUserRole, handleLogout } from '../../redux/actions/auth'
 import { getLandingPageData } from "../../redux/actions/landingPage/index"
 // import { getUserData } from '../../utility/Utils'
 // import CourseCard from './components/courseCard'
@@ -47,7 +47,8 @@ const Landing = (route) => {
     const { id } = useParams()
  
     const userData = useSelector(state => state.auth.userData)
-    const referralCode = useSelector(state => state.common.referralCode)
+    // const referralCode = useSelector(state => state.common.referralCode)
+    const [referralCode, setReferralCode] = useState('')
     const course = useSelector(state => state.courses.course)
     const workshops = useSelector(state => state.courses.workshops)
     const courses = useSelector(state => state.courses.courses)
@@ -161,6 +162,12 @@ const Landing = (route) => {
                         if (course.type === 'Bac') {
                             dispatch(updateUserRole('BAC_USER'))
                         }
+
+                        //Remove this block and uncomment top after automation testing
+                        // //**DANGER***
+                        // dispatch(handleLogout())
+                        // dispatch(saveReferral(''))
+                        // //**DANGER***
                     })
 
                     history.push('/dashboard')
@@ -319,6 +326,7 @@ const Landing = (route) => {
 
                         <div className="text-center mt-2">
                             <LoadingButton 
+                                id="join-now-workshop"
                                 loading={networkLoading}
                                 loadingPosition="start"
                                 variant="contained" 
@@ -362,6 +370,7 @@ const Landing = (route) => {
 
                             <div className="text-center mt-2">
                                 <LoadingButton 
+                                    id="join-now-workshop"
                                     loading={networkLoading}
                                     loadingPosition="start"
                                     variant="contained" 
@@ -478,7 +487,7 @@ const Landing = (route) => {
                             defaultValue=""
                             value={referralCode}
                             variant="standard"
-                            disabled
+                            disabled={true}
                         />
                     </FormControl>
                 )}
@@ -487,6 +496,7 @@ const Landing = (route) => {
 
             <div className="text-center mt-2">
                 <LoadingButton 
+                    id="join-now"
                     loading={networkLoading}
                     loadingPosition="start"
                     variant="contained" 
