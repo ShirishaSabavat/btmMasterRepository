@@ -43,12 +43,13 @@ const Landing = (route) => {
     const [otp, setOtp] = useState('')
     const [chooseWorkshop, setChooseWorkshop] = useState('')
     const [purchaseType, setPurchaseType] = useState('')
+    const [gstNo, setGstNo] = useState('')
 
     const { id } = useParams()
  
     const userData = useSelector(state => state.auth.userData)
-    // const referralCode = useSelector(state => state.common.referralCode)
-    const [referralCode, setReferralCode] = useState('')
+    const referralCode = useSelector(state => state.common.referralCode)
+    // const [referralCode, setReferralCode] = useState('')
     const course = useSelector(state => state.courses.course)
     const workshops = useSelector(state => state.courses.workshops)
     const courses = useSelector(state => state.courses.courses)
@@ -219,7 +220,8 @@ const Landing = (route) => {
             name,
             email,
             phone,
-            password
+            password,
+            gstNo
         }
 
         if (referralCode) {
@@ -476,6 +478,17 @@ const Landing = (route) => {
                         variant="standard"
                         type="password"
                         onChange={e => setConfirmPassword(e.target.value)}
+                    />
+                </FormControl>
+
+                <FormControl className="w-100 pt-1" sx={{ p: 1 }}>
+                    <TextField
+                        id="gstNo"
+                        label="GST No (optional)"
+                        defaultValue=""
+                        variant="standard"
+                        type="gstNo"
+                        onChange={e => setGstNo(e.target.value)}
                     />
                 </FormControl>
 

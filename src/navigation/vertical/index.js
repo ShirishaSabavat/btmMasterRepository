@@ -264,7 +264,7 @@ const Navigation = [
     title: 'Follow Up',
     icon: <PhoneCall size={20} />,
     navLink: '/follow-up',
-    permissions: ["ADMIN"]
+    permissions: ["ADMIN", "BAC_USER"]
   },
   {
     id: 'inquiry',

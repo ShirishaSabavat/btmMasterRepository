@@ -84,7 +84,7 @@ const MlmTree = () => {
             </Alert> */}
 
             <div style={{padding: 10}}>
-                <OrganizationChart  datasource={{
+                <OrganizationChart pan={true}  datasource={{
                     id: "businessaacharya",
                     name: "Business Aacharya",
                     title: "",
